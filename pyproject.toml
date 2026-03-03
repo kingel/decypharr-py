@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "decypharr"
+version = "0.1.0"
+description = "Decypharr"
+requires-python = ">=3.11"
+readme = "README.md"
+license = { file = "LICENSE" }
+
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.30",
+  "jinja2>=3.1",
+  "a2wsgi>=1.0",
+  "wsgidav>=4.0",
+  "pydantic>=2.7",
+  "apscheduler>=3.10",
+  "httpx>=0.27",
+  "python-multipart>=0.0.9",
+  "aiofiles>=24.1",
+  "bcrypt>=4.1",
+  "rarfile>=4.2",
+  "itsdangerous>=2.1",
+  "bencodepy>=0.9.5",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+
+[project.scripts]
+decypharr = "decypharr.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["decypharr*"]
+
+[tool.setuptools.package-data]
+"decypharr" = [
+  "web/templates/*.html",
+  "web/static/**/*",
+  "web/images/**/*",
+]

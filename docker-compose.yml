@@ -1,0 +1,19 @@
+services:
+  decypharr-py:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: decypharr-py
+    ports:
+      - "8282:8282"
+    volumes:
+      - ./data:/data
+    devices:
+      - /dev/fuse:/dev/fuse:rwm
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    restart: unless-stopped
+    environment:
+      - DECYPHARR_SECRET_KEY=change-me

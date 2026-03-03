@@ -1,0 +1,19 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.uv/
+.pytest_cache/
+
+# Local data/config
+data/
+!data/.gitkeep
+
+# Logs
+*.log
+
+# OS files
+.DS_Store

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decypharr - {{ title }}</title>
+
+    <link href="{{ url_base }}assets/css/styles.css" rel="stylesheet" type="text/css" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_base }}images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_base }}images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_base }}images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="{{ url_base }}images/favicon/site.webmanifest">
+
+    <link rel="preload" href="{{ url_base }}assets/js/common.js" as="script">
+
+    <script>
+        // Early theme detection to prevent FOUC
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+
+        // Set global URL base
+        window.urlBase = "{{ url_base }}";
+    </script>
+</head>
+<body class="min-h-screen bg-base-200 flex flex-col">
+<div class="toast-container fixed bottom-4 right-4 z-50 space-y-2">
+</div>
+
+<header class="navbar bg-base-100 shadow-lg sticky top-0 z-40 backdrop-blur-sm">
+    <div class="navbar-start">
+        <div class="dropdown">
+            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"/>
+                </svg>
+            </div>
+            <ul class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-base-100 rounded-box w-52 border border-base-300">
+                <li><a href="{{ url_base }}" class="{% if page == 'index' %}active{% endif %}">
+                    <i class="bi bi-grid-3x3-gap text-primary"></i>Dashboard
+                    </a></li>
+                <li><a href="{{ url_base }}download" class="{% if page == 'download' %}active{% endif %}">
+                    <i class="bi bi-cloud-download text-secondary"></i>Download
+                    </a></li>
+                <li><a href="{{ url_base }}repair" class="{% if page == 'repair' %}active{% endif %}">
+                    <i class="bi bi-wrench-adjustable text-accent"></i>Repair
+                    </a></li>
+                <li><a href="{{ url_base }}settings" class="{% if page == 'config' %}active{% endif %}">
+                    <i class="bi bi-gear text-info"></i>Settings
+                    </a></li>
+                <li><a href="{{ url_base }}webdav" target="_blank">
+                    <i class="bi bi-cloud text-success"></i>WebDAV
+                </a></li>
+                <li><a href="{{ url_base }}logs" target="_blank">
+                    <i class="bi bi-journal-text text-warning"></i>Logs
+                </a></li>
+            </ul>
+        </div>
+        <a class="btn btn-ghost text-xl font-bold text-primary group" href="{{ url_base }}">
+            <img src="{{ url_base }}images/logo.svg" alt="Decypharr Logo" class="w-8 h-8 inline-block mr-2">
+            <span class="hidden sm:inline bg-clip-text">Decypharr</span>
+        </a>
+    </div>
+
+    <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1 gap-1">
+            <li><a href="{{ url_base }}" class="{% if page == 'index' %}active{% endif %} tooltip tooltip-bottom" data-tip="Dashboard">
+                <i class="bi bi-grid-3x3-gap"></i>
+                <span class="hidden xl:inline">Dashboard</span>
+                </a></li>
+            <li><a href="{{ url_base }}download" class="{% if page == 'download' %}active{% endif %} tooltip tooltip-bottom" data-tip="Add Downloads">
+                <i class="bi bi-cloud-download"></i>
+                <span class="hidden xl:inline">Download</span>
+                </a></li>
+            <li><a href="{{ url_base }}repair" class="{% if page == 'repair' %}active{% endif %} tooltip tooltip-bottom" data-tip="Repair Media">
+                <i class="bi bi-wrench-adjustable"></i>
+                <span class="hidden xl:inline">Repair</span>
+                </a></li>
+            <li><a href="{{ url_base }}settings" class="{% if page == 'config' %}active{% endif %} tooltip tooltip-bottom" data-tip="Settings">
+                <i class="bi bi-gear"></i>
+                <span class="hidden xl:inline">Settings</span>
+                </a></li>
+            <li><a href="{{ url_base }}webdav" target="_blank" class="tooltip tooltip-bottom" data-tip="WebDAV Access">
+                <i class="bi bi-cloud"></i>
+                <span class="hidden xl:inline">WebDAV</span>
+            </a></li>
+            <li><a href="{{ url_base }}debug/logs" target="_blank" class="tooltip tooltip-bottom" data-tip="System Logs">
+                <i class="bi bi-journal-text"></i>
+                <span class="hidden xl:inline">Logs</span>
+            </a></li>
+        </ul>
+    </div>
+
+    <div class="navbar-end">
+        <div class="flex items-center gap-3">
+            <div class="tooltip tooltip-left">
+                <label class="swap swap-rotate btn btn-ghost btn-circle hover:bg-base-300 transition-colors">
+                    <input type="checkbox" id="themeToggle" class="theme-controller" />
+                    <i class="swap-off bi bi-sun text-lg text-warning"></i>
+                    <i class="swap-on bi bi-moon-stars text-lg text-info"></i>
+                </label>
+            </div>
+
+            <div class="tooltip tooltip-left" data-tip="System Statistics">
+                <a href="{{ url_base }}stats" class="btn btn-ghost btn-sm hover:bg-base-300 transition-colors">
+                    <i class="bi bi-graph-up text-lg"></i>
+                    <span class="hidden md:inline ml-1">Stats</span>
+                </a>
+            </div>
+
+            <div class="tooltip tooltip-left" data-tip="Current Version">
+                <div class="badge badge-primary font-mono text-xs hover:badge-primary-focus transition-colors cursor-pointer" id="version-badge">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="flex-1 container mx-auto px-4 py-6">
+    {% if page == 'index' %}
+    {% include "index.html" %}
+    {% elif page == 'download' %}
+    {% include "download.html" %}
+    {% elif page == 'repair' %}
+    {% include "repair.html" %}
+    {% elif page == 'stats' %}
+    {% include "stats.html" %}
+    {% elif page == 'config' %}
+    {% include "config.html" %}
+    {% elif page == 'login' %}
+    {% include "login.html" %}
+    {% elif page == 'register' %}
+    {% include "register.html" %}
+    {% else %}
+    <div class="hero min-h-96">
+        <div class="hero-content text-center">
+            <div class="max-w-md">
+                <h1 class="text-5xl font-bold text-error">404</h1>
+                <p class="py-6">Page not found. The page you're looking for doesn't exist.</p>
+                <a href="{{ url_base }}" class="btn btn-primary">Go Home</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</main>
+
+<footer class="footer footer-center p-6 bg-base-300 text-base-content border-t border-base-200">
+    <aside class="grid-flow-col gap-4">
+        <a href="https://github.com/sirrobot01/decypharr" target="_blank"
+           class="link link-hover flex items-center gap-2 hover:text-primary transition-colors">
+            <i class="bi bi-github text-lg"></i>
+            <span>GitHub</span>
+        </a>
+        <a href="https://sirrobot01.github.io/decypharr" target="_blank"
+           class="link link-hover flex items-center gap-2 hover:text-primary transition-colors">
+            <i class="bi bi-book text-lg"></i>
+            <span>Documentation</span>
+        </a>
+    </aside>
+</footer>
+
+<script src="{{ url_base }}assets/js/jquery-3.7.1.min.js"></script>
+<script src="{{ url_base }}assets/js/common.js"></script>
+
+{% if page == 'index' %}
+<script src="{{ url_base }}assets/js/dashboard.js"></script>
+{% elif page == 'download' %}
+<script src="{{ url_base }}assets/js/download.js"></script>
+{% elif page == 'repair' %}
+<script src="{{ url_base }}assets/js/repair.js"></script>
+{% elif page == 'config' %}
+<script src="{{ url_base }}assets/js/config.js"></script>
+{% endif %}
+</body>
+</html>

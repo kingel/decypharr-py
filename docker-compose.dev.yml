@@ -1,0 +1,55 @@
+services:
+  decypharr-py:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: decypharr-py-dev
+    ports:
+      - "8282:8282"
+    volumes:
+      - ./:/app
+      - ./data:/data
+      - ./data/media:/media
+      - ./data/downloads:/downloads
+      - ./data/mounts:/mnt/decypharr:rshared
+      - uv-cache:/root/.cache/uv
+    devices:
+      - /dev/fuse:/dev/fuse:rwm
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    restart: unless-stopped
+    environment:
+      - DECYPHARR_SECRET_KEY=change-me
+      - DECYPHARR_CONFIG_PATH=/data
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+    volumes:
+      - ./data/radarr:/config
+      - ./data/media:/media
+      - ./data/downloads:/downloads
+      - ./data/mounts:/mnt/decypharr:ro
+    ports:
+      - "7878:7878"
+    restart: unless-stopped
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+    volumes:
+      - ./data/prowlarr:/config
+    ports:
+      - "9696:9696"
+    restart: unless-stopped
+
+volumes:
+  uv-cache:
