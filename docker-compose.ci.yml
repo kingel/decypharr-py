@@ -3,4 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    volumes:
+      - ./tests:/app/tests:ro
     command: ["pytest", "-q", "/app/tests"]
