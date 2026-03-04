@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import urllib.parse
 from types import SimpleNamespace
 
 from fastapi.testclient import TestClient
@@ -84,9 +85,16 @@ def test_qbit_trackers_peers_fileprio(tmp_path: Path):
     app = _make_app(tmp_path)
     client = TestClient(app)
 
+    tracker_a = "udp://tracker.example.com:1337/announce"
+    tracker_b = "http://tracker.example.org/announce"
+    magnet = (
+        "magnet:?xt=urn:btih:testhash"
+        f"&tr={urllib.parse.quote(tracker_a)}"
+        f"&tr={urllib.parse.quote(tracker_b)}"
+    )
     add_resp = client.post(
         "/api/v2/torrents/add",
-        data={"urls": "magnet:?xt=urn:btih:testhash", "category": "sonarr"},
+        data={"urls": magnet, "category": "sonarr"},
     )
     assert add_resp.status_code == 200
     torrents = client.get("/api/v2/torrents/info").json()
@@ -95,6 +103,9 @@ def test_qbit_trackers_peers_fileprio(tmp_path: Path):
 
     trackers = client.get("/api/v2/torrents/trackers", params={"hash": torrent_hash})
     assert trackers.status_code == 200
+    tracker_urls = {item["url"] for item in trackers.json()}
+    assert tracker_a in tracker_urls
+    assert tracker_b in tracker_urls
 
     peers = client.get("/api/v2/torrents/peers", params={"hash": torrent_hash})
     assert peers.status_code == 200
@@ -103,6 +114,9 @@ def test_qbit_trackers_peers_fileprio(tmp_path: Path):
 
     prio = client.post("/api/v2/torrents/filePrio", data={"hash": torrent_hash, "id": "0", "priority": "1"})
     assert prio.status_code == 200
+    stored = app.state.ctx.torrents.get(torrent_hash)
+    assert stored
+    assert stored.file_priorities.get(0) == 1
 
 
 def test_ui_add_populates_dashboard(tmp_path: Path):

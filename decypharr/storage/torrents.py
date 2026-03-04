@@ -29,6 +29,8 @@ class Torrent(BaseModel):
     processed: bool = False
     callback_url: Optional[str] = None
     callback_status: Optional[str] = None
+    trackers: List[str] = Field(default_factory=list)
+    file_priorities: Dict[int, int] = Field(default_factory=dict)
 
 
 class TorrentStore:
@@ -71,6 +73,8 @@ class TorrentStore:
         state: Optional[str] = None,
         action: Optional[str] = None,
         callback_url: Optional[str] = None,
+        trackers: Optional[List[str]] = None,
+        file_priorities: Optional[Dict[int, int]] = None,
     ) -> Torrent:
         self.load()
         if not hash_value:
@@ -88,6 +92,8 @@ class TorrentStore:
             state=state or "pausedUP",
             action=action or "symlink",
             callback_url=callback_url,
+            trackers=trackers or [],
+            file_priorities=file_priorities or {},
         )
         self._items[hash_value] = torrent
         self.save()
@@ -142,4 +148,15 @@ class TorrentStore:
         for h in hashes:
             if h in self._items:
                 self._items[h].state = state
+        self.save()
+
+    def set_file_priorities(self, hash_value: str, priorities: Dict[int, int]) -> None:
+        self.load()
+        torrent = self._items.get(hash_value)
+        if not torrent:
+            return
+        merged = dict(torrent.file_priorities)
+        merged.update(priorities)
+        torrent.file_priorities = merged
+        self._items[hash_value] = torrent
         self.save()

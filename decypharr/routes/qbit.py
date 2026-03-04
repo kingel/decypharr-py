@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 import base64
 import hashlib
 import time
 import os
+import re
 
 from fastapi import APIRouter, Depends, Form, Request, HTTPException
 from fastapi.responses import PlainTextResponse
@@ -12,12 +13,19 @@ from fastapi.responses import PlainTextResponse
 from decypharr.arr import ArrClient
 from decypharr.config import Arr as ArrConfig
 from decypharr.services.context import AppContext
-from decypharr.torrent_utils import infohash_from_torrent, map_debrid_status, parse_magnet_infohash
+from decypharr.torrent_utils import (
+    infohash_from_torrent,
+    map_debrid_status,
+    parse_magnet_infohash,
+    parse_magnet_trackers,
+    trackers_from_torrent,
+)
 
 
 router = APIRouter()
 
 _QBIT_TAGS: set[str] = set()
+_FILE_ID_SPLIT_RE = re.compile(r"[|,]")
 
 
 def _torrent_payload(t, now: int) -> dict:
@@ -26,6 +34,13 @@ def _torrent_payload(t, now: int) -> dict:
     eta = -1
     if t.dlspeed and amount_left > 0:
         eta = int(amount_left / max(t.dlspeed, 1))
+    tracker = ""
+    if t.trackers:
+        tracker = t.trackers[0]
+    elif t.magnet_uri:
+        magnet_trackers = parse_magnet_trackers(t.magnet_uri)
+        if magnet_trackers:
+            tracker = magnet_trackers[0]
     return {
         "added_on": t.added_on,
         "amount_left": amount_left,
@@ -67,7 +82,7 @@ def _torrent_payload(t, now: int) -> dict:
         "tags": ",".join(t.tags),
         "time_active": max(now - t.added_on, 0),
         "total_size": t.size,
-        "tracker": "",
+        "tracker": tracker,
         "up_limit": -1,
         "uploaded": 0,
         "uploaded_session": 0,
@@ -199,6 +214,19 @@ def _authenticate_arr(ctx: AppContext, category: str, username: str, password: s
     return arr
 
 
+def _parse_file_ids(value: Optional[str]) -> List[int]:
+    if not value:
+        return []
+    parts = [item for item in _FILE_ID_SPLIT_RE.split(value) if item]
+    ids: List[int] = []
+    for part in parts:
+        try:
+            ids.append(int(part))
+        except ValueError:
+            continue
+    return ids
+
+
 @router.post("/auth/login", response_class=PlainTextResponse)
 async def auth_login(
     request: Request,
@@ -312,7 +340,13 @@ async def torrents_add(
             url = raw.strip()
             if not url:
                 continue
-            url_items.append({"url": url, "infohash": parse_magnet_infohash(url)})
+            url_items.append(
+                {
+                    "url": url,
+                    "infohash": parse_magnet_infohash(url),
+                    "trackers": parse_magnet_trackers(url),
+                }
+            )
 
     uploads = []
     if form:
@@ -325,7 +359,14 @@ async def torrents_add(
         except Exception:
             continue
         infohash = infohash_from_torrent(data)
-        file_items.append({"upload": upload, "data": data, "infohash": infohash})
+        file_items.append(
+            {
+                "upload": upload,
+                "data": data,
+                "infohash": infohash,
+                "trackers": trackers_from_torrent(data),
+            }
+        )
 
     cached_map = None
     if debrid and download_uncached is not True and debrid_config and not debrid_config.download_uncached:
@@ -340,6 +381,7 @@ async def torrents_add(
     for item in url_items:
         url = item["url"]
         infohash = item["infohash"]
+        trackers = item.get("trackers") or []
         if debrid:
             if download_uncached is not True and debrid_config and not debrid_config.download_uncached and infohash:
                 try:
@@ -372,6 +414,7 @@ async def torrents_add(
                 state=state,
                 action=action,
                 callback_url=callback_url,
+                trackers=trackers,
             )
         else:
             name = url[:120]
@@ -384,12 +427,14 @@ async def torrents_add(
                 hash_value=infohash,
                 action=action,
                 callback_url=callback_url,
+                trackers=trackers,
             )
 
     for item in file_items:
         upload = item["upload"]
         data = item["data"]
         infohash = item["infohash"]
+        trackers = item.get("trackers") or []
         if debrid:
             if download_uncached is not True and debrid_config and not debrid_config.download_uncached and infohash:
                 try:
@@ -422,6 +467,7 @@ async def torrents_add(
                 state=state,
                 action=action,
                 callback_url=callback_url,
+                trackers=trackers,
             )
         else:
             name = upload.filename or "upload.torrent"
@@ -434,6 +480,7 @@ async def torrents_add(
                 hash_value=infohash,
                 action=action,
                 callback_url=callback_url,
+                trackers=trackers,
             )
     return PlainTextResponse("Ok.")
 
@@ -651,7 +698,7 @@ async def torrents_files(request: Request, hash: Optional[str] = None, ctx: AppC
                 "name": file.name,
                 "size": file.size,
                 "progress": 1.0 if remote.status in ("downloaded", "completed") else torrent.progress,
-                "priority": 0,
+                "priority": torrent.file_priorities.get(idx, 0),
                 "is_seed": False,
                 "piece_range": [0, 0],
                 "availability": 0,
@@ -674,7 +721,24 @@ async def torrents_trackers(request: Request, hash: Optional[str] = None, ctx: A
     torrent = ctx.torrents.get(hash)
     if not torrent:
         return []
-    return []
+    trackers = torrent.trackers
+    if not trackers and torrent.magnet_uri:
+        trackers = parse_magnet_trackers(torrent.magnet_uri)
+    entries = []
+    for idx, tracker in enumerate(trackers):
+        entries.append(
+            {
+                "url": tracker,
+                "status": 2,
+                "tier": idx,
+                "num_peers": 0,
+                "num_seeds": 0,
+                "num_leeches": 0,
+                "num_downloaded": 0,
+                "msg": "",
+            }
+        )
+    return entries
 
 
 @router.get("/torrents/peers")
@@ -710,6 +774,14 @@ async def torrents_file_prio(
         priority = priority or (form.get("priority") if form else None)
     if not hash:
         raise HTTPException(status_code=400, detail="hash required")
+    ids = _parse_file_ids(id)
+    try:
+        prio = int(priority) if priority is not None else 0
+    except ValueError:
+        prio = 0
+    if ids:
+        updates: Dict[int, int] = {file_id: prio for file_id in ids}
+        ctx.torrents.set_file_priorities(hash, updates)
     return PlainTextResponse("Ok.")
 
 

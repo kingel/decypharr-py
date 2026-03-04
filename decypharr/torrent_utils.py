@@ -3,13 +3,35 @@ from __future__ import annotations
 import base64
 import hashlib
 import re
-from typing import Optional
+from typing import Iterable, List, Optional
 import urllib.parse
 
 import bencodepy
 
 
 MAGNET_INFOHASH_RE = re.compile(r"xt=urn:btih:([A-Za-z0-9]+)")
+
+def _dedupe(values: Iterable[str]) -> List[str]:
+    seen = set()
+    result: List[str] = []
+    for value in values:
+        cleaned = value.strip()
+        if not cleaned or cleaned in seen:
+            continue
+        seen.add(cleaned)
+        result.append(cleaned)
+    return result
+
+
+def _decode_tracker(value: object) -> Optional[str]:
+    if isinstance(value, bytes):
+        try:
+            return value.decode("utf-8", "ignore")
+        except Exception:
+            return None
+    if isinstance(value, str):
+        return value
+    return None
 
 
 def parse_magnet_infohash(magnet: str) -> Optional[str]:
@@ -25,6 +47,41 @@ def parse_magnet_infohash(magnet: str) -> Optional[str]:
         return decoded.hex()
     except Exception:
         return None
+
+
+def parse_magnet_trackers(magnet: str) -> List[str]:
+    try:
+        parsed = urllib.parse.urlparse(magnet)
+    except Exception:
+        return []
+    if parsed.scheme != "magnet":
+        return []
+    query = urllib.parse.parse_qs(parsed.query)
+    trackers = query.get("tr", [])
+    return _dedupe(trackers)
+
+
+def trackers_from_torrent(data: bytes) -> List[str]:
+    try:
+        decoded = bencodepy.decode(data)
+    except Exception:
+        return []
+    trackers: List[str] = []
+    announce = decoded.get(b"announce")
+    if announce is not None:
+        value = _decode_tracker(announce)
+        if value:
+            trackers.append(value)
+    announce_list = decoded.get(b"announce-list")
+    if isinstance(announce_list, list):
+        for tier in announce_list:
+            if not isinstance(tier, list):
+                continue
+            for entry in tier:
+                value = _decode_tracker(entry)
+                if value:
+                    trackers.append(value)
+    return _dedupe(trackers)
 
 
 def infohash_from_torrent(data: bytes) -> Optional[str]:
