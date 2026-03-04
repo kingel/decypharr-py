@@ -53,14 +53,14 @@ Last updated: 2026-03-04
 - **Static asset handling**: Ensure `decypharr/web/static/build/` is committed or add a build step in CI to generate it.
 - **UI validation parity**: Bring settings field validation in line with Go version (client-side rules remain).
 - **WebDAV parity**: Validate WsgiDAV dir browser UX vs Go’s custom listing (delete buttons).
-- **Tests**: Add integration/stack tests (Arr + debrid + webdav flows).
+- **Tests**: Integration/stack tests (Arr + debrid + webdav flows) — manual by user.
 - **Additional debrid providers**: Debrid‑Link / AllDebrid not yet implemented.
 
 ## Constraints
 - Static assets directory `decypharr/web/static/build/` must exist at runtime/tests or app init fails.
 
 ## Next Step
-- Add integration/stack tests (Arr + debrid + WebDAV flows).
+- Pending user direction.
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.
