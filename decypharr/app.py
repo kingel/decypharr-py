@@ -7,6 +7,7 @@ from pathlib import Path
 from contextlib import asynccontextmanager, suppress
 
 from fastapi import FastAPI
+from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.responses import Response
@@ -64,6 +65,10 @@ def create_app(config_path: Path) -> FastAPI:
     templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
     app.state.templates = templates
     app.state.ctx = ctx
+
+    @app.exception_handler(qbit_routes.QbitError)
+    async def qbit_error_handler(request, exc: qbit_routes.QbitError):
+        return PlainTextResponse(exc.message, status_code=exc.status_code)
 
     prefix = cfg.url_base.rstrip("/")
     if prefix == "/":

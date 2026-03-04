@@ -7,7 +7,7 @@ import time
 import os
 import re
 
-from fastapi import APIRouter, Depends, Form, Request, HTTPException
+from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import PlainTextResponse
 
 from decypharr.arr import ArrClient
@@ -26,6 +26,13 @@ router = APIRouter()
 
 _QBIT_TAGS: set[str] = set()
 _FILE_ID_SPLIT_RE = re.compile(r"[|,]")
+
+
+class QbitError(Exception):
+    def __init__(self, status_code: int, message: str) -> None:
+        super().__init__(message)
+        self.status_code = status_code
+        self.message = message
 
 
 def _torrent_payload(t, now: int) -> dict:
@@ -171,24 +178,27 @@ def _require_qbit_auth(request: Request, ctx: AppContext, category: str) -> Opti
     username, password = _get_auth_credentials(request, ctx)
     if cfg.qbittorrent.username and cfg.qbittorrent.password:
         if username != cfg.qbittorrent.username or password != cfg.qbittorrent.password:
-            raise HTTPException(status_code=401, detail="Fails.")
+            raise QbitError(status_code=401, message="unauthorized: invalid credentials")
         return None
-    if username and password:
-        try:
-            return _authenticate_arr(ctx, category, username, password)
-        except Exception:
-            if cfg.use_auth and ctx.config_manager.verify_auth(username, password):
-                return None
-            raise HTTPException(status_code=401, detail="Fails.")
-    if cfg.use_auth:
-        raise HTTPException(status_code=401, detail="Fails.")
-    return None
+    if not username or not password:
+        if cfg.use_auth:
+            raise QbitError(
+                status_code=401,
+                message="unauthorized: Host and token are required for authentication(you've enabled authentication)",
+            )
+        return None
+    try:
+        return _authenticate_arr(ctx, category, username, password)
+    except Exception:
+        if cfg.use_auth and ctx.config_manager.verify_auth(username, password):
+            return None
+        if cfg.use_auth:
+            raise QbitError(status_code=401, message="unauthorized: invalid credentials")
+        raise
 
 
 def _authenticate_arr(ctx: AppContext, category: str, username: str, password: str) -> Optional[ArrClient]:
     cfg = ctx.config_manager.load()
-    if not username or not password:
-        return None
     arr_cfg = ArrConfig(
         name=category or "",
         host=username,
@@ -238,7 +248,7 @@ async def auth_login(
     # Allow qbittorrent credentials if configured, otherwise fallback to app auth
     if cfg.qbittorrent.username and cfg.qbittorrent.password:
         if username != cfg.qbittorrent.username or password != cfg.qbittorrent.password:
-            return PlainTextResponse("Fails.", status_code=401)
+            raise QbitError(status_code=401, message="unauthorized: invalid credentials")
         if cfg.use_auth:
             sid = _create_sid(username, password, ctx.config_manager.secret_key())
             response = PlainTextResponse("Ok.")
@@ -250,8 +260,13 @@ async def auth_login(
     try:
         _authenticate_arr(ctx, category, username, password)
     except Exception:
-        if not ctx.config_manager.verify_auth(username, password):
-            return PlainTextResponse("Fails.", status_code=401)
+        if cfg.use_auth and (not username or not password):
+            raise QbitError(
+                status_code=401,
+                message="unauthorized: Host and token are required for authentication(you've enabled authentication)",
+            )
+        if cfg.use_auth and not ctx.config_manager.verify_auth(username, password):
+            raise QbitError(status_code=401, message="unauthorized: invalid credentials")
     if cfg.use_auth:
         sid = _create_sid(username, password, ctx.config_manager.secret_key())
         response = PlainTextResponse("Ok.")
@@ -315,7 +330,7 @@ async def torrents_add(
         debrid = cfg.debrids[0].name
     debrid_config = next((d for d in cfg.debrids if d.name == debrid), None) if debrid else None
     if debrid and debrid not in ctx.debrids.entries():
-        raise HTTPException(status_code=400, detail="Debrid not configured")
+        raise QbitError(status_code=400, message="no debrid clients available")
 
     download_uncached = None
     if arr and arr.download_uncached is not None:
@@ -368,6 +383,9 @@ async def torrents_add(
             }
         )
 
+    if not url_items and not file_items:
+        raise QbitError(status_code=400, message="No valid URLs or torrents provided")
+
     cached_map = None
     if debrid and download_uncached is not True and debrid_config and not debrid_config.download_uncached:
         hashes = [item["infohash"] for item in url_items if item["infohash"]]
@@ -387,16 +405,13 @@ async def torrents_add(
                 try:
                     cached = cached_map.get(infohash) if cached_map is not None else ctx.debrids.is_cached(debrid, infohash)
                 except Exception as exc:
-                    raise HTTPException(
-                        status_code=400,
-                        detail=f"Debrid cache check failed: {exc}",
-                    ) from exc
+                    raise QbitError(status_code=400, message=f"Debrid cache check failed: {exc}") from exc
                 if not cached:
-                    raise HTTPException(status_code=400, detail="Torrent is not cached on debrid")
+                    raise QbitError(status_code=400, message="Torrent is not cached on debrid")
             try:
                 debrid_torrent = ctx.debrids.submit_magnet(debrid, url)
             except Exception as exc:
-                raise HTTPException(status_code=400, detail=f"Debrid submit failed: {exc}") from exc
+                raise QbitError(status_code=400, message=f"Debrid submit failed: {exc}") from exc
             name = debrid_torrent.name or url[:120]
             hash_value = debrid_torrent.info_hash or infohash
             state = map_debrid_status(debrid_torrent.status)
@@ -440,16 +455,13 @@ async def torrents_add(
                 try:
                     cached = cached_map.get(infohash) if cached_map is not None else ctx.debrids.is_cached(debrid, infohash)
                 except Exception as exc:
-                    raise HTTPException(
-                        status_code=400,
-                        detail=f"Debrid cache check failed: {exc}",
-                    ) from exc
+                    raise QbitError(status_code=400, message=f"Debrid cache check failed: {exc}") from exc
                 if not cached:
-                    raise HTTPException(status_code=400, detail="Torrent is not cached on debrid")
+                    raise QbitError(status_code=400, message="Torrent is not cached on debrid")
             try:
                 debrid_torrent = ctx.debrids.submit_torrent_file(debrid, data)
             except Exception as exc:
-                raise HTTPException(status_code=400, detail=f"Debrid submit failed: {exc}") from exc
+                raise QbitError(status_code=400, message=f"Debrid submit failed: {exc}") from exc
             name = debrid_torrent.name or (upload.filename or "upload.torrent")
             hash_value = debrid_torrent.info_hash or infohash
             state = map_debrid_status(debrid_torrent.status)
@@ -489,6 +501,8 @@ async def torrents_add(
 async def torrents_delete(request: Request, hashes: str = Form(""), ctx: AppContext = Depends(get_ctx)):
     _require_qbit_auth(request, ctx, "")
     hash_list = _parse_hashes(hashes)
+    if hash_list == []:
+        raise QbitError(status_code=400, message="No hashes provided")
     if hash_list is None:
         hash_list = [t.hash for t in ctx.torrents.list()]
     ctx.torrents.delete(hash_list)
@@ -773,7 +787,7 @@ async def torrents_file_prio(
         id = id or (form.get("id") if form else None)
         priority = priority or (form.get("priority") if form else None)
     if not hash:
-        raise HTTPException(status_code=400, detail="hash required")
+        raise QbitError(status_code=400, message="hash required")
     ids = _parse_file_ids(id)
     try:
         prio = int(priority) if priority is not None else 0

@@ -62,6 +62,24 @@ def test_qbit_login_rejects_invalid_when_auth_enabled(tmp_path: Path):
 
     response = client.post("/api/v2/auth/login", data={"username": "bad", "password": "bad"})
     assert response.status_code == 401
+    assert response.text.strip() == "unauthorized: invalid credentials"
+
+
+def test_qbit_auth_requires_credentials_when_enabled(tmp_path: Path):
+    manager = ConfigManager(tmp_path)
+    cfg = manager.load()
+    cfg.use_auth = True
+    manager.save(cfg)
+    manager.ensure_auth("user", "pass")
+    app = create_app(tmp_path)
+    client = TestClient(app)
+
+    response = client.get("/api/v2/torrents/info")
+    assert response.status_code == 401
+    assert (
+        response.text.strip()
+        == "unauthorized: Host and token are required for authentication(you've enabled authentication)"
+    )
 
 
 def test_qbit_add_and_list(tmp_path: Path):
@@ -79,6 +97,15 @@ def test_qbit_add_and_list(tmp_path: Path):
     items = list_resp.json()
     assert len(items) == 1
     assert items[0]["category"] == "sonarr"
+
+
+def test_qbit_add_requires_urls(tmp_path: Path):
+    app = _make_app(tmp_path)
+    client = TestClient(app)
+
+    add_resp = client.post("/api/v2/torrents/add", data={})
+    assert add_resp.status_code == 400
+    assert add_resp.text.strip() == "No valid URLs or torrents provided"
 
 
 def test_qbit_trackers_peers_fileprio(tmp_path: Path):
@@ -117,6 +144,15 @@ def test_qbit_trackers_peers_fileprio(tmp_path: Path):
     stored = app.state.ctx.torrents.get(torrent_hash)
     assert stored
     assert stored.file_priorities.get(0) == 1
+
+
+def test_qbit_delete_requires_hashes(tmp_path: Path):
+    app = _make_app(tmp_path)
+    client = TestClient(app)
+
+    resp = client.post("/api/v2/torrents/delete", data={})
+    assert resp.status_code == 400
+    assert resp.text.strip() == "No hashes provided"
 
 
 def test_ui_add_populates_dashboard(tmp_path: Path):
