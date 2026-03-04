@@ -478,7 +478,11 @@
         function updateStats(stats) {
             // System overview
             document.getElementById('memory-used').textContent = stats.memory_used || '-';
-            document.getElementById('heap-alloc').textContent = `Heap: ${stats.heap_alloc_mb || '-'}`;
+            const heapAlloc = stats.heap_alloc_mb || '-';
+            const totalAlloc = stats.total_alloc_mb || null;
+            document.getElementById('heap-alloc').textContent = totalAlloc
+                ? `Heap: ${heapAlloc} | Total: ${totalAlloc}`
+                : `Heap: ${heapAlloc}`;
             document.getElementById('goroutines').textContent = formatNumber(stats.goroutines || 0);
             document.getElementById('gc-cycles').textContent = `GC: ${formatNumber(stats.gc_cycles || 0)} cycles`;
             document.getElementById('num-cpu').textContent = stats.num_cpu || '-';

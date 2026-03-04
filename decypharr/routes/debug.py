@@ -40,6 +40,14 @@ def _count_async_tasks() -> int:
         return 0
 
 
+def _gc_cycles() -> int:
+    try:
+        stats = gc.get_stats()
+        return sum(gen.get("collections", 0) for gen in stats)
+    except Exception:
+        return sum(gc.get_count())
+
+
 def _read_proc_stat() -> tuple[int, int]:
     with open("/proc/stat", "r", encoding="utf-8") as handle:
         line = handle.readline()
@@ -141,6 +149,7 @@ def _container_limits() -> dict:
 async def stats(ctx: AppContext = Depends(get_ctx)):
     usage = resource.getrusage(resource.RUSAGE_SELF)
     memory_mb = usage.ru_maxrss / 1024.0
+    runtime_version = f"Python {platform.python_version()}"
     debrid_profiles = []
     for name, entry in ctx.debrids.entries().items():
         profile = None
@@ -187,14 +196,16 @@ async def stats(ctx: AppContext = Depends(get_ctx)):
     stats = {
         "memory_used": f"{memory_mb:.1f} MB",
         "heap_alloc_mb": f"{memory_mb:.1f} MB",
+        "total_alloc_mb": f"{memory_mb:.1f} MB",
         "goroutines": threading.active_count(),
         "async_tasks": _count_async_tasks(),
         "cpu_percent": _cpu_percent(),
-        "gc_cycles": sum(gc.get_count()),
+        "gc_cycles": _gc_cycles(),
         "num_cpu": os.cpu_count() or 0,
         "arch": platform.machine(),
         "os": platform.system(),
-        "runtime_version": f"Python {platform.python_version()}",
+        "runtime_version": runtime_version,
+        "go_version": runtime_version,
         "load_avg": os.getloadavg() if hasattr(os, "getloadavg") else None,
         "disk": {
             "root": _disk_usage(Path("/")),

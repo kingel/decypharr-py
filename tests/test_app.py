@@ -455,6 +455,9 @@ def test_stats_debrid_library_fields(tmp_path: Path):
     resp = client.get("/debug/stats")
     assert resp.status_code == 200
     data = resp.json()
+    assert "go_version" in data
+    assert "total_alloc_mb" in data
+    assert "gc_cycles" in data
     debrid = next(item for item in data["debrids"] if item["service"] == "torbox")
     library = debrid["library"]
     assert library["total"] == 2

@@ -3,7 +3,9 @@
 Last updated: 2026-03-04
 
 ## Recent Changes
+- Stats: added Go-style fields (`go_version`, `total_alloc_mb`, GC cycles) and UI display tweaks.
 - Docs: refreshed Project State/TODO and next-step focus.
+- Docs: clarified constraints around static assets and refreshed next step.
 - WebDAV: aligned `__all__` ordering, `__bad__` listing, and delete-all behavior with Go.
 - Added WebDAV listing + delete tests for `__bad__`.
 - qBittorrent: aligned error responses (status + plain-text bodies) with Go.
@@ -51,12 +53,11 @@ Last updated: 2026-03-04
 - **Static asset handling**: Ensure `decypharr/web/static/build/` is committed or add a build step in CI to generate it.
 - **UI validation parity**: Bring settings field validation in line with Go version (client-side rules remain).
 - **WebDAV parity**: Validate WsgiDAV dir browser UX vs Go’s custom listing (delete buttons).
-- **Advanced stats parity**: Minor gaps remain versus Go’s system stats output.
 - **Tests**: Add integration/stack tests (Arr + debrid + webdav flows).
 - **Additional debrid providers**: Debrid‑Link / AllDebrid not yet implemented.
 
 ## Constraints
-- None.
+- Static assets directory `decypharr/web/static/build/` must exist at runtime/tests or app init fails.
 
 ## Next Step
 - Add integration/stack tests (Arr + debrid + WebDAV flows).
