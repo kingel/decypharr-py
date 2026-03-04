@@ -1,0 +1,6 @@
+services:
+  decypharr-py:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: ["pytest", "-q", "/app/tests"]
