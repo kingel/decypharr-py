@@ -3,10 +3,13 @@
 Last updated: 2026-03-04
 
 ## Recent Changes
+- Docs: refreshed Project State/TODO and next-step focus.
 - WebDAV: aligned `__all__` ordering, `__bad__` listing, and delete-all behavior with Go.
 - Added WebDAV listing + delete tests for `__bad__`.
 - qBittorrent: aligned error responses (status + plain-text bodies) with Go.
 - Added qBittorrent error-response tests (auth/add/delete).
+- Setup validation parity: added Go-style setup checks + redirect middleware.
+- Updated tests to use valid setup defaults where needed.
 
 ## Architecture
 - **App core**: FastAPI ASGI app with a shared context container (`decypharr/services/context.py`) and lifespan startup in `decypharr/app.py`.
@@ -46,17 +49,17 @@ Last updated: 2026-03-04
 
 ## Open Tasks
 - **Static asset handling**: Ensure `decypharr/web/static/build/` is committed or add a build step in CI to generate it.
-- **UI validation parity**: Bring settings field validation in line with Go version (edge cases remain).
+- **UI validation parity**: Bring settings field validation in line with Go version (client-side rules remain).
 - **WebDAV parity**: Validate WsgiDAV dir browser UX vs Go’s custom listing (delete buttons).
 - **Advanced stats parity**: Minor gaps remain versus Go’s system stats output.
 - **Tests**: Add integration/stack tests (Arr + debrid + webdav flows).
 - **Additional debrid providers**: Debrid‑Link / AllDebrid not yet implemented.
 
 ## Constraints
-- None added in this update.
+- None.
 
 ## Next Step
-- Decide and implement the static asset strategy (commit build output or CI build).
+- Add integration/stack tests (Arr + debrid + WebDAV flows).
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.

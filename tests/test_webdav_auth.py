@@ -6,7 +6,7 @@ from pathlib import Path
 from fastapi.testclient import TestClient
 
 from decypharr.app import create_app
-from decypharr.config import ConfigManager
+from decypharr.config import ConfigManager, Debrid
 
 
 def _make_app(tmp_path: Path):
@@ -16,6 +16,9 @@ def _make_app(tmp_path: Path):
     cfg.enable_webdav_auth = True
     cfg.webdav.enabled = True
     cfg.url_base = "/"
+    cfg.debrids = [Debrid(name="", api_key="key", folder="folder")]
+    if cfg.qbittorrent.download_folder:
+        Path(cfg.qbittorrent.download_folder).mkdir(parents=True, exist_ok=True)
     manager.save(cfg)
     manager.ensure_auth("alice", "secret")
     return create_app(tmp_path)

@@ -6,8 +6,8 @@ import base64
 from pathlib import Path
 from contextlib import asynccontextmanager, suppress
 
-from fastapi import FastAPI
-from fastapi.responses import PlainTextResponse
+from fastapi import FastAPI, Request
+from fastapi.responses import PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.responses import Response
@@ -88,6 +88,18 @@ def create_app(config_path: Path) -> FastAPI:
         if not sep:
             return "", ""
         return username.strip(), password.strip()
+
+    @app.middleware("http")
+    async def setup_middleware(request: Request, call_next):
+        path = request.scope.get("path", "")
+        settings_path = f"{prefix}/settings"
+        config_path = f"{prefix}/api/config"
+        setup_error = ctx.config_manager.setup_error()
+        if setup_error and path not in (settings_path, config_path):
+            return RedirectResponse(url=f"{settings_path}?inco={setup_error}", status_code=303)
+        if not setup_error and path == settings_path and request.query_params.get("inco"):
+            return RedirectResponse(url=settings_path, status_code=303)
+        return await call_next(request)
 
     @app.middleware("http")
     async def webdav_auth_middleware(request, call_next):

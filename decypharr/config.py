@@ -266,8 +266,29 @@ class ConfigManager:
         return secrets.token_hex(24)
 
     def needs_setup(self) -> bool:
+        return self.setup_error() is not None
+
+    def setup_error(self) -> Optional[str]:
         cfg = self.load()
-        return len(cfg.debrids) == 0
+        if len(cfg.debrids) == 0:
+            return "no debrids configured"
+
+        for debrid in cfg.debrids:
+            if not debrid.api_key:
+                return "debrid api key is required"
+            if not debrid.folder:
+                return "debrid folder is required"
+
+        download_folder = cfg.qbittorrent.download_folder
+        if not download_folder:
+            return "qbittorent download folder is required"
+        if not Path(download_folder).exists():
+            return f"qbittorent download folder({download_folder}) does not exist"
+
+        if cfg.repair.enabled and not cfg.repair.interval:
+            return "repair interval is required"
+
+        return None
 
     def _create_default(self) -> Config:
         self.base_path.mkdir(parents=True, exist_ok=True)

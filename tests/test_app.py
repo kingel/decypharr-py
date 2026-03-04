@@ -7,12 +7,24 @@ from types import SimpleNamespace
 from fastapi.testclient import TestClient
 
 from decypharr.app import create_app
-from decypharr.config import ConfigManager
+from decypharr.config import ConfigManager, Debrid
 from decypharr.debrid.models import DebridFile, DebridProfile, DebridTorrent
 from decypharr.torrent_utils import parse_magnet_infohash
 
 
 def _make_app(tmp_path: Path):
+    manager = ConfigManager(tmp_path)
+    cfg = manager.load()
+    cfg.use_auth = False
+    cfg.url_base = "/"
+    cfg.debrids = [Debrid(name="", api_key="key", folder="folder")]
+    if cfg.qbittorrent.download_folder:
+        Path(cfg.qbittorrent.download_folder).mkdir(parents=True, exist_ok=True)
+    manager.save(cfg)
+    return create_app(tmp_path)
+
+
+def _make_invalid_app(tmp_path: Path):
     manager = ConfigManager(tmp_path)
     cfg = manager.load()
     cfg.use_auth = False
@@ -55,6 +67,9 @@ def test_qbit_login_rejects_invalid_when_auth_enabled(tmp_path: Path):
     manager = ConfigManager(tmp_path)
     cfg = manager.load()
     cfg.use_auth = True
+    cfg.debrids = [Debrid(name="", api_key="key", folder="folder")]
+    if cfg.qbittorrent.download_folder:
+        Path(cfg.qbittorrent.download_folder).mkdir(parents=True, exist_ok=True)
     manager.save(cfg)
     manager.ensure_auth("user", "pass")
     app = create_app(tmp_path)
@@ -69,6 +84,9 @@ def test_qbit_auth_requires_credentials_when_enabled(tmp_path: Path):
     manager = ConfigManager(tmp_path)
     cfg = manager.load()
     cfg.use_auth = True
+    cfg.debrids = [Debrid(name="", api_key="key", folder="folder")]
+    if cfg.qbittorrent.download_folder:
+        Path(cfg.qbittorrent.download_folder).mkdir(parents=True, exist_ok=True)
     manager.save(cfg)
     manager.ensure_auth("user", "pass")
     app = create_app(tmp_path)
@@ -106,6 +124,28 @@ def test_qbit_add_requires_urls(tmp_path: Path):
     add_resp = client.post("/api/v2/torrents/add", data={})
     assert add_resp.status_code == 400
     assert add_resp.text.strip() == "No valid URLs or torrents provided"
+
+
+def test_setup_redirects_to_settings_when_invalid(tmp_path: Path):
+    app = _make_invalid_app(tmp_path)
+    client = TestClient(app)
+
+    response = client.get("/", follow_redirects=False)
+    assert response.status_code == 303
+    location = urllib.parse.unquote(response.headers["location"])
+    assert location.endswith("/settings?inco=no debrids configured")
+
+    config_resp = client.get("/api/config", follow_redirects=False)
+    assert config_resp.status_code == 200
+
+
+def test_setup_strips_inco_when_valid(tmp_path: Path):
+    app = _make_app(tmp_path)
+    client = TestClient(app)
+
+    response = client.get("/settings?inco=repair%20interval%20is%20required", follow_redirects=False)
+    assert response.status_code == 303
+    assert response.headers["location"].endswith("/settings")
 
 
 def test_qbit_trackers_peers_fileprio(tmp_path: Path):
@@ -184,6 +224,7 @@ def test_add_rejects_uncached_when_disabled(tmp_path: Path):
         {
             "name": "realdebrid",
             "api_key": "abc",
+            "folder": "folder",
             "download_uncached": False,
         }
     ]
@@ -219,6 +260,7 @@ def test_add_uses_cached_many(tmp_path: Path):
         {
             "name": "realdebrid",
             "api_key": "abc",
+            "folder": "folder",
             "download_uncached": False,
         }
     ]
@@ -268,6 +310,7 @@ def test_qbit_add_uses_cached_many(tmp_path: Path):
         {
             "name": "realdebrid",
             "api_key": "abc",
+            "folder": "folder",
             "download_uncached": False,
         }
     ]
