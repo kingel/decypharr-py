@@ -63,6 +63,17 @@ class DebridCache:
         self._ensure_list_fresh()
         return [ct.torrent for ct in self._torrents.values()]
 
+    def sorted_torrents(self) -> List[DebridTorrent]:
+        self._ensure_list_fresh()
+        torrents = [ct.torrent for ct in self._torrents.values()]
+        return sorted(
+            torrents,
+            key=lambda torrent: (
+                self._folder_name(torrent),
+                torrent.added or datetime.min,
+            ),
+        )
+
     def folder_names(self) -> List[str]:
         self._ensure_list_fresh()
         return list(self._folder_index.keys())
@@ -71,6 +82,14 @@ class DebridCache:
         self._ensure_list_fresh()
         ids = self._folder_index.get(name, [])
         return [self._torrents[t_id].torrent for t_id in ids if t_id in self._torrents]
+
+    def get_torrent_by_name(self, name: str) -> Optional[DebridTorrent]:
+        torrents = self.torrents_for_folder(name)
+        return torrents[0] if torrents else None
+
+    def get_torrent_by_id(self, torrent_id: str) -> Optional[DebridTorrent]:
+        cached = self._torrents.get(torrent_id)
+        return cached.torrent if cached else None
 
     def get_files_for_folder(self, folder_name: str) -> Dict[str, DebridFile]:
         files: Dict[str, DebridFile] = {}
@@ -213,6 +232,17 @@ class DebridCache:
 
     def folder_name(self, torrent: DebridTorrent) -> str:
         return self._folder_name(torrent)
+
+    def delete_torrent(self, torrent_id: str) -> None:
+        self.client.delete_torrent(torrent_id)
+        cached = self._torrents.pop(torrent_id, None)
+        if cached:
+            folder = self._folder_name(cached.torrent)
+            ids = self._folder_index.get(folder, [])
+            if torrent_id in ids:
+                ids.remove(torrent_id)
+            if not ids:
+                self._folder_index.pop(folder, None)
 
     def custom_folders(self) -> Dict[str, List[str]]:
         folders: Dict[str, List[str]] = {}

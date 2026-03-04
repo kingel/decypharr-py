@@ -11,6 +11,8 @@ from decypharr import __version__
 from decypharr.debrid.cache import DebridCache
 from decypharr.debrid.models import DebridFile, DebridTorrent
 
+DELETE_ALL_BAD_TORRENTS = "DELETE_ALL_BAD_TORRENTS"
+
 
 class _HTTPStream(io.RawIOBase):
     def __init__(self, url: str) -> None:
@@ -127,12 +129,31 @@ class DebridProvider(DAVProvider):
             parent = parts[1]
             if parent not in ("__all__", "torrents", "__bad__") and parent not in cache.custom_folders():
                 return None
-            return TorrentCollection(path, environ, self, cache, parts[2])
+            if parent == "__bad__" and parts[2] == DELETE_ALL_BAD_TORRENTS:
+                return BadDeleteAllResource(path, environ, self, cache)
+            torrent_name = parts[2]
+            torrent_id = None
+            if parent == "__bad__":
+                if " || " in torrent_name:
+                    torrent_name, torrent_id = torrent_name.split(" || ", 1)
+                else:
+                    torrent = cache.get_torrent_by_id(torrent_name)
+                    if torrent:
+                        torrent_id = torrent.id
+                        torrent_name = cache.folder_name(torrent)
+            return TorrentCollection(path, environ, self, cache, torrent_name, torrent_id=torrent_id)
         if len(parts) >= 4:
             parent = parts[1]
             if parent not in ("__all__", "torrents", "__bad__") and parent not in cache.custom_folders():
                 return None
             torrent_name = parts[2]
+            if parent == "__bad__":
+                if " || " in torrent_name:
+                    torrent_name = torrent_name.split(" || ", 1)[0]
+                else:
+                    torrent = cache.get_torrent_by_id(torrent_name)
+                    if torrent:
+                        torrent_name = cache.folder_name(torrent)
             rel_parts = parts[3:]
             files = cache.get_files_for_folder(torrent_name)
             kind, file_key = _path_type(files, rel_parts)
@@ -167,9 +188,7 @@ class DebridCollection(DAVCollection):
         self.cache = cache
 
     def get_member_names(self):
-        base = ["__all__", "torrents"]
-        if self._has_bad():
-            base.append("__bad__")
+        base = ["__all__", "torrents", "__bad__"]
         base.extend(list(self.cache.custom_folders().keys()))
         base.append("version.txt")
         return base
@@ -200,35 +219,60 @@ class TorrentsCollection(DAVCollection):
 
     def get_member_names(self):
         if self.parent == "__bad__":
-            return [
-                f"{t.name} || {t.id}"
-                for t in self.cache.list_torrents()
-                if self.cache.is_bad(t)
-            ]
+            entries = []
+            for torrent in self.cache.sorted_torrents():
+                if self.cache.is_bad(torrent):
+                    entries.append(f"{self.cache.folder_name(torrent)} || {torrent.id}")
+            return entries
         if self.parent in self.cache.custom_folders():
-            return self.cache.custom_folders()[self.parent]
-        return self.cache.folder_names()
+            return sorted(self.cache.custom_folders()[self.parent])
+        seen = set()
+        ordered = []
+        for torrent in self.cache.sorted_torrents():
+            name = self.cache.folder_name(torrent)
+            if name in seen:
+                continue
+            seen.add(name)
+            ordered.append(name)
+        return ordered
 
     def get_member(self, name):
         if self.parent == "__bad__":
-            folder_name = name.split(" || ")[0]
+            if " || " in name:
+                folder_name, torrent_id = name.split(" || ", 1)
+            else:
+                torrent = self.cache.get_torrent_by_id(name)
+                torrent_id = torrent.id if torrent else None
+                folder_name = self.cache.folder_name(torrent) if torrent else name
         else:
             folder_name = name
+            torrent_id = None
         if not self.cache.torrents_for_folder(folder_name):
             return None
         base = self.path.rstrip("/")
         path = f"{base}/{name}"
-        return TorrentCollection(path, self.environ, self.provider, self.cache, folder_name)
+        return TorrentCollection(path, self.environ, self.provider, self.cache, folder_name, torrent_id=torrent_id)
 
 
 class TorrentCollection(DAVCollection):
-    def __init__(self, path, environ, provider, cache: DebridCache, torrent_name: str):
+    def __init__(
+        self,
+        path,
+        environ,
+        provider,
+        cache: DebridCache,
+        torrent_name: str,
+        torrent_id: Optional[str] = None,
+    ):
         super().__init__(path, environ)
         self.provider = provider
         self.cache = cache
         self.torrent_name = torrent_name
+        self.torrent_id = torrent_id
 
     def _torrent(self) -> Optional[DebridTorrent]:
+        if self.torrent_id:
+            return self.cache.get_torrent_by_id(self.torrent_id)
         torrents = self.cache.torrents_for_folder(self.torrent_name)
         return torrents[0] if torrents else None
 
@@ -251,6 +295,12 @@ class TorrentCollection(DAVCollection):
         if file_key:
             return FileResource(path, self.environ, self.provider, self.cache, self.torrent_name, file_key)
         return None
+
+    def delete(self):
+        torrent = self._torrent()
+        if not torrent:
+            raise FileNotFoundError("Torrent not found")
+        self.cache.delete_torrent(torrent.id)
 
 
 class TorrentSubCollection(DAVCollection):
@@ -357,6 +407,42 @@ class VersionResource(DAVNonCollection):
 
     def delete(self):
         raise RuntimeError("Read-only")
+
+
+class BadDeleteAllResource(DAVNonCollection):
+    def __init__(self, path, environ, provider, cache: DebridCache):
+        super().__init__(path, environ)
+        self.provider = provider
+        self.cache = cache
+
+    def get_content_length(self):
+        return 0
+
+    def get_content_type(self):
+        return "text/plain"
+
+    def get_last_modified(self):
+        return datetime.utcnow().timestamp()
+
+    def get_content(self):
+        return io.BytesIO(b"")
+
+    def support_ranges(self):
+        return False
+
+    def support_etag(self):
+        return False
+
+    def get_etag(self):
+        return None
+
+    def delete(self):
+        for torrent in self.cache.sorted_torrents():
+            if self.cache.is_bad(torrent):
+                try:
+                    self.cache.delete_torrent(torrent.id)
+                except Exception:
+                    continue
 
 
 def _open_rar_stream(download_url: str, file: DebridFile):

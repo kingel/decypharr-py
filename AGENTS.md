@@ -7,5 +7,7 @@
    - propose plan
    - list files you will touch
    - then execute
-5) After major work, update PROJECT_STATE.md and TODO.md.
-6) After work always run the tests
+5) When needed: update the project documentation
+6) After major work, update PROJECT_STATE.md and TODO.md
+7) After work always run the tests
+8) Show me a possible commit message which reflects the work done
