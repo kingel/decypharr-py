@@ -5,127 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Decypharr - {{ title }}</title>
 
+    <!-- DaisyUI/Tailwind for unmigrated pages (removed in later phase) -->
     <link href="{{ url_base }}assets/css/styles.css" rel="stylesheet" type="text/css" />
+
+    <!-- Vite bundle: Shoelace + Lit + htmx + app CSS -->
+    {% if vite_dev %}
+    <script type="module" src="http://localhost:5173/@vite/client"></script>
+    <script type="module" src="http://localhost:5173/src/main.js"></script>
+    {% else %}
+    <link href="{{ url_base }}assets/css/main.css" rel="stylesheet" type="text/css" />
+    <script type="module" src="{{ url_base }}assets/js/main.js"></script>
+    {% endif %}
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_base }}images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_base }}images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_base }}images/favicon/favicon-16x16.png">
     <link rel="manifest" href="{{ url_base }}images/favicon/site.webmanifest">
 
-    <link rel="preload" href="{{ url_base }}assets/js/common.js" as="script">
-
     <script>
         // Early theme detection to prevent FOUC
         (function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.documentElement.setAttribute('data-theme', savedTheme);
-            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-            }
+            const saved = localStorage.getItem('theme');
+            const theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.classList.toggle('sl-theme-dark', theme === 'dark');
         })();
-
-        // Set global URL base
         window.urlBase = "{{ url_base }}";
     </script>
 </head>
-<body class="min-h-screen bg-base-200 flex flex-col">
-<div class="toast-container fixed bottom-4 right-4 z-50 space-y-2">
-</div>
+<body>
 
-<header class="navbar bg-base-100 shadow-lg sticky top-0 z-40 backdrop-blur-sm">
-    <div class="navbar-start">
-        <div class="dropdown">
-            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"/>
-                </svg>
-            </div>
-            <ul class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-base-100 rounded-box w-52 border border-base-300">
-                <li><a href="{{ url_base }}" class="{% if page == 'index' %}active{% endif %}">
-                    <i class="bi bi-grid-3x3-gap text-primary"></i>Dashboard
-                    </a></li>
-                <li><a href="{{ url_base }}download" class="{% if page == 'download' %}active{% endif %}">
-                    <i class="bi bi-cloud-download text-secondary"></i>Download
-                    </a></li>
-                <li><a href="{{ url_base }}repair" class="{% if page == 'repair' %}active{% endif %}">
-                    <i class="bi bi-wrench-adjustable text-accent"></i>Repair
-                    </a></li>
-                <li><a href="{{ url_base }}settings" class="{% if page == 'config' %}active{% endif %}">
-                    <i class="bi bi-gear text-info"></i>Settings
-                    </a></li>
-                <li><a href="{{ url_base }}webdav" target="_blank">
-                    <i class="bi bi-cloud text-success"></i>WebDAV
-                </a></li>
-                <li><a href="{{ url_base }}logs" target="_blank">
-                    <i class="bi bi-journal-text text-warning"></i>Logs
-                </a></li>
-            </ul>
-        </div>
-        <a class="btn btn-ghost text-xl font-bold text-primary group" href="{{ url_base }}">
-            <img src="{{ url_base }}images/logo.svg" alt="Decypharr Logo" class="w-8 h-8 inline-block mr-2">
-            <span class="hidden sm:inline bg-clip-text">Decypharr</span>
+<header class="app-header">
+    <div class="app-header__start">
+        <sl-icon-button
+            class="app-header__menu-toggle"
+            name="list"
+            label="Menu"
+            onclick="document.querySelector('.app-drawer').show()"
+        ></sl-icon-button>
+        <a class="app-header__logo" href="{{ url_base }}">
+            <img src="{{ url_base }}images/logo.svg" alt="Decypharr Logo">
+            <span>Decypharr</span>
         </a>
     </div>
 
-    <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1 gap-1">
-            <li><a href="{{ url_base }}" class="{% if page == 'index' %}active{% endif %} tooltip tooltip-bottom" data-tip="Dashboard">
-                <i class="bi bi-grid-3x3-gap"></i>
-                <span class="hidden xl:inline">Dashboard</span>
-                </a></li>
-            <li><a href="{{ url_base }}download" class="{% if page == 'download' %}active{% endif %} tooltip tooltip-bottom" data-tip="Add Downloads">
-                <i class="bi bi-cloud-download"></i>
-                <span class="hidden xl:inline">Download</span>
-                </a></li>
-            <li><a href="{{ url_base }}repair" class="{% if page == 'repair' %}active{% endif %} tooltip tooltip-bottom" data-tip="Repair Media">
-                <i class="bi bi-wrench-adjustable"></i>
-                <span class="hidden xl:inline">Repair</span>
-                </a></li>
-            <li><a href="{{ url_base }}settings" class="{% if page == 'config' %}active{% endif %} tooltip tooltip-bottom" data-tip="Settings">
-                <i class="bi bi-gear"></i>
-                <span class="hidden xl:inline">Settings</span>
-                </a></li>
-            <li><a href="{{ url_base }}webdav" target="_blank" class="tooltip tooltip-bottom" data-tip="WebDAV Access">
-                <i class="bi bi-cloud"></i>
-                <span class="hidden xl:inline">WebDAV</span>
-            </a></li>
-            <li><a href="{{ url_base }}debug/logs" target="_blank" class="tooltip tooltip-bottom" data-tip="System Logs">
-                <i class="bi bi-journal-text"></i>
-                <span class="hidden xl:inline">Logs</span>
-            </a></li>
-        </ul>
-    </div>
+    <nav class="app-header__nav">
+        <a href="{{ url_base }}" class="app-nav-link {% if page == 'index' %}active{% endif %}">
+            <sl-icon name="grid-3x3-gap"></sl-icon> Dashboard
+        </a>
+        <a href="{{ url_base }}download" class="app-nav-link {% if page == 'download' %}active{% endif %}">
+            <sl-icon name="cloud-download"></sl-icon> Download
+        </a>
+        <a href="{{ url_base }}repair" class="app-nav-link {% if page == 'repair' %}active{% endif %}">
+            <sl-icon name="wrench-adjustable"></sl-icon> Repair
+        </a>
+        <a href="{{ url_base }}settings" class="app-nav-link {% if page == 'config' %}active{% endif %}">
+            <sl-icon name="gear"></sl-icon> Settings
+        </a>
+        <a href="{{ url_base }}webdav" target="_blank" class="app-nav-link">
+            <sl-icon name="cloud"></sl-icon> WebDAV
+        </a>
+        <a href="{{ url_base }}debug/logs" target="_blank" class="app-nav-link">
+            <sl-icon name="journal-text"></sl-icon> Logs
+        </a>
+    </nav>
 
-    <div class="navbar-end">
-        <div class="flex items-center gap-3">
-            <div class="tooltip tooltip-left">
-                <label class="swap swap-rotate btn btn-ghost btn-circle hover:bg-base-300 transition-colors">
-                    <input type="checkbox" id="themeToggle" class="theme-controller" />
-                    <i class="swap-off bi bi-sun text-lg text-warning"></i>
-                    <i class="swap-on bi bi-moon-stars text-lg text-info"></i>
-                </label>
-            </div>
-
-            <div class="tooltip tooltip-left" data-tip="System Statistics">
-                <a href="{{ url_base }}stats" class="btn btn-ghost btn-sm hover:bg-base-300 transition-colors">
-                    <i class="bi bi-graph-up text-lg"></i>
-                    <span class="hidden md:inline ml-1">Stats</span>
-                </a>
-            </div>
-
-            <div class="tooltip tooltip-left" data-tip="Current Version">
-                <div class="badge badge-primary font-mono text-xs hover:badge-primary-focus transition-colors cursor-pointer" id="version-badge">
-                    Loading...
-                </div>
-            </div>
-        </div>
+    <div class="app-header__end">
+        <theme-toggle></theme-toggle>
+        <sl-tooltip content="System Statistics">
+            <a href="{{ url_base }}stats" class="app-nav-link">
+                <sl-icon name="graph-up"></sl-icon>
+                <span class="hidden sm:inline">Stats</span>
+            </a>
+        </sl-tooltip>
+        <sl-badge id="version-badge" variant="primary" pill>Loading...</sl-badge>
     </div>
 </header>
 
-<main class="flex-1 container mx-auto px-4 py-6">
+<sl-drawer label="Menu" class="app-drawer" placement="start">
+    <nav>
+        <a href="{{ url_base }}" class="app-nav-link {% if page == 'index' %}active{% endif %}">
+            <sl-icon name="grid-3x3-gap"></sl-icon> Dashboard
+        </a>
+        <a href="{{ url_base }}download" class="app-nav-link {% if page == 'download' %}active{% endif %}">
+            <sl-icon name="cloud-download"></sl-icon> Download
+        </a>
+        <a href="{{ url_base }}repair" class="app-nav-link {% if page == 'repair' %}active{% endif %}">
+            <sl-icon name="wrench-adjustable"></sl-icon> Repair
+        </a>
+        <a href="{{ url_base }}settings" class="app-nav-link {% if page == 'config' %}active{% endif %}">
+            <sl-icon name="gear"></sl-icon> Settings
+        </a>
+        <a href="{{ url_base }}webdav" target="_blank" class="app-nav-link">
+            <sl-icon name="cloud"></sl-icon> WebDAV
+        </a>
+        <a href="{{ url_base }}debug/logs" target="_blank" class="app-nav-link">
+            <sl-icon name="journal-text"></sl-icon> Logs
+        </a>
+    </nav>
+</sl-drawer>
+
+<main class="{% if page in ('login', 'register') %}{% else %}app-main{% endif %}">
     {% if page == 'index' %}
     {% include "index.html" %}
     {% elif page == 'download' %}
@@ -141,44 +121,44 @@
     {% elif page == 'register' %}
     {% include "register.html" %}
     {% else %}
-    <div class="hero min-h-96">
-        <div class="hero-content text-center">
-            <div class="max-w-md">
-                <h1 class="text-5xl font-bold text-error">404</h1>
-                <p class="py-6">Page not found. The page you're looking for doesn't exist.</p>
-                <a href="{{ url_base }}" class="btn btn-primary">Go Home</a>
-            </div>
-        </div>
+    <div style="text-align:center; padding:4rem;">
+        <h1 style="font-size:3rem; color:var(--sl-color-danger-600);">404</h1>
+        <p>Page not found.</p>
+        <sl-button href="{{ url_base }}" variant="primary">Go Home</sl-button>
     </div>
     {% endif %}
 </main>
 
-<footer class="footer footer-center p-6 bg-base-300 text-base-content border-t border-base-200">
-    <aside class="grid-flow-col gap-4">
-        <a href="https://github.com/sirrobot01/decypharr" target="_blank"
-           class="link link-hover flex items-center gap-2 hover:text-primary transition-colors">
-            <i class="bi bi-github text-lg"></i>
-            <span>GitHub</span>
-        </a>
-        <a href="https://sirrobot01.github.io/decypharr" target="_blank"
-           class="link link-hover flex items-center gap-2 hover:text-primary transition-colors">
-            <i class="bi bi-book text-lg"></i>
-            <span>Documentation</span>
-        </a>
-    </aside>
+<footer class="app-footer">
+    <a href="https://github.com/sirrobot01/decypharr" target="_blank">
+        <sl-icon name="github"></sl-icon> GitHub
+    </a>
+    <a href="https://sirrobot01.github.io/decypharr" target="_blank">
+        <sl-icon name="book"></sl-icon> Documentation
+    </a>
 </footer>
 
+<!-- Old page-specific scripts for unmigrated pages (Phase 2+) -->
+{% if page == 'index' %}
 <script src="{{ url_base }}assets/js/jquery-3.7.1.min.js"></script>
 <script src="{{ url_base }}assets/js/common.js"></script>
-
-{% if page == 'index' %}
 <script src="{{ url_base }}assets/js/dashboard.js"></script>
 {% elif page == 'download' %}
+<script src="{{ url_base }}assets/js/jquery-3.7.1.min.js"></script>
+<script src="{{ url_base }}assets/js/common.js"></script>
 <script src="{{ url_base }}assets/js/download.js"></script>
 {% elif page == 'repair' %}
+<script src="{{ url_base }}assets/js/jquery-3.7.1.min.js"></script>
+<script src="{{ url_base }}assets/js/common.js"></script>
 <script src="{{ url_base }}assets/js/repair.js"></script>
 {% elif page == 'config' %}
+<script src="{{ url_base }}assets/js/jquery-3.7.1.min.js"></script>
+<script src="{{ url_base }}assets/js/common.js"></script>
 <script src="{{ url_base }}assets/js/config.js"></script>
+{% elif page == 'stats' %}
+<script src="{{ url_base }}assets/js/jquery-3.7.1.min.js"></script>
+<script src="{{ url_base }}assets/js/common.js"></script>
 {% endif %}
+
 </body>
 </html>

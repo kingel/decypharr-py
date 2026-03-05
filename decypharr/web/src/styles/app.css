@@ -1,0 +1,199 @@
+/* App layout — supplements Shoelace, coexists with DaisyUI during transition */
+
+:root {
+  --app-header-height: 64px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--sl-font-sans);
+}
+
+/* Header */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--app-header-height);
+  padding: 0 1rem;
+  background: var(--sl-color-neutral-0);
+  border-bottom: 1px solid var(--sl-color-neutral-200);
+  box-shadow: var(--sl-shadow-small);
+}
+
+.sl-theme-dark .app-header {
+  background: var(--sl-color-neutral-50);
+  border-bottom-color: var(--sl-color-neutral-200);
+}
+
+.app-header__start {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.app-header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--sl-color-primary-600);
+}
+
+.app-header__logo img {
+  width: 32px;
+  height: 32px;
+}
+
+.app-header__logo span {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .app-header__logo span {
+    display: inline;
+  }
+}
+
+.app-header__menu-toggle {
+  display: inline-flex;
+}
+
+@media (min-width: 1024px) {
+  .app-header__menu-toggle {
+    display: none;
+  }
+}
+
+/* Desktop nav */
+.app-header__nav {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@media (min-width: 1024px) {
+  .app-header__nav {
+    display: flex;
+  }
+}
+
+.app-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--sl-border-radius-medium);
+  text-decoration: none;
+  font-size: 0.875rem;
+  color: var(--sl-color-neutral-700);
+  transition: background 0.15s, color 0.15s;
+}
+
+.app-nav-link:hover {
+  background: var(--sl-color-neutral-100);
+  color: var(--sl-color-neutral-900);
+}
+
+.app-nav-link.active {
+  background: var(--sl-color-primary-50);
+  color: var(--sl-color-primary-700);
+}
+
+.sl-theme-dark .app-nav-link {
+  color: var(--sl-color-neutral-400);
+}
+
+.sl-theme-dark .app-nav-link:hover {
+  background: var(--sl-color-neutral-200);
+  color: var(--sl-color-neutral-0);
+}
+
+.sl-theme-dark .app-nav-link.active {
+  background: var(--sl-color-primary-900);
+  color: var(--sl-color-primary-400);
+}
+
+/* Header end section */
+.app-header__end {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Drawer nav links */
+.app-drawer nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.app-drawer .app-nav-link {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+}
+
+/* Main content */
+.app-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+/* Footer */
+.app-footer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  background: var(--sl-color-neutral-100);
+  border-top: 1px solid var(--sl-color-neutral-200);
+}
+
+.sl-theme-dark .app-footer {
+  background: var(--sl-color-neutral-50);
+  border-top-color: var(--sl-color-neutral-200);
+}
+
+.app-footer a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--sl-color-neutral-600);
+  font-size: 0.875rem;
+}
+
+.app-footer a:hover {
+  color: var(--sl-color-primary-600);
+}
+
+/* Auth pages (login/register) */
+.auth-page {
+  display: flex;
+  min-height: calc(100vh - var(--app-header-height) - 80px);
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin: 0 0 1.5rem;
+  font-size: 1.5rem;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

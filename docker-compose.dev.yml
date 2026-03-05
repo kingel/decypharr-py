@@ -23,6 +23,16 @@ services:
     environment:
       - DECYPHARR_SECRET_KEY=change-me
       - DECYPHARR_CONFIG_PATH=/data
+      - VITE_DEV=1
+  frontend:
+    image: node:20-alpine
+    working_dir: /app/decypharr/web
+    volumes:
+      - ./:/app
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npx vite"
+    restart: unless-stopped
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr

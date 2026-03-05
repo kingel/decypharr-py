@@ -63,6 +63,7 @@ def create_app(config_path: Path) -> FastAPI:
     app.add_middleware(SessionMiddleware, secret_key=ctx.config_manager.secret_key())
 
     templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+    templates.env.globals["vite_dev"] = bool(os.getenv("VITE_DEV"))
     app.state.templates = templates
     app.state.ctx = ctx
 

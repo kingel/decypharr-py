@@ -1,104 +1,69 @@
-<div class="flex min-h-screen items-center justify-center bg-base-200">
-    <div class="card w-full max-w-md bg-base-100 shadow-xl">
-        <div class="card-body">
-            <h2 class="card-title justify-center mb-6">
-                First Time Auth Setup
-            </h2>
-            <form id="authForm" class="space-y-4">
-                <div class="form-control">
-                    <label class="label" for="username">
-                        <span class="label-text">Username</span>
-                    </label>
-                    <input
-                        type="text"
-                        class="input input-bordered w-full"
-                        id="username"
-                        name="username"
-                        required
-                    />
-                </div>
-                <div class="form-control">
-                    <label class="label" for="password">
-                        <span class="label-text">Password</span>
-                    </label>
-                    <input
-                        type="password"
-                        class="input input-bordered w-full"
-                        id="password"
-                        name="password"
-                        required
-                    />
-                </div>
-                <div class="form-control">
-                    <label class="label" for="confirmPassword">
-                        <span class="label-text">Confirm Password</span>
-                    </label>
-                    <input
-                        type="password"
-                        class="input input-bordered w-full"
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        required
-                    />
-                </div>
-                <div class="form-control mt-6 space-y-2">
-                    <button type="submit" class="btn btn-primary w-full">
-                        Save
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+<div class="auth-page">
+    <sl-card class="auth-card">
+        <h2>First Time Auth Setup</h2>
+        <form id="authForm">
+            <sl-input
+                id="username"
+                name="username"
+                label="Username"
+                required
+                autofocus
+            ></sl-input>
+            <sl-input
+                id="password"
+                name="password"
+                label="Password"
+                type="password"
+                password-toggle
+                required
+            ></sl-input>
+            <sl-input
+                id="confirmPassword"
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                password-toggle
+                required
+            ></sl-input>
+            <sl-button type="submit" variant="primary" style="width:100%">Save</sl-button>
+        </form>
+    </sl-card>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const authForm = document.getElementById("authForm");
+<script type="module">
+    document.getElementById('authForm').addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const password = document.getElementById('password').value
+        const confirm = document.getElementById('confirmPassword').value
 
-        authForm.addEventListener("submit", async function (e) {
-            e.preventDefault();
+        if (password !== confirm) {
+            window.decypharrUtils.createToast('Passwords do not match!', 'error')
+            return
+        }
 
-            // Validate passwords match
-            const password = document.getElementById("password").value;
-            const confirmPassword =
-                document.getElementById("confirmPassword").value;
+        const btn = e.target.querySelector('sl-button[type="submit"]')
+        btn.loading = true
 
-            if (password !== confirmPassword) {
-                alert("Passwords do not match!");
-                return;
-            }
+        try {
+            const formData = new FormData()
+            formData.append('username', document.getElementById('username').value)
+            formData.append('password', password)
+            formData.append('confirmPassword', confirm)
 
-            // Collect form data
-            let formData = new FormData();
-            formData.append(
-                "username",
-                document.getElementById("username").value,
-            );
-            formData.append("password", password);
-            formData.append("confirmPassword", confirmPassword);
-            await fetcher("/register", {
-                method: "POST",
+            const resp = await window.decypharrUtils.fetcher('/register', {
+                method: 'POST',
                 body: formData,
             })
-                .then((response) => {
-                    if (!response.ok) {
-                        return response.text().then((errorText) => {
-                            // Throw an error with the response text
-                            window.decypharrUtils.createToast(
-                                errorText || "Registration failed",
-                                "error",
-                            );
-                        });
-                    } else {
-                        window.location.href = window.decypharrUtils.joinURL(
-                            window.urlBase,
-                            "/",
-                        );
-                    }
-                })
-                .catch((error) => {
-                    alert("Registration failed: " + error.message);
-                });
-        });
-    });
+            if (resp.ok) {
+                window.location.href = window.decypharrUtils.joinURL(window.urlBase, '/')
+            } else {
+                const text = await resp.text()
+                window.decypharrUtils.createToast(text || 'Registration failed', 'error')
+            }
+        } catch (err) {
+            window.decypharrUtils.createToast('Registration failed: ' + err.message, 'error')
+        } finally {
+            btn.loading = false
+        }
+    })
 </script>

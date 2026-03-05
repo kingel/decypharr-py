@@ -3,7 +3,8 @@
 Last updated: 2026-03-05 (2)
 
 ## Recent Changes
-- Runtime robustness: all blocking sync calls in `poll_debrid` (debrid HTTP, Arr refresh, callbacks, symlink/download work) now run via `asyncio.to_thread`; event loop no longer stalls during I/O (`42 passed`).
+- Frontend modernization (Phase 1): added Vite build system + Shoelace + Lit + htmx; rewrote layout, login, register templates with Shoelace components; old DaisyUI CSS kept for unmigrated pages (dual CSS); Vite dev server in Docker with hot-reload; backward compat shim for `window.decypharrUtils` (`42 passed`).
+- Runtime robustness: all blocking sync calls in `poll_debrid` now run via `asyncio.to_thread`.
 - Storage robustness: `TorrentStore` now serialises all reads/writes under a `threading.Lock`; `_save()` uses atomic write-to-tmp-then-rename so a crash mid-write leaves the file intact; 2 regression tests added.
 - Transport hardening: `ArrClient` now verifies TLS by default (`verify=True`); opt-in `insecure_tls: bool = False` field added to `Arr` config model and round-tripped through `ArrStorage.serialize()`; 2 regression tests added.
 - Auth hardening: replaced qBittorrent SID cookie credential exposure — SID now contains only a HMAC-signed username (no password); `_require_qbit_auth` accepts SID as proof of prior auth without re-verifying the password; switched from `hashlib` to `hmac` with `compare_digest`; 2 regression tests added.
@@ -59,7 +60,7 @@ Last updated: 2026-03-05 (2)
 - **Tests**: add concurrency/race coverage for torrent store writes — done (see recent changes).
 - **Storage robustness (medium)**: add locking/atomic writes for `torrents.json` updates.
 - **Tests**: add concurrency/race coverage for torrent storage writes.
-- **Static asset handling**: Ensure `decypharr/web/static/build/` is committed or add a build step in CI to generate it.
+- **Static asset handling**: Vite build step added (`npm run build` in `decypharr/web/`); CI should run this before packaging.
 - **UI validation parity**: Bring settings field validation in line with Go version (client-side rules remain).
 - **WebDAV parity**: Validate WsgiDAV dir browser UX vs Go’s custom listing (delete buttons).
 - **Tests**: Integration/stack tests (Arr + debrid + webdav flows) — manual by user.
@@ -69,7 +70,7 @@ Last updated: 2026-03-05 (2)
 - Static assets directory `decypharr/web/static/build/` must exist at runtime/tests or app init fails.
 
 ## Next Step
-- UI validation parity: tighten settings form field validation to match Go behavior (client-side rules).
+- Frontend modernization Phase 2: migrate download.html and stats.html to Shoelace + Lit.
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.
