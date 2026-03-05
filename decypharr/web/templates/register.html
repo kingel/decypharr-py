@@ -1,33 +1,33 @@
 <div class="auth-page">
-    <sl-card class="auth-card">
+    <wa-card class="auth-card">
         <h2>First Time Auth Setup</h2>
         <form id="authForm">
-            <sl-input
+            <wa-input
                 id="username"
                 name="username"
                 label="Username"
                 required
                 autofocus
-            ></sl-input>
-            <sl-input
+            ></wa-input>
+            <wa-input
                 id="password"
                 name="password"
                 label="Password"
                 type="password"
                 password-toggle
                 required
-            ></sl-input>
-            <sl-input
+            ></wa-input>
+            <wa-input
                 id="confirmPassword"
                 name="confirmPassword"
                 label="Confirm Password"
                 type="password"
                 password-toggle
                 required
-            ></sl-input>
-            <sl-button type="submit" variant="primary" style="width:100%">Save</sl-button>
+            ></wa-input>
+            <wa-button type="submit" variant="primary" style="width:100%">Save</wa-button>
         </form>
-    </sl-card>
+    </wa-card>
 </div>
 
 <script type="module">
@@ -41,7 +41,7 @@
             return
         }
 
-        const btn = e.target.querySelector('sl-button[type="submit"]')
+        const btn = e.target.querySelector('wa-button[type="submit"]')
         btn.loading = true
 
         try {

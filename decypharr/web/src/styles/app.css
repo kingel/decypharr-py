@@ -1,12 +1,33 @@
-/* App layout — supplements Shoelace, coexists with DaisyUI during transition */
+/* App layout — supplements Web Awesome, coexists with DaisyUI during transition */
 
 :root {
   --app-header-height: 64px;
+  --app-surface: var(--wa-color-surface-default, #ffffff);
+  --app-surface-muted: var(--wa-color-surface-raised, #f5f5f5);
+  --app-border: var(--wa-color-neutral-90, #e5e7eb);
+  --app-text: var(--wa-color-neutral-20, #111827);
+  --app-text-muted: var(--wa-color-neutral-60, #4b5563);
+  --app-brand: var(--wa-color-brand-on-loud, #2563eb);
+  --app-brand-strong: var(--wa-color-brand-fill-loud, #1d4ed8);
+  --app-brand-bg: var(--wa-color-brand-fill-quiet, #e0f2fe);
+  --app-shadow: var(--wa-shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.08));
+  --app-radius: var(--wa-border-radius-md, 8px);
+}
+
+.wa-dark {
+  --app-surface: var(--wa-color-surface-default, #0b1220);
+  --app-surface-muted: var(--wa-color-surface-raised, #111827);
+  --app-border: var(--wa-color-neutral-80, #1f2937);
+  --app-text: var(--wa-color-neutral-95, #f3f4f6);
+  --app-text-muted: var(--wa-color-neutral-60, #9ca3af);
+  --app-brand: var(--wa-color-brand-on-loud, #93c5fd);
+  --app-brand-strong: var(--wa-color-brand-fill-loud, #2563eb);
+  --app-brand-bg: var(--wa-color-brand-fill-quiet, #1e3a8a);
 }
 
 body {
   margin: 0;
-  font-family: var(--sl-font-sans);
+  font-family: var(--wa-font-family, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
 }
 
 /* Header */
@@ -19,14 +40,9 @@ body {
   justify-content: space-between;
   height: var(--app-header-height);
   padding: 0 1rem;
-  background: var(--sl-color-neutral-0);
-  border-bottom: 1px solid var(--sl-color-neutral-200);
-  box-shadow: var(--sl-shadow-small);
-}
-
-.sl-theme-dark .app-header {
-  background: var(--sl-color-neutral-50);
-  border-bottom-color: var(--sl-color-neutral-200);
+  background: var(--app-surface);
+  border-bottom: 1px solid var(--app-border);
+  box-shadow: var(--app-shadow);
 }
 
 .app-header__start {
@@ -42,7 +58,7 @@ body {
   text-decoration: none;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--sl-color-primary-600);
+  color: var(--app-brand);
 }
 
 .app-header__logo img {
@@ -88,35 +104,21 @@ body {
   align-items: center;
   gap: 0.375rem;
   padding: 0.5rem 0.75rem;
-  border-radius: var(--sl-border-radius-medium);
+  border-radius: var(--app-radius);
   text-decoration: none;
   font-size: 0.875rem;
-  color: var(--sl-color-neutral-700);
+  color: var(--app-text-muted);
   transition: background 0.15s, color 0.15s;
 }
 
 .app-nav-link:hover {
-  background: var(--sl-color-neutral-100);
-  color: var(--sl-color-neutral-900);
+  background: var(--app-surface-muted);
+  color: var(--app-text);
 }
 
 .app-nav-link.active {
-  background: var(--sl-color-primary-50);
-  color: var(--sl-color-primary-700);
-}
-
-.sl-theme-dark .app-nav-link {
-  color: var(--sl-color-neutral-400);
-}
-
-.sl-theme-dark .app-nav-link:hover {
-  background: var(--sl-color-neutral-200);
-  color: var(--sl-color-neutral-0);
-}
-
-.sl-theme-dark .app-nav-link.active {
-  background: var(--sl-color-primary-900);
-  color: var(--sl-color-primary-400);
+  background: var(--app-brand-bg);
+  color: var(--app-brand-strong);
 }
 
 /* Header end section */
@@ -151,13 +153,8 @@ body {
   justify-content: center;
   gap: 2rem;
   padding: 1.5rem;
-  background: var(--sl-color-neutral-100);
-  border-top: 1px solid var(--sl-color-neutral-200);
-}
-
-.sl-theme-dark .app-footer {
-  background: var(--sl-color-neutral-50);
-  border-top-color: var(--sl-color-neutral-200);
+  background: var(--app-surface-muted);
+  border-top: 1px solid var(--app-border);
 }
 
 .app-footer a {
@@ -165,12 +162,12 @@ body {
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
-  color: var(--sl-color-neutral-600);
+  color: var(--app-text-muted);
   font-size: 0.875rem;
 }
 
 .app-footer a:hover {
-  color: var(--sl-color-primary-600);
+  color: var(--app-brand);
 }
 
 /* Auth pages (login/register) */
@@ -196,4 +193,37 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+/* Toasts */
+.app-toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
+  max-width: min(360px, 90vw);
+}
+
+.app-toast {
+  animation: app-toast-in 0.2s ease-out;
+}
+
+.app-toast--hide {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+@keyframes app-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

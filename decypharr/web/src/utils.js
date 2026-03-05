@@ -85,7 +85,7 @@ export function setButtonLoading(el, loading = true, originalText = null) {
   if (loading) {
     el.disabled = true
     if (!el.dataset.originalText) el.dataset.originalText = originalText || el.innerHTML
-    el.innerHTML = '<sl-spinner></sl-spinner> Processing...'
+    el.innerHTML = '<wa-spinner></wa-spinner> Processing...'
   } else {
     el.disabled = false
     el.innerHTML = el.dataset.originalText || 'Submit'
@@ -97,18 +97,37 @@ export function getCurrentTheme() {
   return document.documentElement.getAttribute('data-theme') || 'light'
 }
 
-// Toast using Shoelace's sl-alert .toast() API
-export function createToast(message, type = 'success', duration) {
-  const variants = { success: 'success', error: 'danger', warning: 'warning', info: 'primary' }
-  const icons = { success: 'check2-circle', error: 'exclamation-octagon', warning: 'exclamation-triangle', info: 'info-circle' }
-  const durations = { success: 5000, warning: 10000, error: 15000, info: 7000 }
+function getToastContainer() {
+  let container = document.getElementById('app-toast-container')
+  if (!container) {
+    container = document.createElement('div')
+    container.id = 'app-toast-container'
+    container.className = 'app-toast-container'
+    document.body.appendChild(container)
+  }
+  return container
+}
 
-  const alert = Object.assign(document.createElement('sl-alert'), {
-    variant: variants[type] || 'primary',
-    closable: true,
-    duration: duration || durations[type] || 5000,
-  })
-  alert.innerHTML = `<sl-icon slot="icon" name="${icons[type] || 'info-circle'}"></sl-icon>${escapeHtml(message)}`
-  document.body.appendChild(alert)
-  alert.toast()
+// Toast using Web Awesome callouts (custom container)
+export function createToast(message, type = 'success', duration) {
+  const variants = { success: 'success', error: 'danger', warning: 'warning', info: 'brand' }
+  const icons = { success: 'circle-check', error: 'circle-xmark', warning: 'triangle-exclamation', info: 'circle-info' }
+  const durations = { success: 5000, warning: 10000, error: 15000, info: 7000 }
+  const ttl = duration || durations[type] || 5000
+
+  const container = getToastContainer()
+  const toast = document.createElement('div')
+  toast.className = `app-toast app-toast--${type}`
+  toast.innerHTML = `
+    <wa-callout variant="${variants[type] || 'brand'}" appearance="accent" size="small">
+      <wa-icon slot="icon" name="${icons[type] || 'circle-info'}"></wa-icon>
+      ${escapeHtml(message)}
+    </wa-callout>
+  `
+  container.appendChild(toast)
+
+  window.setTimeout(() => {
+    toast.classList.add('app-toast--hide')
+    window.setTimeout(() => toast.remove(), 250)
+  }, ttl)
 }

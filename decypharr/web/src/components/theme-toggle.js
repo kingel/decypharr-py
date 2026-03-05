@@ -14,11 +14,11 @@ export class ThemeToggle extends LitElement {
   }
 
   get _isDark() {
-    return document.documentElement.classList.contains('sl-theme-dark')
+    return document.documentElement.classList.contains('wa-dark')
   }
 
   _applyTheme(theme) {
-    document.documentElement.classList.toggle('sl-theme-dark', theme === 'dark')
+    document.documentElement.classList.toggle('wa-dark', theme === 'dark')
     document.documentElement.setAttribute('data-theme', theme)
     localStorage.setItem('theme', theme)
     this.requestUpdate()
@@ -30,11 +30,15 @@ export class ThemeToggle extends LitElement {
 
   render() {
     return html`
-      <sl-icon-button
-        name=${this._isDark ? 'moon-stars-fill' : 'sun-fill'}
-        label="Toggle theme"
+      <wa-button
+        appearance="plain"
+        size="small"
+        aria-label="Toggle theme"
+        title="Toggle theme"
         @click=${this._toggle}
-      ></sl-icon-button>
+      >
+        <wa-icon slot="start" name=${this._isDark ? 'moon' : 'sun'}></wa-icon>
+      </wa-button>
     `
   }
 }

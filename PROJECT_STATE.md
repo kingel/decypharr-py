@@ -1,8 +1,9 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-05 (2)
+Last updated: 2026-03-05 (4)
 
 ## Recent Changes
+- Frontend pivot: switched Phase 1 UI from Shoelace to Web Awesome (tags/imports/icons/theme classes), updated app CSS tokens; Vite assets rebuilt in container.
 - Frontend modernization (Phase 1): added Vite build system + Shoelace + Lit + htmx; rewrote layout, login, register templates with Shoelace components; old DaisyUI CSS kept for unmigrated pages (dual CSS); Vite dev server in Docker with hot-reload; backward compat shim for `window.decypharrUtils` (`42 passed`).
 - Runtime robustness: all blocking sync calls in `poll_debrid` now run via `asyncio.to_thread`.
 - Storage robustness: `TorrentStore` now serialises all reads/writes under a `threading.Lock`; `_save()` uses atomic write-to-tmp-then-rename so a crash mid-write leaves the file intact; 2 regression tests added.
@@ -68,9 +69,10 @@ Last updated: 2026-03-05 (2)
 
 ## Constraints
 - Static assets directory `decypharr/web/static/build/` must exist at runtime/tests or app init fails.
+- Run npm/vite commands only inside containers (no host npm).
 
 ## Next Step
-- Frontend modernization Phase 2: migrate download.html and stats.html to Shoelace + Lit.
+- Frontend modernization Phase 2: migrate download.html and stats.html to Web Awesome + Lit.
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.

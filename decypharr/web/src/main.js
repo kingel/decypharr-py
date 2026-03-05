@@ -1,23 +1,22 @@
-// Shoelace themes
-import '@shoelace-style/shoelace/dist/themes/light.css'
-import '@shoelace-style/shoelace/dist/themes/dark.css'
+// Web Awesome styles + theme
+import '@awesome.me/webawesome/dist/styles/webawesome.css'
+import '@awesome.me/webawesome/dist/styles/themes/default.css'
 
-// Shoelace base path for icons (CDN)
-import { setBasePath } from '@shoelace-style/shoelace/dist/utilities/base-path.js'
-setBasePath('https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.19.1/cdn/')
+// Web Awesome base path for icons (CDN)
+import { setBasePath } from '@awesome.me/webawesome/dist/webawesome.js'
+setBasePath('https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.3.1/dist-cdn/')
 
-// Shoelace components used in Phase 1 (layout + login + register)
-import '@shoelace-style/shoelace/dist/components/alert/alert.js'
-import '@shoelace-style/shoelace/dist/components/badge/badge.js'
-import '@shoelace-style/shoelace/dist/components/button/button.js'
-import '@shoelace-style/shoelace/dist/components/card/card.js'
-import '@shoelace-style/shoelace/dist/components/divider/divider.js'
-import '@shoelace-style/shoelace/dist/components/drawer/drawer.js'
-import '@shoelace-style/shoelace/dist/components/icon/icon.js'
-import '@shoelace-style/shoelace/dist/components/icon-button/icon-button.js'
-import '@shoelace-style/shoelace/dist/components/input/input.js'
-import '@shoelace-style/shoelace/dist/components/spinner/spinner.js'
-import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js'
+// Web Awesome components used in Phase 1 (layout + login + register)
+import '@awesome.me/webawesome/dist/components/badge/badge.js'
+import '@awesome.me/webawesome/dist/components/button/button.js'
+import '@awesome.me/webawesome/dist/components/card/card.js'
+import '@awesome.me/webawesome/dist/components/callout/callout.js'
+import '@awesome.me/webawesome/dist/components/divider/divider.js'
+import '@awesome.me/webawesome/dist/components/drawer/drawer.js'
+import '@awesome.me/webawesome/dist/components/icon/icon.js'
+import '@awesome.me/webawesome/dist/components/input/input.js'
+import '@awesome.me/webawesome/dist/components/spinner/spinner.js'
+import '@awesome.me/webawesome/dist/components/tooltip/tooltip.js'
 
 // htmx
 import 'htmx.org'

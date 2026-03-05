@@ -8,7 +8,7 @@
     "watch": "vite build --watch"
   },
   "dependencies": {
-    "@shoelace-style/shoelace": "^2.19.1",
+    "@awesome.me/webawesome": "^3.3.1",
     "htmx.org": "^2.0.4",
     "lit": "^3.2.1"
   },

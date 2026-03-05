@@ -15,10 +15,12 @@
 - Done: static asset strategy — Vite build step in `decypharr/web/` (`npm run build`); dev server with hot-reload via `docker compose`.
 - In progress: frontend modernization — Phase 1 done (layout, login, register); Phases 2-3 remaining (download, stats, dashboard, config, repair).
 - Constraints: static assets directory must exist (missing `decypharr/web/static/build/` breaks app/tests).
+- Constraints: run npm/vite commands only inside containers (no host npm).
 - Done: replace qBittorrent SID cookie — now HMAC-signed username only, no credentials in cookie payload (`38 passed`).
 - Done: make Arr TLS secure by default; opt-in `insecure_tls: bool = False` per Arr config entry (`40 passed`).
 - Done: offload blocking poller work (debrid HTTP, Arr refresh, callbacks, symlink/download) via `asyncio.to_thread` (`42 passed`).
 - Done: add locking/atomic writes in torrent store (`torrents.json`); concurrency + atomic-write tests added (`42 passed`).
+- Done: pivot Phase 1 UI to Web Awesome and rebuild Vite assets in container.
 - Tighten UI validation to match Go behavior for settings forms (client-side rules).
 - Manual: integration/stack tests (Arr + debrid + WebDAV flows).
 - Add additional debrid providers (Debrid‑Link, AllDebrid).
