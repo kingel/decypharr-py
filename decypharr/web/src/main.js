@@ -15,7 +15,12 @@ import '@awesome.me/webawesome/dist/components/divider/divider.js'
 import '@awesome.me/webawesome/dist/components/drawer/drawer.js'
 import '@awesome.me/webawesome/dist/components/icon/icon.js'
 import '@awesome.me/webawesome/dist/components/input/input.js'
+import '@awesome.me/webawesome/dist/components/option/option.js'
+import '@awesome.me/webawesome/dist/components/select/select.js'
+import '@awesome.me/webawesome/dist/components/checkbox/checkbox.js'
+import '@awesome.me/webawesome/dist/components/textarea/textarea.js'
 import '@awesome.me/webawesome/dist/components/spinner/spinner.js'
+import '@awesome.me/webawesome/dist/components/progress-bar/progress-bar.js'
 import '@awesome.me/webawesome/dist/components/tooltip/tooltip.js'
 
 // htmx
@@ -23,6 +28,8 @@ import 'htmx.org'
 
 // Custom components
 import './components/theme-toggle.js'
+import './components/download-page.js'
+import './components/system-stats.js'
 
 // Custom styles
 import './styles/app.css'

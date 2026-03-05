@@ -66,6 +66,9 @@
         <a href="{{ url_base }}settings" class="app-nav-link {% if page == 'config' %}active{% endif %}">
             <wa-icon name="gear"></wa-icon> Settings
         </a>
+        <a href="{{ url_base }}stats" class="app-nav-link {% if page == 'stats' %}active{% endif %}">
+            <wa-icon name="chart-line"></wa-icon> Stats
+        </a>
         <a href="{{ url_base }}webdav" target="_blank" class="app-nav-link">
             <wa-icon name="cloud"></wa-icon> WebDAV
         </a>
@@ -76,12 +79,6 @@
 
     <div class="app-header__end">
         <theme-toggle></theme-toggle>
-        <wa-tooltip content="System Statistics">
-            <a href="{{ url_base }}stats" class="app-nav-link">
-                <wa-icon name="chart-line"></wa-icon>
-                <span class="hidden sm:inline">Stats</span>
-            </a>
-        </wa-tooltip>
         <wa-badge id="version-badge" variant="brand" pill>Loading...</wa-badge>
     </div>
 </header>
@@ -99,6 +96,9 @@
         </a>
         <a href="{{ url_base }}settings" class="app-nav-link {% if page == 'config' %}active{% endif %}">
             <wa-icon name="gear"></wa-icon> Settings
+        </a>
+        <a href="{{ url_base }}stats" class="app-nav-link {% if page == 'stats' %}active{% endif %}">
+            <wa-icon name="chart-line"></wa-icon> Stats
         </a>
         <a href="{{ url_base }}webdav" target="_blank" class="app-nav-link">
             <wa-icon name="cloud"></wa-icon> WebDAV
@@ -148,9 +148,6 @@
 <script src="{{ url_base }}assets/js/common.js"></script>
 <script src="{{ url_base }}assets/js/dashboard.js"></script>
 {% elif page == 'download' %}
-<script src="{{ url_base }}assets/js/jquery-3.7.1.min.js"></script>
-<script src="{{ url_base }}assets/js/common.js"></script>
-<script src="{{ url_base }}assets/js/download.js"></script>
 {% elif page == 'repair' %}
 <script src="{{ url_base }}assets/js/jquery-3.7.1.min.js"></script>
 <script src="{{ url_base }}assets/js/common.js"></script>
@@ -160,8 +157,6 @@
 <script src="{{ url_base }}assets/js/common.js"></script>
 <script src="{{ url_base }}assets/js/config.js"></script>
 {% elif page == 'stats' %}
-<script src="{{ url_base }}assets/js/jquery-3.7.1.min.js"></script>
-<script src="{{ url_base }}assets/js/common.js"></script>
 {% endif %}
 
 </body>

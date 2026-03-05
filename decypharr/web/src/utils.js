@@ -64,6 +64,10 @@ export function formatDuration(seconds) {
   return parts.slice(0, 2).join(' ') || '0s'
 }
 
+export function formatNumber(value) {
+  try { return Number(value).toLocaleString() } catch { return value ?? '-' }
+}
+
 export async function copyToClipboard(text) {
   try {
     await navigator.clipboard.writeText(text)
