@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from pathlib import Path
 import urllib.parse
+from pathlib import Path
 from types import SimpleNamespace
 
 from fastapi.testclient import TestClient
@@ -30,6 +30,20 @@ def _make_invalid_app(tmp_path: Path):
     cfg.use_auth = False
     cfg.url_base = "/"
     manager.save(cfg)
+    return create_app(tmp_path)
+
+
+def _make_auth_app(tmp_path: Path, with_auth: bool = False):
+    manager = ConfigManager(tmp_path)
+    cfg = manager.load()
+    cfg.use_auth = True
+    cfg.url_base = "/"
+    cfg.debrids = [Debrid(name="", api_key="key", folder="folder")]
+    if cfg.qbittorrent.download_folder:
+        Path(cfg.qbittorrent.download_folder).mkdir(parents=True, exist_ok=True)
+    manager.save(cfg)
+    if with_auth:
+        manager.ensure_auth("user", "pass")
     return create_app(tmp_path)
 
 
@@ -75,7 +89,9 @@ def test_qbit_login_rejects_invalid_when_auth_enabled(tmp_path: Path):
     app = create_app(tmp_path)
     client = TestClient(app)
 
-    response = client.post("/api/v2/auth/login", data={"username": "bad", "password": "bad"})
+    response = client.post(
+        "/api/v2/auth/login", data={"username": "bad", "password": "bad"}
+    )
     assert response.status_code == 401
     assert response.text.strip() == "unauthorized: invalid credentials"
 
@@ -98,6 +114,60 @@ def test_qbit_auth_requires_credentials_when_enabled(tmp_path: Path):
         response.text.strip()
         == "unauthorized: Host and token are required for authentication(you've enabled authentication)"
     )
+
+
+def test_register_allows_bootstrap_without_auth(tmp_path: Path):
+    app = _make_auth_app(tmp_path)
+    client = TestClient(app)
+
+    response = client.post(
+        "/register",
+        data={"username": "alice", "password": "secret", "confirmPassword": "secret"},
+    )
+
+    assert response.status_code == 200
+    assert app.state.ctx.config_manager.verify_auth("alice", "secret")
+
+
+def test_register_blocks_unauthenticated_after_bootstrap(tmp_path: Path):
+    app = _make_auth_app(tmp_path)
+    client = TestClient(app)
+
+    first = client.post(
+        "/register",
+        data={"username": "alice", "password": "secret", "confirmPassword": "secret"},
+    )
+    assert first.status_code == 200
+
+    client.cookies.clear()
+    second = client.post(
+        "/register",
+        data={"username": "eve", "password": "hijack", "confirmPassword": "hijack"},
+    )
+    assert second.status_code == 403
+
+
+def test_register_allows_authenticated_update_after_bootstrap(tmp_path: Path):
+    app = _make_auth_app(tmp_path, with_auth=True)
+    client = TestClient(app)
+
+    login = client.post("/login", json={"username": "user", "password": "pass"})
+    assert login.status_code == 200
+
+    response = client.post(
+        "/register",
+        data={"username": "admin", "password": "newpass", "confirmPassword": "newpass"},
+    )
+    assert response.status_code == 200
+    assert app.state.ctx.config_manager.verify_auth("admin", "newpass")
+    assert not app.state.ctx.config_manager.verify_auth("user", "pass")
+
+
+def test_skip_auth_route_removed(tmp_path: Path):
+    app = _make_auth_app(tmp_path)
+    client = TestClient(app)
+    response = client.post("/skip-auth")
+    assert response.status_code == 404
 
 
 def test_qbit_add_and_list(tmp_path: Path):
@@ -143,7 +213,9 @@ def test_setup_strips_inco_when_valid(tmp_path: Path):
     app = _make_app(tmp_path)
     client = TestClient(app)
 
-    response = client.get("/settings?inco=repair%20interval%20is%20required", follow_redirects=False)
+    response = client.get(
+        "/settings?inco=repair%20interval%20is%20required", follow_redirects=False
+    )
     assert response.status_code == 303
     assert response.headers["location"].endswith("/settings")
 
@@ -179,7 +251,10 @@ def test_qbit_trackers_peers_fileprio(tmp_path: Path):
     data = peers.json()
     assert "peers" in data
 
-    prio = client.post("/api/v2/torrents/filePrio", data={"hash": torrent_hash, "id": "0", "priority": "1"})
+    prio = client.post(
+        "/api/v2/torrents/filePrio",
+        data={"hash": torrent_hash, "id": "0", "priority": "1"},
+    )
     assert prio.status_code == 200
     stored = app.state.ctx.torrents.get(torrent_hash)
     assert stored
@@ -244,7 +319,10 @@ def test_add_rejects_uncached_when_disabled(tmp_path: Path):
     ctx.debrids.submit_magnet = fake_submit_magnet  # type: ignore[assignment]
 
     client = TestClient(app)
-    resp = client.post("/api/add", data={"urls": "magnet:?xt=urn:btih:ABCDEF1234567890ABCDEF1234567890ABCDEF12"})
+    resp = client.post(
+        "/api/add",
+        data={"urls": "magnet:?xt=urn:btih:ABCDEF1234567890ABCDEF1234567890ABCDEF12"},
+    )
     assert resp.status_code == 200
     data = resp.json()
     assert data["errors"]
@@ -357,7 +435,9 @@ def test_qbit_add_uses_cached_many(tmp_path: Path):
 def test_delete_remove_from_debrid_calls_client(tmp_path: Path):
     app = _make_app(tmp_path)
     ctx = app.state.ctx
-    torrent = ctx.torrents.add(name="Test", category="sonarr", debrid="realdebrid", debrid_id="rd123")
+    torrent = ctx.torrents.add(
+        name="Test", category="sonarr", debrid="realdebrid", debrid_id="rd123"
+    )
 
     called = {"deleted": False}
 
@@ -448,7 +528,9 @@ def test_stats_debrid_library_fields(tmp_path: Path):
         def is_bad(self, torrent):
             return torrent.id == "2"
 
-    ctx.debrids.entries = lambda: {"torbox": SimpleNamespace(client=FakeProfileClient())}  # type: ignore[assignment]
+    ctx.debrids.entries = lambda: {
+        "torbox": SimpleNamespace(client=FakeProfileClient())
+    }  # type: ignore[assignment]
     ctx.debrids.cache = lambda name: FakeCache()  # type: ignore[assignment]
 
     client = TestClient(app)
@@ -465,3 +547,26 @@ def test_stats_debrid_library_fields(tmp_path: Path):
     assert library["files"] == 3
     assert library["active_links"] == 2
     assert library["total_bytes"] == 300
+
+
+def test_debug_stats_requires_auth(tmp_path: Path):
+    app = _make_auth_app(tmp_path, with_auth=True)
+    client = TestClient(app)
+    response = client.get("/debug/stats")
+    assert response.status_code == 401
+
+
+def test_debug_stats_allows_authenticated(tmp_path: Path):
+    app = _make_auth_app(tmp_path, with_auth=True)
+    client = TestClient(app)
+    login = client.post("/login", json={"username": "user", "password": "pass"})
+    assert login.status_code == 200
+    response = client.get("/debug/stats")
+    assert response.status_code == 200
+
+
+def test_debug_logs_requires_auth(tmp_path: Path):
+    app = _make_auth_app(tmp_path, with_auth=True)
+    client = TestClient(app)
+    response = client.get("/debug/logs")
+    assert response.status_code == 401

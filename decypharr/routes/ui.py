@@ -13,7 +13,9 @@ def get_ctx(request: Request) -> AppContext:
     return request.app.state.ctx
 
 
-def _template_context(request: Request, ctx: AppContext, page: str, title: str) -> Dict[str, Any]:
+def _template_context(
+    request: Request, ctx: AppContext, page: str, title: str
+) -> Dict[str, Any]:
     config = ctx.config_manager.load()
     return {
         "request": request,
@@ -35,6 +37,11 @@ def _require_auth(request: Request, ctx: AppContext) -> None:
     if request.session.get("user"):
         return
     raise HTTPException(status_code=401, detail="Authentication required")
+
+
+def _auth_initialized(ctx: AppContext) -> bool:
+    auth = ctx.config_manager.load().auth
+    return bool(auth and auth.username and auth.password)
 
 
 router = APIRouter()
@@ -155,6 +162,12 @@ async def register_page(request: Request, ctx: AppContext = Depends(get_ctx)):
 
 @router.post("/register")
 async def register(request: Request, ctx: AppContext = Depends(get_ctx)):
+    if _auth_initialized(ctx) and not request.session.get("user"):
+        raise HTTPException(
+            status_code=403,
+            detail="Registration is only available during initial setup",
+        )
+
     form = await request.form()
     username = form.get("username", "")
     password = form.get("password", "")
@@ -166,12 +179,4 @@ async def register(request: Request, ctx: AppContext = Depends(get_ctx)):
 
     ctx.config_manager.ensure_auth(username, password)
     request.session["user"] = username
-    return {"ok": True}
-
-
-@router.post("/skip-auth")
-async def skip_auth(ctx: AppContext = Depends(get_ctx)):
-    config = ctx.config_manager.load()
-    config.use_auth = False
-    ctx.config_manager.save(config)
     return {"ok": True}

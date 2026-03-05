@@ -6,20 +6,16 @@ import platform
 import resource
 import threading
 import asyncio
-import os
 import shutil
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import PlainTextResponse
 
 from decypharr.services.context import AppContext
-
-
-router = APIRouter()
 
 
 _CPU_SAMPLE = {"total": None, "busy": None, "ts": None}
@@ -27,6 +23,18 @@ _CPU_SAMPLE = {"total": None, "busy": None, "ts": None}
 
 def get_ctx(request: Request) -> AppContext:
     return request.app.state.ctx
+
+
+async def require_auth(request: Request, ctx: AppContext = Depends(get_ctx)) -> None:
+    config = ctx.config_manager.load()
+    if not config.use_auth:
+        return
+    if request.session.get("user"):
+        return
+    raise HTTPException(status_code=401, detail="Authentication required")
+
+
+router = APIRouter(dependencies=[Depends(require_auth)])
 
 
 def _log_file(base_path: Path, name: str) -> Path:

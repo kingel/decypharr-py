@@ -1,15 +1,13 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-04
+Last updated: 2026-03-05
 
 ## Recent Changes
-- Audit: repository analysis completed; dockerized tests confirmed passing (`29 passed`).
-- Audit: identified critical auth exposure on `/skip-auth` and `/register`, plus unauthenticated debug endpoints.
-- Audit: identified high-risk transport/session issues (Arr TLS verify disabled, qBittorrent SID cookie carries raw credentials).
-- Audit: identified reliability gaps (blocking sync work in async poller, non-locking JSON torrent store writes).
-- Stats: added Go-style fields (`go_version`, `total_alloc_mb`, GC cycles) and UI display tweaks.
-- Docs: refreshed Project State/TODO and next-step focus.
-- Docs: clarified constraints around static assets and refreshed next step.
+- Auth hardening: protected all `/debug/*` endpoints (`stats`, `logs`, `logs/rclone`, `ingests`) behind session auth via router-level dependency; returns 401 when `use_auth=True` and no valid session.
+- Tests: added 3 auth regression tests for `/debug/*` (`36 passed`).
+- Bug fix: removed duplicate `os` import and added missing `Optional` import in `debug.py`.
+- Auth hardening: `/register` is now bootstrap-only for unauthenticated users; authenticated users can still rotate credentials.
+- Auth hardening: removed `/skip-auth` endpoint and removed skip-auth UI action from register page.
 - WebDAV: aligned `__all__` ordering, `__bad__` listing, and delete-all behavior with Go.
 - Added WebDAV listing + delete tests for `__bad__`.
 - qBittorrent: aligned error responses (status + plain-text bodies) with Go.
@@ -54,13 +52,11 @@ Last updated: 2026-03-04
 - `docs/`: MkDocs site for user + developer docs.
 
 ## Open Tasks
-- **Security hardening (critical)**: protect `/skip-auth` and `/register` flows so auth cannot be disabled/reset by unauthenticated users.
-- **Security hardening (high)**: require auth for `/debug/*` endpoints (`stats`, logs).
 - **Transport hardening (high)**: remove `verify=False` from Arr HTTP client or make insecure TLS opt-in.
 - **Session hardening (high)**: replace qBittorrent SID cookie format so credentials are not embedded in cookie payload.
 - **Runtime robustness (medium)**: move blocking poller callbacks/download processing to threads or async clients.
 - **Storage robustness (medium)**: add locking/atomic writes for `torrents.json` updates.
-- **Tests**: add coverage for auth protection (`/skip-auth`, `/register`, `/debug/*`) and basic concurrency behavior for torrent storage.
+- **Tests**: add concurrency/race coverage for torrent storage writes.
 - **Static asset handling**: Ensure `decypharr/web/static/build/` is committed or add a build step in CI to generate it.
 - **UI validation parity**: Bring settings field validation in line with Go version (client-side rules remain).
 - **WebDAV parity**: Validate WsgiDAV dir browser UX vs Go’s custom listing (delete buttons).
@@ -71,7 +67,7 @@ Last updated: 2026-03-04
 - Static assets directory `decypharr/web/static/build/` must exist at runtime/tests or app init fails.
 
 ## Next Step
-- Security hardening pass: close unauthenticated auth/debug routes, then tighten Arr TLS/session handling.
+- Continue security hardening: tighten Arr TLS (`verify=False`) and fix qBittorrent SID cookie credential exposure.
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.

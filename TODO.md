@@ -6,18 +6,18 @@
 - Done: Add qBittorrent error-response tests (auth/add/delete).
 - Done: Setup validation parity (Go-style checks + settings redirect).
 - Update: repository audit completed and dockerized tests still pass (`29 passed`).
-- Update: next step pending user direction.
-- Update: docs refreshed (constraints/next step).
+- Done: lock down `/register` (bootstrap-only for unauthenticated users; logged-in updates still allowed).
+- Done: remove `/skip-auth` endpoint and Skip button from register UI.
+- Done: add tests for register bootstrap/update behavior and skip-auth removal.
 - Done: System stats parity (go_version/total_alloc/gc cycles).
+- Done: protect all `/debug/*` endpoints with session auth (router-level dependency); 3 regression tests added (`36 passed`).
+- Done: fix duplicate `os` import and missing `Optional` import in `debug.py`.
 - Deferred: decide static asset strategy (commit `decypharr/web/static/build/` or add CI build step).
 - Constraints: static assets directory must exist (missing `decypharr/web/static/build/` breaks app/tests).
-- Critical: secure `/skip-auth` and `/register` so unauthenticated users cannot disable/reset auth.
-- High: require auth for `/debug/stats`, `/debug/logs`, and `/debug/logs/rclone`.
 - High: remove default `verify=False` for Arr HTTP calls (make insecure TLS explicit if needed).
 - High: replace qBittorrent SID cookie format so raw credentials are not stored in cookie payload.
 - Medium: offload blocking poller callbacks/download work from async loop.
 - Medium: add locking/atomic writes in torrent store (`torrents.json`) to avoid concurrent write races.
-- Tests: add auth regression tests for `/skip-auth`, `/register`, `/debug/*`.
 - Tests: add concurrency/race coverage for torrent store writes.
 - Tighten UI validation to match Go behavior for settings forms (client-side rules).
 - Manual: integration/stack tests (Arr + debrid + WebDAV flows).
