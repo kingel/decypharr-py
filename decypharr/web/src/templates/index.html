@@ -1,129 +1,129 @@
-<div class="space-y-6">
-
+<div class="page-stack">
     __NEED_SETUP__
 
-    <div class="card bg-base-100 shadow-xl">
-        <div class="card-body">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <button class="btn btn-secondary btn-sm hidden" id="batchDeleteBtn">
-                        <i class="bi bi-trash"></i>
-                        <span class="hidden sm:inline">Delete Selected</span>
-                    </button>
-                    <button class="btn btn-error btn-sm hidden" id="batchDeleteDebridBtn">
-                        <i class="bi bi-cloud-fog-fill"></i>
-                        <span class="hidden sm:inline">Remove From Debrid</span>
-                    </button>
-                    <button class="btn btn-outline btn-sm" id="refreshBtn">
-                        <i class="bi bi-arrow-clockwise"></i>
-                        <span class="hidden sm:inline">Refresh</span>
-                    </button>
+    <wa-card class="panel">
+        <div class="panel-body">
+            <div class="toolbar">
+                <div class="toolbar-actions">
+                    <wa-button variant="danger" appearance="outline" size="small" id="batchDeleteBtn" class="hidden">
+                        <wa-icon slot="start" name="trash"></wa-icon>
+                        Delete Selected
+                    </wa-button>
+                    <wa-button variant="warning" appearance="outline" size="small" id="batchDeleteDebridBtn" class="hidden">
+                        <wa-icon slot="start" name="cloud-slash"></wa-icon>
+                        Remove From Debrid
+                    </wa-button>
+                    <wa-button variant="neutral" appearance="outline" size="small" id="refreshBtn">
+                        <wa-icon slot="start" name="arrows-rotate"></wa-icon>
+                        Refresh
+                    </wa-button>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
-                    <select class="select select-bordered select-sm w-full sm:w-auto min-w-32" id="stateFilter">
-                        <option value="">All States</option>
-                        <option value="pausedUP">Completed</option>
-                        <option value="downloading">Downloading</option>
-                        <option value="error">Error</option>
-                    </select>
-                    <select class="select select-bordered select-sm w-full sm:w-auto min-w-32" id="categoryFilter">
-                        <option value="">All Categories</option>
-                    </select>
-                    <select class="select select-bordered select-sm w-full sm:w-auto min-w-48" id="sortSelector">
-                        <option value="added_on" selected>Date Added (Newest First)</option>
-                        <option value="added_on_asc">Date Added (Oldest First)</option>
-                        <option value="name_asc">Name (A-Z)</option>
-                        <option value="name_desc">Name (Z-A)</option>
-                        <option value="size_desc">Size (Largest First)</option>
-                        <option value="size_asc">Size (Smallest First)</option>
-                        <option value="progress_desc">Progress (Most First)</option>
-                        <option value="progress_asc">Progress (Least First)</option>
-                    </select>
+                <div class="filter-row">
+                    <div class="filter-field">
+                        <wa-select id="stateFilter" label="State">
+                            <wa-option value="">All States</wa-option>
+                            <wa-option value="pausedUP">Completed</wa-option>
+                            <wa-option value="downloading">Downloading</wa-option>
+                            <wa-option value="error">Error</wa-option>
+                        </wa-select>
+                    </div>
+                    <div class="filter-field">
+                        <wa-select id="categoryFilter" label="Category">
+                            <wa-option value="">All Categories</wa-option>
+                        </wa-select>
+                    </div>
+                    <div class="filter-field">
+                        <wa-select id="sortSelector" label="Sort By">
+                            <wa-option value="added_on" selected>Date Added (Newest First)</wa-option>
+                            <wa-option value="added_on_asc">Date Added (Oldest First)</wa-option>
+                            <wa-option value="name_asc">Name (A-Z)</wa-option>
+                            <wa-option value="name_desc">Name (Z-A)</wa-option>
+                            <wa-option value="size_desc">Size (Largest First)</wa-option>
+                            <wa-option value="size_asc">Size (Smallest First)</wa-option>
+                            <wa-option value="progress_desc">Progress (Most First)</wa-option>
+                            <wa-option value="progress_asc">Progress (Least First)</wa-option>
+                        </wa-select>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </wa-card>
 
-    <div class="card bg-base-100 shadow-xl">
-        <div class="card-body p-0">
-            <div class="overflow-x-auto">
-                <table class="table table-hover">
-                    <thead class="bg-base-200">
-                    <tr>
-                        <th class="w-12">
-                            <label class="cursor-pointer">
-                                <input type="checkbox" class="checkbox checkbox-sm" id="selectAll">
-                            </label>
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-file-text mr-2"></i>Name
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-hdd mr-2"></i>Size
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-speedometer2 mr-2"></i>Progress
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-download mr-2"></i>Speed
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-tag mr-2"></i>Category
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-cloud mr-2"></i>Debrid
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-people mr-2"></i>Seeders
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-activity mr-2"></i>State
-                        </th>
-                        <th class="font-semibold w-32">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody id="torrentsList">
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="flex flex-col sm:flex-row justify-between items-center p-6 border-t border-base-200 gap-4">
-                <div class="text-sm text-base-content/70">
-                    <span id="paginationInfo">Loading torrents...</span>
-                </div>
-                <div class="join" id="paginationControls"></div>
-            </div>
+    <wa-card class="panel">
+        <div class="panel-body table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th class="w-12">
+                        <wa-checkbox id="selectAll"></wa-checkbox>
+                    </th>
+                    <th>
+                        <wa-icon name="file-lines"></wa-icon> Name
+                    </th>
+                    <th>
+                        <wa-icon name="hard-drive"></wa-icon> Size
+                    </th>
+                    <th>
+                        <wa-icon name="gauge-high"></wa-icon> Progress
+                    </th>
+                    <th>
+                        <wa-icon name="download"></wa-icon> Speed
+                    </th>
+                    <th>
+                        <wa-icon name="tag"></wa-icon> Category
+                    </th>
+                    <th>
+                        <wa-icon name="cloud"></wa-icon> Debrid
+                    </th>
+                    <th>
+                        <wa-icon name="users"></wa-icon> Seeders
+                    </th>
+                    <th>
+                        <wa-icon name="wave-square"></wa-icon> State
+                    </th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="torrentsList"></tbody>
+            </table>
         </div>
-    </div>
 
-    <div class="card bg-base-100 shadow-xl hidden" id="emptyState">
-        <div class="card-body text-center py-16">
-            <div class="text-6xl text-base-content/30 mb-4">
-                <i class="bi bi-inbox"></i>
+        <div class="panel-footer">
+            <div class="hint">
+                <span id="paginationInfo">Loading torrents...</span>
             </div>
-            <h3 class="text-2xl font-bold mb-2">No Torrents Found</h3>
-            <p class="text-base-content/70 mb-6">You haven't added any torrents yet. Start by adding your first download!</p>
-            <a href="__URL_BASE__download" class="btn btn-primary">
-                <i class="bi bi-plus-circle mr-2"></i>Add New Download
-            </a>
+            <div class="pagination" id="paginationControls"></div>
         </div>
-    </div>
+    </wa-card>
+
+    <wa-card class="panel hidden" id="emptyState">
+        <div class="panel-body empty-state">
+            <wa-icon name="inbox" style="font-size: 3rem; color: var(--app-text-muted);"></wa-icon>
+            <h3>No Torrents Found</h3>
+            <p class="hint">You haven't added any torrents yet. Start by adding your first download.</p>
+            <wa-button variant="brand" href="__URL_BASE__download">
+                <wa-icon slot="start" name="plus"></wa-icon>
+                Add New Download
+            </wa-button>
+        </div>
+    </wa-card>
 </div>
 
-<ul class="menu bg-base-100 shadow-lg rounded-box context-menu hidden fixed z-50" id="torrentContextMenu">
-    <li class="menu-title">
-        <span class="torrent-name text-sm font-bold truncate max-w-48"></span>
-    </li>
+<div class="context-menu hidden" id="torrentContextMenu">
+    <div class="context-title torrent-name"></div>
     <hr/>
-    <li><a class="menu-item text-sm" data-action="copy-magnet">
-        <i class="bi bi-magnet text-primary"></i>Copy Magnet Link
-    </a></li>
-    <li><a class="menu-item text-sm" data-action="copy-name">
-        <i class="bi bi-clipboard text-info"></i>Copy Name
-    </a></li>
+    <button class="context-item" data-action="copy-magnet">
+        <wa-icon name="magnet"></wa-icon>
+        Copy Magnet Link
+    </button>
+    <button class="context-item" data-action="copy-name">
+        <wa-icon name="clipboard"></wa-icon>
+        Copy Name
+    </button>
     <hr/>
-    <li><a class="menu-item text-sm text-error" data-action="delete">
-        <i class="bi bi-trash"></i>Delete Torrent
-    </a></li>
-</ul>
+    <button class="context-item" data-action="delete">
+        <wa-icon name="trash"></wa-icon>
+        Delete Torrent
+    </button>
+</div>

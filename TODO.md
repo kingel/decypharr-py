@@ -14,7 +14,8 @@
 - Done: fix duplicate `os` import and missing `Optional` import in `debug.py`.
 - Done: static asset strategy — Vite build step in `decypharr/web/` (`npm run build`); dev server with hot-reload via `docker compose`.
 - Done: frontend modernization Phase 2 (download + stats) migrated to Web Awesome + Lit.
-- In progress: frontend modernization — Phase 3 wrappers done (dashboard/config/repair via Lit); remaining work is converting legacy markup to Web Awesome and dropping old CSS/icons.
+- Done: frontend modernization — Phase 3 completed (dashboard/config/repair updated, legacy CSS/icons removed).
+- Follow-up: review utility-class shim + template normalization for potential cleanup.
 - Constraints: static assets directory must exist (missing `decypharr/web/static/build/` breaks app/tests).
 - Constraints: run npm/vite commands only inside containers (no host npm).
 - Done: replace qBittorrent SID cookie — now HMAC-signed username only, no credentials in cookie payload (`38 passed`).

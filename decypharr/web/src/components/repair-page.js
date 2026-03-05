@@ -129,6 +129,7 @@ class RepairManager {
         // Modal events
         this.refs.processJobBtn.addEventListener('click', () => this.processCurrentJob());
         this.refs.stopJobBtn.addEventListener('click', () => this.stopCurrentJob());
+        this.refs.jobDetailsModal.addEventListener('wa-hide', () => this.hideJobDetailsModal());
 
         // Filter events
         this.refs.itemSearchInput.addEventListener('input',
@@ -150,10 +151,10 @@ class RepairManager {
             const arrs = await response.json();
 
             // Clear existing options (keep the default one)
-            this.refs.arrSelect.innerHTML = '<option value="">Select an Arr instance</option>';
+            this.refs.arrSelect.innerHTML = '<wa-option value="">Select an Arr instance</wa-option>';
 
             arrs.forEach(arr => {
-                const option = document.createElement('option');
+                const option = document.createElement('wa-option');
                 option.value = arr.name;
                 option.textContent = `${arr.name} (${arr.host})`;
                 this.refs.arrSelect.appendChild(option);
@@ -252,38 +253,34 @@ class RepairManager {
         pageJobs.forEach(job => {
             const jobRow = document.createElement('tr');
             jobRow.dataset.jobId = job.id;
-            jobRow.className = 'hover';
-
             const statusInfo = RepairUtils.formatRepairStatus(job.status, job.error);
 
             jobRow.innerHTML = `
                 <td>
-                    <label class="cursor-pointer">
-                        <input type="checkbox" class="checkbox checkbox-sm job-checkbox" 
-                               data-job-id="${job.id}" ${this.state.selectedItems.has(job.id) ? 'checked' : ''}>
-                    </label>
+                    <wa-checkbox class="job-checkbox" data-job-id="${job.id}"
+                        ${this.state.selectedItems.has(job.id) ? 'checked' : ''}></wa-checkbox>
                 </td>
                 <td class="font-mono text-xs">${job.id.substring(0, 8)}</td>
                 <td>
-                    <div class="flex items-center gap-2">
-                        <i class="bi ${statusInfo.icon} ${statusInfo.class}"></i>
-                        <span>${statusInfo.message}</span>
-                    </div>
+                    <wa-badge variant="${statusInfo.variant}" size="small">
+                        <wa-icon name="${statusInfo.icon}"></wa-icon>
+                        ${statusInfo.message}
+                    </wa-badge>
                 </td>
                 <td>${this.formatDate(job.created_at)}</td>
                 <td>${job.arrs ? job.arrs.join(', ') : 'All'}</td>
                 <td>${job.media_ids ? job.media_ids.join(', ') : 'All'}</td>
                 <td>
-                    <div class="flex gap-1">
-                        <button class="btn btn-ghost btn-xs view-job" data-job-id="${job.id}">
-                            <i class="bi bi-eye"></i>
-                        </button>
-                        <button class="btn btn-ghost btn-xs export-job" data-job-id="${job.id}">
-                            <i class="bi bi-download"></i>
-                        </button>
-                        <button class="btn btn-ghost btn-xs delete-job text-error" data-job-id="${job.id}">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                    <div class="table-actions">
+                        <wa-button class="view-job" appearance="plain" size="small" data-job-id="${job.id}" title="View">
+                            <wa-icon name="eye"></wa-icon>
+                        </wa-button>
+                        <wa-button class="export-job" appearance="plain" size="small" data-job-id="${job.id}" title="Export">
+                            <wa-icon name="download"></wa-icon>
+                        </wa-button>
+                        <wa-button class="delete-job" appearance="plain" size="small" variant="danger" data-job-id="${job.id}" title="Delete">
+                            <wa-icon name="trash"></wa-icon>
+                        </wa-button>
                     </div>
                 </td>
             `;
@@ -315,8 +312,9 @@ class RepairManager {
         const jobId = e.target.closest('[data-job-id]')?.dataset.jobId;
         if (!jobId) return;
 
-        if (e.target.classList.contains('job-checkbox')) {
-            this.toggleJobSelection(jobId, e.target.checked);
+        const checkbox = e.target.closest('.job-checkbox');
+        if (checkbox) {
+            this.toggleJobSelection(jobId, checkbox.checked);
         } else if (e.target.closest('.view-job')) {
             this.viewJobDetails(jobId);
         } else if (e.target.closest('.export-job')) {
@@ -369,9 +367,10 @@ class RepairManager {
 
         this.refs.modalJobId.textContent = job.id;
         this.refs.modalJobStatus.innerHTML = `
-            <span class="badge ${statusInfo.class}">
-                <i class="bi ${statusInfo.icon} mr-1"></i>${statusInfo.message}
-            </span>
+            <wa-badge variant="${statusInfo.variant}" size="small">
+                <wa-icon name="${statusInfo.icon}"></wa-icon>
+                ${statusInfo.message}
+            </wa-badge>
         `;
         this.refs.modalJobStarted.textContent = this.formatDate(job.created_at);
         this.refs.modalJobCompleted.textContent = job.completed_at ? this.formatDate(job.completed_at) : 'Not completed';
@@ -458,9 +457,9 @@ class RepairManager {
         }));
 
         // Update Arr filter options
-        this.refs.arrFilterSelect.innerHTML = '<option value="">All Arrs</option>';
+        this.refs.arrFilterSelect.innerHTML = '<wa-option value="">All Arrs</wa-option>';
         arrOptions.forEach(arr => {
-            const option = document.createElement('option');
+            const option = document.createElement('wa-option');
             option.value = arr;
             option.textContent = arr;
             if (arr === this.state.arrFilter) option.selected = true;
@@ -468,9 +467,9 @@ class RepairManager {
         });
 
         // Update path filter options
-        this.refs.pathFilterSelect.innerHTML = '<option value="">All Paths</option>';
+        this.refs.pathFilterSelect.innerHTML = '<wa-option value="">All Paths</wa-option>';
         pathOptions.forEach(path => {
-            const option = document.createElement('option');
+            const option = document.createElement('wa-option');
             option.value = path;
             option.textContent = path;
             if (path === this.state.pathFilter) option.selected = true;
@@ -522,13 +521,11 @@ class RepairManager {
 
             row.innerHTML = `
                 <td class="w-12">
-                    <label class="cursor-pointer">
-                        <input type="checkbox" class="checkbox checkbox-sm item-checkbox" 
-                               data-item-id="${item.id}" ${this.state.selectedItems.has(item.id) ? 'checked' : ''}>
-                    </label>
+                    <wa-checkbox class="item-checkbox" data-item-id="${item.id}"
+                        ${this.state.selectedItems.has(item.id) ? 'checked' : ''}></wa-checkbox>
                 </td>
                 <td>
-                    <div class="badge badge-info badge-xs">${window.decypharrUtils.escapeHtml(item.arr)}</div>
+                    <wa-badge variant="brand" size="small">${window.decypharrUtils.escapeHtml(item.arr)}</wa-badge>
                 </td>
                 <td>
                     <div class="text-sm max-w-xs truncate" title="${window.decypharrUtils.escapeHtml(item.path)}">
@@ -555,9 +552,10 @@ class RepairManager {
     }
 
     handleItemTableClick(e) {
-        if (e.target.classList.contains('item-checkbox')) {
-            const itemId = e.target.dataset.itemId;
-            this.toggleItemSelection(itemId, e.target.checked);
+        const checkbox = e.target.closest('.item-checkbox');
+        if (checkbox) {
+            const itemId = checkbox.dataset.itemId;
+            this.toggleItemSelection(itemId, checkbox.checked);
         }
     }
 
@@ -657,11 +655,19 @@ class RepairManager {
     }
 
     showJobDetailsModal() {
-        this.refs.jobDetailsModal.classList.add('modal-open');
+        if (this.refs.jobDetailsModal.show) {
+            this.refs.jobDetailsModal.show();
+        } else {
+            this.refs.jobDetailsModal.open = true;
+        }
     }
 
     hideJobDetailsModal() {
-        this.refs.jobDetailsModal.classList.remove('modal-open');
+        if (this.refs.jobDetailsModal.hide) {
+            this.refs.jobDetailsModal.hide();
+        } else {
+            this.refs.jobDetailsModal.open = false;
+        }
         this.state.currentJob = null;
         this.state.allBrokenItems = [];
         this.state.filteredItems = [];
@@ -672,8 +678,10 @@ class RepairManager {
         if (totalPages <= 1) return;
 
         for (let i = 1; i <= totalPages; i++) {
-            const button = document.createElement('button');
-            button.className = `btn btn-xs ${i === currentPage ? 'btn-primary' : 'btn-ghost'}`;
+            const button = document.createElement('wa-button');
+            button.size = 'small';
+            button.variant = i === currentPage ? 'brand' : 'neutral';
+            button.appearance = i === currentPage ? 'solid' : 'outline';
             button.textContent = i;
             button.addEventListener('click', () => onPageChange(i));
             container.appendChild(button);
@@ -736,40 +744,40 @@ const RepairUtils = {
     formatRepairStatus(status, error = null) {
         const statusConfig = {
             'pending': {
-                icon: 'bi-clock',
-                class: 'text-warning',
+                icon: 'clock',
+                variant: 'warning',
                 message: 'Waiting to start'
             },
             'started': {
-                icon: 'bi-play-circle',
-                class: 'text-primary',
+                icon: 'play',
+                variant: 'brand',
                 message: 'Repair in progress'
             },
             'processing': {
-                icon: 'bi-gear',
-                class: 'text-info',
+                icon: 'gear',
+                variant: 'brand',
                 message: 'Processing results'
             },
             'completed': {
-                icon: 'bi-check-circle',
-                class: 'text-success',
+                icon: 'circle-check',
+                variant: 'success',
                 message: 'Repair completed successfully'
             },
             'failed': {
-                icon: 'bi-x-circle',
-                class: 'text-error',
+                icon: 'circle-xmark',
+                variant: 'danger',
                 message: error || 'Repair failed'
             },
             'cancelled': {
-                icon: 'bi-stop-circle',
-                class: 'text-warning',
+                icon: 'stop',
+                variant: 'warning',
                 message: 'Repair was cancelled'
             }
         };
 
         return statusConfig[status] || {
-            icon: 'bi-question-circle',
-            class: 'text-gray-500',
+            icon: 'circle-question',
+            variant: 'neutral',
             message: `Unknown status: ${status}`
         };
     },

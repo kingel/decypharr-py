@@ -458,7 +458,7 @@ def test_delete_remove_from_debrid_calls_client(tmp_path: Path):
 def test_static_assets(tmp_path: Path):
     app = _make_app(tmp_path)
     client = TestClient(app)
-    response = client.get("/assets/css/styles.css")
+    response = client.get("/assets/css/main.css")
     assert response.status_code == 200
 
 

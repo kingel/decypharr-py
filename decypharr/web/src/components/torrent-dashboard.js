@@ -69,7 +69,7 @@ class TorrentDashboard {
       emptyState: document.getElementById('emptyState'),
     }
 
-    this.refs.tableCard = this.refs.torrentsList?.closest('.card')
+    this.refs.tableCard = this.refs.torrentsList?.closest('wa-card')
     this.init()
   }
 
@@ -89,8 +89,9 @@ class TorrentDashboard {
     this.refs.sortSelector.addEventListener('change', (e) => this.setSort(e.target.value))
     this.bindContextMenu()
     this.refs.torrentsList.addEventListener('change', (e) => {
-      if (e.target.classList.contains('torrent-select')) {
-        this.toggleTorrentSelection(e.target.dataset.hash, e.target.checked)
+      const checkbox = e.target.closest('.torrent-select')
+      if (checkbox) {
+        this.toggleTorrentSelection(checkbox.dataset.hash, checkbox.checked)
       }
     })
   }
@@ -276,18 +277,17 @@ class TorrentDashboard {
     const progressPercent = (torrent.progress * 100).toFixed(1)
     const isSelected = this.state.selectedTorrents.has(torrent.hash)
 
+    const stateVariant = this.getStateVariant(torrent.state)
     return `
       <tr data-hash="${torrent.hash}"
           data-name="${this.escapeHtml(torrent.name)}"
-          data-category="${torrent.category || ''}"
-          class="hover:bg-base-200 transition-colors">
+          data-category="${torrent.category || ''}">
         <td>
-          <label class="cursor-pointer">
-            <input type="checkbox"
-                   class="checkbox checkbox-sm torrent-select"
-                   data-hash="${torrent.hash}"
-                   ${isSelected ? 'checked' : ''}>
-          </label>
+          <wa-checkbox
+            class="torrent-select"
+            data-hash="${torrent.hash}"
+            ${isSelected ? 'checked' : ''}>
+          </wa-checkbox>
         </td>
         <td class="max-w-xs">
           <div class="truncate font-medium" title="${this.escapeHtml(torrent.name)}">
@@ -297,10 +297,10 @@ class TorrentDashboard {
         <td class="text-nowrap font-mono text-sm">
           ${window.decypharrUtils.formatBytes(torrent.size)}
         </td>
-        <td class="min-w-36">
-          <div class="flex items-center gap-3">
-            <progress class="progress progress-primary w-20 h-2" value="${progressPercent}" max="100"></progress>
-            <span class="text-sm font-medium min-w-12">${progressPercent}%</span>
+        <td>
+          <div class="progress-cell">
+            <wa-progress-bar class="progress-bar" value="${progressPercent}"></wa-progress-bar>
+            <span class="text-sm font-medium">${progressPercent}%</span>
           </div>
         </td>
         <td class="text-nowrap font-mono text-sm">
@@ -308,37 +308,47 @@ class TorrentDashboard {
         </td>
         <td>
           ${torrent.category
-            ? `<div class="badge badge-secondary badge-sm">${this.escapeHtml(torrent.category)}</div>`
-            : '<span class="text-base-content/50">None</span>'
+            ? `<wa-badge variant="neutral" size="small">${this.escapeHtml(torrent.category)}</wa-badge>`
+            : '<span class="hint">None</span>'
           }
         </td>
         <td>
           ${torrent.debrid
-            ? `<div class="badge badge-accent badge-sm">${this.escapeHtml(torrent.debrid)}</div>`
-            : '<span class="text-base-content/50">None</span>'
+            ? `<wa-badge variant="brand" size="small">${this.escapeHtml(torrent.debrid)}</wa-badge>`
+            : '<span class="hint">None</span>'
           }
         </td>
         <td class="text-nowrap font-mono text-sm">
           ${torrent.num_seeds || 0}
         </td>
         <td>
-          <div class="badge ${this.getStateColor(torrent.state)} badge-sm">
+          <wa-badge variant="${stateVariant}" size="small">
             ${this.escapeHtml(torrent.state)}
-          </div>
+          </wa-badge>
         </td>
         <td>
-          <div class="flex gap-1">
-            <button class="btn btn-error btn-outline btn-xs tooltip"
-                    onclick="dashboard.deleteTorrent('${torrent.hash}', '${torrent.category || ''}', false);"
-                    data-tip="Delete from local">
-              <i class="bi bi-trash"></i>
-            </button>
+          <div class="table-actions">
+            <wa-button
+              appearance="plain"
+              size="small"
+              variant="danger"
+              title="Delete from local"
+              aria-label="Delete torrent"
+              onclick="dashboard.deleteTorrent('${torrent.hash}', '${torrent.category || ''}', false);"
+            >
+              <wa-icon name="trash"></wa-icon>
+            </wa-button>
             ${torrent.debrid && torrent.id ? `
-              <button class="btn btn-error btn-outline btn-xs tooltip"
-                      onclick="dashboard.deleteTorrent('${torrent.hash}', '${torrent.category || ''}', true);"
-                      data-tip="Remove from debrid">
-                <i class="bi bi-cloud-fog-fill"></i>
-              </button>
+              <wa-button
+                appearance="plain"
+                size="small"
+                variant="warning"
+                title="Remove from debrid"
+                aria-label="Remove from debrid"
+                onclick="dashboard.deleteTorrent('${torrent.hash}', '${torrent.category || ''}', true);"
+              >
+                <wa-icon name="cloud-slash"></wa-icon>
+              </wa-button>
             ` : ''}
           </div>
         </td>
@@ -349,9 +359,9 @@ class TorrentDashboard {
   updateCategoryFilter() {
     const categories = [...this.state.categories]
     const currentValue = this.refs.categoryFilter.value
-    this.refs.categoryFilter.innerHTML = '<option value="">All Categories</option>'
+    this.refs.categoryFilter.innerHTML = '<wa-option value="">All Categories</wa-option>'
     categories.forEach(category => {
-      const option = document.createElement('option')
+      const option = document.createElement('wa-option')
       option.value = category
       option.textContent = category
       this.refs.categoryFilter.appendChild(option)
@@ -373,8 +383,10 @@ class TorrentDashboard {
     this.refs.paginationInfo.textContent = `Showing ${startIndex}-${endIndex} of ${this.state.filteredTorrents.length}`
 
     const createButton = (label, page, disabled = false, active = false) => {
-      const button = document.createElement('button')
-      button.className = `join-item btn btn-sm ${active ? 'btn-primary' : ''}`
+      const button = document.createElement('wa-button')
+      button.size = 'small'
+      button.variant = active ? 'brand' : 'neutral'
+      button.appearance = active ? 'solid' : 'outline'
       button.textContent = label
       button.disabled = disabled
       button.addEventListener('click', () => this.goToPage(page))
@@ -392,7 +404,7 @@ class TorrentDashboard {
         )
       } else if (Math.abs(i - this.state.currentPage) === 2) {
         const span = document.createElement('span')
-        span.className = 'join-item btn btn-sm btn-disabled'
+        span.className = 'pagination-ellipsis'
         span.textContent = '...'
         this.refs.paginationControls.appendChild(span)
       }
@@ -535,17 +547,17 @@ class TorrentDashboard {
     })
   }
 
-  getStateColor(state) {
+  getStateVariant(state) {
     switch ((state || '').toLowerCase()) {
       case 'pausedup':
       case 'completed':
-        return 'badge-success'
+        return 'success'
       case 'downloading':
-        return 'badge-info'
+        return 'brand'
       case 'error':
-        return 'badge-error'
+        return 'danger'
       default:
-        return 'badge-ghost'
+        return 'neutral'
     }
   }
 

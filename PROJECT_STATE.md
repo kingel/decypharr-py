@@ -3,7 +3,7 @@
 Last updated: 2026-03-05 (5)
 
 ## Recent Changes
-- Frontend modernization (Phase 3): wrapped dashboard/config/repair in Lit components (legacy markup rendered via templates); added repair page component + debounce utility; config page now surfaces `need_setup`.
+- Frontend modernization (Phase 3): dashboard/config/repair now render with Web Awesome components; runtime template normalization added; legacy Tailwind/DaisyUI bundle + Bootstrap icons removed; WA dialog + utility CSS added.
 - Frontend modernization (Phase 2): migrated download + stats pages to Web Awesome + Lit components; removed legacy scripts; rebuilt Vite assets in container.
 - Frontend pivot: switched Phase 1 UI from Shoelace to Web Awesome (tags/imports/icons/theme classes), updated app CSS tokens; Vite assets rebuilt in container.
 - Frontend modernization (Phase 1): added Vite build system + Shoelace + Lit + htmx; rewrote layout, login, register templates with Shoelace components; old DaisyUI CSS kept for unmigrated pages (dual CSS); Vite dev server in Docker with hot-reload; backward compat shim for `window.decypharrUtils` (`42 passed`).
@@ -63,16 +63,17 @@ Last updated: 2026-03-05 (5)
 - **Static asset handling**: Vite build step added (`npm run build` in `decypharr/web/`); CI should run this before packaging.
 - **UI validation parity**: Bring settings field validation in line with Go version (client-side rules remain).
 - **WebDAV parity**: Validate WsgiDAV dir browser UX vs Go’s custom listing (delete buttons).
-- **Frontend modernization Phase 3**: replace legacy DaisyUI markup in dashboard/config/repair and remove legacy CSS/icons.
+- **Frontend cleanup**: review utility-class shim + template normalization and decide whether to refactor to pure Web Awesome markup.
 - **Tests**: Integration/stack tests (Arr + debrid + webdav flows) — manual by user.
 - **Additional debrid providers**: Debrid‑Link / AllDebrid not yet implemented.
 
 ## Constraints
 - Static assets directory `decypharr/web/static/build/` must exist at runtime/tests or app init fails.
 - Run npm/vite commands only inside containers (no host npm).
+- Legacy `styles.css` removed; UI now depends on Vite `main.css` bundle.
 
 ## Next Step
-- Frontend modernization Phase 3: replace legacy DaisyUI markup in dashboard/config/repair and drop old CSS/icons.
+- Decide whether to keep the utility-class shim + template normalization or fully rewrite remaining templates to pure Web Awesome markup.
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.

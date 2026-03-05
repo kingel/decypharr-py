@@ -50,8 +50,13 @@ function setupPasswordToggles() {
     e.stopPropagation()
     const container = toggleBtn.closest('.password-toggle-container')
     if (!container) return
-    const input = container.querySelector('input, textarea')
-    const icon = toggleBtn.querySelector('i')
+    const input = container.querySelector('input, textarea, wa-input, wa-textarea')
+    let icon = toggleBtn.querySelector('wa-icon, i')
+    if (!icon) {
+      icon = document.createElement('wa-icon')
+      icon.setAttribute('name', 'eye')
+      toggleBtn.appendChild(icon)
+    }
     if (!input || !icon) return
     if (input.tagName.toLowerCase() === 'textarea') {
       togglePasswordTextarea(input, icon)
@@ -64,10 +69,18 @@ function setupPasswordToggles() {
 function togglePasswordInput(field, icon) {
   if (field.type === 'password') {
     field.type = 'text'
-    icon.className = 'bi bi-eye-slash'
+    if (icon.tagName && icon.tagName.toLowerCase() === 'wa-icon') {
+      icon.setAttribute('name', 'eye-slash')
+    } else {
+      icon.className = 'bi bi-eye-slash'
+    }
   } else {
     field.type = 'password'
-    icon.className = 'bi bi-eye'
+    if (icon.tagName && icon.tagName.toLowerCase() === 'wa-icon') {
+      icon.setAttribute('name', 'eye')
+    } else {
+      icon.className = 'bi bi-eye'
+    }
   }
 }
 
@@ -79,12 +92,20 @@ function togglePasswordTextarea(field, icon) {
     field.style.webkitTextSecurity = 'none'
     field.style.textSecurity = 'none'
     field.setAttribute('data-password-visible', 'true')
-    icon.className = 'bi bi-eye-slash'
+    if (icon.tagName && icon.tagName.toLowerCase() === 'wa-icon') {
+      icon.setAttribute('name', 'eye-slash')
+    } else {
+      icon.className = 'bi bi-eye-slash'
+    }
   } else {
     field.style.webkitTextSecurity = 'disc'
     field.style.textSecurity = 'disc'
     field.setAttribute('data-password-visible', 'false')
-    icon.className = 'bi bi-eye'
+    if (icon.tagName && icon.tagName.toLowerCase() === 'wa-icon') {
+      icon.setAttribute('name', 'eye')
+    } else {
+      icon.className = 'bi bi-eye'
+    }
   }
 }
 
@@ -187,9 +208,27 @@ class ConfigManager {
 
   init() {
     this.bindEvents()
+    this.initTabs()
     this.loadConfiguration()
     this.setupMagnetHandler()
     this.checkIncompleteConfig()
+  }
+
+  initTabs() {
+    const tabs = Array.from(document.querySelectorAll('.tab-button'))
+    const panels = Array.from(document.querySelectorAll('.tab-content'))
+    if (!tabs.length || !panels.length) return
+
+    const activate = (tab) => {
+      const target = tab.dataset.tab
+      tabs.forEach(btn => btn.classList.toggle('active', btn === tab))
+      panels.forEach(panel => {
+        panel.classList.toggle('hidden', panel.dataset.tabContent !== target)
+      })
+    }
+
+    tabs.forEach(btn => btn.addEventListener('click', () => activate(btn)))
+    activate(tabs.find(tab => tab.classList.contains('active')) || tabs[0])
   }
 
   checkIncompleteConfig() {
@@ -700,10 +739,12 @@ class ConfigManager {
           )
           localStorage.setItem('magnetHandler', 'true')
           const btn = document.getElementById('registerMagnetLink')
-          btn.innerHTML = '<i class="bi bi-check-circle mr-2"></i>Magnet Handler Registered'
-          btn.classList.remove('btn-primary')
-          btn.classList.add('btn-success')
-          btn.disabled = true
+          if (btn) {
+            btn.innerHTML = '<wa-icon slot="start" name="check"></wa-icon>Magnet Handler Registered'
+            btn.variant = 'success'
+            btn.appearance = 'solid'
+            btn.disabled = true
+          }
           window.decypharrUtils.createToast('Magnet link handler registered successfully')
         } catch (error) {
           console.error('Failed to register magnet link handler:', error)
@@ -717,9 +758,9 @@ class ConfigManager {
     if (localStorage.getItem('magnetHandler') === 'true') {
       const btn = document.getElementById('registerMagnetLink')
       if (btn) {
-        btn.innerHTML = '<i class="bi bi-check-circle mr-2"></i>Magnet Handler Registered'
-        btn.classList.remove('btn-primary')
-        btn.classList.add('btn-success')
+        btn.innerHTML = '<wa-icon slot="start" name="check"></wa-icon>Magnet Handler Registered'
+        btn.variant = 'success'
+        btn.appearance = 'solid'
         btn.disabled = true
       }
     }
@@ -798,29 +839,429 @@ class ConfigManager {
 }
 
 // Template helpers extracted from legacy markup
+function normalizeTemplate(html) {
+  return html
+    .replace(/class="input input-bordered input-has-toggle"/g, 'class="app-input input-has-toggle"')
+    .replace(/input input-bordered/g, 'app-input')
+    .replace(/class="input input-bordered input-sm"/g, 'class="app-input"')
+    .replace(/class="input input-bordered"/g, 'class="app-input"')
+    .replace(/class="textarea[^"]*"/g, 'class="app-textarea"')
+    .replace(/select select-bordered/g, 'app-select')
+    .replace(/class="select select-bordered select-sm"/g, 'class="app-select"')
+    .replace(/class="select select-bordered"/g, 'class="app-select"')
+    .replace(/checkbox checkbox-sm/g, 'app-checkbox')
+    .replace(/checkbox checkbox-lg/g, 'app-checkbox')
+    .replace(/\bcheckbox\b/g, 'app-checkbox')
+    .replace(/text-base-content\/70/g, 'text-muted')
+    .replace(/text-base-content\/60/g, 'text-muted')
+    .replace(/bg-black\/50/g, 'bg-overlay')
+    .replace(/<button/g, '<wa-button')
+    .replace(/<\/button>/g, '</wa-button>')
+    .replace(/<i class="bi[^>]*"><\/i>/g, '')
+}
+
+function getDebridTemplate(index) {
+  return `
+        <div class="card bg-base-100 border border-base-300 shadow-sm debrid-config" data-index="${index}">
+            <div class="card-body">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="card-title text-lg">
+                        Debrid Service #${index + 1}
+                    </h3>
+                    <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.debrid-config').remove();">
+                        Remove
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="form-control">
+                            <label class="label" for="debrid[${index}].name">
+                                <span class="label-text font-medium">Service Type</span>
+                            </label>
+                            <select class="select select-bordered" name="debrid[${index}].name" id="debrid[${index}].name" required>
+                                <option value="realdebrid">Real Debrid</option>
+                                <option value="alldebrid">AllDebrid</option>
+                                <option value="debridlink">Debrid Link</option>
+                                <option value="torbox">Torbox</option>
+                            </select>
+                        </div>
+
+                        <div class="form-control">
+                            <label class="label" for="debrid[${index}].api_key">
+                                <span class="label-text font-medium">API Key</span>
+                            </label>
+                            <div class="password-toggle-container">
+                                <input type="password" class="input input-bordered input-has-toggle" 
+                                       name="debrid[${index}].api_key" id="debrid[${index}].api_key" required>
+                                <button type="button" class="password-toggle-btn">
+                                    <i class="bi bi-eye" id="debrid[${index}].api_key_icon"></i>
+                                </button>
+                            </div>
+                            <div class="label">
+                                <span class="label-text-alt">API key for the debrid service</span>
+                            </div>
+                            <div class="mt-2 flex items-center gap-2">
+                                <button type="button" class="btn btn-outline btn-xs test-debrid-key" data-index="${index}">
+                                    Test key
+                                </button>
+                                <span class="text-xs text-base-content/60">Validates the API key against the service.</span>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="flex flex-col">
+                        <div class="form-control flex-1">
+                            <label class="label" for="debrid[${index}].download_api_keys">
+                                <span class="label-text font-medium">Download API Keys</span>
+                            </label>
+                            <div class="password-toggle-container">
+                                <textarea class="textarea textarea-bordered has-toggle font-mono h-full min-h-[200px]" 
+                                          name="debrid[${index}].download_api_keys" 
+                                          id="debrid[${index}].download_api_keys" 
+                                          placeholder="Multiple API keys for download (one per line). If empty, main API key will be used."></textarea>
+                                <button type="button" class="password-toggle-btn textarea-toggle">
+                                    <i class="bi bi-eye" id="debrid[${index}].download_api_keys_icon"></i>
+                                </button>
+                            </div>
+                            <div class="label">
+                                <span class="label-text-alt">Multiple API keys for downloads - leave empty to use main API key</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div class="form-control">
+                            <label class="label" for="debrid[${index}].folder">
+                                <span class="label-text font-medium">Mount/Rclone Folder</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="debrid[${index}].folder" id="debrid[${index}].folder" 
+                                   placeholder="/mnt/remote/realdebrid/__all__" required>
+                            <div class="label">
+                                <span class="label-text-alt">Path where debrid files are mounted</span>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                              <label class="label" for="debrid[${index}].rclone_mount_path">
+                                  <span class="label-text font-medium">Custom Rclone Mount Path</span>
+                                  <span class="badge badge-ghost badge-sm">Optional</span>
+                              </label>
+                              <input type="text" class="input input-bordered" 
+                                     name="debrid[${index}].rclone_mount_path" id="debrid[${index}].rclone_mount_path" 
+                                     placeholder="/custom/mount/path (leave empty for global mount path)">
+                              <div class="label">
+                                  <span class="label-text-alt">Custom mount path for this debrid service. If empty, uses global rclone mount path.</span>
+                              </div>
+                        </div>
+                        
+                    </div>
+                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="form-control">
+                            <label class="label" for="debrid[${index}].rate_limit">
+                                <span class="label-text font-medium">Rate Limit</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="debrid[${index}].rate_limit" id="debrid[${index}].rate_limit" 
+                                   placeholder="1000">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="debrid[${index}].download_queue">
+                                <span class="label-text font-medium">Download Queue</span>
+                            </label>
+                            <input type="number" class="input input-bordered" 
+                                   name="debrid[${index}].download_queue" id="debrid[${index}].download_queue" 
+                                   placeholder="0">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="debrid[${index}].download_timeout">
+                                <span class="label-text font-medium">Download Timeout</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="debrid[${index}].download_timeout" id="debrid[${index}].download_timeout" 
+                                   placeholder="30s">
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label class="label" for="debrid[${index}].folder_naming">
+                            <span class="label-text font-medium">Folder Naming Strategy</span>
+                        </label>
+                        <select class="select select-bordered" name="debrid[${index}].folder_naming" id="debrid[${index}].folder_naming">
+                            <option value="original">Original</option>
+                            <option value="original_no_ext">Original (No Extension)</option>
+                            <option value="min">Minimum</option>
+                            <option value="title">Title</option>
+                            <option value="title_no_ext">Title (No Extension)</option>
+                            <option value="arr">Arr Style</option>
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <label class="label cursor-pointer justify-start gap-3">
+                            <input type="checkbox" class="checkbox useWebdav" name="debrid[${index}].use_webdav" id="debrid[${index}].use_webdav">
+                            <div>
+                                <span class="label-text font-medium">Enable WebDAV</span>
+                                <div class="label-text-alt">Expose debrid via WebDAV</div>
+                            </div>
+                        </label>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="webdav-section hidden mt-6" id="webdav-section-${index}">
+                    <div class="divider">WebDAV Settings</div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div class="form-control">
+                            <label class="label" for="debrid[${index}].webdav_url">
+                                <span class="label-text font-medium">WebDAV URL</span>
+                            </label>
+                            <input type="text" class="input input-bordered webdav-field" 
+                                   name="debrid[${index}].webdav_url" id="debrid[${index}].webdav_url" 
+                                   placeholder="https://webdav.example.com">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="debrid[${index}].webdav_username">
+                                <span class="label-text font-medium">WebDAV Username</span>
+                            </label>
+                            <input type="text" class="input input-bordered webdav-field" 
+                                   name="debrid[${index}].webdav_username" id="debrid[${index}].webdav_username">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="debrid[${index}].webdav_password">
+                                <span class="label-text font-medium">WebDAV Password</span>
+                            </label>
+                            <input type="password" class="input input-bordered webdav-field" 
+                                   name="debrid[${index}].webdav_password" id="debrid[${index}].webdav_password">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="debrid[${index}].webdav_path">
+                                <span class="label-text font-medium">WebDAV Path</span>
+                            </label>
+                            <input type="text" class="input input-bordered webdav-field" 
+                                   name="debrid[${index}].webdav_path" id="debrid[${index}].webdav_path">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider">Directories & Filters</div>
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-lg font-semibold">Directories</h4>
+                    <button type="button" class="btn btn-outline btn-sm" onclick="window.configManager.addDirectory(${index});">Add Directory</button>
+                </div>
+                <div id="debrid[${index}].directories"></div>
+            </div>
+        </div>
+    `
+}
+
+function getDirectoryTemplate(debridIndex, dirIndex) {
+  return `
+        <div class="card bg-base-100 border border-base-300 shadow-sm directory-config mb-4" data-index="${dirIndex}">
+            <div class="card-body">
+                <div class="flex justify-between items-start mb-4">
+                    <h4 class="text-lg font-semibold">Directory #${dirIndex + 1}</h4>
+                    <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.directory-config').remove();">Remove</button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="form-control">
+                        <label class="label" for="debrid[${debridIndex}].directories[${dirIndex}].name">
+                            <span class="label-text font-medium">Directory Name</span>
+                        </label>
+                        <input type="text" class="input input-bordered" 
+                               name="debrid[${debridIndex}].directories[${dirIndex}].name" 
+                               id="debrid[${debridIndex}].directories[${dirIndex}].name" required>
+                    </div>
+                    <div class="form-control">
+                        <label class="label" for="debrid[${debridIndex}].directories[${dirIndex}].path">
+                            <span class="label-text font-medium">Directory Path</span>
+                        </label>
+                        <input type="text" class="input input-bordered" 
+                               name="debrid[${debridIndex}].directories[${dirIndex}].path" 
+                               id="debrid[${debridIndex}].directories[${dirIndex}].path">
+                    </div>
+                </div>
+
+                <div class="divider">Filters</div>
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-sm text-base-content/70">Optional: route only matching torrents.</span>
+                    <button type="button" class="btn btn-outline btn-sm" onclick="window.configManager.addFilter(${debridIndex}, ${dirIndex});">Add Filter</button>
+                </div>
+                <div id="debrid[${debridIndex}].directories[${dirIndex}].filters"></div>
+            </div>
+        </div>
+    `
+}
+
+function getFilterTemplate(debridIndex, dirIndex, filterIndex) {
+  return `
+        <div class="card bg-base-200 filter-config p-4 mb-3" data-index="${filterIndex}">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-end">
+                <div class="form-control">
+                    <label class="label" for="debrid[${debridIndex}].directories[${dirIndex}].filters[${filterIndex}].type">
+                        <span class="label-text font-medium">Filter Type</span>
+                    </label>
+                    <select class="select select-bordered" 
+                            name="debrid[${debridIndex}].directories[${dirIndex}].filters[${filterIndex}].type"
+                            id="debrid[${debridIndex}].directories[${dirIndex}].filters[${filterIndex}].type">
+                        <option value="">Select filter</option>
+                        <option value="label">Label</option>
+                        <option value="last_added">Last Added</option>
+                        <option value="size_greater_than">Size Greater Than</option>
+                        <option value="size_less_than">Size Less Than</option>
+                        <option value="name_contains">Name Contains</option>
+                        <option value="name_not_contains">Name Does Not Contain</option>
+                        <option value="file_contains">File Contains</option>
+                        <option value="file_not_contains">File Does Not Contain</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label class="label" for="debrid[${debridIndex}].directories[${dirIndex}].filters[${filterIndex}].value">
+                        <span class="label-text font-medium">Filter Value</span>
+                    </label>
+                    <input type="text" class="input input-bordered" 
+                           name="debrid[${debridIndex}].directories[${dirIndex}].filters[${filterIndex}].value"
+                           id="debrid[${debridIndex}].directories[${dirIndex}].filters[${filterIndex}].value">
+                </div>
+                <div class="form-control">
+                    <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.filter-config').remove();">Remove</button>
+                </div>
+            </div>
+        </div>
+    `
+}
+
+function getArrTemplate(index, data = {}) {
+  const isAutoDetected = data && data.source === 'auto'
+  return `
+            <div class="card bg-base-100 border border-base-300 shadow-sm arr-config ${isAutoDetected ? 'border-info' : ''}" data-index="${index}">
+                <div class="card-body">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="card-title text-lg">
+                            Arr Service #${index + 1}
+                        </h3>
+                        <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.arr-config').remove();">
+                            Remove
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="form-control">
+                            <label class="label" for="arr[${index}].name">
+                                <span class="label-text font-medium">Service Name</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="arr[${index}].name" id="arr[${index}].name" required>
+                        </div>
+
+                        <div class="form-control">
+                            <label class="label" for="arr[${index}].host">
+                                <span class="label-text font-medium">Host URL</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="arr[${index}].host" id="arr[${index}].host" 
+                                   placeholder="http://localhost:7878" required>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="form-control">
+                            <label class="label" for="arr[${index}].api_key">
+                                <span class="label-text font-medium">API Key</span>
+                            </label>
+                            <div class="password-toggle-container">
+                                <input type="password" class="input input-bordered input-has-toggle" 
+                                       name="arr[${index}].api_key" id="arr[${index}].api_key" required>
+                                <button type="button" class="password-toggle-btn">
+                                    <i class="bi bi-eye" id="arr[${index}].api_key_icon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-control">
+                            <label class="label" for="arr[${index}].category">
+                                <span class="label-text font-medium">Category</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="arr[${index}].category" id="arr[${index}].category"
+                                   placeholder="sonarr or radarr">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div class="form-control">
+                            <label class="label" for="arr[${index}].fallback_on_pause">
+                                <span class="label-text font-medium">Fallback On Pause</span>
+                            </label>
+                            <input type="number" class="input input-bordered" 
+                                   name="arr[${index}].fallback_on_pause" id="arr[${index}].fallback_on_pause"
+                                   placeholder="0">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="arr[${index}].max_errors">
+                                <span class="label-text font-medium">Max Errors</span>
+                            </label>
+                            <input type="number" class="input input-bordered" 
+                                   name="arr[${index}].max_errors" id="arr[${index}].max_errors"
+                                   placeholder="0">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="arr[${index}].quality_profile">
+                                <span class="label-text font-medium">Quality Profile</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="arr[${index}].quality_profile" id="arr[${index}].quality_profile"
+                                   placeholder="HD-1080p">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div class="form-control">
+                            <label class="label cursor-pointer justify-start gap-3">
+                                <input type="checkbox" class="checkbox" name="arr[${index}].enabled" id="arr[${index}].enabled">
+                                <div>
+                                    <span class="label-text font-medium">Enabled</span>
+                                    <div class="label-text-alt">Enable this Arr integration</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label class="label cursor-pointer justify-start gap-3">
+                                <input type="checkbox" class="checkbox" name="arr[${index}].add_as_completed" id="arr[${index}].add_as_completed">
+                                <div>
+                                    <span class="label-text font-medium">Add As Completed</span>
+                                    <div class="label-text-alt">Add to Arr when download completes</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label class="label cursor-pointer justify-start gap-3">
+                                <input type="checkbox" class="checkbox" name="arr[${index}].add_default_to_job" id="arr[${index}].add_default_to_job">
+                                <div>
+                                    <span class="label-text font-medium">Add Default Jobs</span>
+                                    <div class="label-text-alt">Add default Arr items to repair queue</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    `
+}
+
 function templateDebrid(index) {
-  return document.getElementById('debrid-template').innerHTML.replace(/__INDEX__/g, index)
+  return normalizeTemplate(getDebridTemplate(index))
 }
 
 function templateDirectory(debridIndex, dirIndex) {
-  return document.getElementById('directory-template').innerHTML
-    .replace(/__DEBRID_INDEX__/g, debridIndex)
-    .replace(/__DIR_INDEX__/g, dirIndex)
+  return normalizeTemplate(getDirectoryTemplate(debridIndex, dirIndex))
 }
 
 function templateFilter(debridIndex, dirIndex, filterIndex) {
-  return document.getElementById('filter-template').innerHTML
-    .replace(/__DEBRID_INDEX__/g, debridIndex)
-    .replace(/__DIR_INDEX__/g, dirIndex)
-    .replace(/__FILTER_INDEX__/g, filterIndex)
+  return normalizeTemplate(getFilterTemplate(debridIndex, dirIndex, filterIndex))
 }
 
 function templateArr(index, data) {
-  let html = document.getElementById('arr-template').innerHTML.replace(/__INDEX__/g, index)
+  const html = normalizeTemplate(getArrTemplate(index, data))
   if (data && data.source === 'auto') {
-    html = html.replace(/__AUTO__/g, '1')
-  } else {
-    html = html.replace(/__AUTO__/g, '')
+    return html.replace(/__AUTO__/g, '1')
   }
-  return html
+  return html.replace(/__AUTO__/g, '')
 }

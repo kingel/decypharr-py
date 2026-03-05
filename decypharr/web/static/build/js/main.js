@@ -1,4 +1,4 @@
-var Re=Object.defineProperty;var Pe=(T,w,O)=>w in T?Re(T,w,{enumerable:!0,configurable:!0,writable:!0,value:O}):T[w]=O;var Se=(T,w,O)=>Pe(T,typeof w!="symbol"?w+"":w,O);/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var basePath="",kitCode="";function setBasePath(T){basePath=T}function getBasePath(T=""){if(!basePath){const w=document.querySelector("[data-webawesome]");if(w!=null&&w.hasAttribute("data-webawesome")){const O=new URL(w.getAttribute("data-webawesome")??"",window.location.href).pathname;setBasePath(O)}else{const F=[...document.getElementsByTagName("script")].find(W=>W.src.endsWith("webawesome.js")||W.src.endsWith("webawesome.loader.js")||W.src.endsWith("webawesome.ssr-loader.js"));if(F){const W=String(F.getAttribute("src"));setBasePath(W.split("/").slice(0,-1).join("/"))}}}return basePath.replace(/\/$/,"")+(T?`/${T.replace(/^\//,"")}`:"")}function setKitCode(T){kitCode=T}function getKitCode(){if(!kitCode){const T=document.querySelector("[data-fa-kit-code]");T&&setKitCode(T.getAttribute("data-fa-kit-code")||"")}return kitCode}/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */new MutationObserver(T=>{for(const{addedNodes:w}of T)for(const O of w)O.nodeType===Node.ELEMENT_NODE&&discover(O)});async function discover(T){const w=T instanceof Element?T.tagName.toLowerCase():"",O=w==null?void 0:w.startsWith("wa-"),F=[...T.querySelectorAll(":not(:defined)")].map(q=>q.tagName.toLowerCase()).filter(q=>q.startsWith("wa-"));O&&!customElements.get(w)&&F.push(w);const W=[...new Set(F)],U=await Promise.allSettled(W.map(q=>register(q)));for(const q of U)q.status==="rejected"&&console.warn(q.reason);await new Promise(requestAnimationFrame),T.dispatchEvent(new CustomEvent("wa-discovery-complete",{bubbles:!1,cancelable:!1,composed:!0}))}function register(T){if(customElements.get(T))return Promise.resolve();const w=T.replace(/^wa-/i,""),O=getBasePath(`components/${w}/${w}.js`);return new Promise((F,W)=>{import(O).then(()=>F()).catch(()=>W(new Error(`Unable to autoload <${T}> from ${O}`)))})}const connectedElements=new Set,translations=new Map;let fallback,documentDirection="ltr",documentLanguage="en";const isClient=typeof MutationObserver<"u"&&typeof document<"u"&&typeof document.documentElement<"u";if(isClient){const T=new MutationObserver(update);documentDirection=document.documentElement.dir||"ltr",documentLanguage=document.documentElement.lang||navigator.language,T.observe(document.documentElement,{attributes:!0,attributeFilter:["dir","lang"]})}function registerTranslation(...T){T.map(w=>{const O=w.$code.toLowerCase();translations.has(O)?translations.set(O,Object.assign(Object.assign({},translations.get(O)),w)):translations.set(O,w),fallback||(fallback=w)}),update()}function update(){isClient&&(documentDirection=document.documentElement.dir||"ltr",documentLanguage=document.documentElement.lang||navigator.language),[...connectedElements.keys()].map(T=>{typeof T.requestUpdate=="function"&&T.requestUpdate()})}let LocalizeController$1=class{constructor(w){this.host=w,this.host.addController(this)}hostConnected(){connectedElements.add(this.host)}hostDisconnected(){connectedElements.delete(this.host)}dir(){return`${this.host.dir||documentDirection}`.toLowerCase()}lang(){return`${this.host.lang||documentLanguage}`.toLowerCase()}getTranslationData(w){var O,F;const W=new Intl.Locale(w.replace(/_/g,"-")),U=W==null?void 0:W.language.toLowerCase(),q=(F=(O=W==null?void 0:W.region)===null||O===void 0?void 0:O.toLowerCase())!==null&&F!==void 0?F:"",j=translations.get(`${U}-${q}`),J=translations.get(U);return{locale:W,language:U,region:q,primary:j,secondary:J}}exists(w,O){var F;const{primary:W,secondary:U}=this.getTranslationData((F=O.lang)!==null&&F!==void 0?F:this.lang());return O=Object.assign({includeFallback:!1},O),!!(W&&W[w]||U&&U[w]||O.includeFallback&&fallback&&fallback[w])}term(w,...O){const{primary:F,secondary:W}=this.getTranslationData(this.lang());let U;if(F&&F[w])U=F[w];else if(W&&W[w])U=W[w];else if(fallback&&fallback[w])U=fallback[w];else return console.error(`No translation found for: ${String(w)}`),String(w);return typeof U=="function"?U(...O):U}date(w,O){return w=new Date(w),new Intl.DateTimeFormat(this.lang(),O).format(w)}number(w,O){return w=Number(w),isNaN(w)?"":new Intl.NumberFormat(this.lang(),O).format(w)}relativeTime(w,O,F){return new Intl.RelativeTimeFormat(this.lang(),F).format(w,O)}};/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var translation={$code:"en",$name:"English",$dir:"ltr",carousel:"Carousel",clearEntry:"Clear entry",close:"Close",copied:"Copied",copy:"Copy",currentValue:"Current value",dropFileHere:"Drop file here or click to browse",decrement:"Decrement",dropFilesHere:"Drop files here or click to browse",error:"Error",goToSlide:(T,w)=>`Go to slide ${T} of ${w}`,hidePassword:"Hide password",increment:"Increment",loading:"Loading",nextSlide:"Next slide",numOptionsSelected:T=>T===0?"No options selected":T===1?"1 option selected":`${T} options selected`,pauseAnimation:"Pause animation",playAnimation:"Play animation",previousSlide:"Previous slide",progress:"Progress",remove:"Remove",resize:"Resize",scrollableRegion:"Scrollable region",scrollToEnd:"Scroll to end",scrollToStart:"Scroll to start",selectAColorFromTheScreen:"Select a color from the screen",showPassword:"Show password",slideNum:T=>`Slide ${T}`,toggleColorFormat:"Toggle color format",zoomIn:"Zoom in",zoomOut:"Zoom out"};registerTranslation(translation);var en_default=translation;/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var LocalizeController=class extends LocalizeController$1{};registerTranslation(en_default);/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var FA_VERSION="7.2.0";function getIconUrl(T,w,O){const F=getKitCode(),W=F.length>0;let U="solid";return w==="chisel"&&(U="chisel-regular"),w==="etch"&&(U="etch-solid"),w==="graphite"&&(U="graphite-thin"),w==="jelly"&&(U="jelly-regular",O==="duo-regular"&&(U="jelly-duo-regular"),O==="fill-regular"&&(U="jelly-fill-regular")),w==="jelly-duo"&&(U="jelly-duo-regular"),w==="jelly-fill"&&(U="jelly-fill-regular"),w==="notdog"&&(O==="solid"&&(U="notdog-solid"),O==="duo-solid"&&(U="notdog-duo-solid")),w==="notdog-duo"&&(U="notdog-duo-solid"),w==="slab"&&((O==="solid"||O==="regular")&&(U="slab-regular"),O==="press-regular"&&(U="slab-press-regular")),w==="slab-press"&&(U="slab-press-regular"),w==="thumbprint"&&(U="thumbprint-light"),w==="utility"&&(U="utility-semibold"),w==="utility-duo"&&(U="utility-duo-semibold"),w==="utility-fill"&&(U="utility-fill-semibold"),w==="whiteboard"&&(U="whiteboard-semibold"),w==="classic"&&(O==="thin"&&(U="thin"),O==="light"&&(U="light"),O==="regular"&&(U="regular"),O==="solid"&&(U="solid")),w==="duotone"&&(O==="thin"&&(U="duotone-thin"),O==="light"&&(U="duotone-light"),O==="regular"&&(U="duotone-regular"),O==="solid"&&(U="duotone")),w==="sharp"&&(O==="thin"&&(U="sharp-thin"),O==="light"&&(U="sharp-light"),O==="regular"&&(U="sharp-regular"),O==="solid"&&(U="sharp-solid")),w==="sharp-duotone"&&(O==="thin"&&(U="sharp-duotone-thin"),O==="light"&&(U="sharp-duotone-light"),O==="regular"&&(U="sharp-duotone-regular"),O==="solid"&&(U="sharp-duotone-solid")),w==="brands"&&(U="brands"),W?`https://ka-p.fontawesome.com/releases/v${FA_VERSION}/svgs/${U}/${T}.svg?token=${encodeURIComponent(F)}`:`https://ka-f.fontawesome.com/releases/v${FA_VERSION}/svgs/${U}/${T}.svg`}var library={name:"default",resolver:(T,w="classic",O="solid")=>getIconUrl(T,w,O),mutator:(T,w)=>{if(w!=null&&w.family&&!T.hasAttribute("data-duotone-initialized")){const{family:O,variant:F}=w;if(O==="duotone"||O==="sharp-duotone"||O==="notdog-duo"||O==="notdog"&&F==="duo-solid"||O==="jelly-duo"||O==="jelly"&&F==="duo-regular"||O==="utility-duo"||O==="thumbprint"){const W=[...T.querySelectorAll("path")],U=W.find(j=>!j.hasAttribute("opacity")),q=W.find(j=>j.hasAttribute("opacity"));if(!U||!q)return;if(U.setAttribute("data-duotone-primary",""),q.setAttribute("data-duotone-secondary",""),w.swapOpacity&&U&&q){const j=q.getAttribute("opacity")||"0.4";U.style.setProperty("--path-opacity",j),q.style.setProperty("--path-opacity","1")}T.setAttribute("data-duotone-initialized","")}}}},library_default_default=library;/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */function dataUri(T){return`data:image/svg+xml,${encodeURIComponent(T)}`}var icons={solid:{check:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>',"chevron-down":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>',"chevron-left":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>',"chevron-right":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M311.1 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L243.2 256 73.9 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>',circle:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"/></svg>',eyedropper:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M341.6 29.2l-101.6 101.6-9.4-9.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-9.4-9.4 101.6-101.6c39-39 39-102.2 0-141.1s-102.2-39-141.1 0zM55.4 323.3c-15 15-23.4 35.4-23.4 56.6l0 42.4-26.6 39.9c-8.5 12.7-6.8 29.6 4 40.4s27.7 12.5 40.4 4l39.9-26.6 42.4 0c21.2 0 41.6-8.4 56.6-23.4l109.4-109.4-45.3-45.3-109.4 109.4c-3 3-7.1 4.7-11.3 4.7l-36.1 0 0-36.1c0-4.2 1.7-8.3 4.7-11.3l109.4-109.4-45.3-45.3-109.4 109.4z"/></svg>',file:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 234.5C512 217.5 505.3 201.2 493.3 189.2L386.7 82.7C374.7 70.7 358.5 64 341.5 64L192 64zM453.5 240L360 240C346.7 240 336 229.3 336 216L336 122.5L453.5 240z"/></svg>',"file-audio":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM389.8 307.7C380.7 301.4 368.3 303.6 362 312.7C355.7 321.8 357.9 334.2 367 340.5C390.9 357.2 406.4 384.8 406.4 416C406.4 447.2 390.8 474.9 367 491.5C357.9 497.8 355.7 510.3 362 519.3C368.3 528.3 380.8 530.6 389.8 524.3C423.9 500.5 446.4 460.8 446.4 416C446.4 371.2 424 331.5 389.8 307.7zM208 376C199.2 376 192 383.2 192 392L192 440C192 448.8 199.2 456 208 456L232 456L259.2 490C262.2 493.8 266.8 496 271.7 496L272 496C280.8 496 288 488.8 288 480L288 352C288 343.2 280.8 336 272 336L271.7 336C266.8 336 262.2 338.2 259.2 342L232 376L208 376zM336 448.2C336 458.9 346.5 466.4 354.9 459.8C367.8 449.5 376 433.7 376 416C376 398.3 367.8 382.5 354.9 372.2C346.5 365.5 336 373.1 336 383.8L336 448.3z"/></svg>',"file-code":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM282.2 359.6C290.8 349.5 289.7 334.4 279.6 325.8C269.5 317.2 254.4 318.3 245.8 328.4L197.8 384.4C190.1 393.4 190.1 406.6 197.8 415.6L245.8 471.6C254.4 481.7 269.6 482.8 279.6 474.2C289.6 465.6 290.8 450.4 282.2 440.4L247.6 400L282.2 359.6zM394.2 328.4C385.6 318.3 370.4 317.2 360.4 325.8C350.4 334.4 349.2 349.6 357.8 359.6L392.4 400L357.8 440.4C349.2 450.5 350.3 465.6 360.4 474.2C370.5 482.8 385.6 481.7 394.2 471.6L442.2 415.6C449.9 406.6 449.9 393.4 442.2 384.4L394.2 328.4z"/></svg>',"file-excel":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM292 330.7C284.6 319.7 269.7 316.7 258.7 324C247.7 331.3 244.7 346.3 252 357.3L291.2 416L252 474.7C244.6 485.7 247.6 500.6 258.7 508C269.8 515.4 284.6 512.4 292 501.3L320 459.3L348 501.3C355.4 512.3 370.3 515.3 381.3 508C392.3 500.7 395.3 485.7 388 474.7L348.8 416L388 357.3C395.4 346.3 392.4 331.4 381.3 324C370.2 316.6 355.4 319.6 348 330.7L320 372.7L292 330.7z"/></svg>',"file-image":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM256 320C256 302.3 241.7 288 224 288C206.3 288 192 302.3 192 320C192 337.7 206.3 352 224 352C241.7 352 256 337.7 256 320zM220.6 512L419.4 512C435.2 512 448 499.2 448 483.4C448 476.1 445.2 469 440.1 463.7L343.3 361.9C337.3 355.6 328.9 352 320.1 352L319.8 352C311 352 302.7 355.6 296.6 361.9L199.9 463.7C194.8 469 192 476.1 192 483.4C192 499.2 204.8 512 220.6 512z"/></svg>',"file-pdf":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 64C92.7 64 64 92.7 64 128L64 512C64 547.3 92.7 576 128 576L208 576L208 464C208 428.7 236.7 400 272 400L448 400L448 234.5C448 217.5 441.3 201.2 429.3 189.2L322.7 82.7C310.7 70.7 294.5 64 277.5 64L128 64zM389.5 240L296 240C282.7 240 272 229.3 272 216L272 122.5L389.5 240zM272 444C261 444 252 453 252 464L252 592C252 603 261 612 272 612C283 612 292 603 292 592L292 564L304 564C337.1 564 364 537.1 364 504C364 470.9 337.1 444 304 444L272 444zM304 524L292 524L292 484L304 484C315 484 324 493 324 504C324 515 315 524 304 524zM400 444C389 444 380 453 380 464L380 592C380 603 389 612 400 612L432 612C460.7 612 484 588.7 484 560L484 496C484 467.3 460.7 444 432 444L400 444zM420 572L420 484L432 484C438.6 484 444 489.4 444 496L444 560C444 566.6 438.6 572 432 572L420 572zM508 464L508 592C508 603 517 612 528 612C539 612 548 603 548 592L548 548L576 548C587 548 596 539 596 528C596 517 587 508 576 508L548 508L548 484L576 484C587 484 596 475 596 464C596 453 587 444 576 444L528 444C517 444 508 453 508 464z"/></svg>',"file-powerpoint":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM280 320C266.7 320 256 330.7 256 344L256 488C256 501.3 266.7 512 280 512C293.3 512 304 501.3 304 488L304 464L328 464C367.8 464 400 431.8 400 392C400 352.2 367.8 320 328 320L280 320zM328 416L304 416L304 368L328 368C341.3 368 352 378.7 352 392C352 405.3 341.3 416 328 416z"/></svg>',"file-video":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM208 368L208 464C208 481.7 222.3 496 240 496L336 496C353.7 496 368 481.7 368 464L368 440L403 475C406.2 478.2 410.5 480 415 480C424.4 480 432 472.4 432 463L432 368.9C432 359.5 424.4 351.9 415 351.9C410.5 351.9 406.2 353.7 403 356.9L368 391.9L368 367.9C368 350.2 353.7 335.9 336 335.9L240 335.9C222.3 335.9 208 350.2 208 367.9z"/></svg>',"file-word":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM263.4 338.8C260.5 325.9 247.7 317.7 234.8 320.6C221.9 323.5 213.7 336.3 216.6 349.2L248.6 493.2C250.9 503.7 260 511.4 270.8 512C281.6 512.6 291.4 505.9 294.8 495.6L320 419.9L345.2 495.6C348.6 505.8 358.4 512.5 369.2 512C380 511.5 389.1 503.8 391.4 493.2L423.4 349.2C426.3 336.3 418.1 323.4 405.2 320.6C392.3 317.8 379.4 325.9 376.6 338.8L363.4 398.2L342.8 336.4C339.5 326.6 330.4 320 320 320C309.6 320 300.5 326.6 297.2 336.4L276.6 398.2L263.4 338.8z"/></svg>',"file-zipper":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM192 136C192 149.3 202.7 160 216 160L264 160C277.3 160 288 149.3 288 136C288 122.7 277.3 112 264 112L216 112C202.7 112 192 122.7 192 136zM192 232C192 245.3 202.7 256 216 256L264 256C277.3 256 288 245.3 288 232C288 218.7 277.3 208 264 208L216 208C202.7 208 192 218.7 192 232zM256 304L224 304C206.3 304 192 318.3 192 336L192 384C192 410.5 213.5 432 240 432C266.5 432 288 410.5 288 384L288 336C288 318.3 273.7 304 256 304zM240 368C248.8 368 256 375.2 256 384C256 392.8 248.8 400 240 400C231.2 400 224 392.8 224 384C224 375.2 231.2 368 240 368z"/></svg>',"grip-vertical":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M128 40c0-22.1-17.9-40-40-40L40 0C17.9 0 0 17.9 0 40L0 88c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48zm0 192c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40l0 48c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48zM0 424l0 48c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40zM320 40c0-22.1-17.9-40-40-40L232 0c-22.1 0-40 17.9-40 40l0 48c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48zM192 232l0 48c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40zM320 424c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40l0 48c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48z"/></svg>',indeterminate:'<svg part="indeterminate-icon" class="icon" viewBox="0 0 16 16"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round"><g stroke="currentColor" stroke-width="2"><g transform="translate(2.285714 6.857143)"><path d="M10.2857143,1.14285714 L1.14285714,1.14285714"/></g></g></g></svg>',minus:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32z"/></svg>',pause:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M48 32C21.5 32 0 53.5 0 80L0 432c0 26.5 21.5 48 48 48l64 0c26.5 0 48-21.5 48-48l0-352c0-26.5-21.5-48-48-48L48 32zm224 0c-26.5 0-48 21.5-48 48l0 352c0 26.5 21.5 48 48 48l64 0c26.5 0 48-21.5 48-48l0-352c0-26.5-21.5-48-48-48l-64 0z"/></svg>',play:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M91.2 36.9c-12.4-6.8-27.4-6.5-39.6 .7S32 57.9 32 72l0 368c0 14.1 7.5 27.2 19.6 34.4s27.2 7.5 39.6 .7l336-184c12.8-7 20.8-20.5 20.8-35.1s-8-28.1-20.8-35.1l-336-184z"/></svg>',plus:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>',star:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M309.5-18.9c-4.1-8-12.4-13.1-21.4-13.1s-17.3 5.1-21.4 13.1L193.1 125.3 33.2 150.7c-8.9 1.4-16.3 7.7-19.1 16.3s-.5 18 5.8 24.4l114.4 114.5-25.2 159.9c-1.4 8.9 2.3 17.9 9.6 23.2s16.9 6.1 25 2L288.1 417.6 432.4 491c8 4.1 17.7 3.3 25-2s11-14.2 9.6-23.2L441.7 305.9 556.1 191.4c6.4-6.4 8.6-15.8 5.8-24.4s-10.1-14.9-19.1-16.3L383 125.3 309.5-18.9z"/></svg>',upload:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M352 173.3L352 384C352 401.7 337.7 416 320 416C302.3 416 288 401.7 288 384L288 173.3L246.6 214.7C234.1 227.2 213.8 227.2 201.3 214.7C188.8 202.2 188.8 181.9 201.3 169.4L297.3 73.4C309.8 60.9 330.1 60.9 342.6 73.4L438.6 169.4C451.1 181.9 451.1 202.2 438.6 214.7C426.1 227.2 405.8 227.2 393.3 214.7L352 173.3zM320 464C364.2 464 400 428.2 400 384L480 384C515.3 384 544 412.7 544 448L544 480C544 515.3 515.3 544 480 544L160 544C124.7 544 96 515.3 96 480L96 448C96 412.7 124.7 384 160 384L240 384C240 428.2 275.8 464 320 464zM464 488C477.3 488 488 477.3 488 464C488 450.7 477.3 440 464 440C450.7 440 440 450.7 440 464C440 477.3 450.7 488 464 488z"/></svg>',user:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 248a120 120 0 1 0 0-240 120 120 0 1 0 0 240zm-29.7 56C95.8 304 16 383.8 16 482.3 16 498.7 29.3 512 45.7 512l356.6 0c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3l-59.4 0z"/></svg>',xmark:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg>'},regular:{"circle-question":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M464 256a208 208 0 1 0 -416 0 208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0zm256-80c-17.7 0-32 14.3-32 32 0 13.3-10.7 24-24 24s-24-10.7-24-24c0-44.2 35.8-80 80-80s80 35.8 80 80c0 47.2-36 67.2-56 74.5l0 3.8c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-8.1c0-20.5 14.8-35.2 30.1-40.2 6.4-2.1 13.2-5.5 18.2-10.3 4.3-4.2 7.7-10 7.7-19.6 0-17.7-14.3-32-32-32zM224 368a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>',"circle-xmark":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c-9.4 9.4-9.4 24.6 0 33.9l55 55-55 55c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l55-55 55 55c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-55-55 55-55c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-55 55-55-55c-9.4-9.4-24.6-9.4-33.9 0z"/></svg>',copy:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l133.5 0c4.2 0 8.3 1.7 11.3 4.7l58.5 58.5c3 3 4.7 7.1 4.7 11.3L400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-197.5c0-17-6.7-33.3-18.7-45.3L370.7 18.7C358.7 6.7 342.5 0 325.5 0L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-16-48 0 0 16c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l16 0 0-48-16 0z"/></svg>',eye:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M288 80C222.8 80 169.2 109.6 128.1 147.7 89.6 183.5 63 226 49.4 256 63 286 89.6 328.5 128.1 364.3 169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256 513 226 486.4 183.5 447.9 147.7 406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1 3.3 7.9 3.3 16.7 0 24.6-14.9 35.7-46.2 87.7-93 131.1-47.1 43.7-111.8 80.6-192.6 80.6S142.5 443.2 95.4 399.4c-46.8-43.5-78.1-95.4-93-131.1-3.3-7.9-3.3-16.7 0-24.6 14.9-35.7 46.2-87.7 93-131.1zM288 336c44.2 0 80-35.8 80-80 0-29.6-16.1-55.5-40-69.3-1.4 59.7-49.6 107.9-109.3 109.3 13.8 23.9 39.7 40 69.3 40zm-79.6-88.4c2.5 .3 5 .4 7.6 .4 35.3 0 64-28.7 64-64 0-2.6-.2-5.1-.4-7.6-37.4 3.9-67.2 33.7-71.1 71.1zm45.6-115c10.8-3 22.2-4.5 33.9-4.5 8.8 0 17.5 .9 25.8 2.6 .3 .1 .5 .1 .8 .2 57.9 12.2 101.4 63.7 101.4 125.2 0 70.7-57.3 128-128 128-61.6 0-113-43.5-125.2-101.4-1.8-8.6-2.8-17.5-2.8-26.6 0-11 1.4-21.8 4-32 .2-.7 .3-1.3 .5-1.9 11.9-43.4 46.1-77.6 89.5-89.5z"/></svg>',"eye-slash":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M41-24.9c-9.4-9.4-24.6-9.4-33.9 0S-2.3-.3 7 9.1l528 528c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-96.4-96.4c2.7-2.4 5.4-4.8 8-7.2 46.8-43.5 78.1-95.4 93-131.1 3.3-7.9 3.3-16.7 0-24.6-14.9-35.7-46.2-87.7-93-131.1-47.1-43.7-111.8-80.6-192.6-80.6-56.8 0-105.6 18.2-146 44.2L41-24.9zM176.9 111.1c32.1-18.9 69.2-31.1 111.1-31.1 65.2 0 118.8 29.6 159.9 67.7 38.5 35.7 65.1 78.3 78.6 108.3-13.6 30-40.2 72.5-78.6 108.3-3.1 2.8-6.2 5.6-9.4 8.4L393.8 328c14-20.5 22.2-45.3 22.2-72 0-70.7-57.3-128-128-128-26.7 0-51.5 8.2-72 22.2l-39.1-39.1zm182 182l-108-108c11.1-5.8 23.7-9.1 37.1-9.1 44.2 0 80 35.8 80 80 0 13.4-3.3 26-9.1 37.1zM103.4 173.2l-34-34c-32.6 36.8-55 75.8-66.9 104.5-3.3 7.9-3.3 16.7 0 24.6 14.9 35.7 46.2 87.7 93 131.1 47.1 43.7 111.8 80.6 192.6 80.6 37.3 0 71.2-7.9 101.5-20.6L352.2 422c-20 6.4-41.4 10-64.2 10-65.2 0-118.8-29.6-159.9-67.7-38.5-35.7-65.1-78.3-78.6-108.3 10.4-23.1 28.6-53.6 54-82.8z"/></svg>',star:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M288.1-32c9 0 17.3 5.1 21.4 13.1L383 125.3 542.9 150.7c8.9 1.4 16.3 7.7 19.1 16.3s.5 18-5.8 24.4L441.7 305.9 467 465.8c1.4 8.9-2.3 17.9-9.6 23.2s-17 6.1-25 2L288.1 417.6 143.8 491c-8 4.1-17.7 3.3-25-2s-11-14.2-9.6-23.2L134.4 305.9 20 191.4c-6.4-6.4-8.6-15.8-5.8-24.4s10.1-14.9 19.1-16.3l159.9-25.4 73.6-144.2c4.1-8 12.4-13.1 21.4-13.1zm0 76.8L230.3 158c-3.5 6.8-10 11.6-17.6 12.8l-125.5 20 89.8 89.9c5.4 5.4 7.9 13.1 6.7 20.7l-19.8 125.5 113.3-57.6c6.8-3.5 14.9-3.5 21.8 0l113.3 57.6-19.8-125.5c-1.2-7.6 1.3-15.3 6.7-20.7l89.8-89.9-125.5-20c-7.6-1.2-14.1-6-17.6-12.8L288.1 44.8z"/></svg>'}},systemLibrary={name:"system",resolver:(T,w="classic",O="solid")=>{let W=icons[O][T]??icons.regular[T]??icons.regular["circle-question"];return W?dataUri(W):""}},library_system_default=systemLibrary;/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var defaultIconFamily="classic",registry=[library_default_default,library_system_default],watchedIcons=[];function watchIcon(T){watchedIcons.push(T)}function unwatchIcon(T){watchedIcons=watchedIcons.filter(w=>w!==T)}function getIconLibrary(T){return registry.find(w=>w.name===T)}function getDefaultIconFamily(){return defaultIconFamily}/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var __defProp=Object.defineProperty,__getOwnPropDesc=Object.getOwnPropertyDescriptor,__typeError=T=>{throw TypeError(T)},__decorateClass=(T,w,O,F)=>{for(var W=F>1?void 0:F?__getOwnPropDesc(w,O):w,U=T.length-1,q;U>=0;U--)(q=T[U])&&(W=(F?q(w,O,W):q(W))||W);return F&&W&&__defProp(w,O,W),W},__accessCheck=(T,w,O)=>w.has(T)||__typeError("Cannot "+O),__privateGet=(T,w,O)=>(__accessCheck(T,w,"read from private field"),w.get(T)),__privateAdd=(T,w,O)=>w.has(T)?__typeError("Cannot add the same private member more than once"):w instanceof WeakSet?w.add(T):w.set(T,O),__privateSet=(T,w,O,F)=>(__accessCheck(T,w,"write to private field"),w.set(T,O),O);/**
+var Pe=Object.defineProperty;var Re=(T,w,O)=>w in T?Pe(T,w,{enumerable:!0,configurable:!0,writable:!0,value:O}):T[w]=O;var Se=(T,w,O)=>Re(T,typeof w!="symbol"?w+"":w,O);/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var basePath="",kitCode="";function setBasePath(T){basePath=T}function getBasePath(T=""){if(!basePath){const w=document.querySelector("[data-webawesome]");if(w!=null&&w.hasAttribute("data-webawesome")){const O=new URL(w.getAttribute("data-webawesome")??"",window.location.href).pathname;setBasePath(O)}else{const F=[...document.getElementsByTagName("script")].find(W=>W.src.endsWith("webawesome.js")||W.src.endsWith("webawesome.loader.js")||W.src.endsWith("webawesome.ssr-loader.js"));if(F){const W=String(F.getAttribute("src"));setBasePath(W.split("/").slice(0,-1).join("/"))}}}return basePath.replace(/\/$/,"")+(T?`/${T.replace(/^\//,"")}`:"")}function setKitCode(T){kitCode=T}function getKitCode(){if(!kitCode){const T=document.querySelector("[data-fa-kit-code]");T&&setKitCode(T.getAttribute("data-fa-kit-code")||"")}return kitCode}/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */new MutationObserver(T=>{for(const{addedNodes:w}of T)for(const O of w)O.nodeType===Node.ELEMENT_NODE&&discover(O)});async function discover(T){const w=T instanceof Element?T.tagName.toLowerCase():"",O=w==null?void 0:w.startsWith("wa-"),F=[...T.querySelectorAll(":not(:defined)")].map(q=>q.tagName.toLowerCase()).filter(q=>q.startsWith("wa-"));O&&!customElements.get(w)&&F.push(w);const W=[...new Set(F)],U=await Promise.allSettled(W.map(q=>register(q)));for(const q of U)q.status==="rejected"&&console.warn(q.reason);await new Promise(requestAnimationFrame),T.dispatchEvent(new CustomEvent("wa-discovery-complete",{bubbles:!1,cancelable:!1,composed:!0}))}function register(T){if(customElements.get(T))return Promise.resolve();const w=T.replace(/^wa-/i,""),O=getBasePath(`components/${w}/${w}.js`);return new Promise((F,W)=>{import(O).then(()=>F()).catch(()=>W(new Error(`Unable to autoload <${T}> from ${O}`)))})}const connectedElements=new Set,translations=new Map;let fallback,documentDirection="ltr",documentLanguage="en";const isClient=typeof MutationObserver<"u"&&typeof document<"u"&&typeof document.documentElement<"u";if(isClient){const T=new MutationObserver(update);documentDirection=document.documentElement.dir||"ltr",documentLanguage=document.documentElement.lang||navigator.language,T.observe(document.documentElement,{attributes:!0,attributeFilter:["dir","lang"]})}function registerTranslation(...T){T.map(w=>{const O=w.$code.toLowerCase();translations.has(O)?translations.set(O,Object.assign(Object.assign({},translations.get(O)),w)):translations.set(O,w),fallback||(fallback=w)}),update()}function update(){isClient&&(documentDirection=document.documentElement.dir||"ltr",documentLanguage=document.documentElement.lang||navigator.language),[...connectedElements.keys()].map(T=>{typeof T.requestUpdate=="function"&&T.requestUpdate()})}let LocalizeController$1=class{constructor(w){this.host=w,this.host.addController(this)}hostConnected(){connectedElements.add(this.host)}hostDisconnected(){connectedElements.delete(this.host)}dir(){return`${this.host.dir||documentDirection}`.toLowerCase()}lang(){return`${this.host.lang||documentLanguage}`.toLowerCase()}getTranslationData(w){var O,F;const W=new Intl.Locale(w.replace(/_/g,"-")),U=W==null?void 0:W.language.toLowerCase(),q=(F=(O=W==null?void 0:W.region)===null||O===void 0?void 0:O.toLowerCase())!==null&&F!==void 0?F:"",j=translations.get(`${U}-${q}`),J=translations.get(U);return{locale:W,language:U,region:q,primary:j,secondary:J}}exists(w,O){var F;const{primary:W,secondary:U}=this.getTranslationData((F=O.lang)!==null&&F!==void 0?F:this.lang());return O=Object.assign({includeFallback:!1},O),!!(W&&W[w]||U&&U[w]||O.includeFallback&&fallback&&fallback[w])}term(w,...O){const{primary:F,secondary:W}=this.getTranslationData(this.lang());let U;if(F&&F[w])U=F[w];else if(W&&W[w])U=W[w];else if(fallback&&fallback[w])U=fallback[w];else return console.error(`No translation found for: ${String(w)}`),String(w);return typeof U=="function"?U(...O):U}date(w,O){return w=new Date(w),new Intl.DateTimeFormat(this.lang(),O).format(w)}number(w,O){return w=Number(w),isNaN(w)?"":new Intl.NumberFormat(this.lang(),O).format(w)}relativeTime(w,O,F){return new Intl.RelativeTimeFormat(this.lang(),F).format(w,O)}};/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var translation={$code:"en",$name:"English",$dir:"ltr",carousel:"Carousel",clearEntry:"Clear entry",close:"Close",copied:"Copied",copy:"Copy",currentValue:"Current value",dropFileHere:"Drop file here or click to browse",decrement:"Decrement",dropFilesHere:"Drop files here or click to browse",error:"Error",goToSlide:(T,w)=>`Go to slide ${T} of ${w}`,hidePassword:"Hide password",increment:"Increment",loading:"Loading",nextSlide:"Next slide",numOptionsSelected:T=>T===0?"No options selected":T===1?"1 option selected":`${T} options selected`,pauseAnimation:"Pause animation",playAnimation:"Play animation",previousSlide:"Previous slide",progress:"Progress",remove:"Remove",resize:"Resize",scrollableRegion:"Scrollable region",scrollToEnd:"Scroll to end",scrollToStart:"Scroll to start",selectAColorFromTheScreen:"Select a color from the screen",showPassword:"Show password",slideNum:T=>`Slide ${T}`,toggleColorFormat:"Toggle color format",zoomIn:"Zoom in",zoomOut:"Zoom out"};registerTranslation(translation);var en_default=translation;/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var LocalizeController=class extends LocalizeController$1{};registerTranslation(en_default);/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var FA_VERSION="7.2.0";function getIconUrl(T,w,O){const F=getKitCode(),W=F.length>0;let U="solid";return w==="chisel"&&(U="chisel-regular"),w==="etch"&&(U="etch-solid"),w==="graphite"&&(U="graphite-thin"),w==="jelly"&&(U="jelly-regular",O==="duo-regular"&&(U="jelly-duo-regular"),O==="fill-regular"&&(U="jelly-fill-regular")),w==="jelly-duo"&&(U="jelly-duo-regular"),w==="jelly-fill"&&(U="jelly-fill-regular"),w==="notdog"&&(O==="solid"&&(U="notdog-solid"),O==="duo-solid"&&(U="notdog-duo-solid")),w==="notdog-duo"&&(U="notdog-duo-solid"),w==="slab"&&((O==="solid"||O==="regular")&&(U="slab-regular"),O==="press-regular"&&(U="slab-press-regular")),w==="slab-press"&&(U="slab-press-regular"),w==="thumbprint"&&(U="thumbprint-light"),w==="utility"&&(U="utility-semibold"),w==="utility-duo"&&(U="utility-duo-semibold"),w==="utility-fill"&&(U="utility-fill-semibold"),w==="whiteboard"&&(U="whiteboard-semibold"),w==="classic"&&(O==="thin"&&(U="thin"),O==="light"&&(U="light"),O==="regular"&&(U="regular"),O==="solid"&&(U="solid")),w==="duotone"&&(O==="thin"&&(U="duotone-thin"),O==="light"&&(U="duotone-light"),O==="regular"&&(U="duotone-regular"),O==="solid"&&(U="duotone")),w==="sharp"&&(O==="thin"&&(U="sharp-thin"),O==="light"&&(U="sharp-light"),O==="regular"&&(U="sharp-regular"),O==="solid"&&(U="sharp-solid")),w==="sharp-duotone"&&(O==="thin"&&(U="sharp-duotone-thin"),O==="light"&&(U="sharp-duotone-light"),O==="regular"&&(U="sharp-duotone-regular"),O==="solid"&&(U="sharp-duotone-solid")),w==="brands"&&(U="brands"),W?`https://ka-p.fontawesome.com/releases/v${FA_VERSION}/svgs/${U}/${T}.svg?token=${encodeURIComponent(F)}`:`https://ka-f.fontawesome.com/releases/v${FA_VERSION}/svgs/${U}/${T}.svg`}var library={name:"default",resolver:(T,w="classic",O="solid")=>getIconUrl(T,w,O),mutator:(T,w)=>{if(w!=null&&w.family&&!T.hasAttribute("data-duotone-initialized")){const{family:O,variant:F}=w;if(O==="duotone"||O==="sharp-duotone"||O==="notdog-duo"||O==="notdog"&&F==="duo-solid"||O==="jelly-duo"||O==="jelly"&&F==="duo-regular"||O==="utility-duo"||O==="thumbprint"){const W=[...T.querySelectorAll("path")],U=W.find(j=>!j.hasAttribute("opacity")),q=W.find(j=>j.hasAttribute("opacity"));if(!U||!q)return;if(U.setAttribute("data-duotone-primary",""),q.setAttribute("data-duotone-secondary",""),w.swapOpacity&&U&&q){const j=q.getAttribute("opacity")||"0.4";U.style.setProperty("--path-opacity",j),q.style.setProperty("--path-opacity","1")}T.setAttribute("data-duotone-initialized","")}}}},library_default_default=library;/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */function dataUri(T){return`data:image/svg+xml,${encodeURIComponent(T)}`}var icons={solid:{check:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></svg>',"chevron-down":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>',"chevron-left":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>',"chevron-right":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M311.1 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L243.2 256 73.9 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>',circle:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"/></svg>',eyedropper:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M341.6 29.2l-101.6 101.6-9.4-9.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-9.4-9.4 101.6-101.6c39-39 39-102.2 0-141.1s-102.2-39-141.1 0zM55.4 323.3c-15 15-23.4 35.4-23.4 56.6l0 42.4-26.6 39.9c-8.5 12.7-6.8 29.6 4 40.4s27.7 12.5 40.4 4l39.9-26.6 42.4 0c21.2 0 41.6-8.4 56.6-23.4l109.4-109.4-45.3-45.3-109.4 109.4c-3 3-7.1 4.7-11.3 4.7l-36.1 0 0-36.1c0-4.2 1.7-8.3 4.7-11.3l109.4-109.4-45.3-45.3-109.4 109.4z"/></svg>',file:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 234.5C512 217.5 505.3 201.2 493.3 189.2L386.7 82.7C374.7 70.7 358.5 64 341.5 64L192 64zM453.5 240L360 240C346.7 240 336 229.3 336 216L336 122.5L453.5 240z"/></svg>',"file-audio":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM389.8 307.7C380.7 301.4 368.3 303.6 362 312.7C355.7 321.8 357.9 334.2 367 340.5C390.9 357.2 406.4 384.8 406.4 416C406.4 447.2 390.8 474.9 367 491.5C357.9 497.8 355.7 510.3 362 519.3C368.3 528.3 380.8 530.6 389.8 524.3C423.9 500.5 446.4 460.8 446.4 416C446.4 371.2 424 331.5 389.8 307.7zM208 376C199.2 376 192 383.2 192 392L192 440C192 448.8 199.2 456 208 456L232 456L259.2 490C262.2 493.8 266.8 496 271.7 496L272 496C280.8 496 288 488.8 288 480L288 352C288 343.2 280.8 336 272 336L271.7 336C266.8 336 262.2 338.2 259.2 342L232 376L208 376zM336 448.2C336 458.9 346.5 466.4 354.9 459.8C367.8 449.5 376 433.7 376 416C376 398.3 367.8 382.5 354.9 372.2C346.5 365.5 336 373.1 336 383.8L336 448.3z"/></svg>',"file-code":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM282.2 359.6C290.8 349.5 289.7 334.4 279.6 325.8C269.5 317.2 254.4 318.3 245.8 328.4L197.8 384.4C190.1 393.4 190.1 406.6 197.8 415.6L245.8 471.6C254.4 481.7 269.6 482.8 279.6 474.2C289.6 465.6 290.8 450.4 282.2 440.4L247.6 400L282.2 359.6zM394.2 328.4C385.6 318.3 370.4 317.2 360.4 325.8C350.4 334.4 349.2 349.6 357.8 359.6L392.4 400L357.8 440.4C349.2 450.5 350.3 465.6 360.4 474.2C370.5 482.8 385.6 481.7 394.2 471.6L442.2 415.6C449.9 406.6 449.9 393.4 442.2 384.4L394.2 328.4z"/></svg>',"file-excel":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM292 330.7C284.6 319.7 269.7 316.7 258.7 324C247.7 331.3 244.7 346.3 252 357.3L291.2 416L252 474.7C244.6 485.7 247.6 500.6 258.7 508C269.8 515.4 284.6 512.4 292 501.3L320 459.3L348 501.3C355.4 512.3 370.3 515.3 381.3 508C392.3 500.7 395.3 485.7 388 474.7L348.8 416L388 357.3C395.4 346.3 392.4 331.4 381.3 324C370.2 316.6 355.4 319.6 348 330.7L320 372.7L292 330.7z"/></svg>',"file-image":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM256 320C256 302.3 241.7 288 224 288C206.3 288 192 302.3 192 320C192 337.7 206.3 352 224 352C241.7 352 256 337.7 256 320zM220.6 512L419.4 512C435.2 512 448 499.2 448 483.4C448 476.1 445.2 469 440.1 463.7L343.3 361.9C337.3 355.6 328.9 352 320.1 352L319.8 352C311 352 302.7 355.6 296.6 361.9L199.9 463.7C194.8 469 192 476.1 192 483.4C192 499.2 204.8 512 220.6 512z"/></svg>',"file-pdf":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 64C92.7 64 64 92.7 64 128L64 512C64 547.3 92.7 576 128 576L208 576L208 464C208 428.7 236.7 400 272 400L448 400L448 234.5C448 217.5 441.3 201.2 429.3 189.2L322.7 82.7C310.7 70.7 294.5 64 277.5 64L128 64zM389.5 240L296 240C282.7 240 272 229.3 272 216L272 122.5L389.5 240zM272 444C261 444 252 453 252 464L252 592C252 603 261 612 272 612C283 612 292 603 292 592L292 564L304 564C337.1 564 364 537.1 364 504C364 470.9 337.1 444 304 444L272 444zM304 524L292 524L292 484L304 484C315 484 324 493 324 504C324 515 315 524 304 524zM400 444C389 444 380 453 380 464L380 592C380 603 389 612 400 612L432 612C460.7 612 484 588.7 484 560L484 496C484 467.3 460.7 444 432 444L400 444zM420 572L420 484L432 484C438.6 484 444 489.4 444 496L444 560C444 566.6 438.6 572 432 572L420 572zM508 464L508 592C508 603 517 612 528 612C539 612 548 603 548 592L548 548L576 548C587 548 596 539 596 528C596 517 587 508 576 508L548 508L548 484L576 484C587 484 596 475 596 464C596 453 587 444 576 444L528 444C517 444 508 453 508 464z"/></svg>',"file-powerpoint":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM280 320C266.7 320 256 330.7 256 344L256 488C256 501.3 266.7 512 280 512C293.3 512 304 501.3 304 488L304 464L328 464C367.8 464 400 431.8 400 392C400 352.2 367.8 320 328 320L280 320zM328 416L304 416L304 368L328 368C341.3 368 352 378.7 352 392C352 405.3 341.3 416 328 416z"/></svg>',"file-video":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM208 368L208 464C208 481.7 222.3 496 240 496L336 496C353.7 496 368 481.7 368 464L368 440L403 475C406.2 478.2 410.5 480 415 480C424.4 480 432 472.4 432 463L432 368.9C432 359.5 424.4 351.9 415 351.9C410.5 351.9 406.2 353.7 403 356.9L368 391.9L368 367.9C368 350.2 353.7 335.9 336 335.9L240 335.9C222.3 335.9 208 350.2 208 367.9z"/></svg>',"file-word":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM263.4 338.8C260.5 325.9 247.7 317.7 234.8 320.6C221.9 323.5 213.7 336.3 216.6 349.2L248.6 493.2C250.9 503.7 260 511.4 270.8 512C281.6 512.6 291.4 505.9 294.8 495.6L320 419.9L345.2 495.6C348.6 505.8 358.4 512.5 369.2 512C380 511.5 389.1 503.8 391.4 493.2L423.4 349.2C426.3 336.3 418.1 323.4 405.2 320.6C392.3 317.8 379.4 325.9 376.6 338.8L363.4 398.2L342.8 336.4C339.5 326.6 330.4 320 320 320C309.6 320 300.5 326.6 297.2 336.4L276.6 398.2L263.4 338.8z"/></svg>',"file-zipper":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M128 128C128 92.7 156.7 64 192 64L341.5 64C358.5 64 374.8 70.7 386.8 82.7L493.3 189.3C505.3 201.3 512 217.6 512 234.6L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 128zM336 122.5L336 216C336 229.3 346.7 240 360 240L453.5 240L336 122.5zM192 136C192 149.3 202.7 160 216 160L264 160C277.3 160 288 149.3 288 136C288 122.7 277.3 112 264 112L216 112C202.7 112 192 122.7 192 136zM192 232C192 245.3 202.7 256 216 256L264 256C277.3 256 288 245.3 288 232C288 218.7 277.3 208 264 208L216 208C202.7 208 192 218.7 192 232zM256 304L224 304C206.3 304 192 318.3 192 336L192 384C192 410.5 213.5 432 240 432C266.5 432 288 410.5 288 384L288 336C288 318.3 273.7 304 256 304zM240 368C248.8 368 256 375.2 256 384C256 392.8 248.8 400 240 400C231.2 400 224 392.8 224 384C224 375.2 231.2 368 240 368z"/></svg>',"grip-vertical":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M128 40c0-22.1-17.9-40-40-40L40 0C17.9 0 0 17.9 0 40L0 88c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48zm0 192c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40l0 48c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48zM0 424l0 48c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40zM320 40c0-22.1-17.9-40-40-40L232 0c-22.1 0-40 17.9-40 40l0 48c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48zM192 232l0 48c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40zM320 424c0-22.1-17.9-40-40-40l-48 0c-22.1 0-40 17.9-40 40l0 48c0 22.1 17.9 40 40 40l48 0c22.1 0 40-17.9 40-40l0-48z"/></svg>',indeterminate:'<svg part="indeterminate-icon" class="icon" viewBox="0 0 16 16"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round"><g stroke="currentColor" stroke-width="2"><g transform="translate(2.285714 6.857143)"><path d="M10.2857143,1.14285714 L1.14285714,1.14285714"/></g></g></g></svg>',minus:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32z"/></svg>',pause:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M48 32C21.5 32 0 53.5 0 80L0 432c0 26.5 21.5 48 48 48l64 0c26.5 0 48-21.5 48-48l0-352c0-26.5-21.5-48-48-48L48 32zm224 0c-26.5 0-48 21.5-48 48l0 352c0 26.5 21.5 48 48 48l64 0c26.5 0 48-21.5 48-48l0-352c0-26.5-21.5-48-48-48l-64 0z"/></svg>',play:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M91.2 36.9c-12.4-6.8-27.4-6.5-39.6 .7S32 57.9 32 72l0 368c0 14.1 7.5 27.2 19.6 34.4s27.2 7.5 39.6 .7l336-184c12.8-7 20.8-20.5 20.8-35.1s-8-28.1-20.8-35.1l-336-184z"/></svg>',plus:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>',star:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M309.5-18.9c-4.1-8-12.4-13.1-21.4-13.1s-17.3 5.1-21.4 13.1L193.1 125.3 33.2 150.7c-8.9 1.4-16.3 7.7-19.1 16.3s-.5 18 5.8 24.4l114.4 114.5-25.2 159.9c-1.4 8.9 2.3 17.9 9.6 23.2s16.9 6.1 25 2L288.1 417.6 432.4 491c8 4.1 17.7 3.3 25-2s11-14.2 9.6-23.2L441.7 305.9 556.1 191.4c6.4-6.4 8.6-15.8 5.8-24.4s-10.1-14.9-19.1-16.3L383 125.3 309.5-18.9z"/></svg>',upload:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M352 173.3L352 384C352 401.7 337.7 416 320 416C302.3 416 288 401.7 288 384L288 173.3L246.6 214.7C234.1 227.2 213.8 227.2 201.3 214.7C188.8 202.2 188.8 181.9 201.3 169.4L297.3 73.4C309.8 60.9 330.1 60.9 342.6 73.4L438.6 169.4C451.1 181.9 451.1 202.2 438.6 214.7C426.1 227.2 405.8 227.2 393.3 214.7L352 173.3zM320 464C364.2 464 400 428.2 400 384L480 384C515.3 384 544 412.7 544 448L544 480C544 515.3 515.3 544 480 544L160 544C124.7 544 96 515.3 96 480L96 448C96 412.7 124.7 384 160 384L240 384C240 428.2 275.8 464 320 464zM464 488C477.3 488 488 477.3 488 464C488 450.7 477.3 440 464 440C450.7 440 440 450.7 440 464C440 477.3 450.7 488 464 488z"/></svg>',user:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 248a120 120 0 1 0 0-240 120 120 0 1 0 0 240zm-29.7 56C95.8 304 16 383.8 16 482.3 16 498.7 29.3 512 45.7 512l356.6 0c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3l-59.4 0z"/></svg>',xmark:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></svg>'},regular:{"circle-question":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M464 256a208 208 0 1 0 -416 0 208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0zm256-80c-17.7 0-32 14.3-32 32 0 13.3-10.7 24-24 24s-24-10.7-24-24c0-44.2 35.8-80 80-80s80 35.8 80 80c0 47.2-36 67.2-56 74.5l0 3.8c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-8.1c0-20.5 14.8-35.2 30.1-40.2 6.4-2.1 13.2-5.5 18.2-10.3 4.3-4.2 7.7-10 7.7-19.6 0-17.7-14.3-32-32-32zM224 368a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>',"circle-xmark":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464a256 256 0 1 0 0-512 256 256 0 1 0 0 512zM167 167c-9.4 9.4-9.4 24.6 0 33.9l55 55-55 55c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l55-55 55 55c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-55-55 55-55c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-55 55-55-55c-9.4-9.4-24.6-9.4-33.9 0z"/></svg>',copy:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l133.5 0c4.2 0 8.3 1.7 11.3 4.7l58.5 58.5c3 3 4.7 7.1 4.7 11.3L400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-197.5c0-17-6.7-33.3-18.7-45.3L370.7 18.7C358.7 6.7 342.5 0 325.5 0L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-16-48 0 0 16c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l16 0 0-48-16 0z"/></svg>',eye:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M288 80C222.8 80 169.2 109.6 128.1 147.7 89.6 183.5 63 226 49.4 256 63 286 89.6 328.5 128.1 364.3 169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256 513 226 486.4 183.5 447.9 147.7 406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1 3.3 7.9 3.3 16.7 0 24.6-14.9 35.7-46.2 87.7-93 131.1-47.1 43.7-111.8 80.6-192.6 80.6S142.5 443.2 95.4 399.4c-46.8-43.5-78.1-95.4-93-131.1-3.3-7.9-3.3-16.7 0-24.6 14.9-35.7 46.2-87.7 93-131.1zM288 336c44.2 0 80-35.8 80-80 0-29.6-16.1-55.5-40-69.3-1.4 59.7-49.6 107.9-109.3 109.3 13.8 23.9 39.7 40 69.3 40zm-79.6-88.4c2.5 .3 5 .4 7.6 .4 35.3 0 64-28.7 64-64 0-2.6-.2-5.1-.4-7.6-37.4 3.9-67.2 33.7-71.1 71.1zm45.6-115c10.8-3 22.2-4.5 33.9-4.5 8.8 0 17.5 .9 25.8 2.6 .3 .1 .5 .1 .8 .2 57.9 12.2 101.4 63.7 101.4 125.2 0 70.7-57.3 128-128 128-61.6 0-113-43.5-125.2-101.4-1.8-8.6-2.8-17.5-2.8-26.6 0-11 1.4-21.8 4-32 .2-.7 .3-1.3 .5-1.9 11.9-43.4 46.1-77.6 89.5-89.5z"/></svg>',"eye-slash":'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M41-24.9c-9.4-9.4-24.6-9.4-33.9 0S-2.3-.3 7 9.1l528 528c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-96.4-96.4c2.7-2.4 5.4-4.8 8-7.2 46.8-43.5 78.1-95.4 93-131.1 3.3-7.9 3.3-16.7 0-24.6-14.9-35.7-46.2-87.7-93-131.1-47.1-43.7-111.8-80.6-192.6-80.6-56.8 0-105.6 18.2-146 44.2L41-24.9zM176.9 111.1c32.1-18.9 69.2-31.1 111.1-31.1 65.2 0 118.8 29.6 159.9 67.7 38.5 35.7 65.1 78.3 78.6 108.3-13.6 30-40.2 72.5-78.6 108.3-3.1 2.8-6.2 5.6-9.4 8.4L393.8 328c14-20.5 22.2-45.3 22.2-72 0-70.7-57.3-128-128-128-26.7 0-51.5 8.2-72 22.2l-39.1-39.1zm182 182l-108-108c11.1-5.8 23.7-9.1 37.1-9.1 44.2 0 80 35.8 80 80 0 13.4-3.3 26-9.1 37.1zM103.4 173.2l-34-34c-32.6 36.8-55 75.8-66.9 104.5-3.3 7.9-3.3 16.7 0 24.6 14.9 35.7 46.2 87.7 93 131.1 47.1 43.7 111.8 80.6 192.6 80.6 37.3 0 71.2-7.9 101.5-20.6L352.2 422c-20 6.4-41.4 10-64.2 10-65.2 0-118.8-29.6-159.9-67.7-38.5-35.7-65.1-78.3-78.6-108.3 10.4-23.1 28.6-53.6 54-82.8z"/></svg>',star:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M288.1-32c9 0 17.3 5.1 21.4 13.1L383 125.3 542.9 150.7c8.9 1.4 16.3 7.7 19.1 16.3s.5 18-5.8 24.4L441.7 305.9 467 465.8c1.4 8.9-2.3 17.9-9.6 23.2s-17 6.1-25 2L288.1 417.6 143.8 491c-8 4.1-17.7 3.3-25-2s-11-14.2-9.6-23.2L134.4 305.9 20 191.4c-6.4-6.4-8.6-15.8-5.8-24.4s10.1-14.9 19.1-16.3l159.9-25.4 73.6-144.2c4.1-8 12.4-13.1 21.4-13.1zm0 76.8L230.3 158c-3.5 6.8-10 11.6-17.6 12.8l-125.5 20 89.8 89.9c5.4 5.4 7.9 13.1 6.7 20.7l-19.8 125.5 113.3-57.6c6.8-3.5 14.9-3.5 21.8 0l113.3 57.6-19.8-125.5c-1.2-7.6 1.3-15.3 6.7-20.7l89.8-89.9-125.5-20c-7.6-1.2-14.1-6-17.6-12.8L288.1 44.8z"/></svg>'}},systemLibrary={name:"system",resolver:(T,w="classic",O="solid")=>{let W=icons[O][T]??icons.regular[T]??icons.regular["circle-question"];return W?dataUri(W):""}},library_system_default=systemLibrary;/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var defaultIconFamily="classic",registry=[library_default_default,library_system_default],watchedIcons=[];function watchIcon(T){watchedIcons.push(T)}function unwatchIcon(T){watchedIcons=watchedIcons.filter(w=>w!==T)}function getIconLibrary(T){return registry.find(w=>w.name===T)}function getDefaultIconFamily(){return defaultIconFamily}/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var __defProp=Object.defineProperty,__getOwnPropDesc=Object.getOwnPropertyDescriptor,__typeError=T=>{throw TypeError(T)},__decorateClass=(T,w,O,F)=>{for(var W=F>1?void 0:F?__getOwnPropDesc(w,O):w,U=T.length-1,q;U>=0;U--)(q=T[U])&&(W=(F?q(w,O,W):q(W))||W);return F&&W&&__defProp(w,O,W),W},__accessCheck=(T,w,O)=>w.has(T)||__typeError("Cannot "+O),__privateGet=(T,w,O)=>(__accessCheck(T,w,"read from private field"),w.get(T)),__privateAdd=(T,w,O)=>w.has(T)?__typeError("Cannot add the same private member more than once"):w instanceof WeakSet?w.add(T):w.set(T,O),__privateSet=(T,w,O,F)=>(__accessCheck(T,w,"write to private field"),w.set(T,O),O);/**
  * @license
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,7 +16,7 @@ var Re=Object.defineProperty;var Pe=(T,w,O)=>w in T?Re(T,w,{enumerable:!0,config
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */const s=globalThis;let i$3=class extends y$1{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){var O;const w=super.createRenderRoot();return(O=this.renderOptions).renderBefore??(O.renderBefore=w.firstChild),w}update(w){const O=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(w),this._$Do=D(O,this.renderRoot,this.renderOptions)}connectedCallback(){var w;super.connectedCallback(),(w=this._$Do)==null||w.setConnected(!0)}disconnectedCallback(){var w;super.disconnectedCallback(),(w=this._$Do)==null||w.setConnected(!1)}render(){return E}};var Ie;i$3._$litElement$=!0,i$3.finalized=!0,(Ie=s.litElementHydrateSupport)==null||Ie.call(s,{LitElement:i$3});const o$5=s.litElementPolyfillSupport;o$5==null||o$5({LitElement:i$3});(s.litElementVersions??(s.litElementVersions=[])).push("4.2.2");/**
+ */const s=globalThis;let i$3=class extends y$1{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){var O;const w=super.createRenderRoot();return(O=this.renderOptions).renderBefore??(O.renderBefore=w.firstChild),w}update(w){const O=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(w),this._$Do=D(O,this.renderRoot,this.renderOptions)}connectedCallback(){var w;super.connectedCallback(),(w=this._$Do)==null||w.setConnected(!0)}disconnectedCallback(){var w;super.disconnectedCallback(),(w=this._$Do)==null||w.setConnected(!1)}render(){return E}};var De;i$3._$litElement$=!0,i$3.finalized=!0,(De=s.litElementHydrateSupport)==null||De.call(s,{LitElement:i$3});const o$5=s.litElementPolyfillSupport;o$5==null||o$5({LitElement:i$3});(s.litElementVersions??(s.litElementVersions=[])).push("4.2.2");/**
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
@@ -1607,7 +1607,234 @@ var Re=Object.defineProperty;var Pe=(T,w,O)=>w in T?Re(T,w,{enumerable:!0,config
               </footer>
             `:""}
       </dialog>
-    `}};WaDrawer.css=drawer_styles_default;__decorateClass([e$4(".drawer")],WaDrawer.prototype,"drawer",2);__decorateClass([n$1({type:Boolean,reflect:!0})],WaDrawer.prototype,"open",2);__decorateClass([n$1({reflect:!0})],WaDrawer.prototype,"label",2);__decorateClass([n$1({reflect:!0})],WaDrawer.prototype,"placement",2);__decorateClass([n$1({attribute:"without-header",type:Boolean,reflect:!0})],WaDrawer.prototype,"withoutHeader",2);__decorateClass([n$1({attribute:"light-dismiss",type:Boolean})],WaDrawer.prototype,"lightDismiss",2);__decorateClass([watch("open",{waitUntilFirstUpdate:!0})],WaDrawer.prototype,"handleOpenChange",1);WaDrawer=__decorateClass([t$1("wa-drawer")],WaDrawer);document.addEventListener("click",T=>{const w=T.target.closest("[data-drawer]");if(w instanceof Element){const[O,F]=parseSpaceDelimitedTokens(w.getAttribute("data-drawer")||"");if(O==="open"&&(F!=null&&F.length)){const U=w.getRootNode().getElementById(F);(U==null?void 0:U.localName)==="wa-drawer"?U.open=!0:console.warn(`A drawer with an ID of "${F}" could not be found in this document.`)}}}),document.body.addEventListener("pointerdown",()=>{});/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var WaClearEvent=class extends Event{constructor(){super("wa-clear",{bubbles:!0,cancelable:!1,composed:!0})}};/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */function submitOnEnter(T,w){const O=T.metaKey||T.ctrlKey||T.shiftKey||T.altKey;T.key==="Enter"&&!O&&setTimeout(()=>{!T.defaultPrevented&&!T.isComposing&&submitForm(w)})}function submitForm(T){let w=null;if("form"in T&&(w=T.form),!w&&"getForm"in T&&(w=T.getForm()),!w)return;const O=[...w.elements];if(O.length===1){w.requestSubmit(null);return}const F=O.find(W=>W.type==="submit"&&!W.matches(":disabled"));F&&(["input","button"].includes(F.localName)?w.requestSubmit(F):F.click())}/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var input_styles_default=i$6`
+    `}};WaDrawer.css=drawer_styles_default;__decorateClass([e$4(".drawer")],WaDrawer.prototype,"drawer",2);__decorateClass([n$1({type:Boolean,reflect:!0})],WaDrawer.prototype,"open",2);__decorateClass([n$1({reflect:!0})],WaDrawer.prototype,"label",2);__decorateClass([n$1({reflect:!0})],WaDrawer.prototype,"placement",2);__decorateClass([n$1({attribute:"without-header",type:Boolean,reflect:!0})],WaDrawer.prototype,"withoutHeader",2);__decorateClass([n$1({attribute:"light-dismiss",type:Boolean})],WaDrawer.prototype,"lightDismiss",2);__decorateClass([watch("open",{waitUntilFirstUpdate:!0})],WaDrawer.prototype,"handleOpenChange",1);WaDrawer=__decorateClass([t$1("wa-drawer")],WaDrawer);document.addEventListener("click",T=>{const w=T.target.closest("[data-drawer]");if(w instanceof Element){const[O,F]=parseSpaceDelimitedTokens(w.getAttribute("data-drawer")||"");if(O==="open"&&(F!=null&&F.length)){const U=w.getRootNode().getElementById(F);(U==null?void 0:U.localName)==="wa-drawer"?U.open=!0:console.warn(`A drawer with an ID of "${F}" could not be found in this document.`)}}}),document.body.addEventListener("pointerdown",()=>{});/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var dialog_styles_default=i$6`
+  :host {
+    --width: 31rem;
+    --spacing: var(--wa-space-l);
+    --show-duration: 200ms;
+    --hide-duration: 200ms;
+
+    display: none;
+  }
+
+  :host([open]) {
+    display: block;
+  }
+
+  .dialog {
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--width);
+    max-width: calc(100% - var(--wa-space-2xl));
+    max-height: calc(100% - var(--wa-space-2xl));
+    color: inherit;
+    background-color: var(--wa-color-surface-raised);
+    border-radius: var(--wa-panel-border-radius);
+    border: none;
+    box-shadow: var(--wa-shadow-l);
+    padding: 0;
+    margin: auto;
+
+    &.show {
+      animation: show-dialog var(--show-duration) ease;
+
+      &::backdrop {
+        animation: show-backdrop var(--show-duration, 200ms) ease;
+      }
+    }
+
+    &.hide {
+      animation: show-dialog var(--hide-duration) ease reverse;
+
+      &::backdrop {
+        animation: show-backdrop var(--hide-duration, 200ms) ease reverse;
+      }
+    }
+
+    &.pulse {
+      animation: pulse 250ms ease;
+    }
+  }
+
+  .dialog:focus {
+    outline: none;
+  }
+
+  /* Ensure there's enough vertical padding for phones that don't update vh when chrome appears (e.g. iPhone) */
+  @media screen and (max-width: 420px) {
+    .dialog {
+      max-height: 80vh;
+    }
+  }
+
+  .open {
+    display: flex;
+    opacity: 1;
+  }
+
+  .header {
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: nowrap;
+
+    padding-inline-start: var(--spacing);
+    padding-block-end: 0;
+
+    /* Subtract the close button's padding so that the X is visually aligned with the edges of the dialog content */
+    padding-inline-end: calc(var(--spacing) - var(--wa-form-control-padding-block));
+    padding-block-start: calc(var(--spacing) - var(--wa-form-control-padding-block));
+  }
+
+  .title {
+    align-self: center;
+    flex: 1 1 auto;
+    font-family: inherit;
+    font-size: var(--wa-font-size-l);
+    font-weight: var(--wa-font-weight-heading);
+    line-height: var(--wa-line-height-condensed);
+    margin: 0;
+  }
+
+  .header-actions {
+    align-self: start;
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: var(--wa-space-2xs);
+    padding-inline-start: var(--spacing);
+  }
+
+  .header-actions wa-button,
+  .header-actions ::slotted(wa-button) {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .body {
+    flex: 1 1 auto;
+    display: block;
+    padding: var(--spacing);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: var(--wa-focus-ring);
+      outline-offset: var(--wa-focus-ring-offset);
+    }
+  }
+
+  .footer {
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--wa-space-xs);
+    justify-content: end;
+    padding: var(--spacing);
+    padding-block-start: 0;
+  }
+
+  .footer ::slotted(wa-button:not(:first-of-type)) {
+    margin-inline-start: var(--wa-spacing-xs);
+  }
+
+  .dialog::backdrop {
+    /*
+      NOTE: the ::backdrop element doesn't inherit properly in Safari yet, but it will in 17.4! At that time, we can
+      remove the fallback values here.
+    */
+    background-color: var(--wa-color-overlay-modal, rgb(0 0 0 / 0.25));
+  }
+
+  @keyframes pulse {
+    0% {
+      scale: 1;
+    }
+    50% {
+      scale: 1.02;
+    }
+    100% {
+      scale: 1;
+    }
+  }
+
+  @keyframes show-dialog {
+    from {
+      opacity: 0;
+      scale: 0.8;
+    }
+    to {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+
+  @keyframes show-backdrop {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .dialog {
+      border: solid 1px white;
+    }
+  }
+`;/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var WaDialog=class extends WebAwesomeElement{constructor(){super(...arguments),this.localize=new LocalizeController(this),this.hasSlotController=new HasSlotController(this,"footer","header-actions","label"),this.open=!1,this.label="",this.withoutHeader=!1,this.lightDismiss=!1,this.handleDocumentKeyDown=T=>{T.key==="Escape"&&this.open&&isTopDismissible(this)&&(T.preventDefault(),T.stopPropagation(),this.requestClose(this.dialog))}}firstUpdated(){this.open&&(this.addOpenListeners(),this.dialog.showModal(),lockBodyScrolling(this))}disconnectedCallback(){super.disconnectedCallback(),unlockBodyScrolling(this),this.removeOpenListeners()}async requestClose(T){const w=new WaHideEvent({source:T});if(this.dispatchEvent(w),w.defaultPrevented){this.open=!0,animateWithClass(this.dialog,"pulse");return}this.removeOpenListeners(),await animateWithClass(this.dialog,"hide"),this.open=!1,this.dialog.close(),unlockBodyScrolling(this);const O=this.originalTrigger;typeof(O==null?void 0:O.focus)=="function"&&setTimeout(()=>O.focus()),this.dispatchEvent(new WaAfterHideEvent)}addOpenListeners(){document.addEventListener("keydown",this.handleDocumentKeyDown),registerDismissible(this)}removeOpenListeners(){document.removeEventListener("keydown",this.handleDocumentKeyDown),unregisterDismissible(this)}handleDialogCancel(T){T.preventDefault(),!this.dialog.classList.contains("hide")&&T.target===this.dialog&&isTopDismissible(this)&&this.requestClose(this.dialog)}handleDialogClick(T){const O=T.target.closest('[data-dialog="close"]');O&&(T.stopPropagation(),this.requestClose(O))}async handleDialogPointerDown(T){T.target===this.dialog&&(this.lightDismiss?this.requestClose(this.dialog):await animateWithClass(this.dialog,"pulse"))}handleOpenChange(){this.open&&!this.dialog.open?this.show():!this.open&&this.dialog.open&&(this.open=!0,this.requestClose(this.dialog))}async show(){const T=new WaShowEvent;if(this.dispatchEvent(T),T.defaultPrevented){this.open=!1;return}this.addOpenListeners(),this.originalTrigger=document.activeElement,this.open=!0,this.dialog.showModal(),lockBodyScrolling(this),requestAnimationFrame(()=>{const w=this.querySelector("[autofocus]");w&&typeof w.focus=="function"?w.focus():this.dialog.focus()}),await animateWithClass(this.dialog,"show"),this.dispatchEvent(new WaAfterShowEvent)}render(){const T=!this.withoutHeader,w=this.hasSlotController.test("footer");return b`
+      <dialog
+        part="dialog"
+        class=${e$2({dialog:!0,open:this.open})}
+        @cancel=${this.handleDialogCancel}
+        @click=${this.handleDialogClick}
+        @pointerdown=${this.handleDialogPointerDown}
+      >
+        ${T?b`
+              <header part="header" class="header">
+                <h2 part="title" class="title" id="title">
+                  <!-- If there's no label, use an invisible character to prevent the header from collapsing -->
+                  <slot name="label"> ${this.label.length>0?this.label:"​"} </slot>
+                </h2>
+                <div part="header-actions" class="header-actions">
+                  <slot name="header-actions"></slot>
+                  <wa-button
+                    part="close-button"
+                    exportparts="base:close-button__base"
+                    class="close"
+                    appearance="plain"
+                    @click="${O=>this.requestClose(O.target)}"
+                  >
+                    <wa-icon
+                      name="xmark"
+                      label=${this.localize.term("close")}
+                      library="system"
+                      variant="solid"
+                    ></wa-icon>
+                  </wa-button>
+                </div>
+              </header>
+            `:""}
+
+        <div part="body" class="body"><slot></slot></div>
+
+        ${w?b`
+              <footer part="footer" class="footer">
+                <slot name="footer"></slot>
+              </footer>
+            `:""}
+      </dialog>
+    `}};WaDialog.css=dialog_styles_default;__decorateClass([e$4(".dialog")],WaDialog.prototype,"dialog",2);__decorateClass([n$1({type:Boolean,reflect:!0})],WaDialog.prototype,"open",2);__decorateClass([n$1({reflect:!0})],WaDialog.prototype,"label",2);__decorateClass([n$1({attribute:"without-header",type:Boolean,reflect:!0})],WaDialog.prototype,"withoutHeader",2);__decorateClass([n$1({attribute:"light-dismiss",type:Boolean})],WaDialog.prototype,"lightDismiss",2);__decorateClass([watch("open",{waitUntilFirstUpdate:!0})],WaDialog.prototype,"handleOpenChange",1);WaDialog=__decorateClass([t$1("wa-dialog")],WaDialog);document.addEventListener("click",T=>{const w=T.target.closest("[data-dialog]");if(w instanceof Element){const[O,F]=parseSpaceDelimitedTokens(w.getAttribute("data-dialog")||"");if(O==="open"&&(F!=null&&F.length)){const U=w.getRootNode().getElementById(F);(U==null?void 0:U.localName)==="wa-dialog"?U.open=!0:console.warn(`A dialog with an ID of "${F}" could not be found in this document.`)}}}),document.addEventListener("pointerdown",()=>{});/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var WaClearEvent=class extends Event{constructor(){super("wa-clear",{bubbles:!0,cancelable:!1,composed:!0})}};/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */function submitOnEnter(T,w){const O=T.metaKey||T.ctrlKey||T.shiftKey||T.altKey;T.key==="Enter"&&!O&&setTimeout(()=>{!T.defaultPrevented&&!T.isComposing&&submitForm(w)})}function submitForm(T){let w=null;if("form"in T&&(w=T.form),!w&&"getForm"in T&&(w=T.getForm()),!w)return;const O=[...w.elements];if(O.length===1){w.requestSubmit(null);return}const F=O.find(W=>W.type==="submit"&&!W.matches(":disabled"));F&&(["input","button"].includes(F.localName)?w.requestSubmit(F):F.click())}/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */var input_styles_default=i$6`
   :host {
     border-width: 0;
   }
@@ -2726,7 +2953,7 @@ var Re=Object.defineProperty;var Pe=(T,w,O)=>w in T?Re(T,w,{enumerable:!0,config
       scale: 1;
     }
   }
-`;const min=Math.min,max=Math.max,round=Math.round,floor=Math.floor,createCoords=T=>({x:T,y:T}),oppositeSideMap={left:"right",right:"left",bottom:"top",top:"bottom"};function clamp$1(T,w,O){return max(T,min(w,O))}function evaluate(T,w){return typeof T=="function"?T(w):T}function getSide(T){return T.split("-")[0]}function getAlignment(T){return T.split("-")[1]}function getOppositeAxis(T){return T==="x"?"y":"x"}function getAxisLength(T){return T==="y"?"height":"width"}function getSideAxis(T){const w=T[0];return w==="t"||w==="b"?"y":"x"}function getAlignmentAxis(T){return getOppositeAxis(getSideAxis(T))}function getAlignmentSides(T,w,O){O===void 0&&(O=!1);const F=getAlignment(T),W=getAlignmentAxis(T),U=getAxisLength(W);let q=W==="x"?F===(O?"end":"start")?"right":"left":F==="start"?"bottom":"top";return w.reference[U]>w.floating[U]&&(q=getOppositePlacement(q)),[q,getOppositePlacement(q)]}function getExpandedPlacements(T){const w=getOppositePlacement(T);return[getOppositeAlignmentPlacement(T),w,getOppositeAlignmentPlacement(w)]}function getOppositeAlignmentPlacement(T){return T.includes("start")?T.replace("start","end"):T.replace("end","start")}const lrPlacement=["left","right"],rlPlacement=["right","left"],tbPlacement=["top","bottom"],btPlacement=["bottom","top"];function getSideList(T,w,O){switch(T){case"top":case"bottom":return O?w?rlPlacement:lrPlacement:w?lrPlacement:rlPlacement;case"left":case"right":return w?tbPlacement:btPlacement;default:return[]}}function getOppositeAxisPlacements(T,w,O,F){const W=getAlignment(T);let U=getSideList(getSide(T),O==="start",F);return W&&(U=U.map(q=>q+"-"+W),w&&(U=U.concat(U.map(getOppositeAlignmentPlacement)))),U}function getOppositePlacement(T){const w=getSide(T);return oppositeSideMap[w]+T.slice(w.length)}function expandPaddingObject(T){return{top:0,right:0,bottom:0,left:0,...T}}function getPaddingObject(T){return typeof T!="number"?expandPaddingObject(T):{top:T,right:T,bottom:T,left:T}}function rectToClientRect(T){const{x:w,y:O,width:F,height:W}=T;return{width:F,height:W,top:O,left:w,right:w+F,bottom:O+W,x:w,y:O}}function computeCoordsFromPlacement(T,w,O){let{reference:F,floating:W}=T;const U=getSideAxis(w),q=getAlignmentAxis(w),j=getAxisLength(q),J=getSide(w),X=U==="y",Y=F.x+F.width/2-W.width/2,K=F.y+F.height/2-W.height/2,G=F[j]/2-W[j]/2;let ee;switch(J){case"top":ee={x:Y,y:F.y-W.height};break;case"bottom":ee={x:Y,y:F.y+F.height};break;case"right":ee={x:F.x+F.width,y:K};break;case"left":ee={x:F.x-W.width,y:K};break;default:ee={x:F.x,y:F.y}}switch(getAlignment(w)){case"start":ee[q]-=G*(O&&X?-1:1);break;case"end":ee[q]+=G*(O&&X?-1:1);break}return ee}async function detectOverflow(T,w){var O;w===void 0&&(w={});const{x:F,y:W,platform:U,rects:q,elements:j,strategy:J}=T,{boundary:X="clippingAncestors",rootBoundary:Y="viewport",elementContext:K="floating",altBoundary:G=!1,padding:ee=0}=evaluate(w,T),Q=getPaddingObject(ee),oe=j[G?K==="floating"?"reference":"floating":K],ae=rectToClientRect(await U.getClippingRect({element:(O=await(U.isElement==null?void 0:U.isElement(oe)))==null||O?oe:oe.contextElement||await(U.getDocumentElement==null?void 0:U.getDocumentElement(j.floating)),boundary:X,rootBoundary:Y,strategy:J})),ne=K==="floating"?{x:F,y:W,width:q.floating.width,height:q.floating.height}:q.reference,re=await(U.getOffsetParent==null?void 0:U.getOffsetParent(j.floating)),se=await(U.isElement==null?void 0:U.isElement(re))?await(U.getScale==null?void 0:U.getScale(re))||{x:1,y:1}:{x:1,y:1},ue=rectToClientRect(U.convertOffsetParentRelativeRectToViewportRelativeRect?await U.convertOffsetParentRelativeRectToViewportRelativeRect({elements:j,rect:ne,offsetParent:re,strategy:J}):ne);return{top:(ae.top-ue.top+Q.top)/se.y,bottom:(ue.bottom-ae.bottom+Q.bottom)/se.y,left:(ae.left-ue.left+Q.left)/se.x,right:(ue.right-ae.right+Q.right)/se.x}}const MAX_RESET_COUNT=50,computePosition$1=async(T,w,O)=>{const{placement:F="bottom",strategy:W="absolute",middleware:U=[],platform:q}=O,j=q.detectOverflow?q:{...q,detectOverflow},J=await(q.isRTL==null?void 0:q.isRTL(w));let X=await q.getElementRects({reference:T,floating:w,strategy:W}),{x:Y,y:K}=computeCoordsFromPlacement(X,F,J),G=F,ee=0;const Q={};for(let te=0;te<U.length;te++){const oe=U[te];if(!oe)continue;const{name:ae,fn:ne}=oe,{x:re,y:se,data:ue,reset:de}=await ne({x:Y,y:K,initialPlacement:F,placement:G,strategy:W,middlewareData:Q,rects:X,platform:j,elements:{reference:T,floating:w}});Y=re??Y,K=se??K,Q[ae]={...Q[ae],...ue},de&&ee<MAX_RESET_COUNT&&(ee++,typeof de=="object"&&(de.placement&&(G=de.placement),de.rects&&(X=de.rects===!0?await q.getElementRects({reference:T,floating:w,strategy:W}):de.rects),{x:Y,y:K}=computeCoordsFromPlacement(X,G,J)),te=-1)}return{x:Y,y:K,placement:G,strategy:W,middlewareData:Q}},arrow$1=T=>({name:"arrow",options:T,async fn(w){const{x:O,y:F,placement:W,rects:U,platform:q,elements:j,middlewareData:J}=w,{element:X,padding:Y=0}=evaluate(T,w)||{};if(X==null)return{};const K=getPaddingObject(Y),G={x:O,y:F},ee=getAlignmentAxis(W),Q=getAxisLength(ee),te=await q.getDimensions(X),oe=ee==="y",ae=oe?"top":"left",ne=oe?"bottom":"right",re=oe?"clientHeight":"clientWidth",se=U.reference[Q]+U.reference[ee]-G[ee]-U.floating[Q],ue=G[ee]-U.reference[ee],de=await(q.getOffsetParent==null?void 0:q.getOffsetParent(X));let le=de?de[re]:0;(!le||!await(q.isElement==null?void 0:q.isElement(de)))&&(le=j.floating[re]||U.floating[Q]);const xe=se/2-ue/2,be=le/2-te[Q]/2-1,ge=min(K[ae],be),_e=min(K[ne],be),ve=ge,fe=le-te[Q]-_e,he=le/2-te[Q]/2+xe,Ce=clamp$1(ve,he,fe),we=!J.arrow&&getAlignment(W)!=null&&he!==Ce&&U.reference[Q]/2-(he<ve?ge:_e)-te[Q]/2<0,ce=we?he<ve?he-ve:he-fe:0;return{[ee]:G[ee]+ce,data:{[ee]:Ce,centerOffset:he-Ce-ce,...we&&{alignmentOffset:ce}},reset:we}}}),flip$1=function(T){return T===void 0&&(T={}),{name:"flip",options:T,async fn(w){var O,F;const{placement:W,middlewareData:U,rects:q,initialPlacement:j,platform:J,elements:X}=w,{mainAxis:Y=!0,crossAxis:K=!0,fallbackPlacements:G,fallbackStrategy:ee="bestFit",fallbackAxisSideDirection:Q="none",flipAlignment:te=!0,...oe}=evaluate(T,w);if((O=U.arrow)!=null&&O.alignmentOffset)return{};const ae=getSide(W),ne=getSideAxis(j),re=getSide(j)===j,se=await(J.isRTL==null?void 0:J.isRTL(X.floating)),ue=G||(re||!te?[getOppositePlacement(j)]:getExpandedPlacements(j)),de=Q!=="none";!G&&de&&ue.push(...getOppositeAxisPlacements(j,te,Q,se));const le=[j,...ue],xe=await J.detectOverflow(w,oe),be=[];let ge=((F=U.flip)==null?void 0:F.overflows)||[];if(Y&&be.push(xe[ae]),K){const he=getAlignmentSides(W,q,se);be.push(xe[he[0]],xe[he[1]])}if(ge=[...ge,{placement:W,overflows:be}],!be.every(he=>he<=0)){var _e,ve;const he=(((_e=U.flip)==null?void 0:_e.index)||0)+1,Ce=le[he];if(Ce&&(!(K==="alignment"?ne!==getSideAxis(Ce):!1)||ge.every(ye=>getSideAxis(ye.placement)===ne?ye.overflows[0]>0:!0)))return{data:{index:he,overflows:ge},reset:{placement:Ce}};let we=(ve=ge.filter(ce=>ce.overflows[0]<=0).sort((ce,ye)=>ce.overflows[1]-ye.overflows[1])[0])==null?void 0:ve.placement;if(!we)switch(ee){case"bestFit":{var fe;const ce=(fe=ge.filter(ye=>{if(de){const Ee=getSideAxis(ye.placement);return Ee===ne||Ee==="y"}return!0}).map(ye=>[ye.placement,ye.overflows.filter(Ee=>Ee>0).reduce((Ee,Ae)=>Ee+Ae,0)]).sort((ye,Ee)=>ye[1]-Ee[1])[0])==null?void 0:fe[0];ce&&(we=ce);break}case"initialPlacement":we=j;break}if(W!==we)return{reset:{placement:we}}}return{}}}},originSides=new Set(["left","top"]);async function convertValueToCoords(T,w){const{placement:O,platform:F,elements:W}=T,U=await(F.isRTL==null?void 0:F.isRTL(W.floating)),q=getSide(O),j=getAlignment(O),J=getSideAxis(O)==="y",X=originSides.has(q)?-1:1,Y=U&&J?-1:1,K=evaluate(w,T);let{mainAxis:G,crossAxis:ee,alignmentAxis:Q}=typeof K=="number"?{mainAxis:K,crossAxis:0,alignmentAxis:null}:{mainAxis:K.mainAxis||0,crossAxis:K.crossAxis||0,alignmentAxis:K.alignmentAxis};return j&&typeof Q=="number"&&(ee=j==="end"?Q*-1:Q),J?{x:ee*Y,y:G*X}:{x:G*X,y:ee*Y}}const offset$1=function(T){return T===void 0&&(T=0),{name:"offset",options:T,async fn(w){var O,F;const{x:W,y:U,placement:q,middlewareData:j}=w,J=await convertValueToCoords(w,T);return q===((O=j.offset)==null?void 0:O.placement)&&(F=j.arrow)!=null&&F.alignmentOffset?{}:{x:W+J.x,y:U+J.y,data:{...J,placement:q}}}}},shift$1=function(T){return T===void 0&&(T={}),{name:"shift",options:T,async fn(w){const{x:O,y:F,placement:W,platform:U}=w,{mainAxis:q=!0,crossAxis:j=!1,limiter:J={fn:ae=>{let{x:ne,y:re}=ae;return{x:ne,y:re}}},...X}=evaluate(T,w),Y={x:O,y:F},K=await U.detectOverflow(w,X),G=getSideAxis(getSide(W)),ee=getOppositeAxis(G);let Q=Y[ee],te=Y[G];if(q){const ae=ee==="y"?"top":"left",ne=ee==="y"?"bottom":"right",re=Q+K[ae],se=Q-K[ne];Q=clamp$1(re,Q,se)}if(j){const ae=G==="y"?"top":"left",ne=G==="y"?"bottom":"right",re=te+K[ae],se=te-K[ne];te=clamp$1(re,te,se)}const oe=J.fn({...w,[ee]:Q,[G]:te});return{...oe,data:{x:oe.x-O,y:oe.y-F,enabled:{[ee]:q,[G]:j}}}}}},size$1=function(T){return T===void 0&&(T={}),{name:"size",options:T,async fn(w){var O,F;const{placement:W,rects:U,platform:q,elements:j}=w,{apply:J=()=>{},...X}=evaluate(T,w),Y=await q.detectOverflow(w,X),K=getSide(W),G=getAlignment(W),ee=getSideAxis(W)==="y",{width:Q,height:te}=U.floating;let oe,ae;K==="top"||K==="bottom"?(oe=K,ae=G===(await(q.isRTL==null?void 0:q.isRTL(j.floating))?"start":"end")?"left":"right"):(ae=K,oe=G==="end"?"top":"bottom");const ne=te-Y.top-Y.bottom,re=Q-Y.left-Y.right,se=min(te-Y[oe],ne),ue=min(Q-Y[ae],re),de=!w.middlewareData.shift;let le=se,xe=ue;if((O=w.middlewareData.shift)!=null&&O.enabled.x&&(xe=re),(F=w.middlewareData.shift)!=null&&F.enabled.y&&(le=ne),de&&!G){const ge=max(Y.left,0),_e=max(Y.right,0),ve=max(Y.top,0),fe=max(Y.bottom,0);ee?xe=Q-2*(ge!==0||_e!==0?ge+_e:max(Y.left,Y.right)):le=te-2*(ve!==0||fe!==0?ve+fe:max(Y.top,Y.bottom))}await J({...w,availableWidth:xe,availableHeight:le});const be=await q.getDimensions(j.floating);return Q!==be.width||te!==be.height?{reset:{rects:!0}}:{}}}};function hasWindow(){return typeof window<"u"}function getNodeName(T){return isNode(T)?(T.nodeName||"").toLowerCase():"#document"}function getWindow(T){var w;return(T==null||(w=T.ownerDocument)==null?void 0:w.defaultView)||window}function getDocumentElement(T){var w;return(w=(isNode(T)?T.ownerDocument:T.document)||window.document)==null?void 0:w.documentElement}function isNode(T){return hasWindow()?T instanceof Node||T instanceof getWindow(T).Node:!1}function isElement(T){return hasWindow()?T instanceof Element||T instanceof getWindow(T).Element:!1}function isHTMLElement(T){return hasWindow()?T instanceof HTMLElement||T instanceof getWindow(T).HTMLElement:!1}function isShadowRoot(T){return!hasWindow()||typeof ShadowRoot>"u"?!1:T instanceof ShadowRoot||T instanceof getWindow(T).ShadowRoot}function isOverflowElement(T){const{overflow:w,overflowX:O,overflowY:F,display:W}=getComputedStyle$1(T);return/auto|scroll|overlay|hidden|clip/.test(w+F+O)&&W!=="inline"&&W!=="contents"}function isTableElement(T){return/^(table|td|th)$/.test(getNodeName(T))}function isTopLayer(T){try{if(T.matches(":popover-open"))return!0}catch{}try{return T.matches(":modal")}catch{return!1}}const willChangeRe=/transform|translate|scale|rotate|perspective|filter/,containRe=/paint|layout|strict|content/,isNotNone=T=>!!T&&T!=="none";let isWebKitValue;function isContainingBlock(T){const w=isElement(T)?getComputedStyle$1(T):T;return isNotNone(w.transform)||isNotNone(w.translate)||isNotNone(w.scale)||isNotNone(w.rotate)||isNotNone(w.perspective)||!isWebKit()&&(isNotNone(w.backdropFilter)||isNotNone(w.filter))||willChangeRe.test(w.willChange||"")||containRe.test(w.contain||"")}function getContainingBlock(T){let w=getParentNode(T);for(;isHTMLElement(w)&&!isLastTraversableNode(w);){if(isContainingBlock(w))return w;if(isTopLayer(w))return null;w=getParentNode(w)}return null}function isWebKit(){return isWebKitValue==null&&(isWebKitValue=typeof CSS<"u"&&CSS.supports&&CSS.supports("-webkit-backdrop-filter","none")),isWebKitValue}function isLastTraversableNode(T){return/^(html|body|#document)$/.test(getNodeName(T))}function getComputedStyle$1(T){return getWindow(T).getComputedStyle(T)}function getNodeScroll(T){return isElement(T)?{scrollLeft:T.scrollLeft,scrollTop:T.scrollTop}:{scrollLeft:T.scrollX,scrollTop:T.scrollY}}function getParentNode(T){if(getNodeName(T)==="html")return T;const w=T.assignedSlot||T.parentNode||isShadowRoot(T)&&T.host||getDocumentElement(T);return isShadowRoot(w)?w.host:w}function getNearestOverflowAncestor(T){const w=getParentNode(T);return isLastTraversableNode(w)?T.ownerDocument?T.ownerDocument.body:T.body:isHTMLElement(w)&&isOverflowElement(w)?w:getNearestOverflowAncestor(w)}function getOverflowAncestors(T,w,O){var F;w===void 0&&(w=[]),O===void 0&&(O=!0);const W=getNearestOverflowAncestor(T),U=W===((F=T.ownerDocument)==null?void 0:F.body),q=getWindow(W);if(U){const j=getFrameElement(q);return w.concat(q,q.visualViewport||[],isOverflowElement(W)?W:[],j&&O?getOverflowAncestors(j):[])}else return w.concat(W,getOverflowAncestors(W,[],O))}function getFrameElement(T){return T.parent&&Object.getPrototypeOf(T.parent)?T.frameElement:null}function getCssDimensions(T){const w=getComputedStyle$1(T);let O=parseFloat(w.width)||0,F=parseFloat(w.height)||0;const W=isHTMLElement(T),U=W?T.offsetWidth:O,q=W?T.offsetHeight:F,j=round(O)!==U||round(F)!==q;return j&&(O=U,F=q),{width:O,height:F,$:j}}function unwrapElement(T){return isElement(T)?T:T.contextElement}function getScale(T){const w=unwrapElement(T);if(!isHTMLElement(w))return createCoords(1);const O=w.getBoundingClientRect(),{width:F,height:W,$:U}=getCssDimensions(w);let q=(U?round(O.width):O.width)/F,j=(U?round(O.height):O.height)/W;return(!q||!Number.isFinite(q))&&(q=1),(!j||!Number.isFinite(j))&&(j=1),{x:q,y:j}}const noOffsets=createCoords(0);function getVisualOffsets(T){const w=getWindow(T);return!isWebKit()||!w.visualViewport?noOffsets:{x:w.visualViewport.offsetLeft,y:w.visualViewport.offsetTop}}function shouldAddVisualOffsets(T,w,O){return w===void 0&&(w=!1),!O||w&&O!==getWindow(T)?!1:w}function getBoundingClientRect(T,w,O,F){w===void 0&&(w=!1),O===void 0&&(O=!1);const W=T.getBoundingClientRect(),U=unwrapElement(T);let q=createCoords(1);w&&(F?isElement(F)&&(q=getScale(F)):q=getScale(T));const j=shouldAddVisualOffsets(U,O,F)?getVisualOffsets(U):createCoords(0);let J=(W.left+j.x)/q.x,X=(W.top+j.y)/q.y,Y=W.width/q.x,K=W.height/q.y;if(U){const G=getWindow(U),ee=F&&isElement(F)?getWindow(F):F;let Q=G,te=getFrameElement(Q);for(;te&&F&&ee!==Q;){const oe=getScale(te),ae=te.getBoundingClientRect(),ne=getComputedStyle$1(te),re=ae.left+(te.clientLeft+parseFloat(ne.paddingLeft))*oe.x,se=ae.top+(te.clientTop+parseFloat(ne.paddingTop))*oe.y;J*=oe.x,X*=oe.y,Y*=oe.x,K*=oe.y,J+=re,X+=se,Q=getWindow(te),te=getFrameElement(Q)}}return rectToClientRect({width:Y,height:K,x:J,y:X})}function getWindowScrollBarX(T,w){const O=getNodeScroll(T).scrollLeft;return w?w.left+O:getBoundingClientRect(getDocumentElement(T)).left+O}function getHTMLOffset(T,w){const O=T.getBoundingClientRect(),F=O.left+w.scrollLeft-getWindowScrollBarX(T,O),W=O.top+w.scrollTop;return{x:F,y:W}}function convertOffsetParentRelativeRectToViewportRelativeRect(T){let{elements:w,rect:O,offsetParent:F,strategy:W}=T;const U=W==="fixed",q=getDocumentElement(F),j=w?isTopLayer(w.floating):!1;if(F===q||j&&U)return O;let J={scrollLeft:0,scrollTop:0},X=createCoords(1);const Y=createCoords(0),K=isHTMLElement(F);if((K||!K&&!U)&&((getNodeName(F)!=="body"||isOverflowElement(q))&&(J=getNodeScroll(F)),K)){const ee=getBoundingClientRect(F);X=getScale(F),Y.x=ee.x+F.clientLeft,Y.y=ee.y+F.clientTop}const G=q&&!K&&!U?getHTMLOffset(q,J):createCoords(0);return{width:O.width*X.x,height:O.height*X.y,x:O.x*X.x-J.scrollLeft*X.x+Y.x+G.x,y:O.y*X.y-J.scrollTop*X.y+Y.y+G.y}}function getClientRects(T){return Array.from(T.getClientRects())}function getDocumentRect(T){const w=getDocumentElement(T),O=getNodeScroll(T),F=T.ownerDocument.body,W=max(w.scrollWidth,w.clientWidth,F.scrollWidth,F.clientWidth),U=max(w.scrollHeight,w.clientHeight,F.scrollHeight,F.clientHeight);let q=-O.scrollLeft+getWindowScrollBarX(T);const j=-O.scrollTop;return getComputedStyle$1(F).direction==="rtl"&&(q+=max(w.clientWidth,F.clientWidth)-W),{width:W,height:U,x:q,y:j}}const SCROLLBAR_MAX=25;function getViewportRect(T,w){const O=getWindow(T),F=getDocumentElement(T),W=O.visualViewport;let U=F.clientWidth,q=F.clientHeight,j=0,J=0;if(W){U=W.width,q=W.height;const Y=isWebKit();(!Y||Y&&w==="fixed")&&(j=W.offsetLeft,J=W.offsetTop)}const X=getWindowScrollBarX(F);if(X<=0){const Y=F.ownerDocument,K=Y.body,G=getComputedStyle(K),ee=Y.compatMode==="CSS1Compat"&&parseFloat(G.marginLeft)+parseFloat(G.marginRight)||0,Q=Math.abs(F.clientWidth-K.clientWidth-ee);Q<=SCROLLBAR_MAX&&(U-=Q)}else X<=SCROLLBAR_MAX&&(U+=X);return{width:U,height:q,x:j,y:J}}function getInnerBoundingClientRect(T,w){const O=getBoundingClientRect(T,!0,w==="fixed"),F=O.top+T.clientTop,W=O.left+T.clientLeft,U=isHTMLElement(T)?getScale(T):createCoords(1),q=T.clientWidth*U.x,j=T.clientHeight*U.y,J=W*U.x,X=F*U.y;return{width:q,height:j,x:J,y:X}}function getClientRectFromClippingAncestor(T,w,O){let F;if(w==="viewport")F=getViewportRect(T,O);else if(w==="document")F=getDocumentRect(getDocumentElement(T));else if(isElement(w))F=getInnerBoundingClientRect(w,O);else{const W=getVisualOffsets(T);F={x:w.x-W.x,y:w.y-W.y,width:w.width,height:w.height}}return rectToClientRect(F)}function hasFixedPositionAncestor(T,w){const O=getParentNode(T);return O===w||!isElement(O)||isLastTraversableNode(O)?!1:getComputedStyle$1(O).position==="fixed"||hasFixedPositionAncestor(O,w)}function getClippingElementAncestors(T,w){const O=w.get(T);if(O)return O;let F=getOverflowAncestors(T,[],!1).filter(j=>isElement(j)&&getNodeName(j)!=="body"),W=null;const U=getComputedStyle$1(T).position==="fixed";let q=U?getParentNode(T):T;for(;isElement(q)&&!isLastTraversableNode(q);){const j=getComputedStyle$1(q),J=isContainingBlock(q);!J&&j.position==="fixed"&&(W=null),(U?!J&&!W:!J&&j.position==="static"&&!!W&&(W.position==="absolute"||W.position==="fixed")||isOverflowElement(q)&&!J&&hasFixedPositionAncestor(T,q))?F=F.filter(Y=>Y!==q):W=j,q=getParentNode(q)}return w.set(T,F),F}function getClippingRect(T){let{element:w,boundary:O,rootBoundary:F,strategy:W}=T;const q=[...O==="clippingAncestors"?isTopLayer(w)?[]:getClippingElementAncestors(w,this._c):[].concat(O),F],j=getClientRectFromClippingAncestor(w,q[0],W);let J=j.top,X=j.right,Y=j.bottom,K=j.left;for(let G=1;G<q.length;G++){const ee=getClientRectFromClippingAncestor(w,q[G],W);J=max(ee.top,J),X=min(ee.right,X),Y=min(ee.bottom,Y),K=max(ee.left,K)}return{width:X-K,height:Y-J,x:K,y:J}}function getDimensions(T){const{width:w,height:O}=getCssDimensions(T);return{width:w,height:O}}function getRectRelativeToOffsetParent(T,w,O){const F=isHTMLElement(w),W=getDocumentElement(w),U=O==="fixed",q=getBoundingClientRect(T,!0,U,w);let j={scrollLeft:0,scrollTop:0};const J=createCoords(0);function X(){J.x=getWindowScrollBarX(W)}if(F||!F&&!U)if((getNodeName(w)!=="body"||isOverflowElement(W))&&(j=getNodeScroll(w)),F){const ee=getBoundingClientRect(w,!0,U,w);J.x=ee.x+w.clientLeft,J.y=ee.y+w.clientTop}else W&&X();U&&!F&&W&&X();const Y=W&&!F&&!U?getHTMLOffset(W,j):createCoords(0),K=q.left+j.scrollLeft-J.x-Y.x,G=q.top+j.scrollTop-J.y-Y.y;return{x:K,y:G,width:q.width,height:q.height}}function isStaticPositioned(T){return getComputedStyle$1(T).position==="static"}function getTrueOffsetParent(T,w){if(!isHTMLElement(T)||getComputedStyle$1(T).position==="fixed")return null;if(w)return w(T);let O=T.offsetParent;return getDocumentElement(T)===O&&(O=O.ownerDocument.body),O}function getOffsetParent(T,w){const O=getWindow(T);if(isTopLayer(T))return O;if(!isHTMLElement(T)){let W=getParentNode(T);for(;W&&!isLastTraversableNode(W);){if(isElement(W)&&!isStaticPositioned(W))return W;W=getParentNode(W)}return O}let F=getTrueOffsetParent(T,w);for(;F&&isTableElement(F)&&isStaticPositioned(F);)F=getTrueOffsetParent(F,w);return F&&isLastTraversableNode(F)&&isStaticPositioned(F)&&!isContainingBlock(F)?O:F||getContainingBlock(T)||O}const getElementRects=async function(T){const w=this.getOffsetParent||getOffsetParent,O=this.getDimensions,F=await O(T.floating);return{reference:getRectRelativeToOffsetParent(T.reference,await w(T.floating),T.strategy),floating:{x:0,y:0,width:F.width,height:F.height}}};function isRTL(T){return getComputedStyle$1(T).direction==="rtl"}const platform={convertOffsetParentRelativeRectToViewportRelativeRect,getDocumentElement,getClippingRect,getOffsetParent,getElementRects,getClientRects,getDimensions,getScale,isElement,isRTL};function rectsAreEqual(T,w){return T.x===w.x&&T.y===w.y&&T.width===w.width&&T.height===w.height}function observeMove(T,w){let O=null,F;const W=getDocumentElement(T);function U(){var j;clearTimeout(F),(j=O)==null||j.disconnect(),O=null}function q(j,J){j===void 0&&(j=!1),J===void 0&&(J=1),U();const X=T.getBoundingClientRect(),{left:Y,top:K,width:G,height:ee}=X;if(j||w(),!G||!ee)return;const Q=floor(K),te=floor(W.clientWidth-(Y+G)),oe=floor(W.clientHeight-(K+ee)),ae=floor(Y),re={rootMargin:-Q+"px "+-te+"px "+-oe+"px "+-ae+"px",threshold:max(0,min(1,J))||1};let se=!0;function ue(de){const le=de[0].intersectionRatio;if(le!==J){if(!se)return q();le?q(!1,le):F=setTimeout(()=>{q(!1,1e-7)},1e3)}le===1&&!rectsAreEqual(X,T.getBoundingClientRect())&&q(),se=!1}try{O=new IntersectionObserver(ue,{...re,root:W.ownerDocument})}catch{O=new IntersectionObserver(ue,re)}O.observe(T)}return q(!0),U}function autoUpdate(T,w,O,F){F===void 0&&(F={});const{ancestorScroll:W=!0,ancestorResize:U=!0,elementResize:q=typeof ResizeObserver=="function",layoutShift:j=typeof IntersectionObserver=="function",animationFrame:J=!1}=F,X=unwrapElement(T),Y=W||U?[...X?getOverflowAncestors(X):[],...w?getOverflowAncestors(w):[]]:[];Y.forEach(ae=>{W&&ae.addEventListener("scroll",O,{passive:!0}),U&&ae.addEventListener("resize",O)});const K=X&&j?observeMove(X,O):null;let G=-1,ee=null;q&&(ee=new ResizeObserver(ae=>{let[ne]=ae;ne&&ne.target===X&&ee&&w&&(ee.unobserve(w),cancelAnimationFrame(G),G=requestAnimationFrame(()=>{var re;(re=ee)==null||re.observe(w)})),O()}),X&&!J&&ee.observe(X),w&&ee.observe(w));let Q,te=J?getBoundingClientRect(T):null;J&&oe();function oe(){const ae=getBoundingClientRect(T);te&&!rectsAreEqual(te,ae)&&O(),te=ae,Q=requestAnimationFrame(oe)}return O(),()=>{var ae;Y.forEach(ne=>{W&&ne.removeEventListener("scroll",O),U&&ne.removeEventListener("resize",O)}),K==null||K(),(ae=ee)==null||ae.disconnect(),ee=null,J&&cancelAnimationFrame(Q)}}const offset=offset$1,shift=shift$1,flip=flip$1,size=size$1,arrow=arrow$1,computePosition=(T,w,O)=>{const F=new Map,W={platform,...O},U={...W.platform,_c:F};return computePosition$1(T,w,{...W,platform:U})};function e(T){return i(T)}function r(T){return T.assignedSlot?T.assignedSlot:T.parentNode instanceof ShadowRoot?T.parentNode.host:T.parentNode}function i(T){for(let w=T;w;w=r(w))if(w instanceof Element&&getComputedStyle(w).display==="none")return null;for(let w=r(T);w;w=r(w)){if(!(w instanceof Element))continue;const O=getComputedStyle(w);if(O.display!=="contents"&&(O.position!=="static"||isContainingBlock(O)||w.tagName==="BODY"))return w}return null}/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */function isVirtualElement(T){return T!==null&&typeof T=="object"&&"getBoundingClientRect"in T&&("contextElement"in T?T instanceof Element:!0)}var De,SUPPORTS_POPOVER=(De=globalThis==null?void 0:globalThis.HTMLElement)==null?void 0:De.prototype.hasOwnProperty("popover"),WaPopup=class extends WebAwesomeElement{constructor(){super(...arguments),this.localize=new LocalizeController(this),this.active=!1,this.placement="top",this.boundary="viewport",this.distance=0,this.skidding=0,this.arrow=!1,this.arrowPlacement="anchor",this.arrowPadding=10,this.flip=!1,this.flipFallbackPlacements="",this.flipFallbackStrategy="best-fit",this.flipPadding=0,this.shift=!1,this.shiftPadding=0,this.autoSizePadding=0,this.hoverBridge=!1,this.updateHoverBridge=()=>{if(this.hoverBridge&&this.anchorEl&&this.popup){const T=this.anchorEl.getBoundingClientRect(),w=this.popup.getBoundingClientRect(),O=this.placement.includes("top")||this.placement.includes("bottom");let F=0,W=0,U=0,q=0,j=0,J=0,X=0,Y=0;O?T.top<w.top?(F=T.left,W=T.bottom,U=T.right,q=T.bottom,j=w.left,J=w.top,X=w.right,Y=w.top):(F=w.left,W=w.bottom,U=w.right,q=w.bottom,j=T.left,J=T.top,X=T.right,Y=T.top):T.left<w.left?(F=T.right,W=T.top,U=w.left,q=w.top,j=T.right,J=T.bottom,X=w.left,Y=w.bottom):(F=w.right,W=w.top,U=T.left,q=T.top,j=w.right,J=w.bottom,X=T.left,Y=T.bottom),this.style.setProperty("--hover-bridge-top-left-x",`${F}px`),this.style.setProperty("--hover-bridge-top-left-y",`${W}px`),this.style.setProperty("--hover-bridge-top-right-x",`${U}px`),this.style.setProperty("--hover-bridge-top-right-y",`${q}px`),this.style.setProperty("--hover-bridge-bottom-left-x",`${j}px`),this.style.setProperty("--hover-bridge-bottom-left-y",`${J}px`),this.style.setProperty("--hover-bridge-bottom-right-x",`${X}px`),this.style.setProperty("--hover-bridge-bottom-right-y",`${Y}px`)}}}async connectedCallback(){super.connectedCallback(),await this.updateComplete,this.start()}disconnectedCallback(){super.disconnectedCallback(),this.stop()}async updated(T){super.updated(T),T.has("active")&&(this.active?this.start():this.stop()),T.has("anchor")&&this.handleAnchorChange(),this.active&&(await this.updateComplete,this.reposition())}async handleAnchorChange(){if(await this.stop(),this.anchor&&typeof this.anchor=="string"){const T=this.getRootNode();this.anchorEl=T.getElementById(this.anchor)}else this.anchor instanceof Element||isVirtualElement(this.anchor)?this.anchorEl=this.anchor:this.anchorEl=this.querySelector('[slot="anchor"]');this.anchorEl instanceof HTMLSlotElement&&(this.anchorEl=this.anchorEl.assignedElements({flatten:!0})[0]),this.anchorEl&&this.start()}start(){var T,w;!this.anchorEl||!this.active||!this.isConnected||((w=(T=this.popup)==null?void 0:T.showPopover)==null||w.call(T),this.cleanup=autoUpdate(this.anchorEl,this.popup,()=>{this.reposition()}))}async stop(){return new Promise(T=>{var w,O;(O=(w=this.popup)==null?void 0:w.hidePopover)==null||O.call(w),this.cleanup?(this.cleanup(),this.cleanup=void 0,this.removeAttribute("data-current-placement"),this.style.removeProperty("--auto-size-available-width"),this.style.removeProperty("--auto-size-available-height"),requestAnimationFrame(()=>T())):T()})}reposition(){if(!this.active||!this.anchorEl||!this.popup)return;const T=[offset({mainAxis:this.distance,crossAxis:this.skidding})];this.sync?T.push(size({apply:({rects:F})=>{const W=this.sync==="width"||this.sync==="both",U=this.sync==="height"||this.sync==="both";this.popup.style.width=W?`${F.reference.width}px`:"",this.popup.style.height=U?`${F.reference.height}px`:""}})):(this.popup.style.width="",this.popup.style.height="");let w;SUPPORTS_POPOVER&&!isVirtualElement(this.anchor)&&this.boundary==="scroll"&&(w=getOverflowAncestors(this.anchorEl).filter(F=>F instanceof Element)),this.flip&&T.push(flip({boundary:this.flipBoundary||w,fallbackPlacements:this.flipFallbackPlacements,fallbackStrategy:this.flipFallbackStrategy==="best-fit"?"bestFit":"initialPlacement",padding:this.flipPadding})),this.shift&&T.push(shift({boundary:this.shiftBoundary||w,padding:this.shiftPadding})),this.autoSize?T.push(size({boundary:this.autoSizeBoundary||w,padding:this.autoSizePadding,apply:({availableWidth:F,availableHeight:W})=>{this.autoSize==="vertical"||this.autoSize==="both"?this.style.setProperty("--auto-size-available-height",`${W}px`):this.style.removeProperty("--auto-size-available-height"),this.autoSize==="horizontal"||this.autoSize==="both"?this.style.setProperty("--auto-size-available-width",`${F}px`):this.style.removeProperty("--auto-size-available-width")}})):(this.style.removeProperty("--auto-size-available-width"),this.style.removeProperty("--auto-size-available-height")),this.arrow&&T.push(arrow({element:this.arrowEl,padding:this.arrowPadding}));const O=SUPPORTS_POPOVER?F=>platform.getOffsetParent(F,e):platform.getOffsetParent;computePosition(this.anchorEl,this.popup,{placement:this.placement,middleware:T,strategy:SUPPORTS_POPOVER?"absolute":"fixed",platform:{...platform,getOffsetParent:O}}).then(({x:F,y:W,middlewareData:U,placement:q})=>{const j=this.localize.dir()==="rtl",J={top:"bottom",right:"left",bottom:"top",left:"right"}[q.split("-")[0]];if(this.setAttribute("data-current-placement",q),Object.assign(this.popup.style,{left:`${F}px`,top:`${W}px`}),this.arrow){const X=U.arrow.x,Y=U.arrow.y;let K="",G="",ee="",Q="";if(this.arrowPlacement==="start"){const te=typeof X=="number"?`calc(${this.arrowPadding}px - var(--arrow-padding-offset))`:"";K=typeof Y=="number"?`calc(${this.arrowPadding}px - var(--arrow-padding-offset))`:"",G=j?te:"",Q=j?"":te}else if(this.arrowPlacement==="end"){const te=typeof X=="number"?`calc(${this.arrowPadding}px - var(--arrow-padding-offset))`:"";G=j?"":te,Q=j?te:"",ee=typeof Y=="number"?`calc(${this.arrowPadding}px - var(--arrow-padding-offset))`:""}else this.arrowPlacement==="center"?(Q=typeof X=="number"?"calc(50% - var(--arrow-size-diagonal))":"",K=typeof Y=="number"?"calc(50% - var(--arrow-size-diagonal))":""):(Q=typeof X=="number"?`${X}px`:"",K=typeof Y=="number"?`${Y}px`:"");Object.assign(this.arrowEl.style,{top:K,right:G,bottom:ee,left:Q,[J]:"calc(var(--arrow-base-offset) - var(--arrow-size-diagonal))"})}}),requestAnimationFrame(()=>this.updateHoverBridge()),this.dispatchEvent(new WaRepositionEvent)}render(){return b`
+`;const min=Math.min,max=Math.max,round=Math.round,floor=Math.floor,createCoords=T=>({x:T,y:T}),oppositeSideMap={left:"right",right:"left",bottom:"top",top:"bottom"};function clamp$1(T,w,O){return max(T,min(w,O))}function evaluate(T,w){return typeof T=="function"?T(w):T}function getSide(T){return T.split("-")[0]}function getAlignment(T){return T.split("-")[1]}function getOppositeAxis(T){return T==="x"?"y":"x"}function getAxisLength(T){return T==="y"?"height":"width"}function getSideAxis(T){const w=T[0];return w==="t"||w==="b"?"y":"x"}function getAlignmentAxis(T){return getOppositeAxis(getSideAxis(T))}function getAlignmentSides(T,w,O){O===void 0&&(O=!1);const F=getAlignment(T),W=getAlignmentAxis(T),U=getAxisLength(W);let q=W==="x"?F===(O?"end":"start")?"right":"left":F==="start"?"bottom":"top";return w.reference[U]>w.floating[U]&&(q=getOppositePlacement(q)),[q,getOppositePlacement(q)]}function getExpandedPlacements(T){const w=getOppositePlacement(T);return[getOppositeAlignmentPlacement(T),w,getOppositeAlignmentPlacement(w)]}function getOppositeAlignmentPlacement(T){return T.includes("start")?T.replace("start","end"):T.replace("end","start")}const lrPlacement=["left","right"],rlPlacement=["right","left"],tbPlacement=["top","bottom"],btPlacement=["bottom","top"];function getSideList(T,w,O){switch(T){case"top":case"bottom":return O?w?rlPlacement:lrPlacement:w?lrPlacement:rlPlacement;case"left":case"right":return w?tbPlacement:btPlacement;default:return[]}}function getOppositeAxisPlacements(T,w,O,F){const W=getAlignment(T);let U=getSideList(getSide(T),O==="start",F);return W&&(U=U.map(q=>q+"-"+W),w&&(U=U.concat(U.map(getOppositeAlignmentPlacement)))),U}function getOppositePlacement(T){const w=getSide(T);return oppositeSideMap[w]+T.slice(w.length)}function expandPaddingObject(T){return{top:0,right:0,bottom:0,left:0,...T}}function getPaddingObject(T){return typeof T!="number"?expandPaddingObject(T):{top:T,right:T,bottom:T,left:T}}function rectToClientRect(T){const{x:w,y:O,width:F,height:W}=T;return{width:F,height:W,top:O,left:w,right:w+F,bottom:O+W,x:w,y:O}}function computeCoordsFromPlacement(T,w,O){let{reference:F,floating:W}=T;const U=getSideAxis(w),q=getAlignmentAxis(w),j=getAxisLength(q),J=getSide(w),X=U==="y",Y=F.x+F.width/2-W.width/2,K=F.y+F.height/2-W.height/2,G=F[j]/2-W[j]/2;let ee;switch(J){case"top":ee={x:Y,y:F.y-W.height};break;case"bottom":ee={x:Y,y:F.y+F.height};break;case"right":ee={x:F.x+F.width,y:K};break;case"left":ee={x:F.x-W.width,y:K};break;default:ee={x:F.x,y:F.y}}switch(getAlignment(w)){case"start":ee[q]-=G*(O&&X?-1:1);break;case"end":ee[q]+=G*(O&&X?-1:1);break}return ee}async function detectOverflow(T,w){var O;w===void 0&&(w={});const{x:F,y:W,platform:U,rects:q,elements:j,strategy:J}=T,{boundary:X="clippingAncestors",rootBoundary:Y="viewport",elementContext:K="floating",altBoundary:G=!1,padding:ee=0}=evaluate(w,T),Q=getPaddingObject(ee),ae=j[G?K==="floating"?"reference":"floating":K],oe=rectToClientRect(await U.getClippingRect({element:(O=await(U.isElement==null?void 0:U.isElement(ae)))==null||O?ae:ae.contextElement||await(U.getDocumentElement==null?void 0:U.getDocumentElement(j.floating)),boundary:X,rootBoundary:Y,strategy:J})),ne=K==="floating"?{x:F,y:W,width:q.floating.width,height:q.floating.height}:q.reference,re=await(U.getOffsetParent==null?void 0:U.getOffsetParent(j.floating)),se=await(U.isElement==null?void 0:U.isElement(re))?await(U.getScale==null?void 0:U.getScale(re))||{x:1,y:1}:{x:1,y:1},ue=rectToClientRect(U.convertOffsetParentRelativeRectToViewportRelativeRect?await U.convertOffsetParentRelativeRectToViewportRelativeRect({elements:j,rect:ne,offsetParent:re,strategy:J}):ne);return{top:(oe.top-ue.top+Q.top)/se.y,bottom:(ue.bottom-oe.bottom+Q.bottom)/se.y,left:(oe.left-ue.left+Q.left)/se.x,right:(ue.right-oe.right+Q.right)/se.x}}const MAX_RESET_COUNT=50,computePosition$1=async(T,w,O)=>{const{placement:F="bottom",strategy:W="absolute",middleware:U=[],platform:q}=O,j=q.detectOverflow?q:{...q,detectOverflow},J=await(q.isRTL==null?void 0:q.isRTL(w));let X=await q.getElementRects({reference:T,floating:w,strategy:W}),{x:Y,y:K}=computeCoordsFromPlacement(X,F,J),G=F,ee=0;const Q={};for(let te=0;te<U.length;te++){const ae=U[te];if(!ae)continue;const{name:oe,fn:ne}=ae,{x:re,y:se,data:ue,reset:de}=await ne({x:Y,y:K,initialPlacement:F,placement:G,strategy:W,middlewareData:Q,rects:X,platform:j,elements:{reference:T,floating:w}});Y=re??Y,K=se??K,Q[oe]={...Q[oe],...ue},de&&ee<MAX_RESET_COUNT&&(ee++,typeof de=="object"&&(de.placement&&(G=de.placement),de.rects&&(X=de.rects===!0?await q.getElementRects({reference:T,floating:w,strategy:W}):de.rects),{x:Y,y:K}=computeCoordsFromPlacement(X,G,J)),te=-1)}return{x:Y,y:K,placement:G,strategy:W,middlewareData:Q}},arrow$1=T=>({name:"arrow",options:T,async fn(w){const{x:O,y:F,placement:W,rects:U,platform:q,elements:j,middlewareData:J}=w,{element:X,padding:Y=0}=evaluate(T,w)||{};if(X==null)return{};const K=getPaddingObject(Y),G={x:O,y:F},ee=getAlignmentAxis(W),Q=getAxisLength(ee),te=await q.getDimensions(X),ae=ee==="y",oe=ae?"top":"left",ne=ae?"bottom":"right",re=ae?"clientHeight":"clientWidth",se=U.reference[Q]+U.reference[ee]-G[ee]-U.floating[Q],ue=G[ee]-U.reference[ee],de=await(q.getOffsetParent==null?void 0:q.getOffsetParent(X));let le=de?de[re]:0;(!le||!await(q.isElement==null?void 0:q.isElement(de)))&&(le=j.floating[re]||U.floating[Q]);const _e=se/2-ue/2,ge=le/2-te[Q]/2-1,be=min(K[oe],ge),Ce=min(K[ne],ge),ve=be,fe=le-te[Q]-Ce,he=le/2-te[Q]/2+_e,xe=clamp$1(ve,he,fe),we=!J.arrow&&getAlignment(W)!=null&&he!==xe&&U.reference[Q]/2-(he<ve?be:Ce)-te[Q]/2<0,ce=we?he<ve?he-ve:he-fe:0;return{[ee]:G[ee]+ce,data:{[ee]:xe,centerOffset:he-xe-ce,...we&&{alignmentOffset:ce}},reset:we}}}),flip$1=function(T){return T===void 0&&(T={}),{name:"flip",options:T,async fn(w){var O,F;const{placement:W,middlewareData:U,rects:q,initialPlacement:j,platform:J,elements:X}=w,{mainAxis:Y=!0,crossAxis:K=!0,fallbackPlacements:G,fallbackStrategy:ee="bestFit",fallbackAxisSideDirection:Q="none",flipAlignment:te=!0,...ae}=evaluate(T,w);if((O=U.arrow)!=null&&O.alignmentOffset)return{};const oe=getSide(W),ne=getSideAxis(j),re=getSide(j)===j,se=await(J.isRTL==null?void 0:J.isRTL(X.floating)),ue=G||(re||!te?[getOppositePlacement(j)]:getExpandedPlacements(j)),de=Q!=="none";!G&&de&&ue.push(...getOppositeAxisPlacements(j,te,Q,se));const le=[j,...ue],_e=await J.detectOverflow(w,ae),ge=[];let be=((F=U.flip)==null?void 0:F.overflows)||[];if(Y&&ge.push(_e[oe]),K){const he=getAlignmentSides(W,q,se);ge.push(_e[he[0]],_e[he[1]])}if(be=[...be,{placement:W,overflows:ge}],!ge.every(he=>he<=0)){var Ce,ve;const he=(((Ce=U.flip)==null?void 0:Ce.index)||0)+1,xe=le[he];if(xe&&(!(K==="alignment"?ne!==getSideAxis(xe):!1)||be.every(ye=>getSideAxis(ye.placement)===ne?ye.overflows[0]>0:!0)))return{data:{index:he,overflows:be},reset:{placement:xe}};let we=(ve=be.filter(ce=>ce.overflows[0]<=0).sort((ce,ye)=>ce.overflows[1]-ye.overflows[1])[0])==null?void 0:ve.placement;if(!we)switch(ee){case"bestFit":{var fe;const ce=(fe=be.filter(ye=>{if(de){const Ee=getSideAxis(ye.placement);return Ee===ne||Ee==="y"}return!0}).map(ye=>[ye.placement,ye.overflows.filter(Ee=>Ee>0).reduce((Ee,Ae)=>Ee+Ae,0)]).sort((ye,Ee)=>ye[1]-Ee[1])[0])==null?void 0:fe[0];ce&&(we=ce);break}case"initialPlacement":we=j;break}if(W!==we)return{reset:{placement:we}}}return{}}}},originSides=new Set(["left","top"]);async function convertValueToCoords(T,w){const{placement:O,platform:F,elements:W}=T,U=await(F.isRTL==null?void 0:F.isRTL(W.floating)),q=getSide(O),j=getAlignment(O),J=getSideAxis(O)==="y",X=originSides.has(q)?-1:1,Y=U&&J?-1:1,K=evaluate(w,T);let{mainAxis:G,crossAxis:ee,alignmentAxis:Q}=typeof K=="number"?{mainAxis:K,crossAxis:0,alignmentAxis:null}:{mainAxis:K.mainAxis||0,crossAxis:K.crossAxis||0,alignmentAxis:K.alignmentAxis};return j&&typeof Q=="number"&&(ee=j==="end"?Q*-1:Q),J?{x:ee*Y,y:G*X}:{x:G*X,y:ee*Y}}const offset$1=function(T){return T===void 0&&(T=0),{name:"offset",options:T,async fn(w){var O,F;const{x:W,y:U,placement:q,middlewareData:j}=w,J=await convertValueToCoords(w,T);return q===((O=j.offset)==null?void 0:O.placement)&&(F=j.arrow)!=null&&F.alignmentOffset?{}:{x:W+J.x,y:U+J.y,data:{...J,placement:q}}}}},shift$1=function(T){return T===void 0&&(T={}),{name:"shift",options:T,async fn(w){const{x:O,y:F,placement:W,platform:U}=w,{mainAxis:q=!0,crossAxis:j=!1,limiter:J={fn:oe=>{let{x:ne,y:re}=oe;return{x:ne,y:re}}},...X}=evaluate(T,w),Y={x:O,y:F},K=await U.detectOverflow(w,X),G=getSideAxis(getSide(W)),ee=getOppositeAxis(G);let Q=Y[ee],te=Y[G];if(q){const oe=ee==="y"?"top":"left",ne=ee==="y"?"bottom":"right",re=Q+K[oe],se=Q-K[ne];Q=clamp$1(re,Q,se)}if(j){const oe=G==="y"?"top":"left",ne=G==="y"?"bottom":"right",re=te+K[oe],se=te-K[ne];te=clamp$1(re,te,se)}const ae=J.fn({...w,[ee]:Q,[G]:te});return{...ae,data:{x:ae.x-O,y:ae.y-F,enabled:{[ee]:q,[G]:j}}}}}},size$1=function(T){return T===void 0&&(T={}),{name:"size",options:T,async fn(w){var O,F;const{placement:W,rects:U,platform:q,elements:j}=w,{apply:J=()=>{},...X}=evaluate(T,w),Y=await q.detectOverflow(w,X),K=getSide(W),G=getAlignment(W),ee=getSideAxis(W)==="y",{width:Q,height:te}=U.floating;let ae,oe;K==="top"||K==="bottom"?(ae=K,oe=G===(await(q.isRTL==null?void 0:q.isRTL(j.floating))?"start":"end")?"left":"right"):(oe=K,ae=G==="end"?"top":"bottom");const ne=te-Y.top-Y.bottom,re=Q-Y.left-Y.right,se=min(te-Y[ae],ne),ue=min(Q-Y[oe],re),de=!w.middlewareData.shift;let le=se,_e=ue;if((O=w.middlewareData.shift)!=null&&O.enabled.x&&(_e=re),(F=w.middlewareData.shift)!=null&&F.enabled.y&&(le=ne),de&&!G){const be=max(Y.left,0),Ce=max(Y.right,0),ve=max(Y.top,0),fe=max(Y.bottom,0);ee?_e=Q-2*(be!==0||Ce!==0?be+Ce:max(Y.left,Y.right)):le=te-2*(ve!==0||fe!==0?ve+fe:max(Y.top,Y.bottom))}await J({...w,availableWidth:_e,availableHeight:le});const ge=await q.getDimensions(j.floating);return Q!==ge.width||te!==ge.height?{reset:{rects:!0}}:{}}}};function hasWindow(){return typeof window<"u"}function getNodeName(T){return isNode(T)?(T.nodeName||"").toLowerCase():"#document"}function getWindow(T){var w;return(T==null||(w=T.ownerDocument)==null?void 0:w.defaultView)||window}function getDocumentElement(T){var w;return(w=(isNode(T)?T.ownerDocument:T.document)||window.document)==null?void 0:w.documentElement}function isNode(T){return hasWindow()?T instanceof Node||T instanceof getWindow(T).Node:!1}function isElement(T){return hasWindow()?T instanceof Element||T instanceof getWindow(T).Element:!1}function isHTMLElement(T){return hasWindow()?T instanceof HTMLElement||T instanceof getWindow(T).HTMLElement:!1}function isShadowRoot(T){return!hasWindow()||typeof ShadowRoot>"u"?!1:T instanceof ShadowRoot||T instanceof getWindow(T).ShadowRoot}function isOverflowElement(T){const{overflow:w,overflowX:O,overflowY:F,display:W}=getComputedStyle$1(T);return/auto|scroll|overlay|hidden|clip/.test(w+F+O)&&W!=="inline"&&W!=="contents"}function isTableElement(T){return/^(table|td|th)$/.test(getNodeName(T))}function isTopLayer(T){try{if(T.matches(":popover-open"))return!0}catch{}try{return T.matches(":modal")}catch{return!1}}const willChangeRe=/transform|translate|scale|rotate|perspective|filter/,containRe=/paint|layout|strict|content/,isNotNone=T=>!!T&&T!=="none";let isWebKitValue;function isContainingBlock(T){const w=isElement(T)?getComputedStyle$1(T):T;return isNotNone(w.transform)||isNotNone(w.translate)||isNotNone(w.scale)||isNotNone(w.rotate)||isNotNone(w.perspective)||!isWebKit()&&(isNotNone(w.backdropFilter)||isNotNone(w.filter))||willChangeRe.test(w.willChange||"")||containRe.test(w.contain||"")}function getContainingBlock(T){let w=getParentNode(T);for(;isHTMLElement(w)&&!isLastTraversableNode(w);){if(isContainingBlock(w))return w;if(isTopLayer(w))return null;w=getParentNode(w)}return null}function isWebKit(){return isWebKitValue==null&&(isWebKitValue=typeof CSS<"u"&&CSS.supports&&CSS.supports("-webkit-backdrop-filter","none")),isWebKitValue}function isLastTraversableNode(T){return/^(html|body|#document)$/.test(getNodeName(T))}function getComputedStyle$1(T){return getWindow(T).getComputedStyle(T)}function getNodeScroll(T){return isElement(T)?{scrollLeft:T.scrollLeft,scrollTop:T.scrollTop}:{scrollLeft:T.scrollX,scrollTop:T.scrollY}}function getParentNode(T){if(getNodeName(T)==="html")return T;const w=T.assignedSlot||T.parentNode||isShadowRoot(T)&&T.host||getDocumentElement(T);return isShadowRoot(w)?w.host:w}function getNearestOverflowAncestor(T){const w=getParentNode(T);return isLastTraversableNode(w)?T.ownerDocument?T.ownerDocument.body:T.body:isHTMLElement(w)&&isOverflowElement(w)?w:getNearestOverflowAncestor(w)}function getOverflowAncestors(T,w,O){var F;w===void 0&&(w=[]),O===void 0&&(O=!0);const W=getNearestOverflowAncestor(T),U=W===((F=T.ownerDocument)==null?void 0:F.body),q=getWindow(W);if(U){const j=getFrameElement(q);return w.concat(q,q.visualViewport||[],isOverflowElement(W)?W:[],j&&O?getOverflowAncestors(j):[])}else return w.concat(W,getOverflowAncestors(W,[],O))}function getFrameElement(T){return T.parent&&Object.getPrototypeOf(T.parent)?T.frameElement:null}function getCssDimensions(T){const w=getComputedStyle$1(T);let O=parseFloat(w.width)||0,F=parseFloat(w.height)||0;const W=isHTMLElement(T),U=W?T.offsetWidth:O,q=W?T.offsetHeight:F,j=round(O)!==U||round(F)!==q;return j&&(O=U,F=q),{width:O,height:F,$:j}}function unwrapElement(T){return isElement(T)?T:T.contextElement}function getScale(T){const w=unwrapElement(T);if(!isHTMLElement(w))return createCoords(1);const O=w.getBoundingClientRect(),{width:F,height:W,$:U}=getCssDimensions(w);let q=(U?round(O.width):O.width)/F,j=(U?round(O.height):O.height)/W;return(!q||!Number.isFinite(q))&&(q=1),(!j||!Number.isFinite(j))&&(j=1),{x:q,y:j}}const noOffsets=createCoords(0);function getVisualOffsets(T){const w=getWindow(T);return!isWebKit()||!w.visualViewport?noOffsets:{x:w.visualViewport.offsetLeft,y:w.visualViewport.offsetTop}}function shouldAddVisualOffsets(T,w,O){return w===void 0&&(w=!1),!O||w&&O!==getWindow(T)?!1:w}function getBoundingClientRect(T,w,O,F){w===void 0&&(w=!1),O===void 0&&(O=!1);const W=T.getBoundingClientRect(),U=unwrapElement(T);let q=createCoords(1);w&&(F?isElement(F)&&(q=getScale(F)):q=getScale(T));const j=shouldAddVisualOffsets(U,O,F)?getVisualOffsets(U):createCoords(0);let J=(W.left+j.x)/q.x,X=(W.top+j.y)/q.y,Y=W.width/q.x,K=W.height/q.y;if(U){const G=getWindow(U),ee=F&&isElement(F)?getWindow(F):F;let Q=G,te=getFrameElement(Q);for(;te&&F&&ee!==Q;){const ae=getScale(te),oe=te.getBoundingClientRect(),ne=getComputedStyle$1(te),re=oe.left+(te.clientLeft+parseFloat(ne.paddingLeft))*ae.x,se=oe.top+(te.clientTop+parseFloat(ne.paddingTop))*ae.y;J*=ae.x,X*=ae.y,Y*=ae.x,K*=ae.y,J+=re,X+=se,Q=getWindow(te),te=getFrameElement(Q)}}return rectToClientRect({width:Y,height:K,x:J,y:X})}function getWindowScrollBarX(T,w){const O=getNodeScroll(T).scrollLeft;return w?w.left+O:getBoundingClientRect(getDocumentElement(T)).left+O}function getHTMLOffset(T,w){const O=T.getBoundingClientRect(),F=O.left+w.scrollLeft-getWindowScrollBarX(T,O),W=O.top+w.scrollTop;return{x:F,y:W}}function convertOffsetParentRelativeRectToViewportRelativeRect(T){let{elements:w,rect:O,offsetParent:F,strategy:W}=T;const U=W==="fixed",q=getDocumentElement(F),j=w?isTopLayer(w.floating):!1;if(F===q||j&&U)return O;let J={scrollLeft:0,scrollTop:0},X=createCoords(1);const Y=createCoords(0),K=isHTMLElement(F);if((K||!K&&!U)&&((getNodeName(F)!=="body"||isOverflowElement(q))&&(J=getNodeScroll(F)),K)){const ee=getBoundingClientRect(F);X=getScale(F),Y.x=ee.x+F.clientLeft,Y.y=ee.y+F.clientTop}const G=q&&!K&&!U?getHTMLOffset(q,J):createCoords(0);return{width:O.width*X.x,height:O.height*X.y,x:O.x*X.x-J.scrollLeft*X.x+Y.x+G.x,y:O.y*X.y-J.scrollTop*X.y+Y.y+G.y}}function getClientRects(T){return Array.from(T.getClientRects())}function getDocumentRect(T){const w=getDocumentElement(T),O=getNodeScroll(T),F=T.ownerDocument.body,W=max(w.scrollWidth,w.clientWidth,F.scrollWidth,F.clientWidth),U=max(w.scrollHeight,w.clientHeight,F.scrollHeight,F.clientHeight);let q=-O.scrollLeft+getWindowScrollBarX(T);const j=-O.scrollTop;return getComputedStyle$1(F).direction==="rtl"&&(q+=max(w.clientWidth,F.clientWidth)-W),{width:W,height:U,x:q,y:j}}const SCROLLBAR_MAX=25;function getViewportRect(T,w){const O=getWindow(T),F=getDocumentElement(T),W=O.visualViewport;let U=F.clientWidth,q=F.clientHeight,j=0,J=0;if(W){U=W.width,q=W.height;const Y=isWebKit();(!Y||Y&&w==="fixed")&&(j=W.offsetLeft,J=W.offsetTop)}const X=getWindowScrollBarX(F);if(X<=0){const Y=F.ownerDocument,K=Y.body,G=getComputedStyle(K),ee=Y.compatMode==="CSS1Compat"&&parseFloat(G.marginLeft)+parseFloat(G.marginRight)||0,Q=Math.abs(F.clientWidth-K.clientWidth-ee);Q<=SCROLLBAR_MAX&&(U-=Q)}else X<=SCROLLBAR_MAX&&(U+=X);return{width:U,height:q,x:j,y:J}}function getInnerBoundingClientRect(T,w){const O=getBoundingClientRect(T,!0,w==="fixed"),F=O.top+T.clientTop,W=O.left+T.clientLeft,U=isHTMLElement(T)?getScale(T):createCoords(1),q=T.clientWidth*U.x,j=T.clientHeight*U.y,J=W*U.x,X=F*U.y;return{width:q,height:j,x:J,y:X}}function getClientRectFromClippingAncestor(T,w,O){let F;if(w==="viewport")F=getViewportRect(T,O);else if(w==="document")F=getDocumentRect(getDocumentElement(T));else if(isElement(w))F=getInnerBoundingClientRect(w,O);else{const W=getVisualOffsets(T);F={x:w.x-W.x,y:w.y-W.y,width:w.width,height:w.height}}return rectToClientRect(F)}function hasFixedPositionAncestor(T,w){const O=getParentNode(T);return O===w||!isElement(O)||isLastTraversableNode(O)?!1:getComputedStyle$1(O).position==="fixed"||hasFixedPositionAncestor(O,w)}function getClippingElementAncestors(T,w){const O=w.get(T);if(O)return O;let F=getOverflowAncestors(T,[],!1).filter(j=>isElement(j)&&getNodeName(j)!=="body"),W=null;const U=getComputedStyle$1(T).position==="fixed";let q=U?getParentNode(T):T;for(;isElement(q)&&!isLastTraversableNode(q);){const j=getComputedStyle$1(q),J=isContainingBlock(q);!J&&j.position==="fixed"&&(W=null),(U?!J&&!W:!J&&j.position==="static"&&!!W&&(W.position==="absolute"||W.position==="fixed")||isOverflowElement(q)&&!J&&hasFixedPositionAncestor(T,q))?F=F.filter(Y=>Y!==q):W=j,q=getParentNode(q)}return w.set(T,F),F}function getClippingRect(T){let{element:w,boundary:O,rootBoundary:F,strategy:W}=T;const q=[...O==="clippingAncestors"?isTopLayer(w)?[]:getClippingElementAncestors(w,this._c):[].concat(O),F],j=getClientRectFromClippingAncestor(w,q[0],W);let J=j.top,X=j.right,Y=j.bottom,K=j.left;for(let G=1;G<q.length;G++){const ee=getClientRectFromClippingAncestor(w,q[G],W);J=max(ee.top,J),X=min(ee.right,X),Y=min(ee.bottom,Y),K=max(ee.left,K)}return{width:X-K,height:Y-J,x:K,y:J}}function getDimensions(T){const{width:w,height:O}=getCssDimensions(T);return{width:w,height:O}}function getRectRelativeToOffsetParent(T,w,O){const F=isHTMLElement(w),W=getDocumentElement(w),U=O==="fixed",q=getBoundingClientRect(T,!0,U,w);let j={scrollLeft:0,scrollTop:0};const J=createCoords(0);function X(){J.x=getWindowScrollBarX(W)}if(F||!F&&!U)if((getNodeName(w)!=="body"||isOverflowElement(W))&&(j=getNodeScroll(w)),F){const ee=getBoundingClientRect(w,!0,U,w);J.x=ee.x+w.clientLeft,J.y=ee.y+w.clientTop}else W&&X();U&&!F&&W&&X();const Y=W&&!F&&!U?getHTMLOffset(W,j):createCoords(0),K=q.left+j.scrollLeft-J.x-Y.x,G=q.top+j.scrollTop-J.y-Y.y;return{x:K,y:G,width:q.width,height:q.height}}function isStaticPositioned(T){return getComputedStyle$1(T).position==="static"}function getTrueOffsetParent(T,w){if(!isHTMLElement(T)||getComputedStyle$1(T).position==="fixed")return null;if(w)return w(T);let O=T.offsetParent;return getDocumentElement(T)===O&&(O=O.ownerDocument.body),O}function getOffsetParent(T,w){const O=getWindow(T);if(isTopLayer(T))return O;if(!isHTMLElement(T)){let W=getParentNode(T);for(;W&&!isLastTraversableNode(W);){if(isElement(W)&&!isStaticPositioned(W))return W;W=getParentNode(W)}return O}let F=getTrueOffsetParent(T,w);for(;F&&isTableElement(F)&&isStaticPositioned(F);)F=getTrueOffsetParent(F,w);return F&&isLastTraversableNode(F)&&isStaticPositioned(F)&&!isContainingBlock(F)?O:F||getContainingBlock(T)||O}const getElementRects=async function(T){const w=this.getOffsetParent||getOffsetParent,O=this.getDimensions,F=await O(T.floating);return{reference:getRectRelativeToOffsetParent(T.reference,await w(T.floating),T.strategy),floating:{x:0,y:0,width:F.width,height:F.height}}};function isRTL(T){return getComputedStyle$1(T).direction==="rtl"}const platform={convertOffsetParentRelativeRectToViewportRelativeRect,getDocumentElement,getClippingRect,getOffsetParent,getElementRects,getClientRects,getDimensions,getScale,isElement,isRTL};function rectsAreEqual(T,w){return T.x===w.x&&T.y===w.y&&T.width===w.width&&T.height===w.height}function observeMove(T,w){let O=null,F;const W=getDocumentElement(T);function U(){var j;clearTimeout(F),(j=O)==null||j.disconnect(),O=null}function q(j,J){j===void 0&&(j=!1),J===void 0&&(J=1),U();const X=T.getBoundingClientRect(),{left:Y,top:K,width:G,height:ee}=X;if(j||w(),!G||!ee)return;const Q=floor(K),te=floor(W.clientWidth-(Y+G)),ae=floor(W.clientHeight-(K+ee)),oe=floor(Y),re={rootMargin:-Q+"px "+-te+"px "+-ae+"px "+-oe+"px",threshold:max(0,min(1,J))||1};let se=!0;function ue(de){const le=de[0].intersectionRatio;if(le!==J){if(!se)return q();le?q(!1,le):F=setTimeout(()=>{q(!1,1e-7)},1e3)}le===1&&!rectsAreEqual(X,T.getBoundingClientRect())&&q(),se=!1}try{O=new IntersectionObserver(ue,{...re,root:W.ownerDocument})}catch{O=new IntersectionObserver(ue,re)}O.observe(T)}return q(!0),U}function autoUpdate(T,w,O,F){F===void 0&&(F={});const{ancestorScroll:W=!0,ancestorResize:U=!0,elementResize:q=typeof ResizeObserver=="function",layoutShift:j=typeof IntersectionObserver=="function",animationFrame:J=!1}=F,X=unwrapElement(T),Y=W||U?[...X?getOverflowAncestors(X):[],...w?getOverflowAncestors(w):[]]:[];Y.forEach(oe=>{W&&oe.addEventListener("scroll",O,{passive:!0}),U&&oe.addEventListener("resize",O)});const K=X&&j?observeMove(X,O):null;let G=-1,ee=null;q&&(ee=new ResizeObserver(oe=>{let[ne]=oe;ne&&ne.target===X&&ee&&w&&(ee.unobserve(w),cancelAnimationFrame(G),G=requestAnimationFrame(()=>{var re;(re=ee)==null||re.observe(w)})),O()}),X&&!J&&ee.observe(X),w&&ee.observe(w));let Q,te=J?getBoundingClientRect(T):null;J&&ae();function ae(){const oe=getBoundingClientRect(T);te&&!rectsAreEqual(te,oe)&&O(),te=oe,Q=requestAnimationFrame(ae)}return O(),()=>{var oe;Y.forEach(ne=>{W&&ne.removeEventListener("scroll",O),U&&ne.removeEventListener("resize",O)}),K==null||K(),(oe=ee)==null||oe.disconnect(),ee=null,J&&cancelAnimationFrame(Q)}}const offset=offset$1,shift=shift$1,flip=flip$1,size=size$1,arrow=arrow$1,computePosition=(T,w,O)=>{const F=new Map,W={platform,...O},U={...W.platform,_c:F};return computePosition$1(T,w,{...W,platform:U})};function e(T){return i(T)}function r(T){return T.assignedSlot?T.assignedSlot:T.parentNode instanceof ShadowRoot?T.parentNode.host:T.parentNode}function i(T){for(let w=T;w;w=r(w))if(w instanceof Element&&getComputedStyle(w).display==="none")return null;for(let w=r(T);w;w=r(w)){if(!(w instanceof Element))continue;const O=getComputedStyle(w);if(O.display!=="contents"&&(O.position!=="static"||isContainingBlock(O)||w.tagName==="BODY"))return w}return null}/*! Copyright 2026 Fonticons, Inc. - https://webawesome.com/license */function isVirtualElement(T){return T!==null&&typeof T=="object"&&"getBoundingClientRect"in T&&("contextElement"in T?T instanceof Element:!0)}var Ie,SUPPORTS_POPOVER=(Ie=globalThis==null?void 0:globalThis.HTMLElement)==null?void 0:Ie.prototype.hasOwnProperty("popover"),WaPopup=class extends WebAwesomeElement{constructor(){super(...arguments),this.localize=new LocalizeController(this),this.active=!1,this.placement="top",this.boundary="viewport",this.distance=0,this.skidding=0,this.arrow=!1,this.arrowPlacement="anchor",this.arrowPadding=10,this.flip=!1,this.flipFallbackPlacements="",this.flipFallbackStrategy="best-fit",this.flipPadding=0,this.shift=!1,this.shiftPadding=0,this.autoSizePadding=0,this.hoverBridge=!1,this.updateHoverBridge=()=>{if(this.hoverBridge&&this.anchorEl&&this.popup){const T=this.anchorEl.getBoundingClientRect(),w=this.popup.getBoundingClientRect(),O=this.placement.includes("top")||this.placement.includes("bottom");let F=0,W=0,U=0,q=0,j=0,J=0,X=0,Y=0;O?T.top<w.top?(F=T.left,W=T.bottom,U=T.right,q=T.bottom,j=w.left,J=w.top,X=w.right,Y=w.top):(F=w.left,W=w.bottom,U=w.right,q=w.bottom,j=T.left,J=T.top,X=T.right,Y=T.top):T.left<w.left?(F=T.right,W=T.top,U=w.left,q=w.top,j=T.right,J=T.bottom,X=w.left,Y=w.bottom):(F=w.right,W=w.top,U=T.left,q=T.top,j=w.right,J=w.bottom,X=T.left,Y=T.bottom),this.style.setProperty("--hover-bridge-top-left-x",`${F}px`),this.style.setProperty("--hover-bridge-top-left-y",`${W}px`),this.style.setProperty("--hover-bridge-top-right-x",`${U}px`),this.style.setProperty("--hover-bridge-top-right-y",`${q}px`),this.style.setProperty("--hover-bridge-bottom-left-x",`${j}px`),this.style.setProperty("--hover-bridge-bottom-left-y",`${J}px`),this.style.setProperty("--hover-bridge-bottom-right-x",`${X}px`),this.style.setProperty("--hover-bridge-bottom-right-y",`${Y}px`)}}}async connectedCallback(){super.connectedCallback(),await this.updateComplete,this.start()}disconnectedCallback(){super.disconnectedCallback(),this.stop()}async updated(T){super.updated(T),T.has("active")&&(this.active?this.start():this.stop()),T.has("anchor")&&this.handleAnchorChange(),this.active&&(await this.updateComplete,this.reposition())}async handleAnchorChange(){if(await this.stop(),this.anchor&&typeof this.anchor=="string"){const T=this.getRootNode();this.anchorEl=T.getElementById(this.anchor)}else this.anchor instanceof Element||isVirtualElement(this.anchor)?this.anchorEl=this.anchor:this.anchorEl=this.querySelector('[slot="anchor"]');this.anchorEl instanceof HTMLSlotElement&&(this.anchorEl=this.anchorEl.assignedElements({flatten:!0})[0]),this.anchorEl&&this.start()}start(){var T,w;!this.anchorEl||!this.active||!this.isConnected||((w=(T=this.popup)==null?void 0:T.showPopover)==null||w.call(T),this.cleanup=autoUpdate(this.anchorEl,this.popup,()=>{this.reposition()}))}async stop(){return new Promise(T=>{var w,O;(O=(w=this.popup)==null?void 0:w.hidePopover)==null||O.call(w),this.cleanup?(this.cleanup(),this.cleanup=void 0,this.removeAttribute("data-current-placement"),this.style.removeProperty("--auto-size-available-width"),this.style.removeProperty("--auto-size-available-height"),requestAnimationFrame(()=>T())):T()})}reposition(){if(!this.active||!this.anchorEl||!this.popup)return;const T=[offset({mainAxis:this.distance,crossAxis:this.skidding})];this.sync?T.push(size({apply:({rects:F})=>{const W=this.sync==="width"||this.sync==="both",U=this.sync==="height"||this.sync==="both";this.popup.style.width=W?`${F.reference.width}px`:"",this.popup.style.height=U?`${F.reference.height}px`:""}})):(this.popup.style.width="",this.popup.style.height="");let w;SUPPORTS_POPOVER&&!isVirtualElement(this.anchor)&&this.boundary==="scroll"&&(w=getOverflowAncestors(this.anchorEl).filter(F=>F instanceof Element)),this.flip&&T.push(flip({boundary:this.flipBoundary||w,fallbackPlacements:this.flipFallbackPlacements,fallbackStrategy:this.flipFallbackStrategy==="best-fit"?"bestFit":"initialPlacement",padding:this.flipPadding})),this.shift&&T.push(shift({boundary:this.shiftBoundary||w,padding:this.shiftPadding})),this.autoSize?T.push(size({boundary:this.autoSizeBoundary||w,padding:this.autoSizePadding,apply:({availableWidth:F,availableHeight:W})=>{this.autoSize==="vertical"||this.autoSize==="both"?this.style.setProperty("--auto-size-available-height",`${W}px`):this.style.removeProperty("--auto-size-available-height"),this.autoSize==="horizontal"||this.autoSize==="both"?this.style.setProperty("--auto-size-available-width",`${F}px`):this.style.removeProperty("--auto-size-available-width")}})):(this.style.removeProperty("--auto-size-available-width"),this.style.removeProperty("--auto-size-available-height")),this.arrow&&T.push(arrow({element:this.arrowEl,padding:this.arrowPadding}));const O=SUPPORTS_POPOVER?F=>platform.getOffsetParent(F,e):platform.getOffsetParent;computePosition(this.anchorEl,this.popup,{placement:this.placement,middleware:T,strategy:SUPPORTS_POPOVER?"absolute":"fixed",platform:{...platform,getOffsetParent:O}}).then(({x:F,y:W,middlewareData:U,placement:q})=>{const j=this.localize.dir()==="rtl",J={top:"bottom",right:"left",bottom:"top",left:"right"}[q.split("-")[0]];if(this.setAttribute("data-current-placement",q),Object.assign(this.popup.style,{left:`${F}px`,top:`${W}px`}),this.arrow){const X=U.arrow.x,Y=U.arrow.y;let K="",G="",ee="",Q="";if(this.arrowPlacement==="start"){const te=typeof X=="number"?`calc(${this.arrowPadding}px - var(--arrow-padding-offset))`:"";K=typeof Y=="number"?`calc(${this.arrowPadding}px - var(--arrow-padding-offset))`:"",G=j?te:"",Q=j?"":te}else if(this.arrowPlacement==="end"){const te=typeof X=="number"?`calc(${this.arrowPadding}px - var(--arrow-padding-offset))`:"";G=j?"":te,Q=j?te:"",ee=typeof Y=="number"?`calc(${this.arrowPadding}px - var(--arrow-padding-offset))`:""}else this.arrowPlacement==="center"?(Q=typeof X=="number"?"calc(50% - var(--arrow-size-diagonal))":"",K=typeof Y=="number"?"calc(50% - var(--arrow-size-diagonal))":""):(Q=typeof X=="number"?`${X}px`:"",K=typeof Y=="number"?`${Y}px`:"");Object.assign(this.arrowEl.style,{top:K,right:G,bottom:ee,left:Q,[J]:"calc(var(--arrow-base-offset) - var(--arrow-size-diagonal))"})}}),requestAnimationFrame(()=>this.updateHoverBridge()),this.dispatchEvent(new WaRepositionEvent)}render(){return b`
       <slot name="anchor" @slotchange=${this.handleAnchorChange}></slot>
 
       <span
@@ -3210,7 +3437,7 @@ var Re=Object.defineProperty;var Pe=(T,w,O)=>w in T?Re(T,w,{enumerable:!0,config
           <slot></slot>
         </div>
       </wa-popup>
-    `}};WaTooltip.css=tooltip_styles_default;WaTooltip.dependencies={"wa-popup":WaPopup};__decorateClass([e$4("slot:not([name])")],WaTooltip.prototype,"defaultSlot",2);__decorateClass([e$4(".body")],WaTooltip.prototype,"body",2);__decorateClass([e$4("wa-popup")],WaTooltip.prototype,"popup",2);__decorateClass([n$1()],WaTooltip.prototype,"placement",2);__decorateClass([n$1({type:Boolean,reflect:!0})],WaTooltip.prototype,"disabled",2);__decorateClass([n$1({type:Number})],WaTooltip.prototype,"distance",2);__decorateClass([n$1({type:Boolean,reflect:!0})],WaTooltip.prototype,"open",2);__decorateClass([n$1({type:Number})],WaTooltip.prototype,"skidding",2);__decorateClass([n$1({attribute:"show-delay",type:Number})],WaTooltip.prototype,"showDelay",2);__decorateClass([n$1({attribute:"hide-delay",type:Number})],WaTooltip.prototype,"hideDelay",2);__decorateClass([n$1()],WaTooltip.prototype,"trigger",2);__decorateClass([n$1({attribute:"without-arrow",type:Boolean,reflect:!0})],WaTooltip.prototype,"withoutArrow",2);__decorateClass([n$1()],WaTooltip.prototype,"for",2);__decorateClass([r$2()],WaTooltip.prototype,"anchor",2);__decorateClass([watch("open",{waitUntilFirstUpdate:!0})],WaTooltip.prototype,"handleOpenChange",1);__decorateClass([watch("for")],WaTooltip.prototype,"handleForChange",1);__decorateClass([watch(["distance","placement","skidding"])],WaTooltip.prototype,"handleOptionsChange",1);__decorateClass([watch("disabled")],WaTooltip.prototype,"handleDisabledChange",1);WaTooltip=__decorateClass([t$1("wa-tooltip")],WaTooltip);(function(){const htmx={onLoad:null,process:null,on:null,off:null,trigger:null,ajax:null,find:null,findAll:null,closest:null,values:function(T,w){return getInputValues(T,w||"post").values},remove:null,addClass:null,removeClass:null,toggleClass:null,takeClass:null,swap:null,defineExtension:null,removeExtension:null,logAll:null,logNone:null,logger:null,config:{historyEnabled:!0,historyCacheSize:10,refreshOnHistoryMiss:!1,defaultSwapStyle:"innerHTML",defaultSwapDelay:0,defaultSettleDelay:20,includeIndicatorStyles:!0,indicatorClass:"htmx-indicator",requestClass:"htmx-request",addedClass:"htmx-added",settlingClass:"htmx-settling",swappingClass:"htmx-swapping",allowEval:!0,allowScriptTags:!0,inlineScriptNonce:"",inlineStyleNonce:"",attributesToSettle:["class","style","width","height"],withCredentials:!1,timeout:0,wsReconnectDelay:"full-jitter",wsBinaryType:"blob",disableSelector:"[hx-disable], [data-hx-disable]",scrollBehavior:"instant",defaultFocusScroll:!1,getCacheBusterParam:!1,globalViewTransitions:!1,methodsThatUseUrlParams:["get","delete"],selfRequestsOnly:!0,ignoreTitle:!1,scrollIntoViewOnBoost:!0,triggerSpecsCache:null,disableInheritance:!1,responseHandling:[{code:"204",swap:!1},{code:"[23]..",swap:!0},{code:"[45]..",swap:!1,error:!0}],allowNestedOobSwaps:!0,historyRestoreAsHxRequest:!0,reportValidityOfForms:!1},parseInterval:null,location,_:null,version:"2.0.8"};htmx.onLoad=onLoadHelper,htmx.process=processNode,htmx.on=addEventListenerImpl,htmx.off=removeEventListenerImpl,htmx.trigger=triggerEvent,htmx.ajax=ajaxHelper,htmx.find=find,htmx.findAll=findAll,htmx.closest=closest,htmx.remove=removeElement,htmx.addClass=addClassToElement,htmx.removeClass=removeClassFromElement,htmx.toggleClass=toggleClassOnElement,htmx.takeClass=takeClassForElement,htmx.swap=swap,htmx.defineExtension=defineExtension,htmx.removeExtension=removeExtension,htmx.logAll=logAll,htmx.logNone=logNone,htmx.parseInterval=parseInterval,htmx._=internalEval;const internalAPI={addTriggerHandler,bodyContains,canAccessLocalStorage,findThisElement,filterValues,swap,hasAttribute,getAttributeValue,getClosestAttributeValue,getClosestMatch,getExpressionVars,getHeaders,getInputValues,getInternalData,getSwapSpecification,getTriggerSpecs,getTarget,makeFragment,mergeObjects,makeSettleInfo,oobSwap,querySelectorExt,settleImmediately,shouldCancel,triggerEvent,triggerErrorEvent,withExtensions},VERBS=["get","post","put","delete","patch"],VERB_SELECTOR=VERBS.map(function(T){return"[hx-"+T+"], [data-hx-"+T+"]"}).join(", ");function parseInterval(T){if(T==null)return;let w=NaN;return T.slice(-2)=="ms"?w=parseFloat(T.slice(0,-2)):T.slice(-1)=="s"?w=parseFloat(T.slice(0,-1))*1e3:T.slice(-1)=="m"?w=parseFloat(T.slice(0,-1))*1e3*60:w=parseFloat(T),isNaN(w)?void 0:w}function getRawAttribute(T,w){return T instanceof Element&&T.getAttribute(w)}function hasAttribute(T,w){return!!T.hasAttribute&&(T.hasAttribute(w)||T.hasAttribute("data-"+w))}function getAttributeValue(T,w){return getRawAttribute(T,w)||getRawAttribute(T,"data-"+w)}function parentElt(T){const w=T.parentElement;return!w&&T.parentNode instanceof ShadowRoot?T.parentNode:w}function getDocument(){return document}function getRootNode(T,w){return T.getRootNode?T.getRootNode({composed:w}):getDocument()}function getClosestMatch(T,w){for(;T&&!w(T);)T=parentElt(T);return T||null}function getAttributeValueWithDisinheritance(T,w,O){const F=getAttributeValue(w,O),W=getAttributeValue(w,"hx-disinherit");var U=getAttributeValue(w,"hx-inherit");if(T!==w){if(htmx.config.disableInheritance)return U&&(U==="*"||U.split(" ").indexOf(O)>=0)?F:null;if(W&&(W==="*"||W.split(" ").indexOf(O)>=0))return"unset"}return F}function getClosestAttributeValue(T,w){let O=null;if(getClosestMatch(T,function(F){return!!(O=getAttributeValueWithDisinheritance(T,asElement(F),w))}),O!=="unset")return O}function matches(T,w){return T instanceof Element&&T.matches(w)}function getStartTag(T){const O=/<([a-z][^\/\0>\x20\t\r\n\f]*)/i.exec(T);return O?O[1].toLowerCase():""}function parseHTML(T){return"parseHTMLUnsafe"in Document?Document.parseHTMLUnsafe(T):new DOMParser().parseFromString(T,"text/html")}function takeChildrenFor(T,w){for(;w.childNodes.length>0;)T.append(w.childNodes[0])}function duplicateScript(T){const w=getDocument().createElement("script");return forEach(T.attributes,function(O){w.setAttribute(O.name,O.value)}),w.textContent=T.textContent,w.async=!1,htmx.config.inlineScriptNonce&&(w.nonce=htmx.config.inlineScriptNonce),w}function isJavaScriptScriptNode(T){return T.matches("script")&&(T.type==="text/javascript"||T.type==="module"||T.type==="")}function normalizeScriptTags(T){Array.from(T.querySelectorAll("script")).forEach(w=>{if(isJavaScriptScriptNode(w)){const O=duplicateScript(w),F=w.parentNode;try{F.insertBefore(O,w)}catch(W){logError(W)}finally{w.remove()}}})}function makeFragment(T){const w=T.replace(/<head(\s[^>]*)?>[\s\S]*?<\/head>/i,""),O=getStartTag(w);let F;if(O==="html"){F=new DocumentFragment;const U=parseHTML(T);takeChildrenFor(F,U.body),F.title=U.title}else if(O==="body"){F=new DocumentFragment;const U=parseHTML(w);takeChildrenFor(F,U.body),F.title=U.title}else{const U=parseHTML('<body><template class="internal-htmx-wrapper">'+w+"</template></body>");F=U.querySelector("template").content,F.title=U.title;var W=F.querySelector("title");W&&W.parentNode===F&&(W.remove(),F.title=W.innerText)}return F&&(htmx.config.allowScriptTags?normalizeScriptTags(F):F.querySelectorAll("script").forEach(U=>U.remove())),F}function maybeCall(T){T&&T()}function isType(T,w){return Object.prototype.toString.call(T)==="[object "+w+"]"}function isFunction(T){return typeof T=="function"}function isRawObject(T){return isType(T,"Object")}function getInternalData(T){const w="htmx-internal-data";let O=T[w];return O||(O=T[w]={}),O}function toArray(T){const w=[];if(T)for(let O=0;O<T.length;O++)w.push(T[O]);return w}function forEach(T,w){if(T)for(let O=0;O<T.length;O++)w(T[O])}function isScrolledIntoView(T){const w=T.getBoundingClientRect(),O=w.top,F=w.bottom;return O<window.innerHeight&&F>=0}function bodyContains(T){return T.getRootNode({composed:!0})===document}function splitOnWhitespace(T){return T.trim().split(/\s+/)}function mergeObjects(T,w){for(const O in w)w.hasOwnProperty(O)&&(T[O]=w[O]);return T}function parseJSON(T){try{return JSON.parse(T)}catch(w){return logError(w),null}}function canAccessLocalStorage(){const T="htmx:sessionStorageTest";try{return sessionStorage.setItem(T,T),sessionStorage.removeItem(T),!0}catch{return!1}}function normalizePath(T){const w=new URL(T,"http://x");return w&&(T=w.pathname+w.search),T!="/"&&(T=T.replace(/\/+$/,"")),T}function internalEval(str){return maybeEval(getDocument().body,function(){return eval(str)})}function onLoadHelper(T){return htmx.on("htmx:load",function(O){T(O.detail.elt)})}function logAll(){htmx.logger=function(T,w,O){console&&console.log(w,T,O)}}function logNone(){htmx.logger=null}function find(T,w){return typeof T!="string"?T.querySelector(w):find(getDocument(),T)}function findAll(T,w){return typeof T!="string"?T.querySelectorAll(w):findAll(getDocument(),T)}function getWindow(){return window}function removeElement(T,w){T=resolveTarget(T),w?getWindow().setTimeout(function(){removeElement(T),T=null},w):parentElt(T).removeChild(T)}function asElement(T){return T instanceof Element?T:null}function asHtmlElement(T){return T instanceof HTMLElement?T:null}function asString(T){return typeof T=="string"?T:null}function asParentNode(T){return T instanceof Element||T instanceof Document||T instanceof DocumentFragment?T:null}function addClassToElement(T,w,O){T=asElement(resolveTarget(T)),T&&(O?getWindow().setTimeout(function(){addClassToElement(T,w),T=null},O):T.classList&&T.classList.add(w))}function removeClassFromElement(T,w,O){let F=asElement(resolveTarget(T));F&&(O?getWindow().setTimeout(function(){removeClassFromElement(F,w),F=null},O):F.classList&&(F.classList.remove(w),F.classList.length===0&&F.removeAttribute("class")))}function toggleClassOnElement(T,w){T=resolveTarget(T),T.classList.toggle(w)}function takeClassForElement(T,w){T=resolveTarget(T),forEach(T.parentElement.children,function(O){removeClassFromElement(O,w)}),addClassToElement(asElement(T),w)}function closest(T,w){return T=asElement(resolveTarget(T)),T?T.closest(w):null}function startsWith(T,w){return T.substring(0,w.length)===w}function endsWith(T,w){return T.substring(T.length-w.length)===w}function normalizeSelector(T){const w=T.trim();return startsWith(w,"<")&&endsWith(w,"/>")?w.substring(1,w.length-2):w}function querySelectorAllExt(T,w,O){if(w.indexOf("global ")===0)return querySelectorAllExt(T,w.slice(7),!0);T=resolveTarget(T);const F=[];{let q=0,j=0;for(let J=0;J<w.length;J++){const X=w[J];if(X===","&&q===0){F.push(w.substring(j,J)),j=J+1;continue}X==="<"?q++:X==="/"&&J<w.length-1&&w[J+1]===">"&&q--}j<w.length&&F.push(w.substring(j))}const W=[],U=[];for(;F.length>0;){const q=normalizeSelector(F.shift());let j;q.indexOf("closest ")===0?j=closest(asElement(T),normalizeSelector(q.slice(8))):q.indexOf("find ")===0?j=find(asParentNode(T),normalizeSelector(q.slice(5))):q==="next"||q==="nextElementSibling"?j=asElement(T).nextElementSibling:q.indexOf("next ")===0?j=scanForwardQuery(T,normalizeSelector(q.slice(5)),!!O):q==="previous"||q==="previousElementSibling"?j=asElement(T).previousElementSibling:q.indexOf("previous ")===0?j=scanBackwardsQuery(T,normalizeSelector(q.slice(9)),!!O):q==="document"?j=document:q==="window"?j=window:q==="body"?j=document.body:q==="root"?j=getRootNode(T,!!O):q==="host"?j=T.getRootNode().host:U.push(q),j&&W.push(j)}if(U.length>0){const q=U.join(","),j=asParentNode(getRootNode(T,!!O));W.push(...toArray(j.querySelectorAll(q)))}return W}var scanForwardQuery=function(T,w,O){const F=asParentNode(getRootNode(T,O)).querySelectorAll(w);for(let W=0;W<F.length;W++){const U=F[W];if(U.compareDocumentPosition(T)===Node.DOCUMENT_POSITION_PRECEDING)return U}},scanBackwardsQuery=function(T,w,O){const F=asParentNode(getRootNode(T,O)).querySelectorAll(w);for(let W=F.length-1;W>=0;W--){const U=F[W];if(U.compareDocumentPosition(T)===Node.DOCUMENT_POSITION_FOLLOWING)return U}};function querySelectorExt(T,w){return typeof T!="string"?querySelectorAllExt(T,w)[0]:querySelectorAllExt(getDocument().body,T)[0]}function resolveTarget(T,w){return typeof T=="string"?find(asParentNode(w)||document,T):T}function processEventArgs(T,w,O,F){return isFunction(w)?{target:getDocument().body,event:asString(T),listener:w,options:O}:{target:resolveTarget(T),event:asString(w),listener:O,options:F}}function addEventListenerImpl(T,w,O,F){return ready(function(){const U=processEventArgs(T,w,O,F);U.target.addEventListener(U.event,U.listener,U.options)}),isFunction(w)?w:O}function removeEventListenerImpl(T,w,O){return ready(function(){const F=processEventArgs(T,w,O);F.target.removeEventListener(F.event,F.listener)}),isFunction(w)?w:O}const DUMMY_ELT=getDocument().createElement("output");function findAttributeTargets(T,w){const O=getClosestAttributeValue(T,w);if(O){if(O==="this")return[findThisElement(T,w)];{const F=querySelectorAllExt(T,O);if(/(^|,)(\s*)inherit(\s*)($|,)/.test(O)){const U=asElement(getClosestMatch(T,function(q){return q!==T&&hasAttribute(asElement(q),w)}));U&&F.push(...findAttributeTargets(U,w))}return F.length===0?(logError('The selector "'+O+'" on '+w+" returned no matches!"),[DUMMY_ELT]):F}}}function findThisElement(T,w){return asElement(getClosestMatch(T,function(O){return getAttributeValue(asElement(O),w)!=null}))}function getTarget(T){const w=getClosestAttributeValue(T,"hx-target");return w?w==="this"?findThisElement(T,"hx-target"):querySelectorExt(T,w):getInternalData(T).boosted?getDocument().body:T}function shouldSettleAttribute(T){return htmx.config.attributesToSettle.includes(T)}function cloneAttributes(T,w){forEach(Array.from(T.attributes),function(O){!w.hasAttribute(O.name)&&shouldSettleAttribute(O.name)&&T.removeAttribute(O.name)}),forEach(w.attributes,function(O){shouldSettleAttribute(O.name)&&T.setAttribute(O.name,O.value)})}function isInlineSwap(T,w){const O=getExtensions(w);for(let F=0;F<O.length;F++){const W=O[F];try{if(W.isInlineSwap(T))return!0}catch(U){logError(U)}}return T==="outerHTML"}function oobSwap(T,w,O,F){F=F||getDocument();let W="#"+CSS.escape(getRawAttribute(w,"id")),U="outerHTML";T==="true"||(T.indexOf(":")>0?(U=T.substring(0,T.indexOf(":")),W=T.substring(T.indexOf(":")+1)):U=T),w.removeAttribute("hx-swap-oob"),w.removeAttribute("data-hx-swap-oob");const q=querySelectorAllExt(F,W,!1);return q.length?(forEach(q,function(j){let J;const X=w.cloneNode(!0);J=getDocument().createDocumentFragment(),J.appendChild(X),isInlineSwap(U,j)||(J=asParentNode(X));const Y={shouldSwap:!0,target:j,fragment:J};triggerEvent(j,"htmx:oobBeforeSwap",Y)&&(j=Y.target,Y.shouldSwap&&(handlePreservedElements(J),swapWithStyle(U,j,j,J,O),restorePreservedElements()),forEach(O.elts,function(K){triggerEvent(K,"htmx:oobAfterSwap",Y)}))}),w.parentNode.removeChild(w)):(w.parentNode.removeChild(w),triggerErrorEvent(getDocument().body,"htmx:oobErrorNoTarget",{content:w})),T}function restorePreservedElements(){const T=find("#--htmx-preserve-pantry--");if(T){for(const w of[...T.children]){const O=find("#"+w.id);O.parentNode.moveBefore(w,O),O.remove()}T.remove()}}function handlePreservedElements(T){forEach(findAll(T,"[hx-preserve], [data-hx-preserve]"),function(w){const O=getAttributeValue(w,"id"),F=getDocument().getElementById(O);if(F!=null)if(w.moveBefore){let W=find("#--htmx-preserve-pantry--");W==null&&(getDocument().body.insertAdjacentHTML("afterend","<div id='--htmx-preserve-pantry--'></div>"),W=find("#--htmx-preserve-pantry--")),W.moveBefore(F,null)}else w.parentNode.replaceChild(F,w)})}function handleAttributes(T,w,O){forEach(w.querySelectorAll("[id]"),function(F){const W=getRawAttribute(F,"id");if(W&&W.length>0){const U=W.replace("'","\\'"),q=F.tagName.replace(":","\\:"),j=asParentNode(T),J=j&&j.querySelector(q+"[id='"+U+"']");if(J&&J!==j){const X=F.cloneNode();cloneAttributes(F,J),O.tasks.push(function(){cloneAttributes(F,X)})}}})}function makeAjaxLoadTask(T){return function(){removeClassFromElement(T,htmx.config.addedClass),processNode(asElement(T)),processFocus(asParentNode(T)),triggerEvent(T,"htmx:load")}}function processFocus(T){const w="[autofocus]",O=asHtmlElement(matches(T,w)?T:T.querySelector(w));O!=null&&O.focus()}function insertNodesBefore(T,w,O,F){for(handleAttributes(T,O,F);O.childNodes.length>0;){const W=O.firstChild;addClassToElement(asElement(W),htmx.config.addedClass),T.insertBefore(W,w),W.nodeType!==Node.TEXT_NODE&&W.nodeType!==Node.COMMENT_NODE&&F.tasks.push(makeAjaxLoadTask(W))}}function stringHash(T,w){let O=0;for(;O<T.length;)w=(w<<5)-w+T.charCodeAt(O++)|0;return w}function attributeHash(T){let w=0;for(let O=0;O<T.attributes.length;O++){const F=T.attributes[O];F.value&&(w=stringHash(F.name,w),w=stringHash(F.value,w))}return w}function deInitOnHandlers(T){const w=getInternalData(T);if(w.onHandlers){for(let O=0;O<w.onHandlers.length;O++){const F=w.onHandlers[O];removeEventListenerImpl(T,F.event,F.listener)}delete w.onHandlers}}function deInitNode(T){const w=getInternalData(T);w.timeout&&clearTimeout(w.timeout),w.listenerInfos&&forEach(w.listenerInfos,function(O){O.on&&removeEventListenerImpl(O.on,O.trigger,O.listener)}),deInitOnHandlers(T),forEach(Object.keys(w),function(O){O!=="firstInitCompleted"&&delete w[O]})}function cleanUpElement(T){triggerEvent(T,"htmx:beforeCleanupElement"),deInitNode(T),forEach(T.children,function(w){cleanUpElement(w)})}function swapOuterHTML(T,w,O){if(T.tagName==="BODY")return swapInnerHTML(T,w,O);let F;const W=T.previousSibling,U=parentElt(T);if(U){for(insertNodesBefore(U,T,w,O),W==null?F=U.firstChild:F=W.nextSibling,O.elts=O.elts.filter(function(q){return q!==T});F&&F!==T;)F instanceof Element&&O.elts.push(F),F=F.nextSibling;cleanUpElement(T),T.remove()}}function swapAfterBegin(T,w,O){return insertNodesBefore(T,T.firstChild,w,O)}function swapBeforeBegin(T,w,O){return insertNodesBefore(parentElt(T),T,w,O)}function swapBeforeEnd(T,w,O){return insertNodesBefore(T,null,w,O)}function swapAfterEnd(T,w,O){return insertNodesBefore(parentElt(T),T.nextSibling,w,O)}function swapDelete(T){cleanUpElement(T);const w=parentElt(T);if(w)return w.removeChild(T)}function swapInnerHTML(T,w,O){const F=T.firstChild;if(insertNodesBefore(T,F,w,O),F){for(;F.nextSibling;)cleanUpElement(F.nextSibling),T.removeChild(F.nextSibling);cleanUpElement(F),T.removeChild(F)}}function swapWithStyle(T,w,O,F,W){switch(T){case"none":return;case"outerHTML":swapOuterHTML(O,F,W);return;case"afterbegin":swapAfterBegin(O,F,W);return;case"beforebegin":swapBeforeBegin(O,F,W);return;case"beforeend":swapBeforeEnd(O,F,W);return;case"afterend":swapAfterEnd(O,F,W);return;case"delete":swapDelete(O);return;default:var U=getExtensions(w);for(let q=0;q<U.length;q++){const j=U[q];try{const J=j.handleSwap(T,O,F,W);if(J){if(Array.isArray(J))for(let X=0;X<J.length;X++){const Y=J[X];Y.nodeType!==Node.TEXT_NODE&&Y.nodeType!==Node.COMMENT_NODE&&W.tasks.push(makeAjaxLoadTask(Y))}return}}catch(J){logError(J)}}T==="innerHTML"?swapInnerHTML(O,F,W):swapWithStyle(htmx.config.defaultSwapStyle,w,O,F,W)}}function findAndSwapOobElements(T,w,O){var F=findAll(T,"[hx-swap-oob], [data-hx-swap-oob]");return forEach(F,function(W){if(htmx.config.allowNestedOobSwaps||W.parentElement===null){const U=getAttributeValue(W,"hx-swap-oob");U!=null&&oobSwap(U,W,w,O)}else W.removeAttribute("hx-swap-oob"),W.removeAttribute("data-hx-swap-oob")}),F.length>0}function swap(T,w,O,F){F||(F={});let W=null,U=null,q=function(){maybeCall(F.beforeSwapCallback),T=resolveTarget(T);const X=F.contextElement?getRootNode(F.contextElement,!1):getDocument(),Y=document.activeElement;let K={};K={elt:Y,start:Y?Y.selectionStart:null,end:Y?Y.selectionEnd:null};const G=makeSettleInfo(T);if(O.swapStyle==="textContent")T.textContent=w;else{let Q=makeFragment(w);if(G.title=F.title||Q.title,F.historyRequest&&(Q=Q.querySelector("[hx-history-elt],[data-hx-history-elt]")||Q),F.selectOOB){const te=F.selectOOB.split(",");for(let oe=0;oe<te.length;oe++){const ae=te[oe].split(":",2);let ne=ae[0].trim();ne.indexOf("#")===0&&(ne=ne.substring(1));const re=ae[1]||"true",se=Q.querySelector("#"+ne);se&&oobSwap(re,se,G,X)}}if(findAndSwapOobElements(Q,G,X),forEach(findAll(Q,"template"),function(te){te.content&&findAndSwapOobElements(te.content,G,X)&&te.remove()}),F.select){const te=getDocument().createDocumentFragment();forEach(Q.querySelectorAll(F.select),function(oe){te.appendChild(oe)}),Q=te}handlePreservedElements(Q),swapWithStyle(O.swapStyle,F.contextElement,T,Q,G),restorePreservedElements()}if(K.elt&&!bodyContains(K.elt)&&getRawAttribute(K.elt,"id")){const Q=document.getElementById(getRawAttribute(K.elt,"id")),te={preventScroll:O.focusScroll!==void 0?!O.focusScroll:!htmx.config.defaultFocusScroll};if(Q){if(K.start&&Q.setSelectionRange)try{Q.setSelectionRange(K.start,K.end)}catch{}Q.focus(te)}}T.classList.remove(htmx.config.swappingClass),forEach(G.elts,function(Q){Q.classList&&Q.classList.add(htmx.config.settlingClass),triggerEvent(Q,"htmx:afterSwap",F.eventInfo)}),maybeCall(F.afterSwapCallback),O.ignoreTitle||handleTitle(G.title);const ee=function(){if(forEach(G.tasks,function(Q){Q.call()}),forEach(G.elts,function(Q){Q.classList&&Q.classList.remove(htmx.config.settlingClass),triggerEvent(Q,"htmx:afterSettle",F.eventInfo)}),F.anchor){const Q=asElement(resolveTarget("#"+F.anchor));Q&&Q.scrollIntoView({block:"start",behavior:"auto"})}updateScrollState(G.elts,O),maybeCall(F.afterSettleCallback),maybeCall(W)};O.settleDelay>0?getWindow().setTimeout(ee,O.settleDelay):ee()},j=htmx.config.globalViewTransitions;O.hasOwnProperty("transition")&&(j=O.transition);const J=F.contextElement||getDocument();if(j&&triggerEvent(J,"htmx:beforeTransition",F.eventInfo)&&typeof Promise<"u"&&document.startViewTransition){const X=new Promise(function(K,G){W=K,U=G}),Y=q;q=function(){document.startViewTransition(function(){return Y(),X})}}try{O!=null&&O.swapDelay&&O.swapDelay>0?getWindow().setTimeout(q,O.swapDelay):q()}catch(X){throw triggerErrorEvent(J,"htmx:swapError",F.eventInfo),maybeCall(U),X}}function handleTriggerHeader(T,w,O){const F=T.getResponseHeader(w);if(F.indexOf("{")===0){const W=parseJSON(F);for(const U in W)if(W.hasOwnProperty(U)){let q=W[U];isRawObject(q)?O=q.target!==void 0?q.target:O:q={value:q},triggerEvent(O,U,q)}}else{const W=F.split(",");for(let U=0;U<W.length;U++)triggerEvent(O,W[U].trim(),[])}}const WHITESPACE_OR_COMMA=/[\s,]/,SYMBOL_START=/[_$a-zA-Z]/,SYMBOL_CONT=/[_$a-zA-Z0-9]/,STRINGISH_START=['"',"'","/"],NOT_WHITESPACE=/[^\s]/,COMBINED_SELECTOR_START=/[{(]/,COMBINED_SELECTOR_END=/[})]/;function tokenizeString(T){const w=[];let O=0;for(;O<T.length;){if(SYMBOL_START.exec(T.charAt(O))){for(var F=O;SYMBOL_CONT.exec(T.charAt(O+1));)O++;w.push(T.substring(F,O+1))}else if(STRINGISH_START.indexOf(T.charAt(O))!==-1){const W=T.charAt(O);var F=O;for(O++;O<T.length&&T.charAt(O)!==W;)T.charAt(O)==="\\"&&O++,O++;w.push(T.substring(F,O+1))}else{const W=T.charAt(O);w.push(W)}O++}return w}function isPossibleRelativeReference(T,w,O){return SYMBOL_START.exec(T.charAt(0))&&T!=="true"&&T!=="false"&&T!=="this"&&T!==O&&w!=="."}function maybeGenerateConditional(T,w,O){if(w[0]==="["){w.shift();let F=1,W=" return (function("+O+"){ return (",U=null;for(;w.length>0;){const q=w[0];if(q==="]"){if(F--,F===0){U===null&&(W=W+"true"),w.shift(),W+=")})";try{const j=maybeEval(T,function(){return Function(W)()},function(){return!0});return j.source=W,j}catch(j){return triggerErrorEvent(getDocument().body,"htmx:syntax:error",{error:j,source:W}),null}}}else q==="["&&F++;isPossibleRelativeReference(q,U,O)?W+="(("+O+"."+q+") ? ("+O+"."+q+") : (window."+q+"))":W=W+q,U=w.shift()}}}function consumeUntil(T,w){let O="";for(;T.length>0&&!w.test(T[0]);)O+=T.shift();return O}function consumeCSSSelector(T){let w;return T.length>0&&COMBINED_SELECTOR_START.test(T[0])?(T.shift(),w=consumeUntil(T,COMBINED_SELECTOR_END).trim(),T.shift()):w=consumeUntil(T,WHITESPACE_OR_COMMA),w}const INPUT_SELECTOR="input, textarea, select";function parseAndCacheTrigger(T,w,O){const F=[],W=tokenizeString(w);do{consumeUntil(W,NOT_WHITESPACE);const j=W.length,J=consumeUntil(W,/[,\[\s]/);if(J!=="")if(J==="every"){const X={trigger:"every"};consumeUntil(W,NOT_WHITESPACE),X.pollInterval=parseInterval(consumeUntil(W,/[,\[\s]/)),consumeUntil(W,NOT_WHITESPACE);var U=maybeGenerateConditional(T,W,"event");U&&(X.eventFilter=U),F.push(X)}else{const X={trigger:J};var U=maybeGenerateConditional(T,W,"event");for(U&&(X.eventFilter=U),consumeUntil(W,NOT_WHITESPACE);W.length>0&&W[0]!==",";){const K=W.shift();if(K==="changed")X.changed=!0;else if(K==="once")X.once=!0;else if(K==="consume")X.consume=!0;else if(K==="delay"&&W[0]===":")W.shift(),X.delay=parseInterval(consumeUntil(W,WHITESPACE_OR_COMMA));else if(K==="from"&&W[0]===":"){if(W.shift(),COMBINED_SELECTOR_START.test(W[0]))var q=consumeCSSSelector(W);else{var q=consumeUntil(W,WHITESPACE_OR_COMMA);if(q==="closest"||q==="find"||q==="next"||q==="previous"){W.shift();const ee=consumeCSSSelector(W);ee.length>0&&(q+=" "+ee)}}X.from=q}else K==="target"&&W[0]===":"?(W.shift(),X.target=consumeCSSSelector(W)):K==="throttle"&&W[0]===":"?(W.shift(),X.throttle=parseInterval(consumeUntil(W,WHITESPACE_OR_COMMA))):K==="queue"&&W[0]===":"?(W.shift(),X.queue=consumeUntil(W,WHITESPACE_OR_COMMA)):K==="root"&&W[0]===":"?(W.shift(),X[K]=consumeCSSSelector(W)):K==="threshold"&&W[0]===":"?(W.shift(),X[K]=consumeUntil(W,WHITESPACE_OR_COMMA)):triggerErrorEvent(T,"htmx:syntax:error",{token:W.shift()});consumeUntil(W,NOT_WHITESPACE)}F.push(X)}W.length===j&&triggerErrorEvent(T,"htmx:syntax:error",{token:W.shift()}),consumeUntil(W,NOT_WHITESPACE)}while(W[0]===","&&W.shift());return O&&(O[w]=F),F}function getTriggerSpecs(T){const w=getAttributeValue(T,"hx-trigger");let O=[];if(w){const F=htmx.config.triggerSpecsCache;O=F&&F[w]||parseAndCacheTrigger(T,w,F)}return O.length>0?O:matches(T,"form")?[{trigger:"submit"}]:matches(T,'input[type="button"], input[type="submit"]')?[{trigger:"click"}]:matches(T,INPUT_SELECTOR)?[{trigger:"change"}]:[{trigger:"click"}]}function cancelPolling(T){getInternalData(T).cancelled=!0}function processPolling(T,w,O){const F=getInternalData(T);F.timeout=getWindow().setTimeout(function(){bodyContains(T)&&F.cancelled!==!0&&(maybeFilterEvent(O,T,makeEvent("hx:poll:trigger",{triggerSpec:O,target:T}))||w(T),processPolling(T,w,O))},O.pollInterval)}function isLocalLink(T){return location.hostname===T.hostname&&getRawAttribute(T,"href")&&getRawAttribute(T,"href").indexOf("#")!==0}function eltIsDisabled(T){return closest(T,htmx.config.disableSelector)}function boostElement(T,w,O){if(T instanceof HTMLAnchorElement&&isLocalLink(T)&&(T.target===""||T.target==="_self")||T.tagName==="FORM"&&String(getRawAttribute(T,"method")).toLowerCase()!=="dialog"){w.boosted=!0;let F,W;if(T.tagName==="A")F="get",W=getRawAttribute(T,"href");else{const U=getRawAttribute(T,"method");F=U?U.toLowerCase():"get",W=getRawAttribute(T,"action"),(W==null||W==="")&&(W=location.href),F==="get"&&W.includes("?")&&(W=W.replace(/\?[^#]+/,""))}O.forEach(function(U){addEventListener(T,function(q,j){const J=asElement(q);if(eltIsDisabled(J)){cleanUpElement(J);return}issueAjaxRequest(F,W,J,j)},w,U,!0)})}}function shouldCancel(T,w){if(T.type==="submit"&&w.tagName==="FORM")return!0;if(T.type==="click"){const O=w.closest('input[type="submit"], button');if(O&&O.form&&O.type==="submit")return!0;const F=w.closest("a"),W=/^#.+/;if(F&&F.href&&!W.test(F.getAttribute("href")))return!0}return!1}function ignoreBoostedAnchorCtrlClick(T,w){return getInternalData(T).boosted&&T instanceof HTMLAnchorElement&&w.type==="click"&&(w.ctrlKey||w.metaKey)}function maybeFilterEvent(T,w,O){const F=T.eventFilter;if(F)try{return F.call(w,O)!==!0}catch(W){const U=F.source;return triggerErrorEvent(getDocument().body,"htmx:eventFilter:error",{error:W,source:U}),!0}return!1}function addEventListener(T,w,O,F,W){const U=getInternalData(T);let q;F.from?q=querySelectorAllExt(T,F.from):q=[T],F.changed&&("lastValue"in U||(U.lastValue=new WeakMap),q.forEach(function(j){U.lastValue.has(F)||U.lastValue.set(F,new WeakMap),U.lastValue.get(F).set(j,j.value)})),forEach(q,function(j){const J=function(X){if(!bodyContains(T)){j.removeEventListener(F.trigger,J);return}if(ignoreBoostedAnchorCtrlClick(T,X)||((W||shouldCancel(X,j))&&X.preventDefault(),maybeFilterEvent(F,T,X)))return;const Y=getInternalData(X);if(Y.triggerSpec=F,Y.handledFor==null&&(Y.handledFor=[]),Y.handledFor.indexOf(T)<0){if(Y.handledFor.push(T),F.consume&&X.stopPropagation(),F.target&&X.target&&!matches(asElement(X.target),F.target))return;if(F.once){if(U.triggeredOnce)return;U.triggeredOnce=!0}if(F.changed){const K=X.target,G=K.value,ee=U.lastValue.get(F);if(ee.has(K)&&ee.get(K)===G)return;ee.set(K,G)}if(U.delayed&&clearTimeout(U.delayed),U.throttle)return;F.throttle>0?U.throttle||(triggerEvent(T,"htmx:trigger"),w(T,X),U.throttle=getWindow().setTimeout(function(){U.throttle=null},F.throttle)):F.delay>0?U.delayed=getWindow().setTimeout(function(){triggerEvent(T,"htmx:trigger"),w(T,X)},F.delay):(triggerEvent(T,"htmx:trigger"),w(T,X))}};O.listenerInfos==null&&(O.listenerInfos=[]),O.listenerInfos.push({trigger:F.trigger,listener:J,on:j}),j.addEventListener(F.trigger,J)})}let windowIsScrolling=!1,scrollHandler=null;function initScrollHandler(){scrollHandler||(scrollHandler=function(){windowIsScrolling=!0},window.addEventListener("scroll",scrollHandler),window.addEventListener("resize",scrollHandler),setInterval(function(){windowIsScrolling&&(windowIsScrolling=!1,forEach(getDocument().querySelectorAll("[hx-trigger*='revealed'],[data-hx-trigger*='revealed']"),function(T){maybeReveal(T)}))},200))}function maybeReveal(T){!hasAttribute(T,"data-hx-revealed")&&isScrolledIntoView(T)&&(T.setAttribute("data-hx-revealed","true"),getInternalData(T).initHash?triggerEvent(T,"revealed"):T.addEventListener("htmx:afterProcessNode",function(){triggerEvent(T,"revealed")},{once:!0}))}function loadImmediately(T,w,O,F){const W=function(){O.loaded||(O.loaded=!0,triggerEvent(T,"htmx:trigger"),w(T))};F>0?getWindow().setTimeout(W,F):W()}function processVerbs(T,w,O){let F=!1;return forEach(VERBS,function(W){if(hasAttribute(T,"hx-"+W)){const U=getAttributeValue(T,"hx-"+W);F=!0,w.path=U,w.verb=W,O.forEach(function(q){addTriggerHandler(T,q,w,function(j,J){const X=asElement(j);if(eltIsDisabled(X)){cleanUpElement(X);return}issueAjaxRequest(W,U,X,J)})})}}),F}function addTriggerHandler(T,w,O,F){if(w.trigger==="revealed")initScrollHandler(),addEventListener(T,F,O,w),maybeReveal(asElement(T));else if(w.trigger==="intersect"){const W={};w.root&&(W.root=querySelectorExt(T,w.root)),w.threshold&&(W.threshold=parseFloat(w.threshold)),new IntersectionObserver(function(q){for(let j=0;j<q.length;j++)if(q[j].isIntersecting){triggerEvent(T,"intersect");break}},W).observe(asElement(T)),addEventListener(asElement(T),F,O,w)}else!O.firstInitCompleted&&w.trigger==="load"?maybeFilterEvent(w,T,makeEvent("load",{elt:T}))||loadImmediately(asElement(T),F,O,w.delay):w.pollInterval>0?(O.polling=!0,processPolling(asElement(T),F,w)):addEventListener(T,F,O,w)}function shouldProcessHxOn(T){const w=asElement(T);if(!w)return!1;const O=w.attributes;for(let F=0;F<O.length;F++){const W=O[F].name;if(startsWith(W,"hx-on:")||startsWith(W,"data-hx-on:")||startsWith(W,"hx-on-")||startsWith(W,"data-hx-on-"))return!0}return!1}const HX_ON_QUERY=new XPathEvaluator().createExpression('.//*[@*[ starts-with(name(), "hx-on:") or starts-with(name(), "data-hx-on:") or starts-with(name(), "hx-on-") or starts-with(name(), "data-hx-on-") ]]');function processHXOnRoot(T,w){shouldProcessHxOn(T)&&w.push(asElement(T));const O=HX_ON_QUERY.evaluate(T);let F=null;for(;F=O.iterateNext();)w.push(asElement(F))}function findHxOnWildcardElements(T){const w=[];if(T instanceof DocumentFragment)for(const O of T.childNodes)processHXOnRoot(O,w);else processHXOnRoot(T,w);return w}function findElementsToProcess(T){if(T.querySelectorAll){const O=", [hx-boost] a, [data-hx-boost] a, a[hx-boost], a[data-hx-boost]",F=[];for(const U in extensions){const q=extensions[U];if(q.getSelectors){var w=q.getSelectors();w&&F.push(w)}}return T.querySelectorAll(VERB_SELECTOR+O+", form, [type='submit'], [hx-ext], [data-hx-ext], [hx-trigger], [data-hx-trigger]"+F.flat().map(U=>", "+U).join(""))}else return[]}function maybeSetLastButtonClicked(T){const w=getTargetButton(T.target),O=getRelatedFormData(T);O&&(O.lastButtonClicked=w)}function maybeUnsetLastButtonClicked(T){const w=getRelatedFormData(T);w&&(w.lastButtonClicked=null)}function getTargetButton(T){return closest(asElement(T),"button, input[type='submit']")}function getRelatedForm(T){return T.form||closest(T,"form")}function getRelatedFormData(T){const w=getTargetButton(T.target);if(!w)return;const O=getRelatedForm(w);if(O)return getInternalData(O)}function initButtonTracking(T){T.addEventListener("click",maybeSetLastButtonClicked),T.addEventListener("focusin",maybeSetLastButtonClicked),T.addEventListener("focusout",maybeUnsetLastButtonClicked)}function addHxOnEventHandler(T,w,O){const F=getInternalData(T);Array.isArray(F.onHandlers)||(F.onHandlers=[]);let W;const U=function(q){maybeEval(T,function(){eltIsDisabled(T)||(W||(W=new Function("event",O)),W.call(T,q))})};T.addEventListener(w,U),F.onHandlers.push({event:w,listener:U})}function processHxOnWildcard(T){deInitOnHandlers(T);for(let w=0;w<T.attributes.length;w++){const O=T.attributes[w].name,F=T.attributes[w].value;if(startsWith(O,"hx-on")||startsWith(O,"data-hx-on")){const W=O.indexOf("-on")+3,U=O.slice(W,W+1);if(U==="-"||U===":"){let q=O.slice(W+1);startsWith(q,":")?q="htmx"+q:startsWith(q,"-")?q="htmx:"+q.slice(1):startsWith(q,"htmx-")&&(q="htmx:"+q.slice(5)),addHxOnEventHandler(T,q,F)}}}}function initNode(T){triggerEvent(T,"htmx:beforeProcessNode");const w=getInternalData(T),O=getTriggerSpecs(T);processVerbs(T,w,O)||(getClosestAttributeValue(T,"hx-boost")==="true"?boostElement(T,w,O):hasAttribute(T,"hx-trigger")&&O.forEach(function(W){addTriggerHandler(T,W,w,function(){})})),(T.tagName==="FORM"||getRawAttribute(T,"type")==="submit"&&hasAttribute(T,"form"))&&initButtonTracking(T),w.firstInitCompleted=!0,triggerEvent(T,"htmx:afterProcessNode")}function maybeDeInitAndHash(T){if(!(T instanceof Element))return!1;const w=getInternalData(T),O=attributeHash(T);return w.initHash!==O?(deInitNode(T),w.initHash=O,!0):!1}function processNode(T){if(T=resolveTarget(T),eltIsDisabled(T)){cleanUpElement(T);return}const w=[];maybeDeInitAndHash(T)&&w.push(T),forEach(findElementsToProcess(T),function(O){if(eltIsDisabled(O)){cleanUpElement(O);return}maybeDeInitAndHash(O)&&w.push(O)}),forEach(findHxOnWildcardElements(T),processHxOnWildcard),forEach(w,initNode)}function kebabEventName(T){return T.replace(/([a-z0-9])([A-Z])/g,"$1-$2").toLowerCase()}function makeEvent(T,w){return new CustomEvent(T,{bubbles:!0,cancelable:!0,composed:!0,detail:w})}function triggerErrorEvent(T,w,O){triggerEvent(T,w,mergeObjects({error:w},O))}function ignoreEventForLogging(T){return T==="htmx:afterProcessNode"}function withExtensions(T,w,O){forEach(getExtensions(T,[],O),function(F){try{w(F)}catch(W){logError(W)}})}function logError(T){console.error(T)}function triggerEvent(T,w,O){T=resolveTarget(T),O==null&&(O={}),O.elt=T;const F=makeEvent(w,O);htmx.logger&&!ignoreEventForLogging(w)&&htmx.logger(T,w,O),O.error&&(logError(O.error),triggerEvent(T,"htmx:error",{errorInfo:O}));let W=T.dispatchEvent(F);const U=kebabEventName(w);if(W&&U!==w){const q=makeEvent(U,F.detail);W=W&&T.dispatchEvent(q)}return withExtensions(asElement(T),function(q){W=W&&q.onEvent(w,F)!==!1&&!F.defaultPrevented}),W}let currentPathForHistory;function setCurrentPathForHistory(T){currentPathForHistory=T,canAccessLocalStorage()&&sessionStorage.setItem("htmx-current-path-for-history",T)}setCurrentPathForHistory(location.pathname+location.search);function getHistoryElement(){return getDocument().querySelector("[hx-history-elt],[data-hx-history-elt]")||getDocument().body}function saveToHistoryCache(T,w){if(!canAccessLocalStorage())return;const O=cleanInnerHtmlForHistory(w),F=getDocument().title,W=window.scrollY;if(htmx.config.historyCacheSize<=0){sessionStorage.removeItem("htmx-history-cache");return}T=normalizePath(T);const U=parseJSON(sessionStorage.getItem("htmx-history-cache"))||[];for(let j=0;j<U.length;j++)if(U[j].url===T){U.splice(j,1);break}const q={url:T,content:O,title:F,scroll:W};for(triggerEvent(getDocument().body,"htmx:historyItemCreated",{item:q,cache:U}),U.push(q);U.length>htmx.config.historyCacheSize;)U.shift();for(;U.length>0;)try{sessionStorage.setItem("htmx-history-cache",JSON.stringify(U));break}catch(j){triggerErrorEvent(getDocument().body,"htmx:historyCacheError",{cause:j,cache:U}),U.shift()}}function getCachedHistory(T){if(!canAccessLocalStorage())return null;T=normalizePath(T);const w=parseJSON(sessionStorage.getItem("htmx-history-cache"))||[];for(let O=0;O<w.length;O++)if(w[O].url===T)return w[O];return null}function cleanInnerHtmlForHistory(T){const w=htmx.config.requestClass,O=T.cloneNode(!0);return forEach(findAll(O,"."+w),function(F){removeClassFromElement(F,w)}),forEach(findAll(O,"[data-disabled-by-htmx]"),function(F){F.removeAttribute("disabled")}),O.innerHTML}function saveCurrentPageToHistory(){const T=getHistoryElement();let w=currentPathForHistory;canAccessLocalStorage()&&(w=sessionStorage.getItem("htmx-current-path-for-history")),w=w||location.pathname+location.search,getDocument().querySelector('[hx-history="false" i],[data-hx-history="false" i]')||(triggerEvent(getDocument().body,"htmx:beforeHistorySave",{path:w,historyElt:T}),saveToHistoryCache(w,T)),htmx.config.historyEnabled&&history.replaceState({htmx:!0},getDocument().title,location.href)}function pushUrlIntoHistory(T){htmx.config.getCacheBusterParam&&(T=T.replace(/org\.htmx\.cache-buster=[^&]*&?/,""),(endsWith(T,"&")||endsWith(T,"?"))&&(T=T.slice(0,-1))),htmx.config.historyEnabled&&history.pushState({htmx:!0},"",T),setCurrentPathForHistory(T)}function replaceUrlInHistory(T){htmx.config.historyEnabled&&history.replaceState({htmx:!0},"",T),setCurrentPathForHistory(T)}function settleImmediately(T){forEach(T,function(w){w.call(void 0)})}function loadHistoryFromServer(T){const w=new XMLHttpRequest,O={swapStyle:"innerHTML",swapDelay:0,settleDelay:0},F={path:T,xhr:w,historyElt:getHistoryElement(),swapSpec:O};w.open("GET",T,!0),htmx.config.historyRestoreAsHxRequest&&w.setRequestHeader("HX-Request","true"),w.setRequestHeader("HX-History-Restore-Request","true"),w.setRequestHeader("HX-Current-URL",location.href),w.onload=function(){this.status>=200&&this.status<400?(F.response=this.response,triggerEvent(getDocument().body,"htmx:historyCacheMissLoad",F),swap(F.historyElt,F.response,O,{contextElement:F.historyElt,historyRequest:!0}),setCurrentPathForHistory(F.path),triggerEvent(getDocument().body,"htmx:historyRestore",{path:T,cacheMiss:!0,serverResponse:F.response})):triggerErrorEvent(getDocument().body,"htmx:historyCacheMissLoadError",F)},triggerEvent(getDocument().body,"htmx:historyCacheMiss",F)&&w.send()}function restoreHistory(T){saveCurrentPageToHistory(),T=T||location.pathname+location.search;const w=getCachedHistory(T);if(w){const O={swapStyle:"innerHTML",swapDelay:0,settleDelay:0,scroll:w.scroll},F={path:T,item:w,historyElt:getHistoryElement(),swapSpec:O};triggerEvent(getDocument().body,"htmx:historyCacheHit",F)&&(swap(F.historyElt,w.content,O,{contextElement:F.historyElt,title:w.title}),setCurrentPathForHistory(F.path),triggerEvent(getDocument().body,"htmx:historyRestore",F))}else htmx.config.refreshOnHistoryMiss?htmx.location.reload(!0):loadHistoryFromServer(T)}function addRequestIndicatorClasses(T){let w=findAttributeTargets(T,"hx-indicator");return w==null&&(w=[T]),forEach(w,function(O){const F=getInternalData(O);F.requestCount=(F.requestCount||0)+1,O.classList.add.call(O.classList,htmx.config.requestClass)}),w}function disableElements(T){let w=findAttributeTargets(T,"hx-disabled-elt");return w==null&&(w=[]),forEach(w,function(O){const F=getInternalData(O);F.requestCount=(F.requestCount||0)+1,O.setAttribute("disabled",""),O.setAttribute("data-disabled-by-htmx","")}),w}function removeRequestIndicators(T,w){forEach(T.concat(w),function(O){const F=getInternalData(O);F.requestCount=(F.requestCount||1)-1}),forEach(T,function(O){getInternalData(O).requestCount===0&&O.classList.remove.call(O.classList,htmx.config.requestClass)}),forEach(w,function(O){getInternalData(O).requestCount===0&&(O.removeAttribute("disabled"),O.removeAttribute("data-disabled-by-htmx"))})}function haveSeenNode(T,w){for(let O=0;O<T.length;O++)if(T[O].isSameNode(w))return!0;return!1}function shouldInclude(T){const w=T;return w.name===""||w.name==null||w.disabled||closest(w,"fieldset[disabled]")||w.type==="button"||w.type==="submit"||w.tagName==="image"||w.tagName==="reset"||w.tagName==="file"?!1:w.type==="checkbox"||w.type==="radio"?w.checked:!0}function addValueToFormData(T,w,O){T!=null&&w!=null&&(Array.isArray(w)?w.forEach(function(F){O.append(T,F)}):O.append(T,w))}function removeValueFromFormData(T,w,O){if(T!=null&&w!=null){let F=O.getAll(T);Array.isArray(w)?F=F.filter(W=>w.indexOf(W)<0):F=F.filter(W=>W!==w),O.delete(T),forEach(F,W=>O.append(T,W))}}function getValueFromInput(T){return T instanceof HTMLSelectElement&&T.multiple?toArray(T.querySelectorAll("option:checked")).map(function(w){return w.value}):T instanceof HTMLInputElement&&T.files?toArray(T.files):T.value}function processInputValue(T,w,O,F,W){if(!(F==null||haveSeenNode(T,F))){if(T.push(F),shouldInclude(F)){const U=getRawAttribute(F,"name");addValueToFormData(U,getValueFromInput(F),w),W&&validateElement(F,O)}F instanceof HTMLFormElement&&(forEach(F.elements,function(U){T.indexOf(U)>=0?removeValueFromFormData(U.name,getValueFromInput(U),w):T.push(U),W&&validateElement(U,O)}),new FormData(F).forEach(function(U,q){U instanceof File&&U.name===""||addValueToFormData(q,U,w)}))}}function validateElement(T,w){const O=T;O.willValidate&&(triggerEvent(O,"htmx:validation:validate"),O.checkValidity()||(triggerEvent(O,"htmx:validation:failed",{message:O.validationMessage,validity:O.validity})&&!w.length&&htmx.config.reportValidityOfForms&&O.reportValidity(),w.push({elt:O,message:O.validationMessage,validity:O.validity})))}function overrideFormData(T,w){for(const O of w.keys())T.delete(O);return w.forEach(function(O,F){T.append(F,O)}),T}function getInputValues(T,w){const O=[],F=new FormData,W=new FormData,U=[],q=getInternalData(T);q.lastButtonClicked&&!bodyContains(q.lastButtonClicked)&&(q.lastButtonClicked=null);let j=T instanceof HTMLFormElement&&T.noValidate!==!0||getAttributeValue(T,"hx-validate")==="true";if(q.lastButtonClicked&&(j=j&&q.lastButtonClicked.formNoValidate!==!0),w!=="get"&&processInputValue(O,W,U,getRelatedForm(T),j),processInputValue(O,F,U,T,j),q.lastButtonClicked||T.tagName==="BUTTON"||T.tagName==="INPUT"&&getRawAttribute(T,"type")==="submit"){const X=q.lastButtonClicked||T,Y=getRawAttribute(X,"name");addValueToFormData(Y,X.value,W)}const J=findAttributeTargets(T,"hx-include");return forEach(J,function(X){processInputValue(O,F,U,asElement(X),j),matches(X,"form")||forEach(asParentNode(X).querySelectorAll(INPUT_SELECTOR),function(Y){processInputValue(O,F,U,Y,j)})}),overrideFormData(F,W),{errors:U,formData:F,values:formDataProxy(F)}}function appendParam(T,w,O){T!==""&&(T+="&"),String(O)==="[object Object]"&&(O=JSON.stringify(O));const F=encodeURIComponent(O);return T+=encodeURIComponent(w)+"="+F,T}function urlEncode(T){T=formDataFromObject(T);let w="";return T.forEach(function(O,F){w=appendParam(w,F,O)}),w}function getHeaders(T,w,O){const F={"HX-Request":"true","HX-Trigger":getRawAttribute(T,"id"),"HX-Trigger-Name":getRawAttribute(T,"name"),"HX-Target":getAttributeValue(w,"id"),"HX-Current-URL":location.href};return getValuesForElement(T,"hx-headers",!1,F),O!==void 0&&(F["HX-Prompt"]=O),getInternalData(T).boosted&&(F["HX-Boosted"]="true"),F}function filterValues(T,w){const O=getClosestAttributeValue(w,"hx-params");if(O){if(O==="none")return new FormData;if(O==="*")return T;if(O.indexOf("not ")===0)return forEach(O.slice(4).split(","),function(F){F=F.trim(),T.delete(F)}),T;{const F=new FormData;return forEach(O.split(","),function(W){W=W.trim(),T.has(W)&&T.getAll(W).forEach(function(U){F.append(W,U)})}),F}}else return T}function isAnchorLink(T){return!!getRawAttribute(T,"href")&&getRawAttribute(T,"href").indexOf("#")>=0}function getSwapSpecification(T,w){const O=w||getClosestAttributeValue(T,"hx-swap"),F={swapStyle:getInternalData(T).boosted?"innerHTML":htmx.config.defaultSwapStyle,swapDelay:htmx.config.defaultSwapDelay,settleDelay:htmx.config.defaultSettleDelay};if(htmx.config.scrollIntoViewOnBoost&&getInternalData(T).boosted&&!isAnchorLink(T)&&(F.show="top"),O){const q=splitOnWhitespace(O);if(q.length>0)for(let j=0;j<q.length;j++){const J=q[j];if(J.indexOf("swap:")===0)F.swapDelay=parseInterval(J.slice(5));else if(J.indexOf("settle:")===0)F.settleDelay=parseInterval(J.slice(7));else if(J.indexOf("transition:")===0)F.transition=J.slice(11)==="true";else if(J.indexOf("ignoreTitle:")===0)F.ignoreTitle=J.slice(12)==="true";else if(J.indexOf("scroll:")===0){var W=J.slice(7).split(":");const Y=W.pop();var U=W.length>0?W.join(":"):null;F.scroll=Y,F.scrollTarget=U}else if(J.indexOf("show:")===0){var W=J.slice(5).split(":");const K=W.pop();var U=W.length>0?W.join(":"):null;F.show=K,F.showTarget=U}else if(J.indexOf("focus-scroll:")===0){const X=J.slice(13);F.focusScroll=X=="true"}else j==0?F.swapStyle=J:logError("Unknown modifier in hx-swap: "+J)}}return F}function usesFormData(T){return getClosestAttributeValue(T,"hx-encoding")==="multipart/form-data"||matches(T,"form")&&getRawAttribute(T,"enctype")==="multipart/form-data"}function encodeParamsForBody(T,w,O){let F=null;return withExtensions(w,function(W){F==null&&(F=W.encodeParameters(T,O,w))}),F??(usesFormData(w)?overrideFormData(new FormData,formDataFromObject(O)):urlEncode(O))}function makeSettleInfo(T){return{tasks:[],elts:[T]}}function updateScrollState(T,w){const O=T[0],F=T[T.length-1];if(w.scroll){var W=null;w.scrollTarget&&(W=asElement(querySelectorExt(O,w.scrollTarget))),w.scroll==="top"&&(O||W)&&(W=W||O,W.scrollTop=0),w.scroll==="bottom"&&(F||W)&&(W=W||F,W.scrollTop=W.scrollHeight),typeof w.scroll=="number"&&getWindow().setTimeout(function(){window.scrollTo(0,w.scroll)},0)}if(w.show){var W=null;if(w.showTarget){let q=w.showTarget;w.showTarget==="window"&&(q="body"),W=asElement(querySelectorExt(O,q))}w.show==="top"&&(O||W)&&(W=W||O,W.scrollIntoView({block:"start",behavior:htmx.config.scrollBehavior})),w.show==="bottom"&&(F||W)&&(W=W||F,W.scrollIntoView({block:"end",behavior:htmx.config.scrollBehavior}))}}function getValuesForElement(T,w,O,F,W){if(F==null&&(F={}),T==null)return F;const U=getAttributeValue(T,w);if(U){let q=U.trim(),j=O;if(q==="unset")return null;q.indexOf("javascript:")===0?(q=q.slice(11),j=!0):q.indexOf("js:")===0&&(q=q.slice(3),j=!0),q.indexOf("{")!==0&&(q="{"+q+"}");let J;j?J=maybeEval(T,function(){return W?Function("event","return ("+q+")").call(T,W):Function("return ("+q+")").call(T)},{}):J=parseJSON(q);for(const X in J)J.hasOwnProperty(X)&&F[X]==null&&(F[X]=J[X])}return getValuesForElement(asElement(parentElt(T)),w,O,F,W)}function maybeEval(T,w,O){return htmx.config.allowEval?w():(triggerErrorEvent(T,"htmx:evalDisallowedError"),O)}function getHXVarsForElement(T,w,O){return getValuesForElement(T,"hx-vars",!0,O,w)}function getHXValsForElement(T,w,O){return getValuesForElement(T,"hx-vals",!1,O,w)}function getExpressionVars(T,w){return mergeObjects(getHXVarsForElement(T,w),getHXValsForElement(T,w))}function safelySetHeaderValue(T,w,O){if(O!==null)try{T.setRequestHeader(w,O)}catch{T.setRequestHeader(w,encodeURIComponent(O)),T.setRequestHeader(w+"-URI-AutoEncoded","true")}}function getPathFromResponse(T){if(T.responseURL)try{const w=new URL(T.responseURL);return w.pathname+w.search}catch{triggerErrorEvent(getDocument().body,"htmx:badResponseUrl",{url:T.responseURL})}}function hasHeader(T,w){return w.test(T.getAllResponseHeaders())}function ajaxHelper(T,w,O){if(T=T.toLowerCase(),O){if(O instanceof Element||typeof O=="string")return issueAjaxRequest(T,w,null,null,{targetOverride:resolveTarget(O)||DUMMY_ELT,returnPromise:!0});{let F=resolveTarget(O.target);return(O.target&&!F||O.source&&!F&&!resolveTarget(O.source))&&(F=DUMMY_ELT),issueAjaxRequest(T,w,resolveTarget(O.source),O.event,{handler:O.handler,headers:O.headers,values:O.values,targetOverride:F,swapOverride:O.swap,select:O.select,returnPromise:!0,push:O.push,replace:O.replace,selectOOB:O.selectOOB})}}else return issueAjaxRequest(T,w,null,null,{returnPromise:!0})}function hierarchyForElt(T){const w=[];for(;T;)w.push(T),T=T.parentElement;return w}function verifyPath(T,w,O){const F=new URL(w,location.protocol!=="about:"?location.href:window.origin),U=(location.protocol!=="about:"?location.origin:window.origin)===F.origin;return htmx.config.selfRequestsOnly&&!U?!1:triggerEvent(T,"htmx:validateUrl",mergeObjects({url:F,sameHost:U},O))}function formDataFromObject(T){if(T instanceof FormData)return T;const w=new FormData;for(const O in T)T.hasOwnProperty(O)&&(T[O]&&typeof T[O].forEach=="function"?T[O].forEach(function(F){w.append(O,F)}):typeof T[O]=="object"&&!(T[O]instanceof Blob)?w.append(O,JSON.stringify(T[O])):w.append(O,T[O]));return w}function formDataArrayProxy(T,w,O){return new Proxy(O,{get:function(F,W){return typeof W=="number"?F[W]:W==="length"?F.length:W==="push"?function(U){F.push(U),T.append(w,U)}:typeof F[W]=="function"?function(){F[W].apply(F,arguments),T.delete(w),F.forEach(function(U){T.append(w,U)})}:F[W]&&F[W].length===1?F[W][0]:F[W]},set:function(F,W,U){return F[W]=U,T.delete(w),F.forEach(function(q){T.append(w,q)}),!0}})}function formDataProxy(T){return new Proxy(T,{get:function(w,O){if(typeof O=="symbol"){const W=Reflect.get(w,O);return typeof W=="function"?function(){return W.apply(T,arguments)}:W}if(O==="toJSON")return()=>Object.fromEntries(T);if(O in w&&typeof w[O]=="function")return function(){return T[O].apply(T,arguments)};const F=T.getAll(O);if(F.length!==0)return F.length===1?F[0]:formDataArrayProxy(w,O,F)},set:function(w,O,F){return typeof O!="string"?!1:(w.delete(O),F&&typeof F.forEach=="function"?F.forEach(function(W){w.append(O,W)}):typeof F=="object"&&!(F instanceof Blob)?w.append(O,JSON.stringify(F)):w.append(O,F),!0)},deleteProperty:function(w,O){return typeof O=="string"&&w.delete(O),!0},ownKeys:function(w){return Reflect.ownKeys(Object.fromEntries(w))},getOwnPropertyDescriptor:function(w,O){return Reflect.getOwnPropertyDescriptor(Object.fromEntries(w),O)}})}function issueAjaxRequest(T,w,O,F,W,U){let q=null,j=null;if(W=W??{},W.returnPromise&&typeof Promise<"u")var J=new Promise(function(ie,pe){q=ie,j=pe});O==null&&(O=getDocument().body);const X=W.handler||handleAjaxResponse,Y=W.select||null;if(!bodyContains(O))return maybeCall(q),J;const K=W.targetOverride||asElement(getTarget(O));if(K==null||K==DUMMY_ELT)return triggerErrorEvent(O,"htmx:targetError",{target:getClosestAttributeValue(O,"hx-target")}),maybeCall(j),J;let G=getInternalData(O);const ee=G.lastButtonClicked;if(ee){const ie=getRawAttribute(ee,"formaction");ie!=null&&(w=ie);const pe=getRawAttribute(ee,"formmethod");if(pe!=null)if(VERBS.includes(pe.toLowerCase()))T=pe;else return maybeCall(q),J}const Q=getClosestAttributeValue(O,"hx-confirm");if(U===void 0&&triggerEvent(O,"htmx:confirm",{target:K,elt:O,path:w,verb:T,triggeringEvent:F,etc:W,issueRequest:function(ke){return issueAjaxRequest(T,w,O,F,W,!!ke)},question:Q})===!1)return maybeCall(q),J;let te=O,oe=getClosestAttributeValue(O,"hx-sync"),ae=null,ne=!1;if(oe){const ie=oe.split(":"),pe=ie[0].trim();if(pe==="this"?te=findThisElement(O,"hx-sync"):te=asElement(querySelectorExt(O,pe)),oe=(ie[1]||"drop").trim(),G=getInternalData(te),oe==="drop"&&G.xhr&&G.abortable!==!0)return maybeCall(q),J;if(oe==="abort"){if(G.xhr)return maybeCall(q),J;ne=!0}else oe==="replace"?triggerEvent(te,"htmx:abort"):oe.indexOf("queue")===0&&(ae=(oe.split(" ")[1]||"last").trim())}if(G.xhr)if(G.abortable)triggerEvent(te,"htmx:abort");else{if(ae==null){if(F){const ie=getInternalData(F);ie&&ie.triggerSpec&&ie.triggerSpec.queue&&(ae=ie.triggerSpec.queue)}ae==null&&(ae="last")}return G.queuedRequests==null&&(G.queuedRequests=[]),ae==="first"&&G.queuedRequests.length===0?G.queuedRequests.push(function(){issueAjaxRequest(T,w,O,F,W)}):ae==="all"?G.queuedRequests.push(function(){issueAjaxRequest(T,w,O,F,W)}):ae==="last"&&(G.queuedRequests=[],G.queuedRequests.push(function(){issueAjaxRequest(T,w,O,F,W)})),maybeCall(q),J}const re=new XMLHttpRequest;G.xhr=re,G.abortable=ne;const se=function(){G.xhr=null,G.abortable=!1,G.queuedRequests!=null&&G.queuedRequests.length>0&&G.queuedRequests.shift()()},ue=getClosestAttributeValue(O,"hx-prompt");if(ue){var de=prompt(ue);if(de===null||!triggerEvent(O,"htmx:prompt",{prompt:de,target:K}))return maybeCall(q),se(),J}if(Q&&!U&&!confirm(Q))return maybeCall(q),se(),J;let le=getHeaders(O,K,de);T!=="get"&&!usesFormData(O)&&(le["Content-Type"]="application/x-www-form-urlencoded"),W.headers&&(le=mergeObjects(le,W.headers));const xe=getInputValues(O,T);let be=xe.errors;const ge=xe.formData;W.values&&overrideFormData(ge,formDataFromObject(W.values));const _e=formDataFromObject(getExpressionVars(O,F)),ve=overrideFormData(ge,_e);let fe=filterValues(ve,O);htmx.config.getCacheBusterParam&&T==="get"&&fe.set("org.htmx.cache-buster",getRawAttribute(K,"id")||"true"),(w==null||w==="")&&(w=location.href);const he=getValuesForElement(O,"hx-request"),Ce=getInternalData(O).boosted;let we=htmx.config.methodsThatUseUrlParams.indexOf(T)>=0;const ce={boosted:Ce,useUrlParams:we,formData:fe,parameters:formDataProxy(fe),unfilteredFormData:ve,unfilteredParameters:formDataProxy(ve),headers:le,elt:O,target:K,verb:T,errors:be,withCredentials:W.credentials||he.credentials||htmx.config.withCredentials,timeout:W.timeout||he.timeout||htmx.config.timeout,path:w,triggeringEvent:F};if(!triggerEvent(O,"htmx:configRequest",ce))return maybeCall(q),se(),J;if(w=ce.path,T=ce.verb,le=ce.headers,fe=formDataFromObject(ce.parameters),be=ce.errors,we=ce.useUrlParams,be&&be.length>0)return triggerEvent(O,"htmx:validation:halted",ce),maybeCall(q),se(),J;const ye=w.split("#"),Ee=ye[0],Ae=ye[1];let $e=w;if(we&&($e=Ee,!fe.keys().next().done&&($e.indexOf("?")<0?$e+="?":$e+="&",$e+=urlEncode(fe),Ae&&($e+="#"+Ae))),!verifyPath(O,$e,ce))return triggerErrorEvent(O,"htmx:invalidPath",ce),maybeCall(j),se(),J;if(re.open(T.toUpperCase(),$e,!0),re.overrideMimeType("text/html"),re.withCredentials=ce.withCredentials,re.timeout=ce.timeout,!he.noHeaders){for(const ie in le)if(le.hasOwnProperty(ie)){const pe=le[ie];safelySetHeaderValue(re,ie,pe)}}const me={xhr:re,target:K,requestConfig:ce,etc:W,boosted:Ce,select:Y,pathInfo:{requestPath:w,finalRequestPath:$e,responsePath:null,anchor:Ae}};if(re.onload=function(){try{const ie=hierarchyForElt(O);if(me.pathInfo.responsePath=getPathFromResponse(re),X(O,me),me.keepIndicators!==!0&&removeRequestIndicators(Te,Le),triggerEvent(O,"htmx:afterRequest",me),triggerEvent(O,"htmx:afterOnLoad",me),!bodyContains(O)){let pe=null;for(;ie.length>0&&pe==null;){const ke=ie.shift();bodyContains(ke)&&(pe=ke)}pe&&(triggerEvent(pe,"htmx:afterRequest",me),triggerEvent(pe,"htmx:afterOnLoad",me))}maybeCall(q)}catch(ie){throw triggerErrorEvent(O,"htmx:onLoadError",mergeObjects({error:ie},me)),ie}finally{se()}},re.onerror=function(){removeRequestIndicators(Te,Le),triggerErrorEvent(O,"htmx:afterRequest",me),triggerErrorEvent(O,"htmx:sendError",me),maybeCall(j),se()},re.onabort=function(){removeRequestIndicators(Te,Le),triggerErrorEvent(O,"htmx:afterRequest",me),triggerErrorEvent(O,"htmx:sendAbort",me),maybeCall(j),se()},re.ontimeout=function(){removeRequestIndicators(Te,Le),triggerErrorEvent(O,"htmx:afterRequest",me),triggerErrorEvent(O,"htmx:timeout",me),maybeCall(j),se()},!triggerEvent(O,"htmx:beforeRequest",me))return maybeCall(q),se(),J;var Te=addRequestIndicatorClasses(O),Le=disableElements(O);forEach(["loadstart","loadend","progress","abort"],function(ie){forEach([re,re.upload],function(pe){pe.addEventListener(ie,function(ke){triggerEvent(O,"htmx:xhr:"+ie,{lengthComputable:ke.lengthComputable,loaded:ke.loaded,total:ke.total})})})}),triggerEvent(O,"htmx:beforeSend",me);const Be=we?null:encodeParamsForBody(re,O,fe);return re.send(Be),J}function determineHistoryUpdates(T,w){const O=w.xhr;let F=null,W=null;if(hasHeader(O,/HX-Push:/i)?(F=O.getResponseHeader("HX-Push"),W="push"):hasHeader(O,/HX-Push-Url:/i)?(F=O.getResponseHeader("HX-Push-Url"),W="push"):hasHeader(O,/HX-Replace-Url:/i)&&(F=O.getResponseHeader("HX-Replace-Url"),W="replace"),F)return F==="false"?{}:{type:W,path:F};const U=w.pathInfo.finalRequestPath,q=w.pathInfo.responsePath,j=w.etc.push||getClosestAttributeValue(T,"hx-push-url"),J=w.etc.replace||getClosestAttributeValue(T,"hx-replace-url"),X=getInternalData(T).boosted;let Y=null,K=null;return j?(Y="push",K=j):J?(Y="replace",K=J):X&&(Y="push",K=q||U),K?K==="false"?{}:(K==="true"&&(K=q||U),w.pathInfo.anchor&&K.indexOf("#")===-1&&(K=K+"#"+w.pathInfo.anchor),{type:Y,path:K}):{}}function codeMatches(T,w){var O=new RegExp(T.code);return O.test(w.toString(10))}function resolveResponseHandling(T){for(var w=0;w<htmx.config.responseHandling.length;w++){var O=htmx.config.responseHandling[w];if(codeMatches(O,T.status))return O}return{swap:!1}}function handleTitle(T){if(T){const w=find("title");w?w.textContent=T:window.document.title=T}}function resolveRetarget(T,w){if(w==="this")return T;const O=asElement(querySelectorExt(T,w));if(O==null)throw triggerErrorEvent(T,"htmx:targetError",{target:w}),new Error(`Invalid re-target ${w}`);return O}function handleAjaxResponse(T,w){const O=w.xhr;let F=w.target;const W=w.etc,U=w.select;if(!triggerEvent(T,"htmx:beforeOnLoad",w))return;if(hasHeader(O,/HX-Trigger:/i)&&handleTriggerHeader(O,"HX-Trigger",T),hasHeader(O,/HX-Location:/i)){let ne=O.getResponseHeader("HX-Location");var q={};ne.indexOf("{")===0&&(q=parseJSON(ne),ne=q.path,delete q.path),q.push=q.push||"true",ajaxHelper("get",ne,q);return}const j=hasHeader(O,/HX-Refresh:/i)&&O.getResponseHeader("HX-Refresh")==="true";if(hasHeader(O,/HX-Redirect:/i)){w.keepIndicators=!0,htmx.location.href=O.getResponseHeader("HX-Redirect"),j&&htmx.location.reload();return}if(j){w.keepIndicators=!0,htmx.location.reload();return}const J=determineHistoryUpdates(T,w),X=resolveResponseHandling(O),Y=X.swap;let K=!!X.error,G=htmx.config.ignoreTitle||X.ignoreTitle,ee=X.select;X.target&&(w.target=resolveRetarget(T,X.target));var Q=W.swapOverride;Q==null&&X.swapOverride&&(Q=X.swapOverride),hasHeader(O,/HX-Retarget:/i)&&(w.target=resolveRetarget(T,O.getResponseHeader("HX-Retarget"))),hasHeader(O,/HX-Reswap:/i)&&(Q=O.getResponseHeader("HX-Reswap"));var te=O.response,oe=mergeObjects({shouldSwap:Y,serverResponse:te,isError:K,ignoreTitle:G,selectOverride:ee,swapOverride:Q},w);if(!(X.event&&!triggerEvent(F,X.event,oe))&&triggerEvent(F,"htmx:beforeSwap",oe)){if(F=oe.target,te=oe.serverResponse,K=oe.isError,G=oe.ignoreTitle,ee=oe.selectOverride,Q=oe.swapOverride,w.target=F,w.failed=K,w.successful=!K,oe.shouldSwap){O.status===286&&cancelPolling(T),withExtensions(T,function(se){te=se.transformResponse(te,O,T)}),J.type&&saveCurrentPageToHistory();var ae=getSwapSpecification(T,Q);ae.hasOwnProperty("ignoreTitle")||(ae.ignoreTitle=G),F.classList.add(htmx.config.swappingClass),U&&(ee=U),hasHeader(O,/HX-Reselect:/i)&&(ee=O.getResponseHeader("HX-Reselect"));const ne=W.selectOOB||getClosestAttributeValue(T,"hx-select-oob"),re=getClosestAttributeValue(T,"hx-select");swap(F,te,ae,{select:ee==="unset"?null:ee||re,selectOOB:ne,eventInfo:w,anchor:w.pathInfo.anchor,contextElement:T,afterSwapCallback:function(){if(hasHeader(O,/HX-Trigger-After-Swap:/i)){let se=T;bodyContains(T)||(se=getDocument().body),handleTriggerHeader(O,"HX-Trigger-After-Swap",se)}},afterSettleCallback:function(){if(hasHeader(O,/HX-Trigger-After-Settle:/i)){let se=T;bodyContains(T)||(se=getDocument().body),handleTriggerHeader(O,"HX-Trigger-After-Settle",se)}},beforeSwapCallback:function(){J.type&&(triggerEvent(getDocument().body,"htmx:beforeHistoryUpdate",mergeObjects({history:J},w)),J.type==="push"?(pushUrlIntoHistory(J.path),triggerEvent(getDocument().body,"htmx:pushedIntoHistory",{path:J.path})):(replaceUrlInHistory(J.path),triggerEvent(getDocument().body,"htmx:replacedInHistory",{path:J.path})))}})}K&&triggerErrorEvent(T,"htmx:responseError",mergeObjects({error:"Response Status Error Code "+O.status+" from "+w.pathInfo.requestPath},w))}}const extensions={};function extensionBase(){return{init:function(T){return null},getSelectors:function(){return null},onEvent:function(T,w){return!0},transformResponse:function(T,w,O){return T},isInlineSwap:function(T){return!1},handleSwap:function(T,w,O,F){return!1},encodeParameters:function(T,w,O){return null}}}function defineExtension(T,w){w.init&&w.init(internalAPI),extensions[T]=mergeObjects(extensionBase(),w)}function removeExtension(T){delete extensions[T]}function getExtensions(T,w,O){if(w==null&&(w=[]),T==null)return w;O==null&&(O=[]);const F=getAttributeValue(T,"hx-ext");return F&&forEach(F.split(","),function(W){if(W=W.replace(/ /g,""),W.slice(0,7)=="ignore:"){O.push(W.slice(7));return}if(O.indexOf(W)<0){const U=extensions[W];U&&w.indexOf(U)<0&&w.push(U)}}),getExtensions(asElement(parentElt(T)),w,O)}var isReady=!1;getDocument().addEventListener("DOMContentLoaded",function(){isReady=!0});function ready(T){isReady||getDocument().readyState==="complete"?T():getDocument().addEventListener("DOMContentLoaded",T)}function insertIndicatorStyles(){if(htmx.config.includeIndicatorStyles!==!1){const T=htmx.config.inlineStyleNonce?` nonce="${htmx.config.inlineStyleNonce}"`:"",w=htmx.config.indicatorClass,O=htmx.config.requestClass;getDocument().head.insertAdjacentHTML("beforeend",`<style${T}>.${w}{opacity:0;visibility: hidden} .${O} .${w}, .${O}.${w}{opacity:1;visibility: visible;transition: opacity 200ms ease-in}</style>`)}}function getMetaConfig(){const T=getDocument().querySelector('meta[name="htmx-config"]');return T?parseJSON(T.content):null}function mergeMetaConfig(){const T=getMetaConfig();T&&(htmx.config=mergeObjects(htmx.config,T))}return ready(function(){mergeMetaConfig(),insertIndicatorStyles();let T=getDocument().body;processNode(T);const w=getDocument().querySelectorAll("[hx-trigger='restored'],[data-hx-trigger='restored']");T.addEventListener("htmx:abort",function(F){const W=F.detail.elt||F.target,U=getInternalData(W);U&&U.xhr&&U.xhr.abort()});const O=window.onpopstate?window.onpopstate.bind(window):null;window.onpopstate=function(F){F.state&&F.state.htmx?(restoreHistory(),forEach(w,function(W){triggerEvent(W,"htmx:restored",{document:getDocument(),triggerEvent})})):O&&O(F)},getWindow().setTimeout(function(){triggerEvent(T,"htmx:load",{}),T=null},0)}),htmx})();class ThemeToggle extends i$3{connectedCallback(){var F;super.connectedCallback();const O=localStorage.getItem("theme")||((F=window.matchMedia)!=null&&F.call(window,"(prefers-color-scheme: dark)").matches?"dark":"light");this._applyTheme(O)}get _isDark(){return document.documentElement.classList.contains("wa-dark")}_applyTheme(w){document.documentElement.classList.toggle("wa-dark",w==="dark"),document.documentElement.setAttribute("data-theme",w),localStorage.setItem("theme",w),this.requestUpdate()}_toggle(){this._applyTheme(this._isDark?"light":"dark")}render(){return b`
+    `}};WaTooltip.css=tooltip_styles_default;WaTooltip.dependencies={"wa-popup":WaPopup};__decorateClass([e$4("slot:not([name])")],WaTooltip.prototype,"defaultSlot",2);__decorateClass([e$4(".body")],WaTooltip.prototype,"body",2);__decorateClass([e$4("wa-popup")],WaTooltip.prototype,"popup",2);__decorateClass([n$1()],WaTooltip.prototype,"placement",2);__decorateClass([n$1({type:Boolean,reflect:!0})],WaTooltip.prototype,"disabled",2);__decorateClass([n$1({type:Number})],WaTooltip.prototype,"distance",2);__decorateClass([n$1({type:Boolean,reflect:!0})],WaTooltip.prototype,"open",2);__decorateClass([n$1({type:Number})],WaTooltip.prototype,"skidding",2);__decorateClass([n$1({attribute:"show-delay",type:Number})],WaTooltip.prototype,"showDelay",2);__decorateClass([n$1({attribute:"hide-delay",type:Number})],WaTooltip.prototype,"hideDelay",2);__decorateClass([n$1()],WaTooltip.prototype,"trigger",2);__decorateClass([n$1({attribute:"without-arrow",type:Boolean,reflect:!0})],WaTooltip.prototype,"withoutArrow",2);__decorateClass([n$1()],WaTooltip.prototype,"for",2);__decorateClass([r$2()],WaTooltip.prototype,"anchor",2);__decorateClass([watch("open",{waitUntilFirstUpdate:!0})],WaTooltip.prototype,"handleOpenChange",1);__decorateClass([watch("for")],WaTooltip.prototype,"handleForChange",1);__decorateClass([watch(["distance","placement","skidding"])],WaTooltip.prototype,"handleOptionsChange",1);__decorateClass([watch("disabled")],WaTooltip.prototype,"handleDisabledChange",1);WaTooltip=__decorateClass([t$1("wa-tooltip")],WaTooltip);(function(){const htmx={onLoad:null,process:null,on:null,off:null,trigger:null,ajax:null,find:null,findAll:null,closest:null,values:function(T,w){return getInputValues(T,w||"post").values},remove:null,addClass:null,removeClass:null,toggleClass:null,takeClass:null,swap:null,defineExtension:null,removeExtension:null,logAll:null,logNone:null,logger:null,config:{historyEnabled:!0,historyCacheSize:10,refreshOnHistoryMiss:!1,defaultSwapStyle:"innerHTML",defaultSwapDelay:0,defaultSettleDelay:20,includeIndicatorStyles:!0,indicatorClass:"htmx-indicator",requestClass:"htmx-request",addedClass:"htmx-added",settlingClass:"htmx-settling",swappingClass:"htmx-swapping",allowEval:!0,allowScriptTags:!0,inlineScriptNonce:"",inlineStyleNonce:"",attributesToSettle:["class","style","width","height"],withCredentials:!1,timeout:0,wsReconnectDelay:"full-jitter",wsBinaryType:"blob",disableSelector:"[hx-disable], [data-hx-disable]",scrollBehavior:"instant",defaultFocusScroll:!1,getCacheBusterParam:!1,globalViewTransitions:!1,methodsThatUseUrlParams:["get","delete"],selfRequestsOnly:!0,ignoreTitle:!1,scrollIntoViewOnBoost:!0,triggerSpecsCache:null,disableInheritance:!1,responseHandling:[{code:"204",swap:!1},{code:"[23]..",swap:!0},{code:"[45]..",swap:!1,error:!0}],allowNestedOobSwaps:!0,historyRestoreAsHxRequest:!0,reportValidityOfForms:!1},parseInterval:null,location,_:null,version:"2.0.8"};htmx.onLoad=onLoadHelper,htmx.process=processNode,htmx.on=addEventListenerImpl,htmx.off=removeEventListenerImpl,htmx.trigger=triggerEvent,htmx.ajax=ajaxHelper,htmx.find=find,htmx.findAll=findAll,htmx.closest=closest,htmx.remove=removeElement,htmx.addClass=addClassToElement,htmx.removeClass=removeClassFromElement,htmx.toggleClass=toggleClassOnElement,htmx.takeClass=takeClassForElement,htmx.swap=swap,htmx.defineExtension=defineExtension,htmx.removeExtension=removeExtension,htmx.logAll=logAll,htmx.logNone=logNone,htmx.parseInterval=parseInterval,htmx._=internalEval;const internalAPI={addTriggerHandler,bodyContains,canAccessLocalStorage,findThisElement,filterValues,swap,hasAttribute,getAttributeValue,getClosestAttributeValue,getClosestMatch,getExpressionVars,getHeaders,getInputValues,getInternalData,getSwapSpecification,getTriggerSpecs,getTarget,makeFragment,mergeObjects,makeSettleInfo,oobSwap,querySelectorExt,settleImmediately,shouldCancel,triggerEvent,triggerErrorEvent,withExtensions},VERBS=["get","post","put","delete","patch"],VERB_SELECTOR=VERBS.map(function(T){return"[hx-"+T+"], [data-hx-"+T+"]"}).join(", ");function parseInterval(T){if(T==null)return;let w=NaN;return T.slice(-2)=="ms"?w=parseFloat(T.slice(0,-2)):T.slice(-1)=="s"?w=parseFloat(T.slice(0,-1))*1e3:T.slice(-1)=="m"?w=parseFloat(T.slice(0,-1))*1e3*60:w=parseFloat(T),isNaN(w)?void 0:w}function getRawAttribute(T,w){return T instanceof Element&&T.getAttribute(w)}function hasAttribute(T,w){return!!T.hasAttribute&&(T.hasAttribute(w)||T.hasAttribute("data-"+w))}function getAttributeValue(T,w){return getRawAttribute(T,w)||getRawAttribute(T,"data-"+w)}function parentElt(T){const w=T.parentElement;return!w&&T.parentNode instanceof ShadowRoot?T.parentNode:w}function getDocument(){return document}function getRootNode(T,w){return T.getRootNode?T.getRootNode({composed:w}):getDocument()}function getClosestMatch(T,w){for(;T&&!w(T);)T=parentElt(T);return T||null}function getAttributeValueWithDisinheritance(T,w,O){const F=getAttributeValue(w,O),W=getAttributeValue(w,"hx-disinherit");var U=getAttributeValue(w,"hx-inherit");if(T!==w){if(htmx.config.disableInheritance)return U&&(U==="*"||U.split(" ").indexOf(O)>=0)?F:null;if(W&&(W==="*"||W.split(" ").indexOf(O)>=0))return"unset"}return F}function getClosestAttributeValue(T,w){let O=null;if(getClosestMatch(T,function(F){return!!(O=getAttributeValueWithDisinheritance(T,asElement(F),w))}),O!=="unset")return O}function matches(T,w){return T instanceof Element&&T.matches(w)}function getStartTag(T){const O=/<([a-z][^\/\0>\x20\t\r\n\f]*)/i.exec(T);return O?O[1].toLowerCase():""}function parseHTML(T){return"parseHTMLUnsafe"in Document?Document.parseHTMLUnsafe(T):new DOMParser().parseFromString(T,"text/html")}function takeChildrenFor(T,w){for(;w.childNodes.length>0;)T.append(w.childNodes[0])}function duplicateScript(T){const w=getDocument().createElement("script");return forEach(T.attributes,function(O){w.setAttribute(O.name,O.value)}),w.textContent=T.textContent,w.async=!1,htmx.config.inlineScriptNonce&&(w.nonce=htmx.config.inlineScriptNonce),w}function isJavaScriptScriptNode(T){return T.matches("script")&&(T.type==="text/javascript"||T.type==="module"||T.type==="")}function normalizeScriptTags(T){Array.from(T.querySelectorAll("script")).forEach(w=>{if(isJavaScriptScriptNode(w)){const O=duplicateScript(w),F=w.parentNode;try{F.insertBefore(O,w)}catch(W){logError(W)}finally{w.remove()}}})}function makeFragment(T){const w=T.replace(/<head(\s[^>]*)?>[\s\S]*?<\/head>/i,""),O=getStartTag(w);let F;if(O==="html"){F=new DocumentFragment;const U=parseHTML(T);takeChildrenFor(F,U.body),F.title=U.title}else if(O==="body"){F=new DocumentFragment;const U=parseHTML(w);takeChildrenFor(F,U.body),F.title=U.title}else{const U=parseHTML('<body><template class="internal-htmx-wrapper">'+w+"</template></body>");F=U.querySelector("template").content,F.title=U.title;var W=F.querySelector("title");W&&W.parentNode===F&&(W.remove(),F.title=W.innerText)}return F&&(htmx.config.allowScriptTags?normalizeScriptTags(F):F.querySelectorAll("script").forEach(U=>U.remove())),F}function maybeCall(T){T&&T()}function isType(T,w){return Object.prototype.toString.call(T)==="[object "+w+"]"}function isFunction(T){return typeof T=="function"}function isRawObject(T){return isType(T,"Object")}function getInternalData(T){const w="htmx-internal-data";let O=T[w];return O||(O=T[w]={}),O}function toArray(T){const w=[];if(T)for(let O=0;O<T.length;O++)w.push(T[O]);return w}function forEach(T,w){if(T)for(let O=0;O<T.length;O++)w(T[O])}function isScrolledIntoView(T){const w=T.getBoundingClientRect(),O=w.top,F=w.bottom;return O<window.innerHeight&&F>=0}function bodyContains(T){return T.getRootNode({composed:!0})===document}function splitOnWhitespace(T){return T.trim().split(/\s+/)}function mergeObjects(T,w){for(const O in w)w.hasOwnProperty(O)&&(T[O]=w[O]);return T}function parseJSON(T){try{return JSON.parse(T)}catch(w){return logError(w),null}}function canAccessLocalStorage(){const T="htmx:sessionStorageTest";try{return sessionStorage.setItem(T,T),sessionStorage.removeItem(T),!0}catch{return!1}}function normalizePath(T){const w=new URL(T,"http://x");return w&&(T=w.pathname+w.search),T!="/"&&(T=T.replace(/\/+$/,"")),T}function internalEval(str){return maybeEval(getDocument().body,function(){return eval(str)})}function onLoadHelper(T){return htmx.on("htmx:load",function(O){T(O.detail.elt)})}function logAll(){htmx.logger=function(T,w,O){console&&console.log(w,T,O)}}function logNone(){htmx.logger=null}function find(T,w){return typeof T!="string"?T.querySelector(w):find(getDocument(),T)}function findAll(T,w){return typeof T!="string"?T.querySelectorAll(w):findAll(getDocument(),T)}function getWindow(){return window}function removeElement(T,w){T=resolveTarget(T),w?getWindow().setTimeout(function(){removeElement(T),T=null},w):parentElt(T).removeChild(T)}function asElement(T){return T instanceof Element?T:null}function asHtmlElement(T){return T instanceof HTMLElement?T:null}function asString(T){return typeof T=="string"?T:null}function asParentNode(T){return T instanceof Element||T instanceof Document||T instanceof DocumentFragment?T:null}function addClassToElement(T,w,O){T=asElement(resolveTarget(T)),T&&(O?getWindow().setTimeout(function(){addClassToElement(T,w),T=null},O):T.classList&&T.classList.add(w))}function removeClassFromElement(T,w,O){let F=asElement(resolveTarget(T));F&&(O?getWindow().setTimeout(function(){removeClassFromElement(F,w),F=null},O):F.classList&&(F.classList.remove(w),F.classList.length===0&&F.removeAttribute("class")))}function toggleClassOnElement(T,w){T=resolveTarget(T),T.classList.toggle(w)}function takeClassForElement(T,w){T=resolveTarget(T),forEach(T.parentElement.children,function(O){removeClassFromElement(O,w)}),addClassToElement(asElement(T),w)}function closest(T,w){return T=asElement(resolveTarget(T)),T?T.closest(w):null}function startsWith(T,w){return T.substring(0,w.length)===w}function endsWith(T,w){return T.substring(T.length-w.length)===w}function normalizeSelector(T){const w=T.trim();return startsWith(w,"<")&&endsWith(w,"/>")?w.substring(1,w.length-2):w}function querySelectorAllExt(T,w,O){if(w.indexOf("global ")===0)return querySelectorAllExt(T,w.slice(7),!0);T=resolveTarget(T);const F=[];{let q=0,j=0;for(let J=0;J<w.length;J++){const X=w[J];if(X===","&&q===0){F.push(w.substring(j,J)),j=J+1;continue}X==="<"?q++:X==="/"&&J<w.length-1&&w[J+1]===">"&&q--}j<w.length&&F.push(w.substring(j))}const W=[],U=[];for(;F.length>0;){const q=normalizeSelector(F.shift());let j;q.indexOf("closest ")===0?j=closest(asElement(T),normalizeSelector(q.slice(8))):q.indexOf("find ")===0?j=find(asParentNode(T),normalizeSelector(q.slice(5))):q==="next"||q==="nextElementSibling"?j=asElement(T).nextElementSibling:q.indexOf("next ")===0?j=scanForwardQuery(T,normalizeSelector(q.slice(5)),!!O):q==="previous"||q==="previousElementSibling"?j=asElement(T).previousElementSibling:q.indexOf("previous ")===0?j=scanBackwardsQuery(T,normalizeSelector(q.slice(9)),!!O):q==="document"?j=document:q==="window"?j=window:q==="body"?j=document.body:q==="root"?j=getRootNode(T,!!O):q==="host"?j=T.getRootNode().host:U.push(q),j&&W.push(j)}if(U.length>0){const q=U.join(","),j=asParentNode(getRootNode(T,!!O));W.push(...toArray(j.querySelectorAll(q)))}return W}var scanForwardQuery=function(T,w,O){const F=asParentNode(getRootNode(T,O)).querySelectorAll(w);for(let W=0;W<F.length;W++){const U=F[W];if(U.compareDocumentPosition(T)===Node.DOCUMENT_POSITION_PRECEDING)return U}},scanBackwardsQuery=function(T,w,O){const F=asParentNode(getRootNode(T,O)).querySelectorAll(w);for(let W=F.length-1;W>=0;W--){const U=F[W];if(U.compareDocumentPosition(T)===Node.DOCUMENT_POSITION_FOLLOWING)return U}};function querySelectorExt(T,w){return typeof T!="string"?querySelectorAllExt(T,w)[0]:querySelectorAllExt(getDocument().body,T)[0]}function resolveTarget(T,w){return typeof T=="string"?find(asParentNode(w)||document,T):T}function processEventArgs(T,w,O,F){return isFunction(w)?{target:getDocument().body,event:asString(T),listener:w,options:O}:{target:resolveTarget(T),event:asString(w),listener:O,options:F}}function addEventListenerImpl(T,w,O,F){return ready(function(){const U=processEventArgs(T,w,O,F);U.target.addEventListener(U.event,U.listener,U.options)}),isFunction(w)?w:O}function removeEventListenerImpl(T,w,O){return ready(function(){const F=processEventArgs(T,w,O);F.target.removeEventListener(F.event,F.listener)}),isFunction(w)?w:O}const DUMMY_ELT=getDocument().createElement("output");function findAttributeTargets(T,w){const O=getClosestAttributeValue(T,w);if(O){if(O==="this")return[findThisElement(T,w)];{const F=querySelectorAllExt(T,O);if(/(^|,)(\s*)inherit(\s*)($|,)/.test(O)){const U=asElement(getClosestMatch(T,function(q){return q!==T&&hasAttribute(asElement(q),w)}));U&&F.push(...findAttributeTargets(U,w))}return F.length===0?(logError('The selector "'+O+'" on '+w+" returned no matches!"),[DUMMY_ELT]):F}}}function findThisElement(T,w){return asElement(getClosestMatch(T,function(O){return getAttributeValue(asElement(O),w)!=null}))}function getTarget(T){const w=getClosestAttributeValue(T,"hx-target");return w?w==="this"?findThisElement(T,"hx-target"):querySelectorExt(T,w):getInternalData(T).boosted?getDocument().body:T}function shouldSettleAttribute(T){return htmx.config.attributesToSettle.includes(T)}function cloneAttributes(T,w){forEach(Array.from(T.attributes),function(O){!w.hasAttribute(O.name)&&shouldSettleAttribute(O.name)&&T.removeAttribute(O.name)}),forEach(w.attributes,function(O){shouldSettleAttribute(O.name)&&T.setAttribute(O.name,O.value)})}function isInlineSwap(T,w){const O=getExtensions(w);for(let F=0;F<O.length;F++){const W=O[F];try{if(W.isInlineSwap(T))return!0}catch(U){logError(U)}}return T==="outerHTML"}function oobSwap(T,w,O,F){F=F||getDocument();let W="#"+CSS.escape(getRawAttribute(w,"id")),U="outerHTML";T==="true"||(T.indexOf(":")>0?(U=T.substring(0,T.indexOf(":")),W=T.substring(T.indexOf(":")+1)):U=T),w.removeAttribute("hx-swap-oob"),w.removeAttribute("data-hx-swap-oob");const q=querySelectorAllExt(F,W,!1);return q.length?(forEach(q,function(j){let J;const X=w.cloneNode(!0);J=getDocument().createDocumentFragment(),J.appendChild(X),isInlineSwap(U,j)||(J=asParentNode(X));const Y={shouldSwap:!0,target:j,fragment:J};triggerEvent(j,"htmx:oobBeforeSwap",Y)&&(j=Y.target,Y.shouldSwap&&(handlePreservedElements(J),swapWithStyle(U,j,j,J,O),restorePreservedElements()),forEach(O.elts,function(K){triggerEvent(K,"htmx:oobAfterSwap",Y)}))}),w.parentNode.removeChild(w)):(w.parentNode.removeChild(w),triggerErrorEvent(getDocument().body,"htmx:oobErrorNoTarget",{content:w})),T}function restorePreservedElements(){const T=find("#--htmx-preserve-pantry--");if(T){for(const w of[...T.children]){const O=find("#"+w.id);O.parentNode.moveBefore(w,O),O.remove()}T.remove()}}function handlePreservedElements(T){forEach(findAll(T,"[hx-preserve], [data-hx-preserve]"),function(w){const O=getAttributeValue(w,"id"),F=getDocument().getElementById(O);if(F!=null)if(w.moveBefore){let W=find("#--htmx-preserve-pantry--");W==null&&(getDocument().body.insertAdjacentHTML("afterend","<div id='--htmx-preserve-pantry--'></div>"),W=find("#--htmx-preserve-pantry--")),W.moveBefore(F,null)}else w.parentNode.replaceChild(F,w)})}function handleAttributes(T,w,O){forEach(w.querySelectorAll("[id]"),function(F){const W=getRawAttribute(F,"id");if(W&&W.length>0){const U=W.replace("'","\\'"),q=F.tagName.replace(":","\\:"),j=asParentNode(T),J=j&&j.querySelector(q+"[id='"+U+"']");if(J&&J!==j){const X=F.cloneNode();cloneAttributes(F,J),O.tasks.push(function(){cloneAttributes(F,X)})}}})}function makeAjaxLoadTask(T){return function(){removeClassFromElement(T,htmx.config.addedClass),processNode(asElement(T)),processFocus(asParentNode(T)),triggerEvent(T,"htmx:load")}}function processFocus(T){const w="[autofocus]",O=asHtmlElement(matches(T,w)?T:T.querySelector(w));O!=null&&O.focus()}function insertNodesBefore(T,w,O,F){for(handleAttributes(T,O,F);O.childNodes.length>0;){const W=O.firstChild;addClassToElement(asElement(W),htmx.config.addedClass),T.insertBefore(W,w),W.nodeType!==Node.TEXT_NODE&&W.nodeType!==Node.COMMENT_NODE&&F.tasks.push(makeAjaxLoadTask(W))}}function stringHash(T,w){let O=0;for(;O<T.length;)w=(w<<5)-w+T.charCodeAt(O++)|0;return w}function attributeHash(T){let w=0;for(let O=0;O<T.attributes.length;O++){const F=T.attributes[O];F.value&&(w=stringHash(F.name,w),w=stringHash(F.value,w))}return w}function deInitOnHandlers(T){const w=getInternalData(T);if(w.onHandlers){for(let O=0;O<w.onHandlers.length;O++){const F=w.onHandlers[O];removeEventListenerImpl(T,F.event,F.listener)}delete w.onHandlers}}function deInitNode(T){const w=getInternalData(T);w.timeout&&clearTimeout(w.timeout),w.listenerInfos&&forEach(w.listenerInfos,function(O){O.on&&removeEventListenerImpl(O.on,O.trigger,O.listener)}),deInitOnHandlers(T),forEach(Object.keys(w),function(O){O!=="firstInitCompleted"&&delete w[O]})}function cleanUpElement(T){triggerEvent(T,"htmx:beforeCleanupElement"),deInitNode(T),forEach(T.children,function(w){cleanUpElement(w)})}function swapOuterHTML(T,w,O){if(T.tagName==="BODY")return swapInnerHTML(T,w,O);let F;const W=T.previousSibling,U=parentElt(T);if(U){for(insertNodesBefore(U,T,w,O),W==null?F=U.firstChild:F=W.nextSibling,O.elts=O.elts.filter(function(q){return q!==T});F&&F!==T;)F instanceof Element&&O.elts.push(F),F=F.nextSibling;cleanUpElement(T),T.remove()}}function swapAfterBegin(T,w,O){return insertNodesBefore(T,T.firstChild,w,O)}function swapBeforeBegin(T,w,O){return insertNodesBefore(parentElt(T),T,w,O)}function swapBeforeEnd(T,w,O){return insertNodesBefore(T,null,w,O)}function swapAfterEnd(T,w,O){return insertNodesBefore(parentElt(T),T.nextSibling,w,O)}function swapDelete(T){cleanUpElement(T);const w=parentElt(T);if(w)return w.removeChild(T)}function swapInnerHTML(T,w,O){const F=T.firstChild;if(insertNodesBefore(T,F,w,O),F){for(;F.nextSibling;)cleanUpElement(F.nextSibling),T.removeChild(F.nextSibling);cleanUpElement(F),T.removeChild(F)}}function swapWithStyle(T,w,O,F,W){switch(T){case"none":return;case"outerHTML":swapOuterHTML(O,F,W);return;case"afterbegin":swapAfterBegin(O,F,W);return;case"beforebegin":swapBeforeBegin(O,F,W);return;case"beforeend":swapBeforeEnd(O,F,W);return;case"afterend":swapAfterEnd(O,F,W);return;case"delete":swapDelete(O);return;default:var U=getExtensions(w);for(let q=0;q<U.length;q++){const j=U[q];try{const J=j.handleSwap(T,O,F,W);if(J){if(Array.isArray(J))for(let X=0;X<J.length;X++){const Y=J[X];Y.nodeType!==Node.TEXT_NODE&&Y.nodeType!==Node.COMMENT_NODE&&W.tasks.push(makeAjaxLoadTask(Y))}return}}catch(J){logError(J)}}T==="innerHTML"?swapInnerHTML(O,F,W):swapWithStyle(htmx.config.defaultSwapStyle,w,O,F,W)}}function findAndSwapOobElements(T,w,O){var F=findAll(T,"[hx-swap-oob], [data-hx-swap-oob]");return forEach(F,function(W){if(htmx.config.allowNestedOobSwaps||W.parentElement===null){const U=getAttributeValue(W,"hx-swap-oob");U!=null&&oobSwap(U,W,w,O)}else W.removeAttribute("hx-swap-oob"),W.removeAttribute("data-hx-swap-oob")}),F.length>0}function swap(T,w,O,F){F||(F={});let W=null,U=null,q=function(){maybeCall(F.beforeSwapCallback),T=resolveTarget(T);const X=F.contextElement?getRootNode(F.contextElement,!1):getDocument(),Y=document.activeElement;let K={};K={elt:Y,start:Y?Y.selectionStart:null,end:Y?Y.selectionEnd:null};const G=makeSettleInfo(T);if(O.swapStyle==="textContent")T.textContent=w;else{let Q=makeFragment(w);if(G.title=F.title||Q.title,F.historyRequest&&(Q=Q.querySelector("[hx-history-elt],[data-hx-history-elt]")||Q),F.selectOOB){const te=F.selectOOB.split(",");for(let ae=0;ae<te.length;ae++){const oe=te[ae].split(":",2);let ne=oe[0].trim();ne.indexOf("#")===0&&(ne=ne.substring(1));const re=oe[1]||"true",se=Q.querySelector("#"+ne);se&&oobSwap(re,se,G,X)}}if(findAndSwapOobElements(Q,G,X),forEach(findAll(Q,"template"),function(te){te.content&&findAndSwapOobElements(te.content,G,X)&&te.remove()}),F.select){const te=getDocument().createDocumentFragment();forEach(Q.querySelectorAll(F.select),function(ae){te.appendChild(ae)}),Q=te}handlePreservedElements(Q),swapWithStyle(O.swapStyle,F.contextElement,T,Q,G),restorePreservedElements()}if(K.elt&&!bodyContains(K.elt)&&getRawAttribute(K.elt,"id")){const Q=document.getElementById(getRawAttribute(K.elt,"id")),te={preventScroll:O.focusScroll!==void 0?!O.focusScroll:!htmx.config.defaultFocusScroll};if(Q){if(K.start&&Q.setSelectionRange)try{Q.setSelectionRange(K.start,K.end)}catch{}Q.focus(te)}}T.classList.remove(htmx.config.swappingClass),forEach(G.elts,function(Q){Q.classList&&Q.classList.add(htmx.config.settlingClass),triggerEvent(Q,"htmx:afterSwap",F.eventInfo)}),maybeCall(F.afterSwapCallback),O.ignoreTitle||handleTitle(G.title);const ee=function(){if(forEach(G.tasks,function(Q){Q.call()}),forEach(G.elts,function(Q){Q.classList&&Q.classList.remove(htmx.config.settlingClass),triggerEvent(Q,"htmx:afterSettle",F.eventInfo)}),F.anchor){const Q=asElement(resolveTarget("#"+F.anchor));Q&&Q.scrollIntoView({block:"start",behavior:"auto"})}updateScrollState(G.elts,O),maybeCall(F.afterSettleCallback),maybeCall(W)};O.settleDelay>0?getWindow().setTimeout(ee,O.settleDelay):ee()},j=htmx.config.globalViewTransitions;O.hasOwnProperty("transition")&&(j=O.transition);const J=F.contextElement||getDocument();if(j&&triggerEvent(J,"htmx:beforeTransition",F.eventInfo)&&typeof Promise<"u"&&document.startViewTransition){const X=new Promise(function(K,G){W=K,U=G}),Y=q;q=function(){document.startViewTransition(function(){return Y(),X})}}try{O!=null&&O.swapDelay&&O.swapDelay>0?getWindow().setTimeout(q,O.swapDelay):q()}catch(X){throw triggerErrorEvent(J,"htmx:swapError",F.eventInfo),maybeCall(U),X}}function handleTriggerHeader(T,w,O){const F=T.getResponseHeader(w);if(F.indexOf("{")===0){const W=parseJSON(F);for(const U in W)if(W.hasOwnProperty(U)){let q=W[U];isRawObject(q)?O=q.target!==void 0?q.target:O:q={value:q},triggerEvent(O,U,q)}}else{const W=F.split(",");for(let U=0;U<W.length;U++)triggerEvent(O,W[U].trim(),[])}}const WHITESPACE_OR_COMMA=/[\s,]/,SYMBOL_START=/[_$a-zA-Z]/,SYMBOL_CONT=/[_$a-zA-Z0-9]/,STRINGISH_START=['"',"'","/"],NOT_WHITESPACE=/[^\s]/,COMBINED_SELECTOR_START=/[{(]/,COMBINED_SELECTOR_END=/[})]/;function tokenizeString(T){const w=[];let O=0;for(;O<T.length;){if(SYMBOL_START.exec(T.charAt(O))){for(var F=O;SYMBOL_CONT.exec(T.charAt(O+1));)O++;w.push(T.substring(F,O+1))}else if(STRINGISH_START.indexOf(T.charAt(O))!==-1){const W=T.charAt(O);var F=O;for(O++;O<T.length&&T.charAt(O)!==W;)T.charAt(O)==="\\"&&O++,O++;w.push(T.substring(F,O+1))}else{const W=T.charAt(O);w.push(W)}O++}return w}function isPossibleRelativeReference(T,w,O){return SYMBOL_START.exec(T.charAt(0))&&T!=="true"&&T!=="false"&&T!=="this"&&T!==O&&w!=="."}function maybeGenerateConditional(T,w,O){if(w[0]==="["){w.shift();let F=1,W=" return (function("+O+"){ return (",U=null;for(;w.length>0;){const q=w[0];if(q==="]"){if(F--,F===0){U===null&&(W=W+"true"),w.shift(),W+=")})";try{const j=maybeEval(T,function(){return Function(W)()},function(){return!0});return j.source=W,j}catch(j){return triggerErrorEvent(getDocument().body,"htmx:syntax:error",{error:j,source:W}),null}}}else q==="["&&F++;isPossibleRelativeReference(q,U,O)?W+="(("+O+"."+q+") ? ("+O+"."+q+") : (window."+q+"))":W=W+q,U=w.shift()}}}function consumeUntil(T,w){let O="";for(;T.length>0&&!w.test(T[0]);)O+=T.shift();return O}function consumeCSSSelector(T){let w;return T.length>0&&COMBINED_SELECTOR_START.test(T[0])?(T.shift(),w=consumeUntil(T,COMBINED_SELECTOR_END).trim(),T.shift()):w=consumeUntil(T,WHITESPACE_OR_COMMA),w}const INPUT_SELECTOR="input, textarea, select";function parseAndCacheTrigger(T,w,O){const F=[],W=tokenizeString(w);do{consumeUntil(W,NOT_WHITESPACE);const j=W.length,J=consumeUntil(W,/[,\[\s]/);if(J!=="")if(J==="every"){const X={trigger:"every"};consumeUntil(W,NOT_WHITESPACE),X.pollInterval=parseInterval(consumeUntil(W,/[,\[\s]/)),consumeUntil(W,NOT_WHITESPACE);var U=maybeGenerateConditional(T,W,"event");U&&(X.eventFilter=U),F.push(X)}else{const X={trigger:J};var U=maybeGenerateConditional(T,W,"event");for(U&&(X.eventFilter=U),consumeUntil(W,NOT_WHITESPACE);W.length>0&&W[0]!==",";){const K=W.shift();if(K==="changed")X.changed=!0;else if(K==="once")X.once=!0;else if(K==="consume")X.consume=!0;else if(K==="delay"&&W[0]===":")W.shift(),X.delay=parseInterval(consumeUntil(W,WHITESPACE_OR_COMMA));else if(K==="from"&&W[0]===":"){if(W.shift(),COMBINED_SELECTOR_START.test(W[0]))var q=consumeCSSSelector(W);else{var q=consumeUntil(W,WHITESPACE_OR_COMMA);if(q==="closest"||q==="find"||q==="next"||q==="previous"){W.shift();const ee=consumeCSSSelector(W);ee.length>0&&(q+=" "+ee)}}X.from=q}else K==="target"&&W[0]===":"?(W.shift(),X.target=consumeCSSSelector(W)):K==="throttle"&&W[0]===":"?(W.shift(),X.throttle=parseInterval(consumeUntil(W,WHITESPACE_OR_COMMA))):K==="queue"&&W[0]===":"?(W.shift(),X.queue=consumeUntil(W,WHITESPACE_OR_COMMA)):K==="root"&&W[0]===":"?(W.shift(),X[K]=consumeCSSSelector(W)):K==="threshold"&&W[0]===":"?(W.shift(),X[K]=consumeUntil(W,WHITESPACE_OR_COMMA)):triggerErrorEvent(T,"htmx:syntax:error",{token:W.shift()});consumeUntil(W,NOT_WHITESPACE)}F.push(X)}W.length===j&&triggerErrorEvent(T,"htmx:syntax:error",{token:W.shift()}),consumeUntil(W,NOT_WHITESPACE)}while(W[0]===","&&W.shift());return O&&(O[w]=F),F}function getTriggerSpecs(T){const w=getAttributeValue(T,"hx-trigger");let O=[];if(w){const F=htmx.config.triggerSpecsCache;O=F&&F[w]||parseAndCacheTrigger(T,w,F)}return O.length>0?O:matches(T,"form")?[{trigger:"submit"}]:matches(T,'input[type="button"], input[type="submit"]')?[{trigger:"click"}]:matches(T,INPUT_SELECTOR)?[{trigger:"change"}]:[{trigger:"click"}]}function cancelPolling(T){getInternalData(T).cancelled=!0}function processPolling(T,w,O){const F=getInternalData(T);F.timeout=getWindow().setTimeout(function(){bodyContains(T)&&F.cancelled!==!0&&(maybeFilterEvent(O,T,makeEvent("hx:poll:trigger",{triggerSpec:O,target:T}))||w(T),processPolling(T,w,O))},O.pollInterval)}function isLocalLink(T){return location.hostname===T.hostname&&getRawAttribute(T,"href")&&getRawAttribute(T,"href").indexOf("#")!==0}function eltIsDisabled(T){return closest(T,htmx.config.disableSelector)}function boostElement(T,w,O){if(T instanceof HTMLAnchorElement&&isLocalLink(T)&&(T.target===""||T.target==="_self")||T.tagName==="FORM"&&String(getRawAttribute(T,"method")).toLowerCase()!=="dialog"){w.boosted=!0;let F,W;if(T.tagName==="A")F="get",W=getRawAttribute(T,"href");else{const U=getRawAttribute(T,"method");F=U?U.toLowerCase():"get",W=getRawAttribute(T,"action"),(W==null||W==="")&&(W=location.href),F==="get"&&W.includes("?")&&(W=W.replace(/\?[^#]+/,""))}O.forEach(function(U){addEventListener(T,function(q,j){const J=asElement(q);if(eltIsDisabled(J)){cleanUpElement(J);return}issueAjaxRequest(F,W,J,j)},w,U,!0)})}}function shouldCancel(T,w){if(T.type==="submit"&&w.tagName==="FORM")return!0;if(T.type==="click"){const O=w.closest('input[type="submit"], button');if(O&&O.form&&O.type==="submit")return!0;const F=w.closest("a"),W=/^#.+/;if(F&&F.href&&!W.test(F.getAttribute("href")))return!0}return!1}function ignoreBoostedAnchorCtrlClick(T,w){return getInternalData(T).boosted&&T instanceof HTMLAnchorElement&&w.type==="click"&&(w.ctrlKey||w.metaKey)}function maybeFilterEvent(T,w,O){const F=T.eventFilter;if(F)try{return F.call(w,O)!==!0}catch(W){const U=F.source;return triggerErrorEvent(getDocument().body,"htmx:eventFilter:error",{error:W,source:U}),!0}return!1}function addEventListener(T,w,O,F,W){const U=getInternalData(T);let q;F.from?q=querySelectorAllExt(T,F.from):q=[T],F.changed&&("lastValue"in U||(U.lastValue=new WeakMap),q.forEach(function(j){U.lastValue.has(F)||U.lastValue.set(F,new WeakMap),U.lastValue.get(F).set(j,j.value)})),forEach(q,function(j){const J=function(X){if(!bodyContains(T)){j.removeEventListener(F.trigger,J);return}if(ignoreBoostedAnchorCtrlClick(T,X)||((W||shouldCancel(X,j))&&X.preventDefault(),maybeFilterEvent(F,T,X)))return;const Y=getInternalData(X);if(Y.triggerSpec=F,Y.handledFor==null&&(Y.handledFor=[]),Y.handledFor.indexOf(T)<0){if(Y.handledFor.push(T),F.consume&&X.stopPropagation(),F.target&&X.target&&!matches(asElement(X.target),F.target))return;if(F.once){if(U.triggeredOnce)return;U.triggeredOnce=!0}if(F.changed){const K=X.target,G=K.value,ee=U.lastValue.get(F);if(ee.has(K)&&ee.get(K)===G)return;ee.set(K,G)}if(U.delayed&&clearTimeout(U.delayed),U.throttle)return;F.throttle>0?U.throttle||(triggerEvent(T,"htmx:trigger"),w(T,X),U.throttle=getWindow().setTimeout(function(){U.throttle=null},F.throttle)):F.delay>0?U.delayed=getWindow().setTimeout(function(){triggerEvent(T,"htmx:trigger"),w(T,X)},F.delay):(triggerEvent(T,"htmx:trigger"),w(T,X))}};O.listenerInfos==null&&(O.listenerInfos=[]),O.listenerInfos.push({trigger:F.trigger,listener:J,on:j}),j.addEventListener(F.trigger,J)})}let windowIsScrolling=!1,scrollHandler=null;function initScrollHandler(){scrollHandler||(scrollHandler=function(){windowIsScrolling=!0},window.addEventListener("scroll",scrollHandler),window.addEventListener("resize",scrollHandler),setInterval(function(){windowIsScrolling&&(windowIsScrolling=!1,forEach(getDocument().querySelectorAll("[hx-trigger*='revealed'],[data-hx-trigger*='revealed']"),function(T){maybeReveal(T)}))},200))}function maybeReveal(T){!hasAttribute(T,"data-hx-revealed")&&isScrolledIntoView(T)&&(T.setAttribute("data-hx-revealed","true"),getInternalData(T).initHash?triggerEvent(T,"revealed"):T.addEventListener("htmx:afterProcessNode",function(){triggerEvent(T,"revealed")},{once:!0}))}function loadImmediately(T,w,O,F){const W=function(){O.loaded||(O.loaded=!0,triggerEvent(T,"htmx:trigger"),w(T))};F>0?getWindow().setTimeout(W,F):W()}function processVerbs(T,w,O){let F=!1;return forEach(VERBS,function(W){if(hasAttribute(T,"hx-"+W)){const U=getAttributeValue(T,"hx-"+W);F=!0,w.path=U,w.verb=W,O.forEach(function(q){addTriggerHandler(T,q,w,function(j,J){const X=asElement(j);if(eltIsDisabled(X)){cleanUpElement(X);return}issueAjaxRequest(W,U,X,J)})})}}),F}function addTriggerHandler(T,w,O,F){if(w.trigger==="revealed")initScrollHandler(),addEventListener(T,F,O,w),maybeReveal(asElement(T));else if(w.trigger==="intersect"){const W={};w.root&&(W.root=querySelectorExt(T,w.root)),w.threshold&&(W.threshold=parseFloat(w.threshold)),new IntersectionObserver(function(q){for(let j=0;j<q.length;j++)if(q[j].isIntersecting){triggerEvent(T,"intersect");break}},W).observe(asElement(T)),addEventListener(asElement(T),F,O,w)}else!O.firstInitCompleted&&w.trigger==="load"?maybeFilterEvent(w,T,makeEvent("load",{elt:T}))||loadImmediately(asElement(T),F,O,w.delay):w.pollInterval>0?(O.polling=!0,processPolling(asElement(T),F,w)):addEventListener(T,F,O,w)}function shouldProcessHxOn(T){const w=asElement(T);if(!w)return!1;const O=w.attributes;for(let F=0;F<O.length;F++){const W=O[F].name;if(startsWith(W,"hx-on:")||startsWith(W,"data-hx-on:")||startsWith(W,"hx-on-")||startsWith(W,"data-hx-on-"))return!0}return!1}const HX_ON_QUERY=new XPathEvaluator().createExpression('.//*[@*[ starts-with(name(), "hx-on:") or starts-with(name(), "data-hx-on:") or starts-with(name(), "hx-on-") or starts-with(name(), "data-hx-on-") ]]');function processHXOnRoot(T,w){shouldProcessHxOn(T)&&w.push(asElement(T));const O=HX_ON_QUERY.evaluate(T);let F=null;for(;F=O.iterateNext();)w.push(asElement(F))}function findHxOnWildcardElements(T){const w=[];if(T instanceof DocumentFragment)for(const O of T.childNodes)processHXOnRoot(O,w);else processHXOnRoot(T,w);return w}function findElementsToProcess(T){if(T.querySelectorAll){const O=", [hx-boost] a, [data-hx-boost] a, a[hx-boost], a[data-hx-boost]",F=[];for(const U in extensions){const q=extensions[U];if(q.getSelectors){var w=q.getSelectors();w&&F.push(w)}}return T.querySelectorAll(VERB_SELECTOR+O+", form, [type='submit'], [hx-ext], [data-hx-ext], [hx-trigger], [data-hx-trigger]"+F.flat().map(U=>", "+U).join(""))}else return[]}function maybeSetLastButtonClicked(T){const w=getTargetButton(T.target),O=getRelatedFormData(T);O&&(O.lastButtonClicked=w)}function maybeUnsetLastButtonClicked(T){const w=getRelatedFormData(T);w&&(w.lastButtonClicked=null)}function getTargetButton(T){return closest(asElement(T),"button, input[type='submit']")}function getRelatedForm(T){return T.form||closest(T,"form")}function getRelatedFormData(T){const w=getTargetButton(T.target);if(!w)return;const O=getRelatedForm(w);if(O)return getInternalData(O)}function initButtonTracking(T){T.addEventListener("click",maybeSetLastButtonClicked),T.addEventListener("focusin",maybeSetLastButtonClicked),T.addEventListener("focusout",maybeUnsetLastButtonClicked)}function addHxOnEventHandler(T,w,O){const F=getInternalData(T);Array.isArray(F.onHandlers)||(F.onHandlers=[]);let W;const U=function(q){maybeEval(T,function(){eltIsDisabled(T)||(W||(W=new Function("event",O)),W.call(T,q))})};T.addEventListener(w,U),F.onHandlers.push({event:w,listener:U})}function processHxOnWildcard(T){deInitOnHandlers(T);for(let w=0;w<T.attributes.length;w++){const O=T.attributes[w].name,F=T.attributes[w].value;if(startsWith(O,"hx-on")||startsWith(O,"data-hx-on")){const W=O.indexOf("-on")+3,U=O.slice(W,W+1);if(U==="-"||U===":"){let q=O.slice(W+1);startsWith(q,":")?q="htmx"+q:startsWith(q,"-")?q="htmx:"+q.slice(1):startsWith(q,"htmx-")&&(q="htmx:"+q.slice(5)),addHxOnEventHandler(T,q,F)}}}}function initNode(T){triggerEvent(T,"htmx:beforeProcessNode");const w=getInternalData(T),O=getTriggerSpecs(T);processVerbs(T,w,O)||(getClosestAttributeValue(T,"hx-boost")==="true"?boostElement(T,w,O):hasAttribute(T,"hx-trigger")&&O.forEach(function(W){addTriggerHandler(T,W,w,function(){})})),(T.tagName==="FORM"||getRawAttribute(T,"type")==="submit"&&hasAttribute(T,"form"))&&initButtonTracking(T),w.firstInitCompleted=!0,triggerEvent(T,"htmx:afterProcessNode")}function maybeDeInitAndHash(T){if(!(T instanceof Element))return!1;const w=getInternalData(T),O=attributeHash(T);return w.initHash!==O?(deInitNode(T),w.initHash=O,!0):!1}function processNode(T){if(T=resolveTarget(T),eltIsDisabled(T)){cleanUpElement(T);return}const w=[];maybeDeInitAndHash(T)&&w.push(T),forEach(findElementsToProcess(T),function(O){if(eltIsDisabled(O)){cleanUpElement(O);return}maybeDeInitAndHash(O)&&w.push(O)}),forEach(findHxOnWildcardElements(T),processHxOnWildcard),forEach(w,initNode)}function kebabEventName(T){return T.replace(/([a-z0-9])([A-Z])/g,"$1-$2").toLowerCase()}function makeEvent(T,w){return new CustomEvent(T,{bubbles:!0,cancelable:!0,composed:!0,detail:w})}function triggerErrorEvent(T,w,O){triggerEvent(T,w,mergeObjects({error:w},O))}function ignoreEventForLogging(T){return T==="htmx:afterProcessNode"}function withExtensions(T,w,O){forEach(getExtensions(T,[],O),function(F){try{w(F)}catch(W){logError(W)}})}function logError(T){console.error(T)}function triggerEvent(T,w,O){T=resolveTarget(T),O==null&&(O={}),O.elt=T;const F=makeEvent(w,O);htmx.logger&&!ignoreEventForLogging(w)&&htmx.logger(T,w,O),O.error&&(logError(O.error),triggerEvent(T,"htmx:error",{errorInfo:O}));let W=T.dispatchEvent(F);const U=kebabEventName(w);if(W&&U!==w){const q=makeEvent(U,F.detail);W=W&&T.dispatchEvent(q)}return withExtensions(asElement(T),function(q){W=W&&q.onEvent(w,F)!==!1&&!F.defaultPrevented}),W}let currentPathForHistory;function setCurrentPathForHistory(T){currentPathForHistory=T,canAccessLocalStorage()&&sessionStorage.setItem("htmx-current-path-for-history",T)}setCurrentPathForHistory(location.pathname+location.search);function getHistoryElement(){return getDocument().querySelector("[hx-history-elt],[data-hx-history-elt]")||getDocument().body}function saveToHistoryCache(T,w){if(!canAccessLocalStorage())return;const O=cleanInnerHtmlForHistory(w),F=getDocument().title,W=window.scrollY;if(htmx.config.historyCacheSize<=0){sessionStorage.removeItem("htmx-history-cache");return}T=normalizePath(T);const U=parseJSON(sessionStorage.getItem("htmx-history-cache"))||[];for(let j=0;j<U.length;j++)if(U[j].url===T){U.splice(j,1);break}const q={url:T,content:O,title:F,scroll:W};for(triggerEvent(getDocument().body,"htmx:historyItemCreated",{item:q,cache:U}),U.push(q);U.length>htmx.config.historyCacheSize;)U.shift();for(;U.length>0;)try{sessionStorage.setItem("htmx-history-cache",JSON.stringify(U));break}catch(j){triggerErrorEvent(getDocument().body,"htmx:historyCacheError",{cause:j,cache:U}),U.shift()}}function getCachedHistory(T){if(!canAccessLocalStorage())return null;T=normalizePath(T);const w=parseJSON(sessionStorage.getItem("htmx-history-cache"))||[];for(let O=0;O<w.length;O++)if(w[O].url===T)return w[O];return null}function cleanInnerHtmlForHistory(T){const w=htmx.config.requestClass,O=T.cloneNode(!0);return forEach(findAll(O,"."+w),function(F){removeClassFromElement(F,w)}),forEach(findAll(O,"[data-disabled-by-htmx]"),function(F){F.removeAttribute("disabled")}),O.innerHTML}function saveCurrentPageToHistory(){const T=getHistoryElement();let w=currentPathForHistory;canAccessLocalStorage()&&(w=sessionStorage.getItem("htmx-current-path-for-history")),w=w||location.pathname+location.search,getDocument().querySelector('[hx-history="false" i],[data-hx-history="false" i]')||(triggerEvent(getDocument().body,"htmx:beforeHistorySave",{path:w,historyElt:T}),saveToHistoryCache(w,T)),htmx.config.historyEnabled&&history.replaceState({htmx:!0},getDocument().title,location.href)}function pushUrlIntoHistory(T){htmx.config.getCacheBusterParam&&(T=T.replace(/org\.htmx\.cache-buster=[^&]*&?/,""),(endsWith(T,"&")||endsWith(T,"?"))&&(T=T.slice(0,-1))),htmx.config.historyEnabled&&history.pushState({htmx:!0},"",T),setCurrentPathForHistory(T)}function replaceUrlInHistory(T){htmx.config.historyEnabled&&history.replaceState({htmx:!0},"",T),setCurrentPathForHistory(T)}function settleImmediately(T){forEach(T,function(w){w.call(void 0)})}function loadHistoryFromServer(T){const w=new XMLHttpRequest,O={swapStyle:"innerHTML",swapDelay:0,settleDelay:0},F={path:T,xhr:w,historyElt:getHistoryElement(),swapSpec:O};w.open("GET",T,!0),htmx.config.historyRestoreAsHxRequest&&w.setRequestHeader("HX-Request","true"),w.setRequestHeader("HX-History-Restore-Request","true"),w.setRequestHeader("HX-Current-URL",location.href),w.onload=function(){this.status>=200&&this.status<400?(F.response=this.response,triggerEvent(getDocument().body,"htmx:historyCacheMissLoad",F),swap(F.historyElt,F.response,O,{contextElement:F.historyElt,historyRequest:!0}),setCurrentPathForHistory(F.path),triggerEvent(getDocument().body,"htmx:historyRestore",{path:T,cacheMiss:!0,serverResponse:F.response})):triggerErrorEvent(getDocument().body,"htmx:historyCacheMissLoadError",F)},triggerEvent(getDocument().body,"htmx:historyCacheMiss",F)&&w.send()}function restoreHistory(T){saveCurrentPageToHistory(),T=T||location.pathname+location.search;const w=getCachedHistory(T);if(w){const O={swapStyle:"innerHTML",swapDelay:0,settleDelay:0,scroll:w.scroll},F={path:T,item:w,historyElt:getHistoryElement(),swapSpec:O};triggerEvent(getDocument().body,"htmx:historyCacheHit",F)&&(swap(F.historyElt,w.content,O,{contextElement:F.historyElt,title:w.title}),setCurrentPathForHistory(F.path),triggerEvent(getDocument().body,"htmx:historyRestore",F))}else htmx.config.refreshOnHistoryMiss?htmx.location.reload(!0):loadHistoryFromServer(T)}function addRequestIndicatorClasses(T){let w=findAttributeTargets(T,"hx-indicator");return w==null&&(w=[T]),forEach(w,function(O){const F=getInternalData(O);F.requestCount=(F.requestCount||0)+1,O.classList.add.call(O.classList,htmx.config.requestClass)}),w}function disableElements(T){let w=findAttributeTargets(T,"hx-disabled-elt");return w==null&&(w=[]),forEach(w,function(O){const F=getInternalData(O);F.requestCount=(F.requestCount||0)+1,O.setAttribute("disabled",""),O.setAttribute("data-disabled-by-htmx","")}),w}function removeRequestIndicators(T,w){forEach(T.concat(w),function(O){const F=getInternalData(O);F.requestCount=(F.requestCount||1)-1}),forEach(T,function(O){getInternalData(O).requestCount===0&&O.classList.remove.call(O.classList,htmx.config.requestClass)}),forEach(w,function(O){getInternalData(O).requestCount===0&&(O.removeAttribute("disabled"),O.removeAttribute("data-disabled-by-htmx"))})}function haveSeenNode(T,w){for(let O=0;O<T.length;O++)if(T[O].isSameNode(w))return!0;return!1}function shouldInclude(T){const w=T;return w.name===""||w.name==null||w.disabled||closest(w,"fieldset[disabled]")||w.type==="button"||w.type==="submit"||w.tagName==="image"||w.tagName==="reset"||w.tagName==="file"?!1:w.type==="checkbox"||w.type==="radio"?w.checked:!0}function addValueToFormData(T,w,O){T!=null&&w!=null&&(Array.isArray(w)?w.forEach(function(F){O.append(T,F)}):O.append(T,w))}function removeValueFromFormData(T,w,O){if(T!=null&&w!=null){let F=O.getAll(T);Array.isArray(w)?F=F.filter(W=>w.indexOf(W)<0):F=F.filter(W=>W!==w),O.delete(T),forEach(F,W=>O.append(T,W))}}function getValueFromInput(T){return T instanceof HTMLSelectElement&&T.multiple?toArray(T.querySelectorAll("option:checked")).map(function(w){return w.value}):T instanceof HTMLInputElement&&T.files?toArray(T.files):T.value}function processInputValue(T,w,O,F,W){if(!(F==null||haveSeenNode(T,F))){if(T.push(F),shouldInclude(F)){const U=getRawAttribute(F,"name");addValueToFormData(U,getValueFromInput(F),w),W&&validateElement(F,O)}F instanceof HTMLFormElement&&(forEach(F.elements,function(U){T.indexOf(U)>=0?removeValueFromFormData(U.name,getValueFromInput(U),w):T.push(U),W&&validateElement(U,O)}),new FormData(F).forEach(function(U,q){U instanceof File&&U.name===""||addValueToFormData(q,U,w)}))}}function validateElement(T,w){const O=T;O.willValidate&&(triggerEvent(O,"htmx:validation:validate"),O.checkValidity()||(triggerEvent(O,"htmx:validation:failed",{message:O.validationMessage,validity:O.validity})&&!w.length&&htmx.config.reportValidityOfForms&&O.reportValidity(),w.push({elt:O,message:O.validationMessage,validity:O.validity})))}function overrideFormData(T,w){for(const O of w.keys())T.delete(O);return w.forEach(function(O,F){T.append(F,O)}),T}function getInputValues(T,w){const O=[],F=new FormData,W=new FormData,U=[],q=getInternalData(T);q.lastButtonClicked&&!bodyContains(q.lastButtonClicked)&&(q.lastButtonClicked=null);let j=T instanceof HTMLFormElement&&T.noValidate!==!0||getAttributeValue(T,"hx-validate")==="true";if(q.lastButtonClicked&&(j=j&&q.lastButtonClicked.formNoValidate!==!0),w!=="get"&&processInputValue(O,W,U,getRelatedForm(T),j),processInputValue(O,F,U,T,j),q.lastButtonClicked||T.tagName==="BUTTON"||T.tagName==="INPUT"&&getRawAttribute(T,"type")==="submit"){const X=q.lastButtonClicked||T,Y=getRawAttribute(X,"name");addValueToFormData(Y,X.value,W)}const J=findAttributeTargets(T,"hx-include");return forEach(J,function(X){processInputValue(O,F,U,asElement(X),j),matches(X,"form")||forEach(asParentNode(X).querySelectorAll(INPUT_SELECTOR),function(Y){processInputValue(O,F,U,Y,j)})}),overrideFormData(F,W),{errors:U,formData:F,values:formDataProxy(F)}}function appendParam(T,w,O){T!==""&&(T+="&"),String(O)==="[object Object]"&&(O=JSON.stringify(O));const F=encodeURIComponent(O);return T+=encodeURIComponent(w)+"="+F,T}function urlEncode(T){T=formDataFromObject(T);let w="";return T.forEach(function(O,F){w=appendParam(w,F,O)}),w}function getHeaders(T,w,O){const F={"HX-Request":"true","HX-Trigger":getRawAttribute(T,"id"),"HX-Trigger-Name":getRawAttribute(T,"name"),"HX-Target":getAttributeValue(w,"id"),"HX-Current-URL":location.href};return getValuesForElement(T,"hx-headers",!1,F),O!==void 0&&(F["HX-Prompt"]=O),getInternalData(T).boosted&&(F["HX-Boosted"]="true"),F}function filterValues(T,w){const O=getClosestAttributeValue(w,"hx-params");if(O){if(O==="none")return new FormData;if(O==="*")return T;if(O.indexOf("not ")===0)return forEach(O.slice(4).split(","),function(F){F=F.trim(),T.delete(F)}),T;{const F=new FormData;return forEach(O.split(","),function(W){W=W.trim(),T.has(W)&&T.getAll(W).forEach(function(U){F.append(W,U)})}),F}}else return T}function isAnchorLink(T){return!!getRawAttribute(T,"href")&&getRawAttribute(T,"href").indexOf("#")>=0}function getSwapSpecification(T,w){const O=w||getClosestAttributeValue(T,"hx-swap"),F={swapStyle:getInternalData(T).boosted?"innerHTML":htmx.config.defaultSwapStyle,swapDelay:htmx.config.defaultSwapDelay,settleDelay:htmx.config.defaultSettleDelay};if(htmx.config.scrollIntoViewOnBoost&&getInternalData(T).boosted&&!isAnchorLink(T)&&(F.show="top"),O){const q=splitOnWhitespace(O);if(q.length>0)for(let j=0;j<q.length;j++){const J=q[j];if(J.indexOf("swap:")===0)F.swapDelay=parseInterval(J.slice(5));else if(J.indexOf("settle:")===0)F.settleDelay=parseInterval(J.slice(7));else if(J.indexOf("transition:")===0)F.transition=J.slice(11)==="true";else if(J.indexOf("ignoreTitle:")===0)F.ignoreTitle=J.slice(12)==="true";else if(J.indexOf("scroll:")===0){var W=J.slice(7).split(":");const Y=W.pop();var U=W.length>0?W.join(":"):null;F.scroll=Y,F.scrollTarget=U}else if(J.indexOf("show:")===0){var W=J.slice(5).split(":");const K=W.pop();var U=W.length>0?W.join(":"):null;F.show=K,F.showTarget=U}else if(J.indexOf("focus-scroll:")===0){const X=J.slice(13);F.focusScroll=X=="true"}else j==0?F.swapStyle=J:logError("Unknown modifier in hx-swap: "+J)}}return F}function usesFormData(T){return getClosestAttributeValue(T,"hx-encoding")==="multipart/form-data"||matches(T,"form")&&getRawAttribute(T,"enctype")==="multipart/form-data"}function encodeParamsForBody(T,w,O){let F=null;return withExtensions(w,function(W){F==null&&(F=W.encodeParameters(T,O,w))}),F??(usesFormData(w)?overrideFormData(new FormData,formDataFromObject(O)):urlEncode(O))}function makeSettleInfo(T){return{tasks:[],elts:[T]}}function updateScrollState(T,w){const O=T[0],F=T[T.length-1];if(w.scroll){var W=null;w.scrollTarget&&(W=asElement(querySelectorExt(O,w.scrollTarget))),w.scroll==="top"&&(O||W)&&(W=W||O,W.scrollTop=0),w.scroll==="bottom"&&(F||W)&&(W=W||F,W.scrollTop=W.scrollHeight),typeof w.scroll=="number"&&getWindow().setTimeout(function(){window.scrollTo(0,w.scroll)},0)}if(w.show){var W=null;if(w.showTarget){let q=w.showTarget;w.showTarget==="window"&&(q="body"),W=asElement(querySelectorExt(O,q))}w.show==="top"&&(O||W)&&(W=W||O,W.scrollIntoView({block:"start",behavior:htmx.config.scrollBehavior})),w.show==="bottom"&&(F||W)&&(W=W||F,W.scrollIntoView({block:"end",behavior:htmx.config.scrollBehavior}))}}function getValuesForElement(T,w,O,F,W){if(F==null&&(F={}),T==null)return F;const U=getAttributeValue(T,w);if(U){let q=U.trim(),j=O;if(q==="unset")return null;q.indexOf("javascript:")===0?(q=q.slice(11),j=!0):q.indexOf("js:")===0&&(q=q.slice(3),j=!0),q.indexOf("{")!==0&&(q="{"+q+"}");let J;j?J=maybeEval(T,function(){return W?Function("event","return ("+q+")").call(T,W):Function("return ("+q+")").call(T)},{}):J=parseJSON(q);for(const X in J)J.hasOwnProperty(X)&&F[X]==null&&(F[X]=J[X])}return getValuesForElement(asElement(parentElt(T)),w,O,F,W)}function maybeEval(T,w,O){return htmx.config.allowEval?w():(triggerErrorEvent(T,"htmx:evalDisallowedError"),O)}function getHXVarsForElement(T,w,O){return getValuesForElement(T,"hx-vars",!0,O,w)}function getHXValsForElement(T,w,O){return getValuesForElement(T,"hx-vals",!1,O,w)}function getExpressionVars(T,w){return mergeObjects(getHXVarsForElement(T,w),getHXValsForElement(T,w))}function safelySetHeaderValue(T,w,O){if(O!==null)try{T.setRequestHeader(w,O)}catch{T.setRequestHeader(w,encodeURIComponent(O)),T.setRequestHeader(w+"-URI-AutoEncoded","true")}}function getPathFromResponse(T){if(T.responseURL)try{const w=new URL(T.responseURL);return w.pathname+w.search}catch{triggerErrorEvent(getDocument().body,"htmx:badResponseUrl",{url:T.responseURL})}}function hasHeader(T,w){return w.test(T.getAllResponseHeaders())}function ajaxHelper(T,w,O){if(T=T.toLowerCase(),O){if(O instanceof Element||typeof O=="string")return issueAjaxRequest(T,w,null,null,{targetOverride:resolveTarget(O)||DUMMY_ELT,returnPromise:!0});{let F=resolveTarget(O.target);return(O.target&&!F||O.source&&!F&&!resolveTarget(O.source))&&(F=DUMMY_ELT),issueAjaxRequest(T,w,resolveTarget(O.source),O.event,{handler:O.handler,headers:O.headers,values:O.values,targetOverride:F,swapOverride:O.swap,select:O.select,returnPromise:!0,push:O.push,replace:O.replace,selectOOB:O.selectOOB})}}else return issueAjaxRequest(T,w,null,null,{returnPromise:!0})}function hierarchyForElt(T){const w=[];for(;T;)w.push(T),T=T.parentElement;return w}function verifyPath(T,w,O){const F=new URL(w,location.protocol!=="about:"?location.href:window.origin),U=(location.protocol!=="about:"?location.origin:window.origin)===F.origin;return htmx.config.selfRequestsOnly&&!U?!1:triggerEvent(T,"htmx:validateUrl",mergeObjects({url:F,sameHost:U},O))}function formDataFromObject(T){if(T instanceof FormData)return T;const w=new FormData;for(const O in T)T.hasOwnProperty(O)&&(T[O]&&typeof T[O].forEach=="function"?T[O].forEach(function(F){w.append(O,F)}):typeof T[O]=="object"&&!(T[O]instanceof Blob)?w.append(O,JSON.stringify(T[O])):w.append(O,T[O]));return w}function formDataArrayProxy(T,w,O){return new Proxy(O,{get:function(F,W){return typeof W=="number"?F[W]:W==="length"?F.length:W==="push"?function(U){F.push(U),T.append(w,U)}:typeof F[W]=="function"?function(){F[W].apply(F,arguments),T.delete(w),F.forEach(function(U){T.append(w,U)})}:F[W]&&F[W].length===1?F[W][0]:F[W]},set:function(F,W,U){return F[W]=U,T.delete(w),F.forEach(function(q){T.append(w,q)}),!0}})}function formDataProxy(T){return new Proxy(T,{get:function(w,O){if(typeof O=="symbol"){const W=Reflect.get(w,O);return typeof W=="function"?function(){return W.apply(T,arguments)}:W}if(O==="toJSON")return()=>Object.fromEntries(T);if(O in w&&typeof w[O]=="function")return function(){return T[O].apply(T,arguments)};const F=T.getAll(O);if(F.length!==0)return F.length===1?F[0]:formDataArrayProxy(w,O,F)},set:function(w,O,F){return typeof O!="string"?!1:(w.delete(O),F&&typeof F.forEach=="function"?F.forEach(function(W){w.append(O,W)}):typeof F=="object"&&!(F instanceof Blob)?w.append(O,JSON.stringify(F)):w.append(O,F),!0)},deleteProperty:function(w,O){return typeof O=="string"&&w.delete(O),!0},ownKeys:function(w){return Reflect.ownKeys(Object.fromEntries(w))},getOwnPropertyDescriptor:function(w,O){return Reflect.getOwnPropertyDescriptor(Object.fromEntries(w),O)}})}function issueAjaxRequest(T,w,O,F,W,U){let q=null,j=null;if(W=W??{},W.returnPromise&&typeof Promise<"u")var J=new Promise(function(ie,pe){q=ie,j=pe});O==null&&(O=getDocument().body);const X=W.handler||handleAjaxResponse,Y=W.select||null;if(!bodyContains(O))return maybeCall(q),J;const K=W.targetOverride||asElement(getTarget(O));if(K==null||K==DUMMY_ELT)return triggerErrorEvent(O,"htmx:targetError",{target:getClosestAttributeValue(O,"hx-target")}),maybeCall(j),J;let G=getInternalData(O);const ee=G.lastButtonClicked;if(ee){const ie=getRawAttribute(ee,"formaction");ie!=null&&(w=ie);const pe=getRawAttribute(ee,"formmethod");if(pe!=null)if(VERBS.includes(pe.toLowerCase()))T=pe;else return maybeCall(q),J}const Q=getClosestAttributeValue(O,"hx-confirm");if(U===void 0&&triggerEvent(O,"htmx:confirm",{target:K,elt:O,path:w,verb:T,triggeringEvent:F,etc:W,issueRequest:function(ke){return issueAjaxRequest(T,w,O,F,W,!!ke)},question:Q})===!1)return maybeCall(q),J;let te=O,ae=getClosestAttributeValue(O,"hx-sync"),oe=null,ne=!1;if(ae){const ie=ae.split(":"),pe=ie[0].trim();if(pe==="this"?te=findThisElement(O,"hx-sync"):te=asElement(querySelectorExt(O,pe)),ae=(ie[1]||"drop").trim(),G=getInternalData(te),ae==="drop"&&G.xhr&&G.abortable!==!0)return maybeCall(q),J;if(ae==="abort"){if(G.xhr)return maybeCall(q),J;ne=!0}else ae==="replace"?triggerEvent(te,"htmx:abort"):ae.indexOf("queue")===0&&(oe=(ae.split(" ")[1]||"last").trim())}if(G.xhr)if(G.abortable)triggerEvent(te,"htmx:abort");else{if(oe==null){if(F){const ie=getInternalData(F);ie&&ie.triggerSpec&&ie.triggerSpec.queue&&(oe=ie.triggerSpec.queue)}oe==null&&(oe="last")}return G.queuedRequests==null&&(G.queuedRequests=[]),oe==="first"&&G.queuedRequests.length===0?G.queuedRequests.push(function(){issueAjaxRequest(T,w,O,F,W)}):oe==="all"?G.queuedRequests.push(function(){issueAjaxRequest(T,w,O,F,W)}):oe==="last"&&(G.queuedRequests=[],G.queuedRequests.push(function(){issueAjaxRequest(T,w,O,F,W)})),maybeCall(q),J}const re=new XMLHttpRequest;G.xhr=re,G.abortable=ne;const se=function(){G.xhr=null,G.abortable=!1,G.queuedRequests!=null&&G.queuedRequests.length>0&&G.queuedRequests.shift()()},ue=getClosestAttributeValue(O,"hx-prompt");if(ue){var de=prompt(ue);if(de===null||!triggerEvent(O,"htmx:prompt",{prompt:de,target:K}))return maybeCall(q),se(),J}if(Q&&!U&&!confirm(Q))return maybeCall(q),se(),J;let le=getHeaders(O,K,de);T!=="get"&&!usesFormData(O)&&(le["Content-Type"]="application/x-www-form-urlencoded"),W.headers&&(le=mergeObjects(le,W.headers));const _e=getInputValues(O,T);let ge=_e.errors;const be=_e.formData;W.values&&overrideFormData(be,formDataFromObject(W.values));const Ce=formDataFromObject(getExpressionVars(O,F)),ve=overrideFormData(be,Ce);let fe=filterValues(ve,O);htmx.config.getCacheBusterParam&&T==="get"&&fe.set("org.htmx.cache-buster",getRawAttribute(K,"id")||"true"),(w==null||w==="")&&(w=location.href);const he=getValuesForElement(O,"hx-request"),xe=getInternalData(O).boosted;let we=htmx.config.methodsThatUseUrlParams.indexOf(T)>=0;const ce={boosted:xe,useUrlParams:we,formData:fe,parameters:formDataProxy(fe),unfilteredFormData:ve,unfilteredParameters:formDataProxy(ve),headers:le,elt:O,target:K,verb:T,errors:ge,withCredentials:W.credentials||he.credentials||htmx.config.withCredentials,timeout:W.timeout||he.timeout||htmx.config.timeout,path:w,triggeringEvent:F};if(!triggerEvent(O,"htmx:configRequest",ce))return maybeCall(q),se(),J;if(w=ce.path,T=ce.verb,le=ce.headers,fe=formDataFromObject(ce.parameters),ge=ce.errors,we=ce.useUrlParams,ge&&ge.length>0)return triggerEvent(O,"htmx:validation:halted",ce),maybeCall(q),se(),J;const ye=w.split("#"),Ee=ye[0],Ae=ye[1];let $e=w;if(we&&($e=Ee,!fe.keys().next().done&&($e.indexOf("?")<0?$e+="?":$e+="&",$e+=urlEncode(fe),Ae&&($e+="#"+Ae))),!verifyPath(O,$e,ce))return triggerErrorEvent(O,"htmx:invalidPath",ce),maybeCall(j),se(),J;if(re.open(T.toUpperCase(),$e,!0),re.overrideMimeType("text/html"),re.withCredentials=ce.withCredentials,re.timeout=ce.timeout,!he.noHeaders){for(const ie in le)if(le.hasOwnProperty(ie)){const pe=le[ie];safelySetHeaderValue(re,ie,pe)}}const me={xhr:re,target:K,requestConfig:ce,etc:W,boosted:xe,select:Y,pathInfo:{requestPath:w,finalRequestPath:$e,responsePath:null,anchor:Ae}};if(re.onload=function(){try{const ie=hierarchyForElt(O);if(me.pathInfo.responsePath=getPathFromResponse(re),X(O,me),me.keepIndicators!==!0&&removeRequestIndicators(Te,Le),triggerEvent(O,"htmx:afterRequest",me),triggerEvent(O,"htmx:afterOnLoad",me),!bodyContains(O)){let pe=null;for(;ie.length>0&&pe==null;){const ke=ie.shift();bodyContains(ke)&&(pe=ke)}pe&&(triggerEvent(pe,"htmx:afterRequest",me),triggerEvent(pe,"htmx:afterOnLoad",me))}maybeCall(q)}catch(ie){throw triggerErrorEvent(O,"htmx:onLoadError",mergeObjects({error:ie},me)),ie}finally{se()}},re.onerror=function(){removeRequestIndicators(Te,Le),triggerErrorEvent(O,"htmx:afterRequest",me),triggerErrorEvent(O,"htmx:sendError",me),maybeCall(j),se()},re.onabort=function(){removeRequestIndicators(Te,Le),triggerErrorEvent(O,"htmx:afterRequest",me),triggerErrorEvent(O,"htmx:sendAbort",me),maybeCall(j),se()},re.ontimeout=function(){removeRequestIndicators(Te,Le),triggerErrorEvent(O,"htmx:afterRequest",me),triggerErrorEvent(O,"htmx:timeout",me),maybeCall(j),se()},!triggerEvent(O,"htmx:beforeRequest",me))return maybeCall(q),se(),J;var Te=addRequestIndicatorClasses(O),Le=disableElements(O);forEach(["loadstart","loadend","progress","abort"],function(ie){forEach([re,re.upload],function(pe){pe.addEventListener(ie,function(ke){triggerEvent(O,"htmx:xhr:"+ie,{lengthComputable:ke.lengthComputable,loaded:ke.loaded,total:ke.total})})})}),triggerEvent(O,"htmx:beforeSend",me);const Be=we?null:encodeParamsForBody(re,O,fe);return re.send(Be),J}function determineHistoryUpdates(T,w){const O=w.xhr;let F=null,W=null;if(hasHeader(O,/HX-Push:/i)?(F=O.getResponseHeader("HX-Push"),W="push"):hasHeader(O,/HX-Push-Url:/i)?(F=O.getResponseHeader("HX-Push-Url"),W="push"):hasHeader(O,/HX-Replace-Url:/i)&&(F=O.getResponseHeader("HX-Replace-Url"),W="replace"),F)return F==="false"?{}:{type:W,path:F};const U=w.pathInfo.finalRequestPath,q=w.pathInfo.responsePath,j=w.etc.push||getClosestAttributeValue(T,"hx-push-url"),J=w.etc.replace||getClosestAttributeValue(T,"hx-replace-url"),X=getInternalData(T).boosted;let Y=null,K=null;return j?(Y="push",K=j):J?(Y="replace",K=J):X&&(Y="push",K=q||U),K?K==="false"?{}:(K==="true"&&(K=q||U),w.pathInfo.anchor&&K.indexOf("#")===-1&&(K=K+"#"+w.pathInfo.anchor),{type:Y,path:K}):{}}function codeMatches(T,w){var O=new RegExp(T.code);return O.test(w.toString(10))}function resolveResponseHandling(T){for(var w=0;w<htmx.config.responseHandling.length;w++){var O=htmx.config.responseHandling[w];if(codeMatches(O,T.status))return O}return{swap:!1}}function handleTitle(T){if(T){const w=find("title");w?w.textContent=T:window.document.title=T}}function resolveRetarget(T,w){if(w==="this")return T;const O=asElement(querySelectorExt(T,w));if(O==null)throw triggerErrorEvent(T,"htmx:targetError",{target:w}),new Error(`Invalid re-target ${w}`);return O}function handleAjaxResponse(T,w){const O=w.xhr;let F=w.target;const W=w.etc,U=w.select;if(!triggerEvent(T,"htmx:beforeOnLoad",w))return;if(hasHeader(O,/HX-Trigger:/i)&&handleTriggerHeader(O,"HX-Trigger",T),hasHeader(O,/HX-Location:/i)){let ne=O.getResponseHeader("HX-Location");var q={};ne.indexOf("{")===0&&(q=parseJSON(ne),ne=q.path,delete q.path),q.push=q.push||"true",ajaxHelper("get",ne,q);return}const j=hasHeader(O,/HX-Refresh:/i)&&O.getResponseHeader("HX-Refresh")==="true";if(hasHeader(O,/HX-Redirect:/i)){w.keepIndicators=!0,htmx.location.href=O.getResponseHeader("HX-Redirect"),j&&htmx.location.reload();return}if(j){w.keepIndicators=!0,htmx.location.reload();return}const J=determineHistoryUpdates(T,w),X=resolveResponseHandling(O),Y=X.swap;let K=!!X.error,G=htmx.config.ignoreTitle||X.ignoreTitle,ee=X.select;X.target&&(w.target=resolveRetarget(T,X.target));var Q=W.swapOverride;Q==null&&X.swapOverride&&(Q=X.swapOverride),hasHeader(O,/HX-Retarget:/i)&&(w.target=resolveRetarget(T,O.getResponseHeader("HX-Retarget"))),hasHeader(O,/HX-Reswap:/i)&&(Q=O.getResponseHeader("HX-Reswap"));var te=O.response,ae=mergeObjects({shouldSwap:Y,serverResponse:te,isError:K,ignoreTitle:G,selectOverride:ee,swapOverride:Q},w);if(!(X.event&&!triggerEvent(F,X.event,ae))&&triggerEvent(F,"htmx:beforeSwap",ae)){if(F=ae.target,te=ae.serverResponse,K=ae.isError,G=ae.ignoreTitle,ee=ae.selectOverride,Q=ae.swapOverride,w.target=F,w.failed=K,w.successful=!K,ae.shouldSwap){O.status===286&&cancelPolling(T),withExtensions(T,function(se){te=se.transformResponse(te,O,T)}),J.type&&saveCurrentPageToHistory();var oe=getSwapSpecification(T,Q);oe.hasOwnProperty("ignoreTitle")||(oe.ignoreTitle=G),F.classList.add(htmx.config.swappingClass),U&&(ee=U),hasHeader(O,/HX-Reselect:/i)&&(ee=O.getResponseHeader("HX-Reselect"));const ne=W.selectOOB||getClosestAttributeValue(T,"hx-select-oob"),re=getClosestAttributeValue(T,"hx-select");swap(F,te,oe,{select:ee==="unset"?null:ee||re,selectOOB:ne,eventInfo:w,anchor:w.pathInfo.anchor,contextElement:T,afterSwapCallback:function(){if(hasHeader(O,/HX-Trigger-After-Swap:/i)){let se=T;bodyContains(T)||(se=getDocument().body),handleTriggerHeader(O,"HX-Trigger-After-Swap",se)}},afterSettleCallback:function(){if(hasHeader(O,/HX-Trigger-After-Settle:/i)){let se=T;bodyContains(T)||(se=getDocument().body),handleTriggerHeader(O,"HX-Trigger-After-Settle",se)}},beforeSwapCallback:function(){J.type&&(triggerEvent(getDocument().body,"htmx:beforeHistoryUpdate",mergeObjects({history:J},w)),J.type==="push"?(pushUrlIntoHistory(J.path),triggerEvent(getDocument().body,"htmx:pushedIntoHistory",{path:J.path})):(replaceUrlInHistory(J.path),triggerEvent(getDocument().body,"htmx:replacedInHistory",{path:J.path})))}})}K&&triggerErrorEvent(T,"htmx:responseError",mergeObjects({error:"Response Status Error Code "+O.status+" from "+w.pathInfo.requestPath},w))}}const extensions={};function extensionBase(){return{init:function(T){return null},getSelectors:function(){return null},onEvent:function(T,w){return!0},transformResponse:function(T,w,O){return T},isInlineSwap:function(T){return!1},handleSwap:function(T,w,O,F){return!1},encodeParameters:function(T,w,O){return null}}}function defineExtension(T,w){w.init&&w.init(internalAPI),extensions[T]=mergeObjects(extensionBase(),w)}function removeExtension(T){delete extensions[T]}function getExtensions(T,w,O){if(w==null&&(w=[]),T==null)return w;O==null&&(O=[]);const F=getAttributeValue(T,"hx-ext");return F&&forEach(F.split(","),function(W){if(W=W.replace(/ /g,""),W.slice(0,7)=="ignore:"){O.push(W.slice(7));return}if(O.indexOf(W)<0){const U=extensions[W];U&&w.indexOf(U)<0&&w.push(U)}}),getExtensions(asElement(parentElt(T)),w,O)}var isReady=!1;getDocument().addEventListener("DOMContentLoaded",function(){isReady=!0});function ready(T){isReady||getDocument().readyState==="complete"?T():getDocument().addEventListener("DOMContentLoaded",T)}function insertIndicatorStyles(){if(htmx.config.includeIndicatorStyles!==!1){const T=htmx.config.inlineStyleNonce?` nonce="${htmx.config.inlineStyleNonce}"`:"",w=htmx.config.indicatorClass,O=htmx.config.requestClass;getDocument().head.insertAdjacentHTML("beforeend",`<style${T}>.${w}{opacity:0;visibility: hidden} .${O} .${w}, .${O}.${w}{opacity:1;visibility: visible;transition: opacity 200ms ease-in}</style>`)}}function getMetaConfig(){const T=getDocument().querySelector('meta[name="htmx-config"]');return T?parseJSON(T.content):null}function mergeMetaConfig(){const T=getMetaConfig();T&&(htmx.config=mergeObjects(htmx.config,T))}return ready(function(){mergeMetaConfig(),insertIndicatorStyles();let T=getDocument().body;processNode(T);const w=getDocument().querySelectorAll("[hx-trigger='restored'],[data-hx-trigger='restored']");T.addEventListener("htmx:abort",function(F){const W=F.detail.elt||F.target,U=getInternalData(W);U&&U.xhr&&U.xhr.abort()});const O=window.onpopstate?window.onpopstate.bind(window):null;window.onpopstate=function(F){F.state&&F.state.htmx?(restoreHistory(),forEach(w,function(W){triggerEvent(W,"htmx:restored",{document:getDocument(),triggerEvent})})):O&&O(F)},getWindow().setTimeout(function(){triggerEvent(T,"htmx:load",{}),T=null},0)}),htmx})();class ThemeToggle extends i$3{connectedCallback(){var F;super.connectedCallback();const O=localStorage.getItem("theme")||((F=window.matchMedia)!=null&&F.call(window,"(prefers-color-scheme: dark)").matches?"dark":"light");this._applyTheme(O)}get _isDark(){return document.documentElement.classList.contains("wa-dark")}_applyTheme(w){document.documentElement.classList.toggle("wa-dark",w==="dark"),document.documentElement.setAttribute("data-theme",w),localStorage.setItem("theme",w),this.requestUpdate()}_toggle(){this._applyTheme(this._isDark?"light":"dark")}render(){return b`
       <wa-button
         appearance="plain"
         size="small"
@@ -3222,7 +3449,7 @@ var Re=Object.defineProperty;var Pe=(T,w,O)=>w in T?Re(T,w,{enumerable:!0,config
       </wa-button>
     `}}Se(ThemeToggle,"styles",i$6`
     :host { display: inline-flex; align-items: center; }
-  `);customElements.define("theme-toggle",ThemeToggle);let _urlBase="";function setUrlBase(T){_urlBase=T}function getUrlBase(){return _urlBase||window.urlBase||""}function joinURL(T,w){return T.endsWith("/")||(T+="/"),w.startsWith("/")&&(w=w.substring(1)),T+w}async function fetcher(T,w={}){const O=joinURL(getUrlBase(),T),F={headers:{},...w};return w.body instanceof FormData||(F.headers["Content-Type"]="application/json"),F.headers={...F.headers,...w.headers},fetch(O,F)}function escapeHtml(T){if(!T)return"";const w={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"};return T.replace(/[&<>"']/g,O=>w[O])}function formatBytes(T){if(!T||T===0)return"0 B";const w=1024,O=["B","KB","MB","GB","TB","PB"],F=Math.floor(Math.log(T)/Math.log(w));return`${parseFloat((T/Math.pow(w,F)).toFixed(2))} ${O[F]}`}function formatSpeed(T){return`${formatBytes(T)}/s`}function formatDuration(T){if(!T||T===0)return"0s";const w=[{label:"d",seconds:86400},{label:"h",seconds:3600},{label:"m",seconds:60},{label:"s",seconds:1}],O=[];let F=T;for(const W of w){const U=Math.floor(F/W.seconds);U>0&&(O.push(`${U}${W.label}`),F%=W.seconds)}return O.slice(0,2).join(" ")||"0s"}function formatNumber(T){try{return Number(T).toLocaleString()}catch{return T??"-"}}function debounce(T,w,O=!1){let F;return function(...U){const q=()=>{F=null,O||T(...U)},j=O&&!F;clearTimeout(F),F=setTimeout(q,w),j&&T(...U)}}async function copyToClipboard(T){try{return await navigator.clipboard.writeText(T),createToast("Copied to clipboard","success"),!0}catch{return createToast("Failed to copy to clipboard","error"),!1}}function isValidUrl(T){try{return new URL(T),!0}catch{return!1}}function setButtonLoading(T,w=!0,O=null){typeof T=="string"&&(T=document.getElementById(T)||document.querySelector(T)),T&&(w?(T.disabled=!0,T.dataset.originalText||(T.dataset.originalText=O||T.innerHTML),T.innerHTML="<wa-spinner></wa-spinner> Processing..."):(T.disabled=!1,T.innerHTML=T.dataset.originalText||"Submit",delete T.dataset.originalText))}function getCurrentTheme(){return document.documentElement.getAttribute("data-theme")||"light"}function getToastContainer(){let T=document.getElementById("app-toast-container");return T||(T=document.createElement("div"),T.id="app-toast-container",T.className="app-toast-container",document.body.appendChild(T)),T}function createToast(T,w="success",O){const F={success:"success",error:"danger",warning:"warning",info:"brand"},W={success:"circle-check",error:"circle-xmark",warning:"triangle-exclamation",info:"circle-info"},q=O||{success:5e3,warning:1e4,error:15e3,info:7e3}[w]||5e3,j=getToastContainer(),J=document.createElement("div");J.className=`app-toast app-toast--${w}`,J.innerHTML=`
+  `);customElements.define("theme-toggle",ThemeToggle);let _urlBase="";function setUrlBase(T){_urlBase=T}function getUrlBase(){return _urlBase||window.urlBase||""}function joinURL(T,w){return T.endsWith("/")||(T+="/"),w.startsWith("/")&&(w=w.substring(1)),T+w}async function fetcher(T,w={}){const O=joinURL(getUrlBase(),T),F={headers:{},...w};return w.body instanceof FormData||(F.headers["Content-Type"]="application/json"),F.headers={...F.headers,...w.headers},fetch(O,F)}function escapeHtml(T){if(!T)return"";const w={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"};return T.replace(/[&<>"']/g,O=>w[O])}function formatBytes(T){if(!T||T===0)return"0 B";const w=1024,O=["B","KB","MB","GB","TB","PB"],F=Math.floor(Math.log(T)/Math.log(w));return`${parseFloat((T/Math.pow(w,F)).toFixed(2))} ${O[F]}`}function formatSpeed(T){return`${formatBytes(T)}/s`}function formatDuration(T){if(!T||T===0)return"0s";const w=[{label:"d",seconds:86400},{label:"h",seconds:3600},{label:"m",seconds:60},{label:"s",seconds:1}],O=[];let F=T;for(const W of w){const U=Math.floor(F/W.seconds);U>0&&(O.push(`${U}${W.label}`),F%=W.seconds)}return O.slice(0,2).join(" ")||"0s"}function formatNumber(T){try{return Number(T).toLocaleString()}catch{return T??"-"}}function debounce(T,w,O=!1){let F;return function(...U){const q=()=>{F=null,O||T(...U)},j=O&&!F;clearTimeout(F),F=setTimeout(q,w),j&&T(...U)}}async function copyToClipboard(T){try{return await navigator.clipboard.writeText(T),createToast("Copied to clipboard","success"),!0}catch{return createToast("Failed to copy to clipboard","error"),!1}}function isValidUrl(T){try{return new URL(T),!0}catch{return!1}}function setButtonLoading(T,w=!0,O=null){if(typeof T=="string"&&(T=document.getElementById(T)||document.querySelector(T)),!!T){if(T.tagName&&T.tagName.toLowerCase()==="wa-button"){w?(T.disabled=!0,T.loading=!0,O&&!T.dataset.originalText&&(T.dataset.originalText=T.textContent),O&&(T.textContent=O)):(T.disabled=!1,T.loading=!1,T.dataset.originalText&&(T.textContent=T.dataset.originalText,delete T.dataset.originalText));return}w?(T.disabled=!0,T.dataset.originalText||(T.dataset.originalText=O||T.innerHTML),T.innerHTML="<wa-spinner></wa-spinner> Processing..."):(T.disabled=!1,T.innerHTML=T.dataset.originalText||"Submit",delete T.dataset.originalText)}}function getCurrentTheme(){return document.documentElement.getAttribute("data-theme")||"light"}function getToastContainer(){let T=document.getElementById("app-toast-container");return T||(T=document.createElement("div"),T.id="app-toast-container",T.className="app-toast-container",document.body.appendChild(T)),T}function createToast(T,w="success",O){const F={success:"success",error:"danger",warning:"warning",info:"brand"},W={success:"circle-check",error:"circle-xmark",warning:"triangle-exclamation",info:"circle-info"},q=O||{success:5e3,warning:1e4,error:15e3,info:7e3}[w]||5e3,j=getToastContainer(),J=document.createElement("div");J.className=`app-toast app-toast--${w}`,J.innerHTML=`
     <wa-callout variant="${F[w]||"brand"}" appearance="accent" size="small">
       <wa-icon slot="icon" name="${W[w]||"circle-info"}"></wa-icon>
       ${escapeHtml(T)}
@@ -3657,153 +3884,151 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
     .subtle { background: var(--app-surface-muted); padding: 0.5rem; border-radius: var(--app-radius); }
     .scroll { max-height: 280px; overflow-y: auto; }
     .callout-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
-  `);customElements.define("system-stats",SystemStats);const template$2=`<div class="space-y-6">
-
+  `);customElements.define("system-stats",SystemStats);const template$2=`<div class="page-stack">
     __NEED_SETUP__
 
-    <div class="card bg-base-100 shadow-xl">
-        <div class="card-body">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <button class="btn btn-secondary btn-sm hidden" id="batchDeleteBtn">
-                        <i class="bi bi-trash"></i>
-                        <span class="hidden sm:inline">Delete Selected</span>
-                    </button>
-                    <button class="btn btn-error btn-sm hidden" id="batchDeleteDebridBtn">
-                        <i class="bi bi-cloud-fog-fill"></i>
-                        <span class="hidden sm:inline">Remove From Debrid</span>
-                    </button>
-                    <button class="btn btn-outline btn-sm" id="refreshBtn">
-                        <i class="bi bi-arrow-clockwise"></i>
-                        <span class="hidden sm:inline">Refresh</span>
-                    </button>
+    <wa-card class="panel">
+        <div class="panel-body">
+            <div class="toolbar">
+                <div class="toolbar-actions">
+                    <wa-button variant="danger" appearance="outline" size="small" id="batchDeleteBtn" class="hidden">
+                        <wa-icon slot="start" name="trash"></wa-icon>
+                        Delete Selected
+                    </wa-button>
+                    <wa-button variant="warning" appearance="outline" size="small" id="batchDeleteDebridBtn" class="hidden">
+                        <wa-icon slot="start" name="cloud-slash"></wa-icon>
+                        Remove From Debrid
+                    </wa-button>
+                    <wa-button variant="neutral" appearance="outline" size="small" id="refreshBtn">
+                        <wa-icon slot="start" name="arrows-rotate"></wa-icon>
+                        Refresh
+                    </wa-button>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
-                    <select class="select select-bordered select-sm w-full sm:w-auto min-w-32" id="stateFilter">
-                        <option value="">All States</option>
-                        <option value="pausedUP">Completed</option>
-                        <option value="downloading">Downloading</option>
-                        <option value="error">Error</option>
-                    </select>
-                    <select class="select select-bordered select-sm w-full sm:w-auto min-w-32" id="categoryFilter">
-                        <option value="">All Categories</option>
-                    </select>
-                    <select class="select select-bordered select-sm w-full sm:w-auto min-w-48" id="sortSelector">
-                        <option value="added_on" selected>Date Added (Newest First)</option>
-                        <option value="added_on_asc">Date Added (Oldest First)</option>
-                        <option value="name_asc">Name (A-Z)</option>
-                        <option value="name_desc">Name (Z-A)</option>
-                        <option value="size_desc">Size (Largest First)</option>
-                        <option value="size_asc">Size (Smallest First)</option>
-                        <option value="progress_desc">Progress (Most First)</option>
-                        <option value="progress_asc">Progress (Least First)</option>
-                    </select>
+                <div class="filter-row">
+                    <div class="filter-field">
+                        <wa-select id="stateFilter" label="State">
+                            <wa-option value="">All States</wa-option>
+                            <wa-option value="pausedUP">Completed</wa-option>
+                            <wa-option value="downloading">Downloading</wa-option>
+                            <wa-option value="error">Error</wa-option>
+                        </wa-select>
+                    </div>
+                    <div class="filter-field">
+                        <wa-select id="categoryFilter" label="Category">
+                            <wa-option value="">All Categories</wa-option>
+                        </wa-select>
+                    </div>
+                    <div class="filter-field">
+                        <wa-select id="sortSelector" label="Sort By">
+                            <wa-option value="added_on" selected>Date Added (Newest First)</wa-option>
+                            <wa-option value="added_on_asc">Date Added (Oldest First)</wa-option>
+                            <wa-option value="name_asc">Name (A-Z)</wa-option>
+                            <wa-option value="name_desc">Name (Z-A)</wa-option>
+                            <wa-option value="size_desc">Size (Largest First)</wa-option>
+                            <wa-option value="size_asc">Size (Smallest First)</wa-option>
+                            <wa-option value="progress_desc">Progress (Most First)</wa-option>
+                            <wa-option value="progress_asc">Progress (Least First)</wa-option>
+                        </wa-select>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </wa-card>
 
-    <div class="card bg-base-100 shadow-xl">
-        <div class="card-body p-0">
-            <div class="overflow-x-auto">
-                <table class="table table-hover">
-                    <thead class="bg-base-200">
-                    <tr>
-                        <th class="w-12">
-                            <label class="cursor-pointer">
-                                <input type="checkbox" class="checkbox checkbox-sm" id="selectAll">
-                            </label>
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-file-text mr-2"></i>Name
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-hdd mr-2"></i>Size
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-speedometer2 mr-2"></i>Progress
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-download mr-2"></i>Speed
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-tag mr-2"></i>Category
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-cloud mr-2"></i>Debrid
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-people mr-2"></i>Seeders
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-activity mr-2"></i>State
-                        </th>
-                        <th class="font-semibold w-32">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody id="torrentsList">
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="flex flex-col sm:flex-row justify-between items-center p-6 border-t border-base-200 gap-4">
-                <div class="text-sm text-base-content/70">
-                    <span id="paginationInfo">Loading torrents...</span>
-                </div>
-                <div class="join" id="paginationControls"></div>
-            </div>
+    <wa-card class="panel">
+        <div class="panel-body table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th class="w-12">
+                        <wa-checkbox id="selectAll"></wa-checkbox>
+                    </th>
+                    <th>
+                        <wa-icon name="file-lines"></wa-icon> Name
+                    </th>
+                    <th>
+                        <wa-icon name="hard-drive"></wa-icon> Size
+                    </th>
+                    <th>
+                        <wa-icon name="gauge-high"></wa-icon> Progress
+                    </th>
+                    <th>
+                        <wa-icon name="download"></wa-icon> Speed
+                    </th>
+                    <th>
+                        <wa-icon name="tag"></wa-icon> Category
+                    </th>
+                    <th>
+                        <wa-icon name="cloud"></wa-icon> Debrid
+                    </th>
+                    <th>
+                        <wa-icon name="users"></wa-icon> Seeders
+                    </th>
+                    <th>
+                        <wa-icon name="wave-square"></wa-icon> State
+                    </th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="torrentsList"></tbody>
+            </table>
         </div>
-    </div>
 
-    <div class="card bg-base-100 shadow-xl hidden" id="emptyState">
-        <div class="card-body text-center py-16">
-            <div class="text-6xl text-base-content/30 mb-4">
-                <i class="bi bi-inbox"></i>
+        <div class="panel-footer">
+            <div class="hint">
+                <span id="paginationInfo">Loading torrents...</span>
             </div>
-            <h3 class="text-2xl font-bold mb-2">No Torrents Found</h3>
-            <p class="text-base-content/70 mb-6">You haven't added any torrents yet. Start by adding your first download!</p>
-            <a href="__URL_BASE__download" class="btn btn-primary">
-                <i class="bi bi-plus-circle mr-2"></i>Add New Download
-            </a>
+            <div class="pagination" id="paginationControls"></div>
         </div>
-    </div>
+    </wa-card>
+
+    <wa-card class="panel hidden" id="emptyState">
+        <div class="panel-body empty-state">
+            <wa-icon name="inbox" style="font-size: 3rem; color: var(--app-text-muted);"></wa-icon>
+            <h3>No Torrents Found</h3>
+            <p class="hint">You haven't added any torrents yet. Start by adding your first download.</p>
+            <wa-button variant="brand" href="__URL_BASE__download">
+                <wa-icon slot="start" name="plus"></wa-icon>
+                Add New Download
+            </wa-button>
+        </div>
+    </wa-card>
 </div>
 
-<ul class="menu bg-base-100 shadow-lg rounded-box context-menu hidden fixed z-50" id="torrentContextMenu">
-    <li class="menu-title">
-        <span class="torrent-name text-sm font-bold truncate max-w-48"></span>
-    </li>
+<div class="context-menu hidden" id="torrentContextMenu">
+    <div class="context-title torrent-name"></div>
     <hr/>
-    <li><a class="menu-item text-sm" data-action="copy-magnet">
-        <i class="bi bi-magnet text-primary"></i>Copy Magnet Link
-    </a></li>
-    <li><a class="menu-item text-sm" data-action="copy-name">
-        <i class="bi bi-clipboard text-info"></i>Copy Name
-    </a></li>
+    <button class="context-item" data-action="copy-magnet">
+        <wa-icon name="magnet"></wa-icon>
+        Copy Magnet Link
+    </button>
+    <button class="context-item" data-action="copy-name">
+        <wa-icon name="clipboard"></wa-icon>
+        Copy Name
+    </button>
     <hr/>
-    <li><a class="menu-item text-sm text-error" data-action="delete">
-        <i class="bi bi-trash"></i>Delete Torrent
-    </a></li>
-</ul>
+    <button class="context-item" data-action="delete">
+        <wa-icon name="trash"></wa-icon>
+        Delete Torrent
+    </button>
+</div>
 `;class TorrentDashboardPage extends i$3{createRenderRoot(){return this}firstUpdated(){this._controller||(this._controller=new TorrentDashboard,window.dashboard=this._controller)}render(){const w=window.urlBase||"",O=this.needSetup?`
         <wa-callout variant="warning" appearance="accent">
           <wa-icon slot="icon" name="triangle-exclamation"></wa-icon>
           <strong>Configuration Required</strong>
           <div>Your configuration is incomplete. Please complete the setup in the <a href="${w}settings">Settings page</a>.</div>
         </wa-callout>
-      `:"",F=template$2.replace("__NEED_SETUP__",O).replace(/__URL_BASE__/g,w);return b`${o(F)}`}}Se(TorrentDashboardPage,"properties",{needSetup:{type:Boolean,attribute:"need-setup"}});customElements.define("torrent-dashboard",TorrentDashboardPage);class TorrentDashboard{constructor(){var w;this.state={torrents:[],selectedTorrents:new Set,categories:new Set,filteredTorrents:[],selectedCategory:"",selectedState:"",sortBy:"added_on",itemsPerPage:20,currentPage:1,selectedTorrentContextMenu:null},this.refs={torrentsList:document.getElementById("torrentsList"),categoryFilter:document.getElementById("categoryFilter"),stateFilter:document.getElementById("stateFilter"),sortSelector:document.getElementById("sortSelector"),selectAll:document.getElementById("selectAll"),batchDeleteBtn:document.getElementById("batchDeleteBtn"),batchDeleteDebridBtn:document.getElementById("batchDeleteDebridBtn"),refreshBtn:document.getElementById("refreshBtn"),torrentContextMenu:document.getElementById("torrentContextMenu"),paginationControls:document.getElementById("paginationControls"),paginationInfo:document.getElementById("paginationInfo"),emptyState:document.getElementById("emptyState")},this.refs.tableCard=(w=this.refs.torrentsList)==null?void 0:w.closest(".card"),this.init()}init(){this.bindEvents(),this.loadTorrents(),this.startAutoRefresh()}bindEvents(){this.refs.refreshBtn.addEventListener("click",()=>this.loadTorrents()),this.refs.batchDeleteBtn.addEventListener("click",()=>this.deleteSelectedTorrents()),this.refs.batchDeleteDebridBtn.addEventListener("click",()=>this.deleteSelectedTorrents(!0)),this.refs.selectAll.addEventListener("change",w=>this.toggleSelectAll(w.target.checked)),this.refs.categoryFilter.addEventListener("change",w=>this.setFilter("category",w.target.value)),this.refs.stateFilter.addEventListener("change",w=>this.setFilter("state",w.target.value)),this.refs.sortSelector.addEventListener("change",w=>this.setSort(w.target.value)),this.bindContextMenu(),this.refs.torrentsList.addEventListener("change",w=>{w.target.classList.contains("torrent-select")&&this.toggleTorrentSelection(w.target.dataset.hash,w.target.checked)})}bindContextMenu(){this.refs.torrentsList.addEventListener("contextmenu",w=>{const O=w.target.closest("tr[data-hash]");O&&(w.preventDefault(),this.showContextMenu(w,O))}),document.addEventListener("click",w=>{this.refs.torrentContextMenu.contains(w.target)||this.hideContextMenu()}),this.refs.torrentContextMenu.addEventListener("click",w=>{var F;const O=(F=w.target.closest("[data-action]"))==null?void 0:F.dataset.action;O&&(this.handleContextAction(O),this.hideContextMenu())})}showContextMenu(w,O){this.state.selectedTorrentContextMenu={hash:O.dataset.hash,name:O.dataset.name,category:O.dataset.category||""},this.refs.torrentContextMenu.querySelector(".torrent-name").textContent=this.state.selectedTorrentContextMenu.name;const{pageX:F,pageY:W}=w,{clientWidth:U,clientHeight:q}=document.documentElement,j=this.refs.torrentContextMenu;j.classList.remove("hidden");const J=j.offsetWidth,X=j.offsetHeight,Y=F+J>U?F-J:F,K=W+X>q?W-X:W;j.style.left=`${Y}px`,j.style.top=`${K}px`}hideContextMenu(){this.refs.torrentContextMenu.classList.add("hidden")}async handleContextAction(w){const{hash:O}=this.state.selectedTorrentContextMenu||{};if(!O)return;const F=this.state.torrents.find(U=>U.hash===O);if(!F)return;const W={"copy-magnet":async()=>{try{await navigator.clipboard.writeText(`magnet:?xt=urn:btih:${F.hash}`),window.decypharrUtils.createToast("Magnet link copied to clipboard")}catch{window.decypharrUtils.createToast("Failed to copy magnet link","error")}},"copy-name":async()=>{try{await navigator.clipboard.writeText(F.name),window.decypharrUtils.createToast("Torrent name copied to clipboard")}catch{window.decypharrUtils.createToast("Failed to copy torrent name","error")}},delete:async()=>{await this.deleteTorrent(F.hash,F.category,!1)}};W[w]&&await W[w]()}async loadTorrents(){try{this.refs.refreshBtn.disabled=!0,this.refs.paginationInfo.textContent="Loading torrents...";const w=await window.decypharrUtils.fetcher("/api/torrents");if(!w.ok)throw new Error("Failed to fetch torrents");const O=await w.json();this.state.torrents=O,this.state.categories=new Set(O.map(F=>F.category).filter(Boolean)),this.updateUI()}catch(w){console.error("Error loading torrents:",w),window.decypharrUtils.createToast(`Error loading torrents: ${w.message}`,"error")}finally{this.refs.refreshBtn.disabled=!1}}updateUI(){this.filterTorrents(),this.updateCategoryFilter(),this.renderTorrents(),this.updatePagination(),this.updateSelectionUI(),this.toggleEmptyState()}filterTorrents(){let w=[...this.state.torrents];this.state.selectedCategory&&(w=w.filter(O=>O.category===this.state.selectedCategory)),this.state.selectedState&&(w=w.filter(O=>{var F;return((F=O.state)==null?void 0:F.toLowerCase())===this.state.selectedState.toLowerCase()})),w=this.sortTorrents(w),this.state.filteredTorrents=w}sortTorrents(w){const[O,F]=this.state.sortBy.includes("_asc")||this.state.sortBy.includes("_desc")?[this.state.sortBy.split("_").slice(0,-1).join("_"),this.state.sortBy.endsWith("_asc")?"asc":"desc"]:[this.state.sortBy,"desc"];return w.sort((W,U)=>{var J,X;let q,j;switch(O){case"name":q=((J=W.name)==null?void 0:J.toLowerCase())||"",j=((X=U.name)==null?void 0:X.toLowerCase())||"";break;case"size":q=W.size||0,j=U.size||0;break;case"progress":q=W.progress||0,j=U.progress||0;break;case"added_on":q=W.added_on||0,j=U.added_on||0;break;default:q=W[O]||0,j=U[O]||0}return typeof q=="string"?F==="asc"?q.localeCompare(j):j.localeCompare(q):F==="asc"?q-j:j-q})}renderTorrents(){const w=(this.state.currentPage-1)*this.state.itemsPerPage,O=Math.min(w+this.state.itemsPerPage,this.state.filteredTorrents.length),F=this.state.filteredTorrents.slice(w,O);this.refs.torrentsList.innerHTML=F.map(W=>this.torrentRowTemplate(W)).join("")}torrentRowTemplate(w){const O=(w.progress*100).toFixed(1),F=this.state.selectedTorrents.has(w.hash);return`
+      `:"",F=template$2.replace("__NEED_SETUP__",O).replace(/__URL_BASE__/g,w);return b`${o(F)}`}}Se(TorrentDashboardPage,"properties",{needSetup:{type:Boolean,attribute:"need-setup"}});customElements.define("torrent-dashboard",TorrentDashboardPage);class TorrentDashboard{constructor(){var w;this.state={torrents:[],selectedTorrents:new Set,categories:new Set,filteredTorrents:[],selectedCategory:"",selectedState:"",sortBy:"added_on",itemsPerPage:20,currentPage:1,selectedTorrentContextMenu:null},this.refs={torrentsList:document.getElementById("torrentsList"),categoryFilter:document.getElementById("categoryFilter"),stateFilter:document.getElementById("stateFilter"),sortSelector:document.getElementById("sortSelector"),selectAll:document.getElementById("selectAll"),batchDeleteBtn:document.getElementById("batchDeleteBtn"),batchDeleteDebridBtn:document.getElementById("batchDeleteDebridBtn"),refreshBtn:document.getElementById("refreshBtn"),torrentContextMenu:document.getElementById("torrentContextMenu"),paginationControls:document.getElementById("paginationControls"),paginationInfo:document.getElementById("paginationInfo"),emptyState:document.getElementById("emptyState")},this.refs.tableCard=(w=this.refs.torrentsList)==null?void 0:w.closest("wa-card"),this.init()}init(){this.bindEvents(),this.loadTorrents(),this.startAutoRefresh()}bindEvents(){this.refs.refreshBtn.addEventListener("click",()=>this.loadTorrents()),this.refs.batchDeleteBtn.addEventListener("click",()=>this.deleteSelectedTorrents()),this.refs.batchDeleteDebridBtn.addEventListener("click",()=>this.deleteSelectedTorrents(!0)),this.refs.selectAll.addEventListener("change",w=>this.toggleSelectAll(w.target.checked)),this.refs.categoryFilter.addEventListener("change",w=>this.setFilter("category",w.target.value)),this.refs.stateFilter.addEventListener("change",w=>this.setFilter("state",w.target.value)),this.refs.sortSelector.addEventListener("change",w=>this.setSort(w.target.value)),this.bindContextMenu(),this.refs.torrentsList.addEventListener("change",w=>{const O=w.target.closest(".torrent-select");O&&this.toggleTorrentSelection(O.dataset.hash,O.checked)})}bindContextMenu(){this.refs.torrentsList.addEventListener("contextmenu",w=>{const O=w.target.closest("tr[data-hash]");O&&(w.preventDefault(),this.showContextMenu(w,O))}),document.addEventListener("click",w=>{this.refs.torrentContextMenu.contains(w.target)||this.hideContextMenu()}),this.refs.torrentContextMenu.addEventListener("click",w=>{var F;const O=(F=w.target.closest("[data-action]"))==null?void 0:F.dataset.action;O&&(this.handleContextAction(O),this.hideContextMenu())})}showContextMenu(w,O){this.state.selectedTorrentContextMenu={hash:O.dataset.hash,name:O.dataset.name,category:O.dataset.category||""},this.refs.torrentContextMenu.querySelector(".torrent-name").textContent=this.state.selectedTorrentContextMenu.name;const{pageX:F,pageY:W}=w,{clientWidth:U,clientHeight:q}=document.documentElement,j=this.refs.torrentContextMenu;j.classList.remove("hidden");const J=j.offsetWidth,X=j.offsetHeight,Y=F+J>U?F-J:F,K=W+X>q?W-X:W;j.style.left=`${Y}px`,j.style.top=`${K}px`}hideContextMenu(){this.refs.torrentContextMenu.classList.add("hidden")}async handleContextAction(w){const{hash:O}=this.state.selectedTorrentContextMenu||{};if(!O)return;const F=this.state.torrents.find(U=>U.hash===O);if(!F)return;const W={"copy-magnet":async()=>{try{await navigator.clipboard.writeText(`magnet:?xt=urn:btih:${F.hash}`),window.decypharrUtils.createToast("Magnet link copied to clipboard")}catch{window.decypharrUtils.createToast("Failed to copy magnet link","error")}},"copy-name":async()=>{try{await navigator.clipboard.writeText(F.name),window.decypharrUtils.createToast("Torrent name copied to clipboard")}catch{window.decypharrUtils.createToast("Failed to copy torrent name","error")}},delete:async()=>{await this.deleteTorrent(F.hash,F.category,!1)}};W[w]&&await W[w]()}async loadTorrents(){try{this.refs.refreshBtn.disabled=!0,this.refs.paginationInfo.textContent="Loading torrents...";const w=await window.decypharrUtils.fetcher("/api/torrents");if(!w.ok)throw new Error("Failed to fetch torrents");const O=await w.json();this.state.torrents=O,this.state.categories=new Set(O.map(F=>F.category).filter(Boolean)),this.updateUI()}catch(w){console.error("Error loading torrents:",w),window.decypharrUtils.createToast(`Error loading torrents: ${w.message}`,"error")}finally{this.refs.refreshBtn.disabled=!1}}updateUI(){this.filterTorrents(),this.updateCategoryFilter(),this.renderTorrents(),this.updatePagination(),this.updateSelectionUI(),this.toggleEmptyState()}filterTorrents(){let w=[...this.state.torrents];this.state.selectedCategory&&(w=w.filter(O=>O.category===this.state.selectedCategory)),this.state.selectedState&&(w=w.filter(O=>{var F;return((F=O.state)==null?void 0:F.toLowerCase())===this.state.selectedState.toLowerCase()})),w=this.sortTorrents(w),this.state.filteredTorrents=w}sortTorrents(w){const[O,F]=this.state.sortBy.includes("_asc")||this.state.sortBy.includes("_desc")?[this.state.sortBy.split("_").slice(0,-1).join("_"),this.state.sortBy.endsWith("_asc")?"asc":"desc"]:[this.state.sortBy,"desc"];return w.sort((W,U)=>{var J,X;let q,j;switch(O){case"name":q=((J=W.name)==null?void 0:J.toLowerCase())||"",j=((X=U.name)==null?void 0:X.toLowerCase())||"";break;case"size":q=W.size||0,j=U.size||0;break;case"progress":q=W.progress||0,j=U.progress||0;break;case"added_on":q=W.added_on||0,j=U.added_on||0;break;default:q=W[O]||0,j=U[O]||0}return typeof q=="string"?F==="asc"?q.localeCompare(j):j.localeCompare(q):F==="asc"?q-j:j-q})}renderTorrents(){const w=(this.state.currentPage-1)*this.state.itemsPerPage,O=Math.min(w+this.state.itemsPerPage,this.state.filteredTorrents.length),F=this.state.filteredTorrents.slice(w,O);this.refs.torrentsList.innerHTML=F.map(W=>this.torrentRowTemplate(W)).join("")}torrentRowTemplate(w){const O=(w.progress*100).toFixed(1),F=this.state.selectedTorrents.has(w.hash),W=this.getStateVariant(w.state);return`
       <tr data-hash="${w.hash}"
           data-name="${this.escapeHtml(w.name)}"
-          data-category="${w.category||""}"
-          class="hover:bg-base-200 transition-colors">
+          data-category="${w.category||""}">
         <td>
-          <label class="cursor-pointer">
-            <input type="checkbox"
-                   class="checkbox checkbox-sm torrent-select"
-                   data-hash="${w.hash}"
-                   ${F?"checked":""}>
-          </label>
+          <wa-checkbox
+            class="torrent-select"
+            data-hash="${w.hash}"
+            ${F?"checked":""}>
+          </wa-checkbox>
         </td>
         <td class="max-w-xs">
           <div class="truncate font-medium" title="${this.escapeHtml(w.name)}">
@@ -3813,101 +4038,105 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
         <td class="text-nowrap font-mono text-sm">
           ${window.decypharrUtils.formatBytes(w.size)}
         </td>
-        <td class="min-w-36">
-          <div class="flex items-center gap-3">
-            <progress class="progress progress-primary w-20 h-2" value="${O}" max="100"></progress>
-            <span class="text-sm font-medium min-w-12">${O}%</span>
+        <td>
+          <div class="progress-cell">
+            <wa-progress-bar class="progress-bar" value="${O}"></wa-progress-bar>
+            <span class="text-sm font-medium">${O}%</span>
           </div>
         </td>
         <td class="text-nowrap font-mono text-sm">
           ${window.decypharrUtils.formatSpeed(w.dlspeed)}
         </td>
         <td>
-          ${w.category?`<div class="badge badge-secondary badge-sm">${this.escapeHtml(w.category)}</div>`:'<span class="text-base-content/50">None</span>'}
+          ${w.category?`<wa-badge variant="neutral" size="small">${this.escapeHtml(w.category)}</wa-badge>`:'<span class="hint">None</span>'}
         </td>
         <td>
-          ${w.debrid?`<div class="badge badge-accent badge-sm">${this.escapeHtml(w.debrid)}</div>`:'<span class="text-base-content/50">None</span>'}
+          ${w.debrid?`<wa-badge variant="brand" size="small">${this.escapeHtml(w.debrid)}</wa-badge>`:'<span class="hint">None</span>'}
         </td>
         <td class="text-nowrap font-mono text-sm">
           ${w.num_seeds||0}
         </td>
         <td>
-          <div class="badge ${this.getStateColor(w.state)} badge-sm">
+          <wa-badge variant="${W}" size="small">
             ${this.escapeHtml(w.state)}
-          </div>
+          </wa-badge>
         </td>
         <td>
-          <div class="flex gap-1">
-            <button class="btn btn-error btn-outline btn-xs tooltip"
-                    onclick="dashboard.deleteTorrent('${w.hash}', '${w.category||""}', false);"
-                    data-tip="Delete from local">
-              <i class="bi bi-trash"></i>
-            </button>
+          <div class="table-actions">
+            <wa-button
+              appearance="plain"
+              size="small"
+              variant="danger"
+              title="Delete from local"
+              aria-label="Delete torrent"
+              onclick="dashboard.deleteTorrent('${w.hash}', '${w.category||""}', false);"
+            >
+              <wa-icon name="trash"></wa-icon>
+            </wa-button>
             ${w.debrid&&w.id?`
-              <button class="btn btn-error btn-outline btn-xs tooltip"
-                      onclick="dashboard.deleteTorrent('${w.hash}', '${w.category||""}', true);"
-                      data-tip="Remove from debrid">
-                <i class="bi bi-cloud-fog-fill"></i>
-              </button>
+              <wa-button
+                appearance="plain"
+                size="small"
+                variant="warning"
+                title="Remove from debrid"
+                aria-label="Remove from debrid"
+                onclick="dashboard.deleteTorrent('${w.hash}', '${w.category||""}', true);"
+              >
+                <wa-icon name="cloud-slash"></wa-icon>
+              </wa-button>
             `:""}
           </div>
         </td>
       </tr>
-    `}updateCategoryFilter(){const w=[...this.state.categories],O=this.refs.categoryFilter.value;this.refs.categoryFilter.innerHTML='<option value="">All Categories</option>',w.forEach(F=>{const W=document.createElement("option");W.value=F,W.textContent=F,this.refs.categoryFilter.appendChild(W)}),this.refs.categoryFilter.value=O}updatePagination(){const w=Math.ceil(this.state.filteredTorrents.length/this.state.itemsPerPage);if(this.refs.paginationControls.innerHTML="",w<=1){this.refs.paginationInfo.textContent=`${this.state.filteredTorrents.length} torrent${this.state.filteredTorrents.length!==1?"s":""}`;return}const O=(this.state.currentPage-1)*this.state.itemsPerPage+1,F=Math.min(O+this.state.itemsPerPage-1,this.state.filteredTorrents.length);this.refs.paginationInfo.textContent=`Showing ${O}-${F} of ${this.state.filteredTorrents.length}`;const W=(U,q,j=!1,J=!1)=>{const X=document.createElement("button");return X.className=`join-item btn btn-sm ${J?"btn-primary":""}`,X.textContent=U,X.disabled=j,X.addEventListener("click",()=>this.goToPage(q)),X};this.refs.paginationControls.appendChild(W("«",this.state.currentPage-1,this.state.currentPage===1));for(let U=1;U<=w;U++)if(U===1||U===w||Math.abs(U-this.state.currentPage)<=1)this.refs.paginationControls.appendChild(W(U.toString(),U,!1,U===this.state.currentPage));else if(Math.abs(U-this.state.currentPage)===2){const q=document.createElement("span");q.className="join-item btn btn-sm btn-disabled",q.textContent="...",this.refs.paginationControls.appendChild(q)}this.refs.paginationControls.appendChild(W("»",this.state.currentPage+1,this.state.currentPage===w))}updateSelectionUI(){const w=new Set(this.state.filteredTorrents.map(F=>F.hash));this.state.selectedTorrents.forEach(F=>{w.has(F)||this.state.selectedTorrents.delete(F)}),this.refs.batchDeleteBtn.classList.toggle("hidden",this.state.selectedTorrents.size===0),this.refs.batchDeleteDebridBtn.classList.toggle("hidden",this.state.selectedTorrents.size===0);const O=this.state.filteredTorrents.slice((this.state.currentPage-1)*this.state.itemsPerPage,this.state.currentPage*this.state.itemsPerPage);this.refs.selectAll.checked=O.length>0&&O.every(F=>this.state.selectedTorrents.has(F.hash)),this.refs.selectAll.indeterminate=O.some(F=>this.state.selectedTorrents.has(F.hash))&&!O.every(F=>this.state.selectedTorrents.has(F.hash))}toggleEmptyState(){const w=this.state.torrents.length===0;this.refs.emptyState.classList.toggle("hidden",!w),this.refs.tableCard&&this.refs.tableCard.classList.toggle("hidden",w)}setFilter(w,O){w==="category"?this.state.selectedCategory=O:w==="state"&&(this.state.selectedState=O),this.state.currentPage=1,this.updateUI()}setSort(w){this.state.sortBy=w,this.state.currentPage=1,this.updateUI()}goToPage(w){this.state.currentPage=w,this.updateUI()}toggleSelectAll(w){this.state.filteredTorrents.slice((this.state.currentPage-1)*this.state.itemsPerPage,this.state.currentPage*this.state.itemsPerPage).forEach(F=>{w?this.state.selectedTorrents.add(F.hash):this.state.selectedTorrents.delete(F.hash)}),this.updateUI()}toggleTorrentSelection(w,O){O?this.state.selectedTorrents.add(w):this.state.selectedTorrents.delete(w),this.updateSelectionUI()}async deleteTorrent(w,O,F=!1){if(confirm(`Are you sure you want to delete this torrent${F?" from "+O:""}?`))try{const W=`/api/torrents/${encodeURIComponent(O)}/${w}?removeFromDebrid=${F}`,U=await window.decypharrUtils.fetcher(W,{method:"DELETE"});if(!U.ok)throw new Error(await U.text());window.decypharrUtils.createToast("Torrent deleted successfully"),await this.loadTorrents()}catch(W){console.error("Error deleting torrent:",W),window.decypharrUtils.createToast(`Failed to delete torrent: ${W.message}`,"error")}}async deleteSelectedTorrents(w=!1){const O=this.state.selectedTorrents.size;if(O===0){window.decypharrUtils.createToast("No torrents selected for deletion","warning");return}if(confirm(`Are you sure you want to delete ${O} torrent${O>1?"s":""}${w?" from debrid":""}?`))try{const F=Array.from(this.state.selectedTorrents).join(","),W=await window.decypharrUtils.fetcher(`/api/torrents/?hashes=${encodeURIComponent(F)}&removeFromDebrid=${w}`,{method:"DELETE"});if(!W.ok)throw new Error(await W.text());window.decypharrUtils.createToast(`${O} torrent${O>1?"s":""} deleted successfully`),this.state.selectedTorrents.clear(),await this.loadTorrents()}catch(F){console.error("Error deleting torrents:",F),window.decypharrUtils.createToast(`Failed to delete some torrents: ${F.message}`,"error")}}startAutoRefresh(){this.refreshInterval=setInterval(()=>{this.loadTorrents()},5e3),window.addEventListener("beforeunload",()=>{this.refreshInterval&&clearInterval(this.refreshInterval)})}getStateColor(w){switch((w||"").toLowerCase()){case"pausedup":case"completed":return"badge-success";case"downloading":return"badge-info";case"error":return"badge-error";default:return"badge-ghost"}}escapeHtml(w){const O={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"};return w?w.replace(/[&<>"']/g,F=>O[F]):""}}const template$1=`<div class="space-y-6">
+    `}updateCategoryFilter(){const w=[...this.state.categories],O=this.refs.categoryFilter.value;this.refs.categoryFilter.innerHTML='<wa-option value="">All Categories</wa-option>',w.forEach(F=>{const W=document.createElement("wa-option");W.value=F,W.textContent=F,this.refs.categoryFilter.appendChild(W)}),this.refs.categoryFilter.value=O}updatePagination(){const w=Math.ceil(this.state.filteredTorrents.length/this.state.itemsPerPage);if(this.refs.paginationControls.innerHTML="",w<=1){this.refs.paginationInfo.textContent=`${this.state.filteredTorrents.length} torrent${this.state.filteredTorrents.length!==1?"s":""}`;return}const O=(this.state.currentPage-1)*this.state.itemsPerPage+1,F=Math.min(O+this.state.itemsPerPage-1,this.state.filteredTorrents.length);this.refs.paginationInfo.textContent=`Showing ${O}-${F} of ${this.state.filteredTorrents.length}`;const W=(U,q,j=!1,J=!1)=>{const X=document.createElement("wa-button");return X.size="small",X.variant=J?"brand":"neutral",X.appearance=J?"solid":"outline",X.textContent=U,X.disabled=j,X.addEventListener("click",()=>this.goToPage(q)),X};this.refs.paginationControls.appendChild(W("«",this.state.currentPage-1,this.state.currentPage===1));for(let U=1;U<=w;U++)if(U===1||U===w||Math.abs(U-this.state.currentPage)<=1)this.refs.paginationControls.appendChild(W(U.toString(),U,!1,U===this.state.currentPage));else if(Math.abs(U-this.state.currentPage)===2){const q=document.createElement("span");q.className="pagination-ellipsis",q.textContent="...",this.refs.paginationControls.appendChild(q)}this.refs.paginationControls.appendChild(W("»",this.state.currentPage+1,this.state.currentPage===w))}updateSelectionUI(){const w=new Set(this.state.filteredTorrents.map(F=>F.hash));this.state.selectedTorrents.forEach(F=>{w.has(F)||this.state.selectedTorrents.delete(F)}),this.refs.batchDeleteBtn.classList.toggle("hidden",this.state.selectedTorrents.size===0),this.refs.batchDeleteDebridBtn.classList.toggle("hidden",this.state.selectedTorrents.size===0);const O=this.state.filteredTorrents.slice((this.state.currentPage-1)*this.state.itemsPerPage,this.state.currentPage*this.state.itemsPerPage);this.refs.selectAll.checked=O.length>0&&O.every(F=>this.state.selectedTorrents.has(F.hash)),this.refs.selectAll.indeterminate=O.some(F=>this.state.selectedTorrents.has(F.hash))&&!O.every(F=>this.state.selectedTorrents.has(F.hash))}toggleEmptyState(){const w=this.state.torrents.length===0;this.refs.emptyState.classList.toggle("hidden",!w),this.refs.tableCard&&this.refs.tableCard.classList.toggle("hidden",w)}setFilter(w,O){w==="category"?this.state.selectedCategory=O:w==="state"&&(this.state.selectedState=O),this.state.currentPage=1,this.updateUI()}setSort(w){this.state.sortBy=w,this.state.currentPage=1,this.updateUI()}goToPage(w){this.state.currentPage=w,this.updateUI()}toggleSelectAll(w){this.state.filteredTorrents.slice((this.state.currentPage-1)*this.state.itemsPerPage,this.state.currentPage*this.state.itemsPerPage).forEach(F=>{w?this.state.selectedTorrents.add(F.hash):this.state.selectedTorrents.delete(F.hash)}),this.updateUI()}toggleTorrentSelection(w,O){O?this.state.selectedTorrents.add(w):this.state.selectedTorrents.delete(w),this.updateSelectionUI()}async deleteTorrent(w,O,F=!1){if(confirm(`Are you sure you want to delete this torrent${F?" from "+O:""}?`))try{const W=`/api/torrents/${encodeURIComponent(O)}/${w}?removeFromDebrid=${F}`,U=await window.decypharrUtils.fetcher(W,{method:"DELETE"});if(!U.ok)throw new Error(await U.text());window.decypharrUtils.createToast("Torrent deleted successfully"),await this.loadTorrents()}catch(W){console.error("Error deleting torrent:",W),window.decypharrUtils.createToast(`Failed to delete torrent: ${W.message}`,"error")}}async deleteSelectedTorrents(w=!1){const O=this.state.selectedTorrents.size;if(O===0){window.decypharrUtils.createToast("No torrents selected for deletion","warning");return}if(confirm(`Are you sure you want to delete ${O} torrent${O>1?"s":""}${w?" from debrid":""}?`))try{const F=Array.from(this.state.selectedTorrents).join(","),W=await window.decypharrUtils.fetcher(`/api/torrents/?hashes=${encodeURIComponent(F)}&removeFromDebrid=${w}`,{method:"DELETE"});if(!W.ok)throw new Error(await W.text());window.decypharrUtils.createToast(`${O} torrent${O>1?"s":""} deleted successfully`),this.state.selectedTorrents.clear(),await this.loadTorrents()}catch(F){console.error("Error deleting torrents:",F),window.decypharrUtils.createToast(`Failed to delete some torrents: ${F.message}`,"error")}}startAutoRefresh(){this.refreshInterval=setInterval(()=>{this.loadTorrents()},5e3),window.addEventListener("beforeunload",()=>{this.refreshInterval&&clearInterval(this.refreshInterval)})}getStateVariant(w){switch((w||"").toLowerCase()){case"pausedup":case"completed":return"success";case"downloading":return"brand";case"error":return"danger";default:return"neutral"}}escapeHtml(w){const O={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"};return w?w.replace(/[&<>"']/g,F=>O[F]):""}}const template$1=`<div class="page-stack">
     __NEED_SETUP__
 
-    <form id="configForm" class="space-y-6" novalidate>
+    <form id="configForm" class="page-stack" novalidate>
         <div class="card bg-base-100 shadow-xl">
             <div class="card-body">
                 <div class="border-b border-base-300 mb-8">
-                    <nav class="flex space-x-8" aria-label="Configuration Tabs">
-                        <button type="button" class="tab-button active flex items-center gap-2 py-3 px-1 border-b-2 border-primary text-primary font-medium text-sm" data-tab="general">
-                            <i class="bi bi-gear text-lg"></i>
-                            <span class="hidden sm:inline">General</span>
-                        </button>
-                        <button type="button" class="tab-button flex items-center gap-2 py-3 px-1 border-b-2 border-transparent text-base-content/70 hover:text-base-content hover:border-base-300 font-medium text-sm transition-colors" data-tab="debrid">
-                            <i class="bi bi-cloud text-lg"></i>
-                            <span class="hidden sm:inline">Debrid</span>
-                        </button>
-                        <button type="button" class="tab-button flex items-center gap-2 py-3 px-1 border-b-2 border-transparent text-base-content/70 hover:text-base-content hover:border-base-300 font-medium text-sm transition-colors" data-tab="qbittorrent">
-                            <i class="bi bi-download text-lg"></i>
-                            <span class="hidden sm:inline">QBittorrent</span>
-                        </button>
-                        <button type="button" class="tab-button flex items-center gap-2 py-3 px-1 border-b-2 border-transparent text-base-content/70 hover:text-base-content hover:border-base-300 font-medium text-sm transition-colors" data-tab="arrs">
-                            <i class="bi bi-collection text-lg"></i>
-                            <span class="hidden sm:inline">*Arrs</span>
-                        </button>
-                        <button type="button" class="tab-button flex items-center gap-2 py-3 px-1 border-b-2 border-transparent text-base-content/70 hover:text-base-content hover:border-base-300 font-medium text-sm transition-colors" data-tab="repair">
-                            <i class="bi bi-wrench text-lg"></i>
-                            <span class="hidden sm:inline">Repair</span>
-                        </button>
-                        <button type="button" class="tab-button flex items-center gap-2 py-3 px-1 border-b-2 border-transparent text-base-content/70 hover:text-base-content hover:border-base-300 font-medium text-sm transition-colors" data-tab="rclone">
-                            <i class="bi bi-hdd-stack text-lg"></i>
-                            <span class="hidden sm:inline">Rclone</span>
-                        </button>
+                    <nav class="tab-nav" aria-label="Configuration Tabs">
+                        <wa-button type="button" appearance="plain" class="tab-button active" data-tab="general">
+                            General
+                        </wa-button>
+                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="debrid">
+                            Debrid
+                        </wa-button>
+                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="qbittorrent">
+                            QBittorrent
+                        </wa-button>
+                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="arrs">
+                            *Arrs
+                        </wa-button>
+                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="repair">
+                            Repair
+                        </wa-button>
+                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="rclone">
+                            Rclone
+                        </wa-button>
                     </nav>
                 </div>
 
                 <div class="sticky top-20 z-30 flex justify-end mb-6">
-                    <button type="submit" class="btn btn-success btn-lg shadow-lg">
-                        <i class="bi bi-save mr-2"></i>Save Configuration
-                    </button>
+                    <wa-button type="submit" variant="success">
+                        Save Configuration
+                    </wa-button>
                 </div>
 
                 <div class="tab-content-container">
 
                     <div class="tab-content" data-tab-content="general">
-                        <div class="space-y-6">
+                        <div class="page-stack">
                             <h2 class="text-2xl font-bold flex items-center mb-6">
-                                <i class="bi bi-gear mr-3 text-primary"></i>General Settings
+                                General Settings
                             </h2>
 
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                <div class="form-control">
+                            <div class="grid grid-2">
+                                <div class="field-group">
                                     <label class="label" for="log-level">
                                         <span class="label-text font-medium">Log Level</span>
                                     </label>
-                                    <select class="select select-bordered" name="log_level" id="log-level">
+                                    <select class="app-select" name="log_level" id="log-level">
                                         <option value="info">Info</option>
                                         <option value="debug">Debug</option>
                                         <option value="warn">Warning</option>
@@ -3915,123 +4144,124 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         <option value="trace">Trace</option>
                                     </select>
                                 </div>
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label">
                                         <span class="label-text font-medium">Magnet Link Handler</span>
                                     </label>
-                                    <button type="button" class="btn btn-primary" onclick="registerMagnetLinkHandler();" id="registerMagnetLink">
-                                        <i class="bi bi-magnet mr-2"></i>Register Magnet Handler
-                                    </button>
+                                    <wa-button type="button" variant="brand" appearance="outline" onclick="registerMagnetLinkHandler();" id="registerMagnetLink">
+                                        <wa-icon slot="start" name="magnet"></wa-icon>
+                                        Register Magnet Handler
+                                    </wa-button>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                                <div class="form-control">
+                            <div class="grid grid-3">
+                                <div class="field-group">
                                     <label class="label" for="urlBase">
                                         <span class="label-text font-medium">URL Base</span>
                                     </label>
-                                    <input type="text" class="input input-bordered" id="urlBase" name="url_base" placeholder="/">
+                                    <input type="text" class="app-input" id="urlBase" name="url_base" placeholder="/">
                                     <div class="label">
                                         <span class="label-text-alt">URL base for the application</span>
                                     </div>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="bindAddress">
                                         <span class="label-text font-medium">Bind Address</span>
                                     </label>
-                                    <input type="text" class="input input-bordered" id="bindAddress" name="bind_address" placeholder="0.0.0.0">
+                                    <input type="text" class="app-input" id="bindAddress" name="bind_address" placeholder="0.0.0.0">
                                     <div class="label">
                                         <span class="label-text-alt">Bind address (default: all interfaces)</span>
                                     </div>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="port">
                                         <span class="label-text font-medium">Port</span>
                                     </label>
-                                    <input type="number" class="input input-bordered" id="port" name="port" placeholder="8282">
+                                    <input type="number" class="app-input" id="port" name="port" placeholder="8282">
                                     <div class="label">
                                         <span class="label-text-alt">Application port</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                                <div class="form-control">
+                            <div class="grid grid-3">
+                                <div class="field-group">
                                     <label class="label" for="debridPollInterval">
                                         <span class="label-text font-medium">Debrid Poll Interval (seconds)</span>
                                     </label>
-                                    <input type="number" class="input input-bordered" id="debridPollInterval" name="debrid_poll_interval" min="5" placeholder="30">
+                                    <input type="number" class="app-input" id="debridPollInterval" name="debrid_poll_interval" min="5" placeholder="30">
                                     <div class="label">
                                         <span class="label-text-alt">How often to refresh debrid status</span>
                                     </div>
                                 </div>
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="badTorrentThresholdHours">
                                         <span class="label-text font-medium">Bad Torrent Threshold (hours)</span>
                                     </label>
-                                    <input type="number" class="input input-bordered" id="badTorrentThresholdHours" name="bad_torrent_threshold_hours" min="1" placeholder="12">
+                                    <input type="number" class="app-input" id="badTorrentThresholdHours" name="bad_torrent_threshold_hours" min="1" placeholder="12">
                                     <div class="label">
                                         <span class="label-text-alt">Mark waiting torrents as bad after this duration</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                <div class="form-control">
+                            <div class="grid grid-2">
+                                <div class="field-group">
                                     <label class="label" for="discordWebhookUrl">
                                         <span class="label-text font-medium">Discord Webhook URL</span>
                                     </label>
-                                    <textarea class="textarea textarea-bordered" id="discordWebhookUrl" name="discord_webhook_url" placeholder="https://discord.com/api/webhooks/..."></textarea>
+                                    <textarea class="app-textarea" id="discordWebhookUrl" name="discord_webhook_url" placeholder="https://discord.com/api/webhooks/..."></textarea>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="allowedExtensions">
                                         <span class="label-text font-medium">Allowed File Extensions</span>
                                     </label>
-                                    <textarea class="textarea textarea-bordered" id="allowedExtensions" name="allowed_file_types" placeholder="mkv, mp4, avi, mov"></textarea>
+                                    <textarea class="app-textarea" id="allowedExtensions" name="allowed_file_types" placeholder="mkv, mp4, avi, mov"></textarea>
                                     <div class="label">
                                         <span class="label-text-alt">Comma-separated list of allowed file extensions</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                <div class="form-control">
+                            <div class="grid grid-2">
+                                <div class="field-group">
                                     <label class="label" for="minFileSize">
                                         <span class="label-text font-medium">Minimum File Size</span>
                                     </label>
-                                    <input type="text" class="input input-bordered" id="minFileSize" name="min_file_size" placeholder="10MB">
+                                    <input type="text" class="app-input" id="minFileSize" name="min_file_size" placeholder="10MB">
                                     <div class="label">
                                         <span class="label-text-alt">Minimum file size to download</span>
                                     </div>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="maxFileSize">
                                         <span class="label-text font-medium">Maximum File Size</span>
                                     </label>
-                                    <input type="text" class="input input-bordered" id="maxFileSize" name="max_file_size" placeholder="50GB">
+                                    <input type="text" class="app-input" id="maxFileSize" name="max_file_size" placeholder="50GB">
                                     <div class="label">
                                         <span class="label-text-alt">Maximum file size to download</span>
                                     </div>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="removeStalledAfter">
                                         <span class="label-text font-medium">Remove Stalled After</span>
                                     </label>
-                                    <input type="text" class="input input-bordered" id="removeStalledAfter" name="remove_stalled_after" placeholder="1h">
+                                    <input type="text" class="app-input" id="removeStalledAfter" name="remove_stalled_after" placeholder="1h">
                                     <div class="label">
                                         <span class="label-text-alt">Duration before removing stalled torrents</span>
                                     </div>
                                 </div>
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="callbackUrl">
                                         <span class="label-text font-medium">Callback URL</span>
                                     </label>
-                                    <input type="text" class="input input-bordered" id="callbackUrl" name="callback_url" placeholder="http://example.com/callback">
+                                    <input type="text" class="app-input" id="callbackUrl" name="callback_url" placeholder="http://example.com/callback">
                                     <div class="label">
                                         <span class="label-text-alt">Optional callback URL for download status updates</span>
                                     </div>
@@ -4045,32 +4275,32 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                             <div class="card bg-base-200">
                                 <div class="card-body">
-                                    <div class="space-y-6">
+                                    <div class="page-stack">
                                         <div class="flex justify-between items-start">
                                             <div class="flex-1">
                                                 <h3 class="text-lg font-semibold mb-2">Authentication Settings</h3>
-                                                <p class="text-sm text-base-content/70">Configure username/password authentication and API token for programmatic access.</p>
+                                                <p class="text-sm text-muted">Configure username/password authentication and API token for programmatic access.</p>
                                             </div>
                                         </div>
 
                                         <!-- Username/Password Section -->
                                         <div class="space-y-4">
                                             <h4 class="font-semibold text-base">Web Authentication</h4>
-                                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                                <div class="form-control">
+                                            <div class="grid grid-2">
+                                                <div class="field-group">
                                                     <label class="label">
                                                         <span class="label-text font-medium">Username</span>
                                                     </label>
                                                     <input type="text" 
                                                            id="auth-username" 
                                                            name="auth_username"
-                                                           class="input input-bordered" 
+                                                           class="app-input" 
                                                            placeholder="Enter username (leave empty to disable auth)">
                                                     <div class="label">
                                                         <span class="label-text-alt">Leave empty to disable authentication</span>
                                                     </div>
                                                 </div>
-                                                <div class="form-control">
+                                                <div class="field-group">
                                                     <label class="label">
                                                         <span class="label-text font-medium">Password</span>
                                                     </label>
@@ -4078,17 +4308,17 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                                         <input type="password" 
                                                                id="auth-password" 
                                                                name="auth_password"
-                                                               class="input input-bordered input-has-toggle" 
+                                                               class="app-input input-has-toggle" 
                                                                placeholder="Enter password">
-                                                        <button type="button" class="password-toggle-btn">
-                                                            <i class="bi bi-eye"></i>
-                                                        </button>
+                                                        <wa-button type="button" appearance="plain" class="password-toggle-btn">
+                                                            <wa-icon name="eye"></wa-icon>
+                                                        </wa-button>
                                                     </div>
                                                     <div class="label">
                                                         <span class="label-text-alt">Leave empty to disable authentication</span>
                                                     </div>
                                                 </div>
-                                                <div class="form-control">
+                                                <div class="field-group">
                                                     <label class="label">
                                                         <span class="label-text font-medium">Confirm Password</span>
                                                     </label>
@@ -4096,38 +4326,36 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                                         <input type="password"
                                                                id="auth-password-confirm"
                                                                name="auth_password_confirm"
-                                                               class="input input-bordered input-has-toggle"
+                                                               class="app-input input-has-toggle"
                                                                placeholder="Confirm password">
-                                                        <button type="button" class="password-toggle-btn">
-                                                            <i class="bi bi-eye"></i>
-                                                        </button>
+                                                        <wa-button type="button" appearance="plain" class="password-toggle-btn">
+                                                            <wa-icon name="eye"></wa-icon>
+                                                        </wa-button>
                                                     </div>
                                                     <div class="label">
                                                         <span class="label-text-alt" id="password-match-indicator"></span>
                                                     </div>
                                                 </div>
-                                                <div class="form-control">
+                                                <div class="field-group">
                                                     <label class="label">
                                                         <span class="label-text font-medium">Current Token</span>
                                                     </label>
                                                     <div class="join">
                                                         <input type="text"
                                                                id="api-token-display"
-                                                               class="input input-bordered join-item flex-1 font-mono"
+                                                               class="app-input flex-1 font-mono"
                                                                placeholder="No token generated"
                                                                readonly>
-                                                        <button type="button"
+                                                        <wa-button type="button" appearance="outline" size="small"
                                                                 id="copy-token-btn"
-                                                                class="btn btn-outline join-item"
                                                                 onclick="copyAPIToken();">
-                                                            <i class="bi bi-copy"></i>
-                                                        </button>
-                                                        <button type="button"
+                                                            <wa-icon name="copy"></wa-icon>
+                                                        </wa-button>
+                                                        <wa-button type="button" appearance="outline" size="small"
                                                                 id="refresh-token-btn"
-                                                                class="btn btn-outline btn-secondary join-item"
                                                                 onclick="refreshAPIToken();">
-                                                            <i class="bi bi-arrow-clockwise"></i>
-                                                        </button>
+                                                            <wa-icon name="arrows-rotate"></wa-icon>
+                                                        </wa-button>
                                                     </div>
                                                     <div class="label">
                                                         <span class="label-text-alt">Click refresh to generate or update your API token</span>
@@ -4135,16 +4363,15 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                                 </div>
                                             </div>
                                             <div class="flex justify-end items-center mt-5">
-                                                <button type="button"
+                                                <wa-button type="button" variant="brand"
                                                         id="update-auth-btn"
-                                                        class="btn btn-primary"
                                                         onclick="updateAuthSettings();">
-                                                    <i class="bi bi-shield-check mr-2"></i>Update Authentication
-                                                </button>
+                                                    Update Authentication
+                                                </wa-button>
                                             </div>
                                         </div>
                                         <div class="space-y-4">
-                                            <p class="text-sm text-base-content/70">Use this token for API authentication instead of session cookies. Perfect for automation and scripts.</p>
+                                            <p class="text-sm text-muted">Use this token for API authentication instead of session cookies. Perfect for automation and scripts.</p>
 
                                         </div>
                                     </div>
@@ -4155,14 +4382,14 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="debrid">
-                        <div class="space-y-6">
+                        <div class="page-stack">
                             <div class="flex justify-between items-center">
                                 <h2 class="text-2xl font-bold flex items-center">
-                                    <i class="bi bi-cloud mr-3 text-secondary"></i>Debrid Services
+                                    Debrid Services
                                 </h2>
-                                <button type="button" id="addDebridBtn" class="btn btn-secondary">
-                                    <i class="bi bi-plus mr-2"></i>Add Debrid Service
-                                </button>
+                                <wa-button type="button" variant="brand" appearance="outline" id="addDebridBtn">
+                                    Add Debrid Service
+                                </wa-button>
                             </div>
 
                             <div id="debridConfigs" class="space-y-4">
@@ -4171,42 +4398,42 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="qbittorrent">
-                        <div class="space-y-6">
+                        <div class="page-stack">
                             <h2 class="text-2xl font-bold flex items-center mb-6">
-                                <i class="bi bi-download mr-3 text-accent"></i>QBittorrent Settings
+                                QBittorrent Settings
                             </h2>
 
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                <div class="form-control">
+                            <div class="grid grid-2">
+                                <div class="field-group">
                                     <label class="label" for="qbit.download_folder">
                                         <span class="label-text font-medium">Download Folder</span>
                                     </label>
-                                    <input type="text" class="input input-bordered" name="qbit.download_folder" id="qbit.download_folder">
+                                    <input type="text" class="app-input" name="qbit.download_folder" id="qbit.download_folder">
                                     <div class="label">
                                         <span class="label-text-alt">Folder where downloaded files will be stored</span>
                                     </div>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="qbit.refresh_interval">
                                         <span class="label-text font-medium">Refresh Interval (seconds)</span>
                                     </label>
-                                    <input type="number" class="input input-bordered" name="qbit.refresh_interval" id="qbit.refresh_interval" min="1">
+                                    <input type="number" class="app-input" name="qbit.refresh_interval" id="qbit.refresh_interval" min="1">
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="qbit.max_downloads">
                                         <span class="label-text font-medium">Maximum Downloads</span>
                                     </label>
-                                    <input type="number" class="input input-bordered" name="qbit.max_downloads" id="qbit.max_downloads" min="0">
+                                    <input type="number" class="app-input" name="qbit.max_downloads" id="qbit.max_downloads" min="0">
                                     <div class="label">
                                         <span class="label-text-alt">Maximum simultaneous downloads (0 = unlimited)</span>
                                     </div>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label cursor-pointer justify-start gap-3">
-                                        <input type="checkbox" class="checkbox" name="qbit.skip_pre_cache" id="qbit.skip_pre_cache">
+                                        <input type="checkbox" class="app-checkbox" name="qbit.skip_pre_cache" id="qbit.skip_pre_cache">
                                         <div>
                                             <span class="label-text font-medium">Skip Pre-Cache</span>
                                             <div class="label-text-alt">Disable pre-caching to speed up imports</div>
@@ -4214,9 +4441,9 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                     </label>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label cursor-pointer justify-start gap-3">
-                                        <input type="checkbox" class="checkbox" name="qbit.always_rm_tracker_urls" id="qbit.always_rm_tracker_urls">
+                                        <input type="checkbox" class="app-checkbox" name="qbit.always_rm_tracker_urls" id="qbit.always_rm_tracker_urls">
                                         <div>
                                             <span class="label-text font-medium">Always Remove Tracker URLs</span>
                                             <div class="label-text-alt">Allows you to <a href="https://sirrobot01.github.io/decypharr/features/repair-worker/private-tracker-downloads" class="link link-hover font-semibold" target="_blank">download private tracker torrents</a> with lower risk</div>
@@ -4224,11 +4451,11 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                     </label>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="qbit.default_action">
                                         <span class="label-text font-medium">Default Action</span>
                                     </label>
-                                    <select class="select select-bordered" name="qbit.default_action" id="qbit.default_action">
+                                    <select class="app-select" name="qbit.default_action" id="qbit.default_action">
                                         <option value="symlink">Symlink (fast, requires shared rclone mount)</option>
                                         <option value="download">Download (copy files to download folder)</option>
                                         <option value="none">None (no file output)</option>
@@ -4242,14 +4469,14 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="arrs">
-                        <div class="space-y-6">
+                        <div class="page-stack">
                             <div class="flex justify-between items-center">
                                 <h2 class="text-2xl font-bold flex items-center">
-                                    <i class="bi bi-collection mr-3 text-warning"></i>Arr Applications
+                                    Arr Applications
                                 </h2>
-                                <button type="button" id="addArrBtn" class="btn btn-warning">
-                                    <i class="bi bi-plus mr-2"></i>Add Arr Service
-                                </button>
+                                <wa-button type="button" variant="brand" appearance="outline" id="addArrBtn">
+                                    Add Arr Service
+                                </wa-button>
                             </div>
 
                             <div id="arrConfigs" class="space-y-4">
@@ -4258,14 +4485,14 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="repair">
-                        <div class="space-y-6">
+                        <div class="page-stack">
                             <h2 class="text-2xl font-bold flex items-center mb-6">
-                                <i class="bi bi-wrench mr-3 text-error"></i>Repair Settings
+                                Repair Settings
                             </h2>
 
-                            <div class="form-control">
+                            <div class="field-group">
                                 <label class="label cursor-pointer justify-start gap-3">
-                                    <input type="checkbox" class="checkbox checkbox-lg" name="repair.enabled" id="repair.enabled">
+                                    <input type="checkbox" class="app-checkbox" name="repair.enabled" id="repair.enabled">
                                     <div>
                                         <span class="label-text font-medium text-lg">Enable Scheduled Repair</span>
                                         <div class="label-text-alt">Automatically repair broken symlinks and missing files</div>
@@ -4273,32 +4500,32 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                 </label>
                             </div>
 
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                <div class="form-control">
+                            <div class="grid grid-2">
+                                <div class="field-group">
                                     <label class="label" for="repair.interval">
                                         <span class="label-text font-medium">Repair Interval</span>
                                     </label>
-                                    <input type="text" class="input input-bordered" name="repair.interval" id="repair.interval" placeholder="24h">
+                                    <input type="text" class="app-input" name="repair.interval" id="repair.interval" placeholder="24h">
                                     <div class="label">
                                         <span class="label-text-alt">How often to run repair (e.g., 24h, 1d, 03:00, or crontab)</span>
                                     </div>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="repair.workers">
                                         <span class="label-text font-medium">Worker Threads</span>
                                     </label>
-                                    <input type="number" class="input input-bordered" name="repair.workers" id="repair.workers" min="1" placeholder="40">
+                                    <input type="number" class="app-input" name="repair.workers" id="repair.workers" min="1" placeholder="40">
                                     <div class="label">
                                         <span class="label-text-alt">Number of concurrent repair workers</span>
                                     </div>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="repair.strategy">
                                         <span class="label-text font-medium">Repair Strategy</span>
                                     </label>
-                                    <select class="select select-bordered" name="repair.strategy" id="repair.strategy">
+                                    <select class="app-select" name="repair.strategy" id="repair.strategy">
                                         <option value="per_torrent" selected>Per Torrent</option>
                                         <option value="per_file">Per File</option>
                                     </select>
@@ -4306,21 +4533,21 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         <span class="label-text-alt">How to handle repairs</span>
                                     </div>
                                 </div>
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label" for="repair.zurg_url">
                                         <span class="label-text font-medium">Zurg URL</span>
                                     </label>
-                                    <input type="url" class="input input-bordered" name="repair.zurg_url" id="repair.zurg_url" placeholder="http://zurg:9999">
+                                    <input type="url" class="app-input" name="repair.zurg_url" id="repair.zurg_url" placeholder="http://zurg:9999">
                                     <div class="label">
                                         <span class="label-text-alt">Optional Zurg instance to speed up repairs</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                                <div class="form-control">
+                            <div class="grid grid-3">
+                                <div class="field-group">
                                     <label class="label cursor-pointer justify-start gap-3">
-                                        <input type="checkbox" class="checkbox" name="repair.use_webdav" id="repair.use_webdav">
+                                        <input type="checkbox" class="app-checkbox" name="repair.use_webdav" id="repair.use_webdav">
                                         <div>
                                             <span class="label-text font-medium">Use WebDAV</span>
                                             <div class="label-text-alt">Use internal WebDAV for repairs</div>
@@ -4328,9 +4555,9 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                     </label>
                                 </div>
 
-                                <div class="form-control">
+                                <div class="field-group">
                                     <label class="label cursor-pointer justify-start gap-3">
-                                        <input type="checkbox" class="checkbox" name="repair.auto_process" id="repair.auto_process">
+                                        <input type="checkbox" class="app-checkbox" name="repair.auto_process" id="repair.auto_process">
                                         <div>
                                             <span class="label-text font-medium">Auto Process</span>
                                             <div class="label-text-alt">Automatically delete broken symlinks and re-search</div>
@@ -4342,14 +4569,14 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="rclone">
-                        <div class="space-y-6">
+                        <div class="page-stack">
                             <h2 class="text-2xl font-bold flex items-center mb-6">
-                                <i class="bi bi-hdd-stack mr-3 text-info"></i>Rclone Mount Settings
+                                Rclone Mount Settings
                             </h2>
 
-                            <div class="form-control">
+                            <div class="field-group">
                                 <label class="label cursor-pointer justify-start gap-3">
-                                    <input type="checkbox" class="checkbox checkbox-lg" name="rclone.enabled" id="rclone.enabled">
+                                    <input type="checkbox" class="app-checkbox" name="rclone.enabled" id="rclone.enabled">
                                     <div>
                                         <span class="label-text font-medium text-lg">Enable Mount</span>
                                         <div class="label-text-alt">Automatically mount your debrid items</div>
@@ -4360,31 +4587,31 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             <div class="card bg-base-200">
                                 <div class="card-body">
                                     <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="bi bi-folder mr-2"></i>Mount Configuration
+                                        Mount Configuration
                                     </h3>
                                     <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.mount_path">
                                                 <span class="label-text font-medium">Global Mount Path</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.mount_path" id="rclone.mount_path" placeholder="/mnt/decypharr">
+                                            <input type="text" class="app-input" name="rclone.mount_path" id="rclone.mount_path" placeholder="/mnt/decypharr">
                                             <div class="label">
                                                 <span class="label-text-alt">Base directory where all providers will be mounted (e.g., /mnt/decypharr)</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.rc_port">
                                                 <span class="label-text font-medium">RC Port</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.rc_port" id="rclone.rc_port">
+                                            <input type="text" class="app-input" name="rclone.rc_port" id="rclone.rc_port">
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.log_level">
                                                 <span class="label-text font-medium">Log Level</span>
                                             </label>
-                                            <select class="select select-bordered" name="rclone.log_level" id="rclone.log_level">
+                                            <select class="app-select" name="rclone.log_level" id="rclone.log_level">
                                                 <option value="INFO">INFO</option>
                                                 <option value="DEBUG">DEBUG</option>
                                                 <option value="NOTICE">NOTICE</option>
@@ -4392,66 +4619,66 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                             </select>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.uid">
                                                 <span class="label-text font-medium">User ID (PUID)</span>
                                             </label>
-                                            <input type="number" class="input input-bordered" name="rclone.uid" id="rclone.uid" placeholder="1000" min="0">
+                                            <input type="number" class="app-input" name="rclone.uid" id="rclone.uid" placeholder="1000" min="0">
                                             <div class="label">
                                                 <span class="label-text-alt">User ID for mounted files (0 = current user)</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.gid">
                                                 <span class="label-text font-medium">Group ID (PGID)</span>
                                             </label>
-                                            <input type="number" class="input input-bordered" name="rclone.gid" id="rclone.gid" placeholder="1000" min="0">
+                                            <input type="number" class="app-input" name="rclone.gid" id="rclone.gid" placeholder="1000" min="0">
                                             <div class="label">
                                                 <span class="label-text-alt">Group ID for mounted files (0 = current group)</span>
                                             </div>
                                         </div>
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.umask">
                                                 <span class="label-text font-medium">UMASK</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.umask" id="rclone.umask" placeholder="0022">
+                                            <input type="text" class="app-input" name="rclone.umask" id="rclone.umask" placeholder="0022">
                                             <div class="label">
                                                 <span class="label-text-alt">Umask</span>
                                             </div>
                                         </div>
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.buffer_size">
                                                 <span class="label-text font-medium">Buffer Size</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.buffer_size" id="rclone.buffer_size" placeholder="10M">
+                                            <input type="text" class="app-input" name="rclone.buffer_size" id="rclone.buffer_size" placeholder="10M">
                                             <div class="label">
                                                 <span class="label-text-alt">Buffer Size(This caches to memory, be wary!!)</span>
                                             </div>
                                         </div>
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.bw_limit">
                                                 <span class="label-text font-medium">Bandwidth Limit</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.bw_limit" id="rclone.bw_limit" placeholder="100M">
+                                            <input type="text" class="app-input" name="rclone.bw_limit" id="rclone.bw_limit" placeholder="100M">
                                             <div class="label">
                                                 <span class="label-text-alt">Bandwidth limit (e.g., 100M, 1G, leave empty for unlimited)</span>
                                             </div>
                                         </div>
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.attr_timeout">
                                                 <span class="label-text font-medium">Attribute Caching Timeout</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.attr_timeout" id="rclone.attr_timeout" placeholder="1s">
+                                            <input type="text" class="app-input" name="rclone.attr_timeout" id="rclone.attr_timeout" placeholder="1s">
                                             <div class="label">
                                                 <span class="label-text-alt">How long the kernel caches the attributes (size, modification time, etc.)</span>
                                             </div>
                                         </div>
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.transfers">
                                                 <span class="label-text font-medium">Transfers</span>
                                             </label>
-                                            <input type="number" class="input input-bordered" name="rclone.transfers" id="rclone.transfers" placeholder="8" min="1">
+                                            <input type="number" class="app-input" name="rclone.transfers" id="rclone.transfers" placeholder="8" min="1">
                                             <div class="label">
                                                 <span class="label-text-alt">Number of file transfers to run in parallel</span>
                                             </div>
@@ -4462,24 +4689,24 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             <div class="card bg-base-200">
                                 <div class="card-body">
                                     <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="bi bi-speedometer2 mr-2"></i>VFS Cache Settings
+                                        VFS Cache Settings
                                     </h3>
                                     <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.cache_dir">
                                                 <span class="label-text font-medium">Cache Directory</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.cache_dir" id="rclone.cache_dir" placeholder="/tmp/rclone">
+                                            <input type="text" class="app-input" name="rclone.cache_dir" id="rclone.cache_dir" placeholder="/tmp/rclone">
                                             <div class="label">
                                                 <span class="label-text-alt">Directory for rclone cache files (leave empty for system default)</span>
                                             </div>
                                         </div>
                                         
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_mode">
                                                 <span class="label-text font-medium">VFS Cache Mode</span>
                                             </label>
-                                            <select class="select select-bordered" name="rclone.vfs_cache_mode" id="rclone.vfs_cache_mode">
+                                            <select class="app-select" name="rclone.vfs_cache_mode" id="rclone.vfs_cache_mode">
                                                 <option value="off">Off - No caching</option>
                                                 <option value="minimal">Minimal - Cache file structure only</option>
                                                 <option value="writes">Writes - Cache writes for better performance</option>
@@ -4490,101 +4717,101 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                             </div>
                                         </div>
                                         
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_max_size">
                                                 <span class="label-text font-medium">VFS Cache Max Size</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.vfs_cache_max_size" id="rclone.vfs_cache_max_size" placeholder="1G">
+                                            <input type="text" class="app-input" name="rclone.vfs_cache_max_size" id="rclone.vfs_cache_max_size" placeholder="1G">
                                             <div class="label">
                                                 <span class="label-text-alt">Maximum cache size (e.g., 1G, 500M, leave empty for unlimited)</span>
                                             </div>
                                         </div>
                                         
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_max_age">
                                                 <span class="label-text font-medium">VFS Cache Max Age</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.vfs_cache_max_age" id="rclone.vfs_cache_max_age" placeholder="1h">
+                                            <input type="text" class="app-input" name="rclone.vfs_cache_max_age" id="rclone.vfs_cache_max_age" placeholder="1h">
                                             <div class="label">
                                                 <span class="label-text-alt">Maximum age of cache entries (e.g., 1h, 30m)</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_chunk_size">
                                                 <span class="label-text font-medium">Read Chunk Size</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.vfs_read_chunk_size" id="rclone.vfs_read_chunk_size" placeholder="128M">
+                                            <input type="text" class="app-input" name="rclone.vfs_read_chunk_size" id="rclone.vfs_read_chunk_size" placeholder="128M">
                                             <div class="label">
                                                 <span class="label-text-alt">Size of data chunks to read (e.g., 128M, 64M)</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_chunk_size_limit">
                                                 <span class="label-text font-medium">Read Chunk Size Limit</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.vfs_read_chunk_size_limit" id="rclone.vfs_read_chunk_size_limit" placeholder="128M">
+                                            <input type="text" class="app-input" name="rclone.vfs_read_chunk_size_limit" id="rclone.vfs_read_chunk_size_limit" placeholder="128M">
                                             <div class="label">
                                                 <span class="label-text-alt">Limit Read Chunk Size</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_ahead">
                                                 <span class="label-text font-medium">VFS Read Ahead</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.vfs_read_ahead" id="rclone.vfs_read_ahead" placeholder="128k">
+                                            <input type="text" class="app-input" name="rclone.vfs_read_ahead" id="rclone.vfs_read_ahead" placeholder="128k">
                                             <div class="label">
                                                 <span class="label-text-alt">Read ahead buffer size (e.g., 128k, 256k)</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.dir_cache_time">
                                                 <span class="label-text font-medium">Directory Cache Time</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.dir_cache_time" id="rclone.dir_cache_time" placeholder="5m">
+                                            <input type="text" class="app-input" name="rclone.dir_cache_time" id="rclone.dir_cache_time" placeholder="5m">
                                             <div class="label">
                                                 <span class="label-text-alt">How long to cache directory listings (e.g., 5m, 10m)</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_poll_interval">
                                                 <span class="label-text font-medium">VFS Cache Poll Interval</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.vfs_cache_poll_interval" id="rclone.vfs_cache_poll_interval" placeholder="1h">
+                                            <input type="text" class="app-input" name="rclone.vfs_cache_poll_interval" id="rclone.vfs_cache_poll_interval" placeholder="1h">
                                             <div class="label">
                                                 <span class="label-text-alt">How often VFS cache dir gets cleaned</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_min_free_space">
                                                 <span class="label-text font-medium">VFS Cache Min Free Space</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.vfs_cache_min_free_space" id="rclone.vfs_cache_min_free_space" placeholder="1G">
+                                            <input type="text" class="app-input" name="rclone.vfs_cache_min_free_space" id="rclone.vfs_cache_min_free_space" placeholder="1G">
                                             <div class="label">
                                                 <span class="label-text-alt">Target minimum free space on the disk containing the cache</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.vfs_disk_space_total">
                                                 <span class="label-text font-medium">VFS Disk Space Total</span>
                                             </label>
-                                            <input type="text" class="input input-bordered" name="rclone.vfs_disk_space_total" id="rclone.vfs_disk_space_total" placeholder="1G">
+                                            <input type="text" class="app-input" name="rclone.vfs_disk_space_total" id="rclone.vfs_disk_space_total" placeholder="1G">
                                             <div class="label">
                                                 <span class="label-text-alt">Specify the total space of disk</span>
                                             </div>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_chunk_streams">
                                                 <span class="label-text font-medium">VFS Read Chunk Streams</span>
                                             </label>
-                                            <input type="number" class="input input-bordered" name="rclone.vfs_read_chunk_streams" id="rclone.vfs_read_chunk_streams" placeholder="4" min="0">
+                                            <input type="number" class="app-input" name="rclone.vfs_read_chunk_streams" id="rclone.vfs_read_chunk_streams" placeholder="4" min="0">
                                             <div class="label">
                                                 <span class="label-text-alt">The number of parallel streams to read at once</span>
                                             </div>
@@ -4596,12 +4823,12 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             <div class="card bg-base-200">
                                 <div class="card-body">
                                     <h3 class="text-lg font-semibold mb-4 flex items-center">
-                                        <i class="bi bi-gear mr-2"></i>Advanced Settings
+                                        Advanced Settings
                                     </h3>
-                                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                                        <div class="form-control">
+                                    <div class="grid grid-3">
+                                        <div class="field-group">
                                             <label class="label cursor-pointer justify-start gap-3">
-                                                <input type="checkbox" class="checkbox" name="rclone.no_modtime" id="rclone.no_modtime">
+                                                <input type="checkbox" class="app-checkbox" name="rclone.no_modtime" id="rclone.no_modtime">
                                                 <div>
                                                     <span class="label-text font-medium">No Modification Time</span>
                                                     <div class="label-text-alt">Don't read/write modification times</div>
@@ -4609,9 +4836,9 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                             </label>
                                         </div>
                                         
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label cursor-pointer justify-start gap-3">
-                                                <input type="checkbox" class="checkbox" name="rclone.no_checksum" id="rclone.no_checksum">
+                                                <input type="checkbox" class="app-checkbox" name="rclone.no_checksum" id="rclone.no_checksum">
                                                 <div>
                                                     <span class="label-text font-medium">No Checksum</span>
                                                     <div class="label-text-alt">Don't checksum files on upload</div>
@@ -4619,9 +4846,9 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                             </label>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label cursor-pointer justify-start gap-3" for="rclone.async_read">
-                                                <input type="checkbox" class="checkbox" name="rclone.async_read" id="rclone.async_read">
+                                                <input type="checkbox" class="app-checkbox" name="rclone.async_read" id="rclone.async_read">
                                                 <div>
                                                     <span class="label-text font-medium">Async Read</span>
                                                     <div class="label-text-alt">Use asynchronous reads</div>
@@ -4629,9 +4856,9 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                             </label>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label cursor-pointer justify-start gap-3" for="rclone.vfs_fast_fingerprint">
-                                                <input type="checkbox" class="checkbox" name="rclone.vfs_fast_fingerprint" id="rclone.vfs_fast_fingerprint">
+                                                <input type="checkbox" class="app-checkbox" name="rclone.vfs_fast_fingerprint" id="rclone.vfs_fast_fingerprint">
                                                 <div>
                                                     <span class="label-text font-medium">VFS Fast Fingerprint</span>
                                                     <div class="label-text-alt">Use fast (less accurate) fingerprints for change detection</div>
@@ -4639,9 +4866,9 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                             </label>
                                         </div>
 
-                                        <div class="form-control">
+                                        <div class="field-group">
                                             <label class="label cursor-pointer justify-start gap-3" for="rclone.use_mmap">
-                                                <input type="checkbox" class="checkbox" name="rclone.use_mmap" id="rclone.use_mmap">
+                                                <input type="checkbox" class="app-checkbox" name="rclone.use_mmap" id="rclone.use_mmap">
                                                 <div>
                                                     <span class="label-text font-medium">Use Mmap</span>
                                                     <div class="label-text-alt">Use fast (less accurate) fingerprints for change detection</div>
@@ -4660,13 +4887,13 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
     </form>
 </div>
 
-<div id="loadingOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
+<div id="loadingOverlay" class="fixed inset-0 bg-overlay backdrop-blur-sm z-50 hidden">
     <div class="flex items-center justify-center h-full">
         <div class="card bg-base-100 shadow-2xl">
             <div class="card-body text-center">
-                <span class="loading loading-spinner loading-lg text-primary"></span>
+                <wa-spinner></wa-spinner>
                 <h3 class="text-lg font-semibold mt-4">Applying Configuration</h3>
-                <p class="text-base-content/70">Please wait while we save your settings...</p>
+                <p class="text-muted">Please wait while we save your settings...</p>
             </div>
         </div>
     </div>
@@ -4677,367 +4904,652 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
           <strong>Configuration Required</strong>
           <div>Your configuration is incomplete. Please complete the setup below.</div>
         </wa-callout>
-      `:"",F=template$1.replace("__NEED_SETUP__",O).replace(/__URL_BASE__/g,w);return b`${o(F)}`}}Se(ConfigPage,"properties",{needSetup:{type:Boolean,attribute:"need-setup"}});customElements.define("config-page",ConfigPage);function setupPasswordToggles(){document.addEventListener("click",T=>{const w=T.target.closest(".password-toggle-btn");if(!w)return;T.preventDefault(),T.stopPropagation();const O=w.closest(".password-toggle-container");if(!O)return;const F=O.querySelector("input, textarea"),W=w.querySelector("i");!F||!W||(F.tagName.toLowerCase()==="textarea"?togglePasswordTextarea(F,W):togglePasswordInput(F,W))})}function togglePasswordInput(T,w){T.type==="password"?(T.type="text",w.className="bi bi-eye-slash"):(T.type="password",w.className="bi bi-eye")}function togglePasswordTextarea(T,w){T.style.webkitTextSecurity==="disc"||T.style.webkitTextSecurity===""||T.getAttribute("data-password-visible")!=="true"?(T.style.webkitTextSecurity="none",T.style.textSecurity="none",T.setAttribute("data-password-visible","true"),w.className="bi bi-eye-slash"):(T.style.webkitTextSecurity="disc",T.style.textSecurity="disc",T.setAttribute("data-password-visible","false"),w.className="bi bi-eye")}async function refreshAPIToken(){const T=document.getElementById("refresh-token-btn"),w=document.getElementById("api-token-display");window.decypharrUtils.setButtonLoading(T,!0,"Refresh Token");try{const O=await window.decypharrUtils.fetcher("/api/refresh-token",{method:"POST"});if(!O.ok)throw new Error("Failed to refresh token");const F=await O.json();w.value=F.token,window.decypharrUtils.createToast(F.message||"Token refreshed successfully","success")}catch(O){console.error("Error refreshing token:",O),window.decypharrUtils.createToast("Failed to refresh token: "+O.message,"error")}finally{window.decypharrUtils.setButtonLoading(T,!1)}}async function copyAPIToken(){const w=document.getElementById("api-token-display").value;if(!w||w==="No token generated"){window.decypharrUtils.createToast("No token to copy. Please refresh the token first.","warning");return}try{await window.decypharrUtils.copyToClipboard(w)}catch(O){console.error("Failed to copy token:",O),window.decypharrUtils.createToast("Failed to copy token to clipboard","error")}}async function updateAuthSettings(){const T=document.getElementById("auth-username").value,w=document.getElementById("auth-password").value,O=document.getElementById("auth-password-confirm").value,F=document.getElementById("update-auth-btn");if(w!==O)return window.decypharrUtils.createToast("Passwords do not match","error"),!1;window.decypharrUtils.setButtonLoading(F,!0,"Update Authentication");try{const W=await window.decypharrUtils.fetcher("/api/update-auth",{method:"POST",body:JSON.stringify({username:T,password:w,confirm_password:O})});if(!W.ok){const q=await W.text();throw new Error(q||"Failed to update authentication settings")}const U=await W.json();return window.decypharrUtils.createToast(U.message,"success"),document.getElementById("auth-password").value="",document.getElementById("auth-password-confirm").value="",!0}catch(W){return console.error("Error updating auth settings:",W),window.decypharrUtils.createToast("Failed to update authentication: "+W.message,"error"),!1}finally{window.decypharrUtils.setButtonLoading(F,!1)}}class ConfigManager{constructor(){this.debridCount=0,this.arrCount=0,this.debridDirectoryCounts={},this.directoryFilterCounts={},this.refs={configForm:document.getElementById("configForm"),loadingOverlay:document.getElementById("loadingOverlay"),debridConfigs:document.getElementById("debridConfigs"),arrConfigs:document.getElementById("arrConfigs"),addDebridBtn:document.getElementById("addDebridBtn"),addArrBtn:document.getElementById("addArrBtn")},this.init()}init(){this.bindEvents(),this.loadConfiguration(),this.setupMagnetHandler(),this.checkIncompleteConfig()}checkIncompleteConfig(){const w=new URLSearchParams(window.location.search);if(w.has("inco")){const O=w.get("inco");window.decypharrUtils.createToast(`Incomplete configuration: ${O}`,"warning")}}bindEvents(){this.refs.configForm.addEventListener("submit",w=>this.saveConfiguration(w)),this.refs.addDebridBtn.addEventListener("click",()=>this.addDebridConfig()),this.refs.addArrBtn.addEventListener("click",()=>this.addArrConfig()),document.addEventListener("change",w=>{w.target.classList.contains("useWebdav")&&this.toggleWebDAVSection(w.target)}),document.addEventListener("click",w=>{const O=w.target.closest(".test-debrid-key");if(O){w.preventDefault();const F=parseInt(O.dataset.index||"0",10);this.testDebridKey(F)}})}async loadConfiguration(){try{const w=await window.decypharrUtils.fetcher("/api/config");if(!w.ok)throw new Error("Failed to load configuration");const O=await w.json();this.populateForm(O)}catch(w){console.error("Error loading configuration:",w),window.decypharrUtils.createToast("Error loading configuration","error")}}populateForm(w){this.populateGeneralSettings(w),w.debrids&&Array.isArray(w.debrids)&&w.debrids.forEach(O=>this.addDebridConfig(O)),this.populateQBittorrentSettings(w.qbittorrent),w.arrs&&Array.isArray(w.arrs)&&w.arrs.forEach(O=>this.addArrConfig(O)),this.populateRepairSettings(w.repair),this.populateRcloneSettings(w.rclone),this.populateAPIToken(w)}populateGeneralSettings(w){["log_level","url_base","bind_address","port","discord_webhook_url","min_file_size","max_file_size","remove_stalled_after","debrid_poll_interval","bad_torrent_threshold_hours"].forEach(F=>{const W=document.querySelector(`[name="${F}"]`);W&&w[F]!==void 0&&(W.value=w[F])}),w.allowed_file_types&&Array.isArray(w.allowed_file_types)&&(document.querySelector('[name="allowed_file_types"]').value=w.allowed_file_types.join(", "))}populateQBittorrentSettings(w){if(!w)return;["download_folder","refresh_interval","max_downloads","skip_pre_cache","always_rm_tracker_urls","default_action"].forEach(F=>{const W=document.querySelector(`[name="qbit.${F}"]`);W&&w[F]!==void 0&&(W.type==="checkbox"?W.checked=w[F]:W.value=w[F])})}populateRepairSettings(w){if(!w)return;["enabled","interval","workers","zurg_url","strategy","use_webdav","auto_process"].forEach(F=>{const W=document.querySelector(`[name="repair.${F}"]`);W&&w[F]!==void 0&&(W.type==="checkbox"?W.checked=w[F]:W.value=w[F])})}populateRcloneSettings(w){if(!w)return;["enabled","rc_port","mount_path","cache_dir","transfers","vfs_cache_mode","vfs_cache_max_size","vfs_cache_max_age","vfs_cache_poll_interval","vfs_read_chunk_size","vfs_read_chunk_size_limit","buffer_size","bw_limit","uid","gid","vfs_read_ahead","attr_timeout","dir_cache_time","poll_interval","umask","no_modtime","no_checksum","log_level","vfs_cache_min_free_space","vfs_fast_fingerprint","vfs_read_chunk_streams","async_read","use_mmap"].forEach(F=>{const W=document.querySelector(`[name="rclone.${F}"]`);W&&w[F]!==void 0&&(W.type==="checkbox"?W.checked=w[F]:W.value=w[F])})}addDebridConfig(w={}){const O=this.getDebridTemplate(this.debridCount,w);this.refs.debridConfigs.insertAdjacentHTML("beforeend",O);const W=this.refs.debridConfigs.lastElementChild.querySelector(".useWebdav");w.use_webdav&&this.toggleWebDAVSection(W,!0),Object.keys(w).length>0&&this.populateDebridData(this.debridCount,w),this.debridDirectoryCounts[this.debridCount]=0,w.directories&&Object.entries(w.directories).forEach(([U,q])=>{const j=this.addDirectory(this.debridCount,{name:U,...q});q.filters&&Object.entries(q.filters).forEach(([J,X])=>{this.addFilter(this.debridCount,j,J,X)})}),this.debridCount++}populateDebridData(w,O){Object.entries(O).forEach(([F,W])=>{const U=document.querySelector(`[name="debrid[${w}].${F}"]`);U&&(U.type==="checkbox"?U.checked=W:F==="download_api_keys"&&Array.isArray(W)?(U.value=W.join(`
+      `:"",F=template$1.replace("__NEED_SETUP__",O).replace(/__URL_BASE__/g,w);return b`${o(F)}`}}Se(ConfigPage,"properties",{needSetup:{type:Boolean,attribute:"need-setup"}});customElements.define("config-page",ConfigPage);function setupPasswordToggles(){document.addEventListener("click",T=>{const w=T.target.closest(".password-toggle-btn");if(!w)return;T.preventDefault(),T.stopPropagation();const O=w.closest(".password-toggle-container");if(!O)return;const F=O.querySelector("input, textarea, wa-input, wa-textarea");let W=w.querySelector("wa-icon, i");W||(W=document.createElement("wa-icon"),W.setAttribute("name","eye"),w.appendChild(W)),!(!F||!W)&&(F.tagName.toLowerCase()==="textarea"?togglePasswordTextarea(F,W):togglePasswordInput(F,W))})}function togglePasswordInput(T,w){T.type==="password"?(T.type="text",w.tagName&&w.tagName.toLowerCase()==="wa-icon"?w.setAttribute("name","eye-slash"):w.className="bi bi-eye-slash"):(T.type="password",w.tagName&&w.tagName.toLowerCase()==="wa-icon"?w.setAttribute("name","eye"):w.className="bi bi-eye")}function togglePasswordTextarea(T,w){T.style.webkitTextSecurity==="disc"||T.style.webkitTextSecurity===""||T.getAttribute("data-password-visible")!=="true"?(T.style.webkitTextSecurity="none",T.style.textSecurity="none",T.setAttribute("data-password-visible","true"),w.tagName&&w.tagName.toLowerCase()==="wa-icon"?w.setAttribute("name","eye-slash"):w.className="bi bi-eye-slash"):(T.style.webkitTextSecurity="disc",T.style.textSecurity="disc",T.setAttribute("data-password-visible","false"),w.tagName&&w.tagName.toLowerCase()==="wa-icon"?w.setAttribute("name","eye"):w.className="bi bi-eye")}async function refreshAPIToken(){const T=document.getElementById("refresh-token-btn"),w=document.getElementById("api-token-display");window.decypharrUtils.setButtonLoading(T,!0,"Refresh Token");try{const O=await window.decypharrUtils.fetcher("/api/refresh-token",{method:"POST"});if(!O.ok)throw new Error("Failed to refresh token");const F=await O.json();w.value=F.token,window.decypharrUtils.createToast(F.message||"Token refreshed successfully","success")}catch(O){console.error("Error refreshing token:",O),window.decypharrUtils.createToast("Failed to refresh token: "+O.message,"error")}finally{window.decypharrUtils.setButtonLoading(T,!1)}}async function copyAPIToken(){const w=document.getElementById("api-token-display").value;if(!w||w==="No token generated"){window.decypharrUtils.createToast("No token to copy. Please refresh the token first.","warning");return}try{await window.decypharrUtils.copyToClipboard(w)}catch(O){console.error("Failed to copy token:",O),window.decypharrUtils.createToast("Failed to copy token to clipboard","error")}}async function updateAuthSettings(){const T=document.getElementById("auth-username").value,w=document.getElementById("auth-password").value,O=document.getElementById("auth-password-confirm").value,F=document.getElementById("update-auth-btn");if(w!==O)return window.decypharrUtils.createToast("Passwords do not match","error"),!1;window.decypharrUtils.setButtonLoading(F,!0,"Update Authentication");try{const W=await window.decypharrUtils.fetcher("/api/update-auth",{method:"POST",body:JSON.stringify({username:T,password:w,confirm_password:O})});if(!W.ok){const q=await W.text();throw new Error(q||"Failed to update authentication settings")}const U=await W.json();return window.decypharrUtils.createToast(U.message,"success"),document.getElementById("auth-password").value="",document.getElementById("auth-password-confirm").value="",!0}catch(W){return console.error("Error updating auth settings:",W),window.decypharrUtils.createToast("Failed to update authentication: "+W.message,"error"),!1}finally{window.decypharrUtils.setButtonLoading(F,!1)}}class ConfigManager{constructor(){this.debridCount=0,this.arrCount=0,this.debridDirectoryCounts={},this.directoryFilterCounts={},this.refs={configForm:document.getElementById("configForm"),loadingOverlay:document.getElementById("loadingOverlay"),debridConfigs:document.getElementById("debridConfigs"),arrConfigs:document.getElementById("arrConfigs"),addDebridBtn:document.getElementById("addDebridBtn"),addArrBtn:document.getElementById("addArrBtn")},this.init()}init(){this.bindEvents(),this.initTabs(),this.loadConfiguration(),this.setupMagnetHandler(),this.checkIncompleteConfig()}initTabs(){const w=Array.from(document.querySelectorAll(".tab-button")),O=Array.from(document.querySelectorAll(".tab-content"));if(!w.length||!O.length)return;const F=W=>{const U=W.dataset.tab;w.forEach(q=>q.classList.toggle("active",q===W)),O.forEach(q=>{q.classList.toggle("hidden",q.dataset.tabContent!==U)})};w.forEach(W=>W.addEventListener("click",()=>F(W))),F(w.find(W=>W.classList.contains("active"))||w[0])}checkIncompleteConfig(){const w=new URLSearchParams(window.location.search);if(w.has("inco")){const O=w.get("inco");window.decypharrUtils.createToast(`Incomplete configuration: ${O}`,"warning")}}bindEvents(){this.refs.configForm.addEventListener("submit",w=>this.saveConfiguration(w)),this.refs.addDebridBtn.addEventListener("click",()=>this.addDebridConfig()),this.refs.addArrBtn.addEventListener("click",()=>this.addArrConfig()),document.addEventListener("change",w=>{w.target.classList.contains("useWebdav")&&this.toggleWebDAVSection(w.target)}),document.addEventListener("click",w=>{const O=w.target.closest(".test-debrid-key");if(O){w.preventDefault();const F=parseInt(O.dataset.index||"0",10);this.testDebridKey(F)}})}async loadConfiguration(){try{const w=await window.decypharrUtils.fetcher("/api/config");if(!w.ok)throw new Error("Failed to load configuration");const O=await w.json();this.populateForm(O)}catch(w){console.error("Error loading configuration:",w),window.decypharrUtils.createToast("Error loading configuration","error")}}populateForm(w){this.populateGeneralSettings(w),w.debrids&&Array.isArray(w.debrids)&&w.debrids.forEach(O=>this.addDebridConfig(O)),this.populateQBittorrentSettings(w.qbittorrent),w.arrs&&Array.isArray(w.arrs)&&w.arrs.forEach(O=>this.addArrConfig(O)),this.populateRepairSettings(w.repair),this.populateRcloneSettings(w.rclone),this.populateAPIToken(w)}populateGeneralSettings(w){["log_level","url_base","bind_address","port","discord_webhook_url","min_file_size","max_file_size","remove_stalled_after","debrid_poll_interval","bad_torrent_threshold_hours"].forEach(F=>{const W=document.querySelector(`[name="${F}"]`);W&&w[F]!==void 0&&(W.value=w[F])}),w.allowed_file_types&&Array.isArray(w.allowed_file_types)&&(document.querySelector('[name="allowed_file_types"]').value=w.allowed_file_types.join(", "))}populateQBittorrentSettings(w){if(!w)return;["download_folder","refresh_interval","max_downloads","skip_pre_cache","always_rm_tracker_urls","default_action"].forEach(F=>{const W=document.querySelector(`[name="qbit.${F}"]`);W&&w[F]!==void 0&&(W.type==="checkbox"?W.checked=w[F]:W.value=w[F])})}populateRepairSettings(w){if(!w)return;["enabled","interval","workers","zurg_url","strategy","use_webdav","auto_process"].forEach(F=>{const W=document.querySelector(`[name="repair.${F}"]`);W&&w[F]!==void 0&&(W.type==="checkbox"?W.checked=w[F]:W.value=w[F])})}populateRcloneSettings(w){if(!w)return;["enabled","rc_port","mount_path","cache_dir","transfers","vfs_cache_mode","vfs_cache_max_size","vfs_cache_max_age","vfs_cache_poll_interval","vfs_read_chunk_size","vfs_read_chunk_size_limit","buffer_size","bw_limit","uid","gid","vfs_read_ahead","attr_timeout","dir_cache_time","poll_interval","umask","no_modtime","no_checksum","log_level","vfs_cache_min_free_space","vfs_fast_fingerprint","vfs_read_chunk_streams","async_read","use_mmap"].forEach(F=>{const W=document.querySelector(`[name="rclone.${F}"]`);W&&w[F]!==void 0&&(W.type==="checkbox"?W.checked=w[F]:W.value=w[F])})}addDebridConfig(w={}){const O=this.getDebridTemplate(this.debridCount,w);this.refs.debridConfigs.insertAdjacentHTML("beforeend",O);const W=this.refs.debridConfigs.lastElementChild.querySelector(".useWebdav");w.use_webdav&&this.toggleWebDAVSection(W,!0),Object.keys(w).length>0&&this.populateDebridData(this.debridCount,w),this.debridDirectoryCounts[this.debridCount]=0,w.directories&&Object.entries(w.directories).forEach(([U,q])=>{const j=this.addDirectory(this.debridCount,{name:U,...q});q.filters&&Object.entries(q.filters).forEach(([J,X])=>{this.addFilter(this.debridCount,j,J,X)})}),this.debridCount++}populateDebridData(w,O){Object.entries(O).forEach(([F,W])=>{const U=document.querySelector(`[name="debrid[${w}].${F}"]`);U&&(U.type==="checkbox"?U.checked=W:F==="download_api_keys"&&Array.isArray(W)?(U.value=W.join(`
 `),U.tagName.toLowerCase()==="textarea"&&(U.style.webkitTextSecurity="disc",U.style.textSecurity="disc",U.setAttribute("data-password-visible","false"))):U.value=W)})}getDebridTemplate(w){return templateDebrid(w)}toggleWebDAVSection(w,O=!1){const F=w.closest(".debrid-config"),W=F.dataset.index,U=F.querySelector(`#webdav-section-${W}`),q=U.querySelectorAll(".webdav-field");w.checked||O?U.classList.remove("hidden"):(U.classList.add("hidden"),q.forEach(j=>j.required=!1))}addDirectory(w,O={}){this.debridDirectoryCounts[w]||(this.debridDirectoryCounts[w]=0);const F=this.debridDirectoryCounts[w],W=document.getElementById(`debrid[${w}].directories`),U=this.getDirectoryTemplate(w,F);return W.insertAdjacentHTML("beforeend",U),Object.keys(O).length>0&&this.populateDirectoryData(w,F,O),this.debridDirectoryCounts[w]++,F}populateDirectoryData(w,O,F){if(F.name){const W=document.querySelector(`[name="debrid[${w}].directories[${O}].name"]`);W&&(W.value=F.name)}if(F.path){const W=document.querySelector(`[name="debrid[${w}].directories[${O}].path"]`);W&&(W.value=F.path)}}getDirectoryTemplate(w,O){return templateDirectory(w,O)}addFilter(w,O,F,W){this.directoryFilterCounts[`${w}-${O}`]||(this.directoryFilterCounts[`${w}-${O}`]=0);const U=this.directoryFilterCounts[`${w}-${O}`],q=document.getElementById(`debrid[${w}].directories[${O}].filters`),j=this.getFilterTemplate(w,O,U);q.insertAdjacentHTML("beforeend",j);const J=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${U}].type"]`),X=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${U}].value"]`);J&&(J.value=F),X&&(X.value=W),this.directoryFilterCounts[`${w}-${O}`]++}getFilterTemplate(w,O,F){return templateFilter(w,O,F)}addArrConfig(w={}){const O=this.getArrTemplate(this.arrCount,w);this.refs.arrConfigs.insertAdjacentHTML("beforeend",O),Object.keys(w).length>0&&this.populateArrData(this.arrCount,w),this.arrCount++}populateArrData(w,O){Object.entries(O).forEach(([F,W])=>{const U=document.querySelector(`[name="arr[${w}].${F}"]`);U&&(U.type==="checkbox"?U.checked=W:U.value=W)})}getArrTemplate(w,O={}){return templateArr(w,O)}async saveConfiguration(w){w.preventDefault();const O=new FormData(this.refs.configForm),F=this.buildConfigPayload(O);this.showLoadingOverlay(!0);try{const W=await window.decypharrUtils.fetcher("/api/config",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(F)});if(!W.ok){const U=await W.text();throw new Error(U||"Failed to save configuration")}window.decypharrUtils.createToast("Configuration saved successfully","success")}catch(W){console.error("Error saving configuration:",W),window.decypharrUtils.createToast("Failed to save configuration: "+W.message,"error")}finally{this.showLoadingOverlay(!1)}}buildConfigPayload(w){const O=Object.fromEntries(w.entries());return O.allowed_file_types&&(O.allowed_file_types=O.allowed_file_types.split(",").map(F=>F.trim()).filter(Boolean)),O.debrids=this.collectDebridConfig(),O.arrs=this.collectArrConfig(),O.qbittorrent=this.collectQbitConfig(),O.repair=this.collectRepairConfig(),O.rclone=this.collectRcloneConfig(),O}collectDebridConfig(){const w=[];for(let O=0;O<this.debridCount;O++){if(!document.querySelector(`[name="debrid[${O}].name"]`))continue;const W={};document.querySelectorAll(`[name^="debrid[${O}]."]`).forEach(U=>{const q=U.name.replace(`debrid[${O}].`,"");U.type==="checkbox"?W[q]=U.checked:q==="download_api_keys"?W[q]=U.value.split(`
-`).map(j=>j.trim()).filter(Boolean):W[q]=U.value}),W.directories=this.collectDirectoryConfig(O),w.push(W)}return w}collectDirectoryConfig(w){const O={},F=document.getElementById(`debrid[${w}].directories`);return F&&F.querySelectorAll(".directory-config").forEach(W=>{const U=W.dataset.index,q=document.querySelector(`[name="debrid[${w}].directories[${U}].name"]`).value,j=document.querySelector(`[name="debrid[${w}].directories[${U}].path"]`).value,J=this.collectFilterConfig(w,U);O[q]={path:j,filters:J}}),O}collectFilterConfig(w,O){const F={},W=document.getElementById(`debrid[${w}].directories[${O}].filters`);return W&&W.querySelectorAll(".filter-config").forEach(U=>{const q=U.dataset.index,j=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${q}].type"]`).value,J=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${q}].value"]`).value;j&&(F[j]=J)}),F}collectArrConfig(){const w=[];for(let O=0;O<this.arrCount;O++){if(!document.querySelector(`[name="arr[${O}].name"]`))continue;const W={};document.querySelectorAll(`[name^="arr[${O}]."]`).forEach(U=>{const q=U.name.replace(`arr[${O}].`,"");U.type==="checkbox"?W[q]=U.checked:W[q]=U.value}),w.push(W)}return w}collectQbitConfig(){const w=(O,F="")=>{const W=document.querySelector(`[name="qbit.${O}"]`);return W?W.type==="checkbox"?W.checked:W.value||F:F};return{download_folder:w("download_folder"),refresh_interval:parseInt(w("refresh_interval",60),10),max_downloads:parseInt(w("max_downloads",0),10),skip_pre_cache:w("skip_pre_cache",!1),always_rm_tracker_urls:w("always_rm_tracker_urls",!1),default_action:w("default_action","symlink")}}collectRepairConfig(){return{enabled:document.querySelector('[name="repair.enabled"]').checked,interval:document.querySelector('[name="repair.interval"]').value,zurg_url:document.querySelector('[name="repair.zurg_url"]').value,strategy:document.querySelector('[name="repair.strategy"]').value,workers:parseInt(document.querySelector('[name="repair.workers"]').value)||1,use_webdav:document.querySelector('[name="repair.use_webdav"]').checked,auto_process:document.querySelector('[name="repair.auto_process"]').checked}}collectRcloneConfig(){const w=(O,F="")=>{const W=document.querySelector(`[name="rclone.${O}"]`);if(!W)return F;if(W.type==="checkbox")return W.checked;if(W.type==="number"){const U=parseInt(W.value);return isNaN(U)?0:U}return W.value||F};return{enabled:w("enabled",!1),rc_port:w("rc_port","5572"),mount_path:w("mount_path"),buffer_size:w("buffer_size"),bw_limit:w("bw_limit"),cache_dir:w("cache_dir"),transfers:w("transfers",8),vfs_cache_mode:w("vfs_cache_mode","off"),vfs_cache_max_age:w("vfs_cache_max_age","1h"),vfs_cache_max_size:w("vfs_cache_max_size"),vfs_cache_poll_interval:w("vfs_cache_poll_interval","1m"),vfs_read_chunk_size:w("vfs_read_chunk_size","128M"),vfs_read_chunk_size_limit:w("vfs_read_chunk_size_limit","off"),vfs_cache_min_free_space:w("vfs_cache_min_free_space",""),vfs_fast_fingerprint:w("vfs_fast_fingerprint",!1),vfs_read_chunk_streams:w("vfs_read_chunk_streams",0),use_mmap:w("use_mmap",!1),async_read:w("async_read",!0),uid:w("uid",0),gid:w("gid",0),umask:w("umask",""),vfs_read_ahead:w("vfs_read_ahead","128k"),attr_timeout:w("attr_timeout","1s"),dir_cache_time:w("dir_cache_time","5m"),no_modtime:w("no_modtime",!1),no_checksum:w("no_checksum",!1),log_level:w("log_level","INFO")}}showLoadingOverlay(w){this.refs.loadingOverlay.classList.toggle("hidden",!w)}setupMagnetHandler(){if(window.registerMagnetLinkHandler=()=>{if("registerProtocolHandler"in navigator)try{navigator.registerProtocolHandler("magnet",`${window.location.origin}${window.urlBase}download?magnet=%s`,"Decypharr"),localStorage.setItem("magnetHandler","true");const w=document.getElementById("registerMagnetLink");w.innerHTML='<i class="bi bi-check-circle mr-2"></i>Magnet Handler Registered',w.classList.remove("btn-primary"),w.classList.add("btn-success"),w.disabled=!0,window.decypharrUtils.createToast("Magnet link handler registered successfully")}catch(w){console.error("Failed to register magnet link handler:",w),window.decypharrUtils.createToast("Failed to register magnet link handler","error")}else window.decypharrUtils.createToast("Magnet link registration not supported in this browser","warning")},localStorage.getItem("magnetHandler")==="true"){const w=document.getElementById("registerMagnetLink");w&&(w.innerHTML='<i class="bi bi-check-circle mr-2"></i>Magnet Handler Registered',w.classList.remove("btn-primary"),w.classList.add("btn-success"),w.disabled=!0)}}async testDebridKey(w){const O=document.querySelector(`[name="debrid[${w}].name"]`),F=document.querySelector(`[name="debrid[${w}].api_key"]`);if(!O||!F){window.decypharrUtils.createToast("Debrid fields not found","error");return}const W=O.value.trim(),U=F.value.trim(),q=document.querySelector(`[name="debrid[${w}].unpack_rar"]`),j=document.querySelector(`.test-debrid-key[data-index="${w}"]`);if(!W||!U){window.decypharrUtils.createToast("Please enter a debrid service and API key first","warning");return}try{window.decypharrUtils.setButtonLoading(j,!0);const J=await window.decypharrUtils.fetcher("/api/debrid/test",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:W,api_key:U,unpack_rar:q?q.checked:!1})});let X={};try{X=await J.json()}catch{X={}}if(!J.ok)throw new Error(X.detail||X.error||"Test failed");const Y=X.profile||{};let K=`${W} key OK`;if(Y.username&&(K+=` (${Y.username})`),Y.expiration){const G=new Date(Y.expiration);isNaN(G.getTime())||(K+=`, expires ${G.toLocaleString()}`)}window.decypharrUtils.createToast(K,"success")}catch(J){const X=J&&J.message?J.message:String(J);window.decypharrUtils.createToast(`Key test failed: ${X}`,"error")}finally{window.decypharrUtils.setButtonLoading(j,!1)}}populateAPIToken(w){const O=document.getElementById("api-token-display");O&&(O.value=w.api_token||"****");const F=document.getElementById("auth-username");F&&w.auth_username&&(F.value=w.auth_username)}}function templateDebrid(T){return document.getElementById("debrid-template").innerHTML.replace(/__INDEX__/g,T)}function templateDirectory(T,w){return document.getElementById("directory-template").innerHTML.replace(/__DEBRID_INDEX__/g,T).replace(/__DIR_INDEX__/g,w)}function templateFilter(T,w,O){return document.getElementById("filter-template").innerHTML.replace(/__DEBRID_INDEX__/g,T).replace(/__DIR_INDEX__/g,w).replace(/__FILTER_INDEX__/g,O)}function templateArr(T,w){let O=document.getElementById("arr-template").innerHTML.replace(/__INDEX__/g,T);return w&&w.source==="auto"?O=O.replace(/__AUTO__/g,"1"):O=O.replace(/__AUTO__/g,""),O}const template=`<div class="space-y-6">
+`).map(j=>j.trim()).filter(Boolean):W[q]=U.value}),W.directories=this.collectDirectoryConfig(O),w.push(W)}return w}collectDirectoryConfig(w){const O={},F=document.getElementById(`debrid[${w}].directories`);return F&&F.querySelectorAll(".directory-config").forEach(W=>{const U=W.dataset.index,q=document.querySelector(`[name="debrid[${w}].directories[${U}].name"]`).value,j=document.querySelector(`[name="debrid[${w}].directories[${U}].path"]`).value,J=this.collectFilterConfig(w,U);O[q]={path:j,filters:J}}),O}collectFilterConfig(w,O){const F={},W=document.getElementById(`debrid[${w}].directories[${O}].filters`);return W&&W.querySelectorAll(".filter-config").forEach(U=>{const q=U.dataset.index,j=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${q}].type"]`).value,J=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${q}].value"]`).value;j&&(F[j]=J)}),F}collectArrConfig(){const w=[];for(let O=0;O<this.arrCount;O++){if(!document.querySelector(`[name="arr[${O}].name"]`))continue;const W={};document.querySelectorAll(`[name^="arr[${O}]."]`).forEach(U=>{const q=U.name.replace(`arr[${O}].`,"");U.type==="checkbox"?W[q]=U.checked:W[q]=U.value}),w.push(W)}return w}collectQbitConfig(){const w=(O,F="")=>{const W=document.querySelector(`[name="qbit.${O}"]`);return W?W.type==="checkbox"?W.checked:W.value||F:F};return{download_folder:w("download_folder"),refresh_interval:parseInt(w("refresh_interval",60),10),max_downloads:parseInt(w("max_downloads",0),10),skip_pre_cache:w("skip_pre_cache",!1),always_rm_tracker_urls:w("always_rm_tracker_urls",!1),default_action:w("default_action","symlink")}}collectRepairConfig(){return{enabled:document.querySelector('[name="repair.enabled"]').checked,interval:document.querySelector('[name="repair.interval"]').value,zurg_url:document.querySelector('[name="repair.zurg_url"]').value,strategy:document.querySelector('[name="repair.strategy"]').value,workers:parseInt(document.querySelector('[name="repair.workers"]').value)||1,use_webdav:document.querySelector('[name="repair.use_webdav"]').checked,auto_process:document.querySelector('[name="repair.auto_process"]').checked}}collectRcloneConfig(){const w=(O,F="")=>{const W=document.querySelector(`[name="rclone.${O}"]`);if(!W)return F;if(W.type==="checkbox")return W.checked;if(W.type==="number"){const U=parseInt(W.value);return isNaN(U)?0:U}return W.value||F};return{enabled:w("enabled",!1),rc_port:w("rc_port","5572"),mount_path:w("mount_path"),buffer_size:w("buffer_size"),bw_limit:w("bw_limit"),cache_dir:w("cache_dir"),transfers:w("transfers",8),vfs_cache_mode:w("vfs_cache_mode","off"),vfs_cache_max_age:w("vfs_cache_max_age","1h"),vfs_cache_max_size:w("vfs_cache_max_size"),vfs_cache_poll_interval:w("vfs_cache_poll_interval","1m"),vfs_read_chunk_size:w("vfs_read_chunk_size","128M"),vfs_read_chunk_size_limit:w("vfs_read_chunk_size_limit","off"),vfs_cache_min_free_space:w("vfs_cache_min_free_space",""),vfs_fast_fingerprint:w("vfs_fast_fingerprint",!1),vfs_read_chunk_streams:w("vfs_read_chunk_streams",0),use_mmap:w("use_mmap",!1),async_read:w("async_read",!0),uid:w("uid",0),gid:w("gid",0),umask:w("umask",""),vfs_read_ahead:w("vfs_read_ahead","128k"),attr_timeout:w("attr_timeout","1s"),dir_cache_time:w("dir_cache_time","5m"),no_modtime:w("no_modtime",!1),no_checksum:w("no_checksum",!1),log_level:w("log_level","INFO")}}showLoadingOverlay(w){this.refs.loadingOverlay.classList.toggle("hidden",!w)}setupMagnetHandler(){if(window.registerMagnetLinkHandler=()=>{if("registerProtocolHandler"in navigator)try{navigator.registerProtocolHandler("magnet",`${window.location.origin}${window.urlBase}download?magnet=%s`,"Decypharr"),localStorage.setItem("magnetHandler","true");const w=document.getElementById("registerMagnetLink");w&&(w.innerHTML='<wa-icon slot="start" name="check"></wa-icon>Magnet Handler Registered',w.variant="success",w.appearance="solid",w.disabled=!0),window.decypharrUtils.createToast("Magnet link handler registered successfully")}catch(w){console.error("Failed to register magnet link handler:",w),window.decypharrUtils.createToast("Failed to register magnet link handler","error")}else window.decypharrUtils.createToast("Magnet link registration not supported in this browser","warning")},localStorage.getItem("magnetHandler")==="true"){const w=document.getElementById("registerMagnetLink");w&&(w.innerHTML='<wa-icon slot="start" name="check"></wa-icon>Magnet Handler Registered',w.variant="success",w.appearance="solid",w.disabled=!0)}}async testDebridKey(w){const O=document.querySelector(`[name="debrid[${w}].name"]`),F=document.querySelector(`[name="debrid[${w}].api_key"]`);if(!O||!F){window.decypharrUtils.createToast("Debrid fields not found","error");return}const W=O.value.trim(),U=F.value.trim(),q=document.querySelector(`[name="debrid[${w}].unpack_rar"]`),j=document.querySelector(`.test-debrid-key[data-index="${w}"]`);if(!W||!U){window.decypharrUtils.createToast("Please enter a debrid service and API key first","warning");return}try{window.decypharrUtils.setButtonLoading(j,!0);const J=await window.decypharrUtils.fetcher("/api/debrid/test",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:W,api_key:U,unpack_rar:q?q.checked:!1})});let X={};try{X=await J.json()}catch{X={}}if(!J.ok)throw new Error(X.detail||X.error||"Test failed");const Y=X.profile||{};let K=`${W} key OK`;if(Y.username&&(K+=` (${Y.username})`),Y.expiration){const G=new Date(Y.expiration);isNaN(G.getTime())||(K+=`, expires ${G.toLocaleString()}`)}window.decypharrUtils.createToast(K,"success")}catch(J){const X=J&&J.message?J.message:String(J);window.decypharrUtils.createToast(`Key test failed: ${X}`,"error")}finally{window.decypharrUtils.setButtonLoading(j,!1)}}populateAPIToken(w){const O=document.getElementById("api-token-display");O&&(O.value=w.api_token||"****");const F=document.getElementById("auth-username");F&&w.auth_username&&(F.value=w.auth_username)}}function normalizeTemplate(T){return T.replace(/class="input input-bordered input-has-toggle"/g,'class="app-input input-has-toggle"').replace(/input input-bordered/g,"app-input").replace(/class="input input-bordered input-sm"/g,'class="app-input"').replace(/class="input input-bordered"/g,'class="app-input"').replace(/class="textarea[^"]*"/g,'class="app-textarea"').replace(/select select-bordered/g,"app-select").replace(/class="select select-bordered select-sm"/g,'class="app-select"').replace(/class="select select-bordered"/g,'class="app-select"').replace(/checkbox checkbox-sm/g,"app-checkbox").replace(/checkbox checkbox-lg/g,"app-checkbox").replace(/\bcheckbox\b/g,"app-checkbox").replace(/text-base-content\/70/g,"text-muted").replace(/text-base-content\/60/g,"text-muted").replace(/bg-black\/50/g,"bg-overlay").replace(/<button/g,"<wa-button").replace(/<\/button>/g,"</wa-button>").replace(/<i class="bi[^>]*"><\/i>/g,"")}function getDebridTemplate(T){return`
+        <div class="card bg-base-100 border border-base-300 shadow-sm debrid-config" data-index="${T}">
+            <div class="card-body">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="card-title text-lg">
+                        Debrid Service #${T+1}
+                    </h3>
+                    <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.debrid-config').remove();">
+                        Remove
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="form-control">
+                            <label class="label" for="debrid[${T}].name">
+                                <span class="label-text font-medium">Service Type</span>
+                            </label>
+                            <select class="select select-bordered" name="debrid[${T}].name" id="debrid[${T}].name" required>
+                                <option value="realdebrid">Real Debrid</option>
+                                <option value="alldebrid">AllDebrid</option>
+                                <option value="debridlink">Debrid Link</option>
+                                <option value="torbox">Torbox</option>
+                            </select>
+                        </div>
+
+                        <div class="form-control">
+                            <label class="label" for="debrid[${T}].api_key">
+                                <span class="label-text font-medium">API Key</span>
+                            </label>
+                            <div class="password-toggle-container">
+                                <input type="password" class="input input-bordered input-has-toggle" 
+                                       name="debrid[${T}].api_key" id="debrid[${T}].api_key" required>
+                                <button type="button" class="password-toggle-btn">
+                                    <i class="bi bi-eye" id="debrid[${T}].api_key_icon"></i>
+                                </button>
+                            </div>
+                            <div class="label">
+                                <span class="label-text-alt">API key for the debrid service</span>
+                            </div>
+                            <div class="mt-2 flex items-center gap-2">
+                                <button type="button" class="btn btn-outline btn-xs test-debrid-key" data-index="${T}">
+                                    Test key
+                                </button>
+                                <span class="text-xs text-base-content/60">Validates the API key against the service.</span>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="flex flex-col">
+                        <div class="form-control flex-1">
+                            <label class="label" for="debrid[${T}].download_api_keys">
+                                <span class="label-text font-medium">Download API Keys</span>
+                            </label>
+                            <div class="password-toggle-container">
+                                <textarea class="textarea textarea-bordered has-toggle font-mono h-full min-h-[200px]" 
+                                          name="debrid[${T}].download_api_keys" 
+                                          id="debrid[${T}].download_api_keys" 
+                                          placeholder="Multiple API keys for download (one per line). If empty, main API key will be used."></textarea>
+                                <button type="button" class="password-toggle-btn textarea-toggle">
+                                    <i class="bi bi-eye" id="debrid[${T}].download_api_keys_icon"></i>
+                                </button>
+                            </div>
+                            <div class="label">
+                                <span class="label-text-alt">Multiple API keys for downloads - leave empty to use main API key</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div class="form-control">
+                            <label class="label" for="debrid[${T}].folder">
+                                <span class="label-text font-medium">Mount/Rclone Folder</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="debrid[${T}].folder" id="debrid[${T}].folder" 
+                                   placeholder="/mnt/remote/realdebrid/__all__" required>
+                            <div class="label">
+                                <span class="label-text-alt">Path where debrid files are mounted</span>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                              <label class="label" for="debrid[${T}].rclone_mount_path">
+                                  <span class="label-text font-medium">Custom Rclone Mount Path</span>
+                                  <span class="badge badge-ghost badge-sm">Optional</span>
+                              </label>
+                              <input type="text" class="input input-bordered" 
+                                     name="debrid[${T}].rclone_mount_path" id="debrid[${T}].rclone_mount_path" 
+                                     placeholder="/custom/mount/path (leave empty for global mount path)">
+                              <div class="label">
+                                  <span class="label-text-alt">Custom mount path for this debrid service. If empty, uses global rclone mount path.</span>
+                              </div>
+                        </div>
+                        
+                    </div>
+                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="form-control">
+                            <label class="label" for="debrid[${T}].rate_limit">
+                                <span class="label-text font-medium">Rate Limit</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="debrid[${T}].rate_limit" id="debrid[${T}].rate_limit" 
+                                   placeholder="1000">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="debrid[${T}].download_queue">
+                                <span class="label-text font-medium">Download Queue</span>
+                            </label>
+                            <input type="number" class="input input-bordered" 
+                                   name="debrid[${T}].download_queue" id="debrid[${T}].download_queue" 
+                                   placeholder="0">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="debrid[${T}].download_timeout">
+                                <span class="label-text font-medium">Download Timeout</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="debrid[${T}].download_timeout" id="debrid[${T}].download_timeout" 
+                                   placeholder="30s">
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label class="label" for="debrid[${T}].folder_naming">
+                            <span class="label-text font-medium">Folder Naming Strategy</span>
+                        </label>
+                        <select class="select select-bordered" name="debrid[${T}].folder_naming" id="debrid[${T}].folder_naming">
+                            <option value="original">Original</option>
+                            <option value="original_no_ext">Original (No Extension)</option>
+                            <option value="min">Minimum</option>
+                            <option value="title">Title</option>
+                            <option value="title_no_ext">Title (No Extension)</option>
+                            <option value="arr">Arr Style</option>
+                        </select>
+                    </div>
+                    <div class="form-control">
+                        <label class="label cursor-pointer justify-start gap-3">
+                            <input type="checkbox" class="checkbox useWebdav" name="debrid[${T}].use_webdav" id="debrid[${T}].use_webdav">
+                            <div>
+                                <span class="label-text font-medium">Enable WebDAV</span>
+                                <div class="label-text-alt">Expose debrid via WebDAV</div>
+                            </div>
+                        </label>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="webdav-section hidden mt-6" id="webdav-section-${T}">
+                    <div class="divider">WebDAV Settings</div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div class="form-control">
+                            <label class="label" for="debrid[${T}].webdav_url">
+                                <span class="label-text font-medium">WebDAV URL</span>
+                            </label>
+                            <input type="text" class="input input-bordered webdav-field" 
+                                   name="debrid[${T}].webdav_url" id="debrid[${T}].webdav_url" 
+                                   placeholder="https://webdav.example.com">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="debrid[${T}].webdav_username">
+                                <span class="label-text font-medium">WebDAV Username</span>
+                            </label>
+                            <input type="text" class="input input-bordered webdav-field" 
+                                   name="debrid[${T}].webdav_username" id="debrid[${T}].webdav_username">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="debrid[${T}].webdav_password">
+                                <span class="label-text font-medium">WebDAV Password</span>
+                            </label>
+                            <input type="password" class="input input-bordered webdav-field" 
+                                   name="debrid[${T}].webdav_password" id="debrid[${T}].webdav_password">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="debrid[${T}].webdav_path">
+                                <span class="label-text font-medium">WebDAV Path</span>
+                            </label>
+                            <input type="text" class="input input-bordered webdav-field" 
+                                   name="debrid[${T}].webdav_path" id="debrid[${T}].webdav_path">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider">Directories & Filters</div>
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-lg font-semibold">Directories</h4>
+                    <button type="button" class="btn btn-outline btn-sm" onclick="window.configManager.addDirectory(${T});">Add Directory</button>
+                </div>
+                <div id="debrid[${T}].directories"></div>
+            </div>
+        </div>
+    `}function getDirectoryTemplate(T,w){return`
+        <div class="card bg-base-100 border border-base-300 shadow-sm directory-config mb-4" data-index="${w}">
+            <div class="card-body">
+                <div class="flex justify-between items-start mb-4">
+                    <h4 class="text-lg font-semibold">Directory #${w+1}</h4>
+                    <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.directory-config').remove();">Remove</button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="form-control">
+                        <label class="label" for="debrid[${T}].directories[${w}].name">
+                            <span class="label-text font-medium">Directory Name</span>
+                        </label>
+                        <input type="text" class="input input-bordered" 
+                               name="debrid[${T}].directories[${w}].name" 
+                               id="debrid[${T}].directories[${w}].name" required>
+                    </div>
+                    <div class="form-control">
+                        <label class="label" for="debrid[${T}].directories[${w}].path">
+                            <span class="label-text font-medium">Directory Path</span>
+                        </label>
+                        <input type="text" class="input input-bordered" 
+                               name="debrid[${T}].directories[${w}].path" 
+                               id="debrid[${T}].directories[${w}].path">
+                    </div>
+                </div>
+
+                <div class="divider">Filters</div>
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-sm text-base-content/70">Optional: route only matching torrents.</span>
+                    <button type="button" class="btn btn-outline btn-sm" onclick="window.configManager.addFilter(${T}, ${w});">Add Filter</button>
+                </div>
+                <div id="debrid[${T}].directories[${w}].filters"></div>
+            </div>
+        </div>
+    `}function getFilterTemplate(T,w,O){return`
+        <div class="card bg-base-200 filter-config p-4 mb-3" data-index="${O}">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-end">
+                <div class="form-control">
+                    <label class="label" for="debrid[${T}].directories[${w}].filters[${O}].type">
+                        <span class="label-text font-medium">Filter Type</span>
+                    </label>
+                    <select class="select select-bordered" 
+                            name="debrid[${T}].directories[${w}].filters[${O}].type"
+                            id="debrid[${T}].directories[${w}].filters[${O}].type">
+                        <option value="">Select filter</option>
+                        <option value="label">Label</option>
+                        <option value="last_added">Last Added</option>
+                        <option value="size_greater_than">Size Greater Than</option>
+                        <option value="size_less_than">Size Less Than</option>
+                        <option value="name_contains">Name Contains</option>
+                        <option value="name_not_contains">Name Does Not Contain</option>
+                        <option value="file_contains">File Contains</option>
+                        <option value="file_not_contains">File Does Not Contain</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label class="label" for="debrid[${T}].directories[${w}].filters[${O}].value">
+                        <span class="label-text font-medium">Filter Value</span>
+                    </label>
+                    <input type="text" class="input input-bordered" 
+                           name="debrid[${T}].directories[${w}].filters[${O}].value"
+                           id="debrid[${T}].directories[${w}].filters[${O}].value">
+                </div>
+                <div class="form-control">
+                    <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.filter-config').remove();">Remove</button>
+                </div>
+            </div>
+        </div>
+    `}function getArrTemplate(T,w={}){return`
+            <div class="card bg-base-100 border border-base-300 shadow-sm arr-config ${w&&w.source==="auto"?"border-info":""}" data-index="${T}">
+                <div class="card-body">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="card-title text-lg">
+                            Arr Service #${T+1}
+                        </h3>
+                        <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.arr-config').remove();">
+                            Remove
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="form-control">
+                            <label class="label" for="arr[${T}].name">
+                                <span class="label-text font-medium">Service Name</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="arr[${T}].name" id="arr[${T}].name" required>
+                        </div>
+
+                        <div class="form-control">
+                            <label class="label" for="arr[${T}].host">
+                                <span class="label-text font-medium">Host URL</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="arr[${T}].host" id="arr[${T}].host" 
+                                   placeholder="http://localhost:7878" required>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="form-control">
+                            <label class="label" for="arr[${T}].api_key">
+                                <span class="label-text font-medium">API Key</span>
+                            </label>
+                            <div class="password-toggle-container">
+                                <input type="password" class="input input-bordered input-has-toggle" 
+                                       name="arr[${T}].api_key" id="arr[${T}].api_key" required>
+                                <button type="button" class="password-toggle-btn">
+                                    <i class="bi bi-eye" id="arr[${T}].api_key_icon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-control">
+                            <label class="label" for="arr[${T}].category">
+                                <span class="label-text font-medium">Category</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="arr[${T}].category" id="arr[${T}].category"
+                                   placeholder="sonarr or radarr">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div class="form-control">
+                            <label class="label" for="arr[${T}].fallback_on_pause">
+                                <span class="label-text font-medium">Fallback On Pause</span>
+                            </label>
+                            <input type="number" class="input input-bordered" 
+                                   name="arr[${T}].fallback_on_pause" id="arr[${T}].fallback_on_pause"
+                                   placeholder="0">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="arr[${T}].max_errors">
+                                <span class="label-text font-medium">Max Errors</span>
+                            </label>
+                            <input type="number" class="input input-bordered" 
+                                   name="arr[${T}].max_errors" id="arr[${T}].max_errors"
+                                   placeholder="0">
+                        </div>
+                        <div class="form-control">
+                            <label class="label" for="arr[${T}].quality_profile">
+                                <span class="label-text font-medium">Quality Profile</span>
+                            </label>
+                            <input type="text" class="input input-bordered" 
+                                   name="arr[${T}].quality_profile" id="arr[${T}].quality_profile"
+                                   placeholder="HD-1080p">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                        <div class="form-control">
+                            <label class="label cursor-pointer justify-start gap-3">
+                                <input type="checkbox" class="checkbox" name="arr[${T}].enabled" id="arr[${T}].enabled">
+                                <div>
+                                    <span class="label-text font-medium">Enabled</span>
+                                    <div class="label-text-alt">Enable this Arr integration</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label class="label cursor-pointer justify-start gap-3">
+                                <input type="checkbox" class="checkbox" name="arr[${T}].add_as_completed" id="arr[${T}].add_as_completed">
+                                <div>
+                                    <span class="label-text font-medium">Add As Completed</span>
+                                    <div class="label-text-alt">Add to Arr when download completes</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label class="label cursor-pointer justify-start gap-3">
+                                <input type="checkbox" class="checkbox" name="arr[${T}].add_default_to_job" id="arr[${T}].add_default_to_job">
+                                <div>
+                                    <span class="label-text font-medium">Add Default Jobs</span>
+                                    <div class="label-text-alt">Add default Arr items to repair queue</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    `}function templateDebrid(T){return normalizeTemplate(getDebridTemplate(T))}function templateDirectory(T,w){return normalizeTemplate(getDirectoryTemplate(T,w))}function templateFilter(T,w,O){return normalizeTemplate(getFilterTemplate(T,w,O))}function templateArr(T,w){const O=normalizeTemplate(getArrTemplate(T,w));return w&&w.source==="auto"?O.replace(/__AUTO__/g,"1"):O.replace(/__AUTO__/g,"")}const template=`<div class="page-stack">
     __NEED_SETUP__
 
-    <div class="card bg-base-100 shadow-xl">
-        <div class="card-body">
-            <h2 class="card-title text-2xl mb-6">
-                <i class="bi bi-plus-circle mr-2 text-primary"></i>Start New Repair
-            </h2>
+    <wa-card class="panel">
+        <div class="panel-body">
+            <div class="section-title">
+                <wa-icon name="wrench"></wa-icon>
+                Start New Repair
+            </div>
 
-            <form id="repairForm" class="space-y-6">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <div class="form-control">
-                            <label class="label" for="arrSelect">
-                                <span class="label-text font-semibold">
-                                    <i class="bi bi-collection mr-2 text-secondary"></i>Arr Instance
-                                </span>
-                            </label>
-                            <select class="select select-bordered" id="arrSelect">
-                                <option value="">Select an Arr instance</option>
-                            </select>
-                            <div class="label">
-                                <span class="label-text-alt">Choose which Arr service to repair</span>
-                            </div>
-                        </div>
-
-                        <div class="form-control">
-                            <label class="label" for="mediaIds">
-                                <span class="label-text font-semibold">
-                                    <i class="bi bi-hash mr-2 text-accent"></i>Media IDs
-                                </span>
-                                <span class="label-text-alt">Optional</span>
-                            </label>
-                            <input type="text"
-                                   class="input input-bordered"
-                                   id="mediaIds"
-                                   placeholder="123, 456, 789">
-                            <div class="label">
-                                <span class="label-text-alt">
-                                    Enter specific TV DB IDs (Sonarr) or TM DB IDs (Radarr), comma-separated. Leave empty for all media.
-                                </span>
-                            </div>
-                        </div>
+            <form id="repairForm" class="page-stack">
+                <div class="grid grid-2">
+                    <div class="field-group">
+                        <wa-select id="arrSelect" label="Arr Instance" hint="Choose which Arr service to repair">
+                            <wa-option value="">Select an Arr instance</wa-option>
+                        </wa-select>
                     </div>
 
-                    <div class="space-y-4">
-                        <div class="form-control">
-                            <label class="label">
-                                <span class="label-text font-semibold">
-                                    <i class="bi bi-sliders mr-2 text-info"></i>Repair Options
-                                </span>
-                            </label>
-                            <div class="space-y-3">
-                                <div class="form-control">
-                                    <label class="label cursor-pointer justify-start gap-3">
-                                        <input type="checkbox" class="checkbox checkbox-lg" id="isAsync" checked>
-                                        <div>
-                                            <span class="label-text font-medium">Run in Background</span>
-                                            <div class="label-text-alt">Process repair job asynchronously</div>
-                                        </div>
-                                    </label>
-                                </div>
-
-                                <div class="form-control">
-                                    <label class="label cursor-pointer justify-start gap-3">
-                                        <input type="checkbox" class="checkbox checkbox-lg" id="autoProcess">
-                                        <div>
-                                            <span class="label-text font-medium">Auto Process</span>
-                                            <div class="label-text-alt text-warning">
-                                                <i class="bi bi-exclamation-triangle mr-1"></i>
-                                                Automatically delete broken symlinks and re-search media
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-control">
-                            <button type="submit" class="btn btn-primary btn-lg" id="submitRepair">
-                                <i class="bi bi-wrench mr-2"></i>Start Repair
-                            </button>
-                        </div>
+                    <div class="field-group">
+                        <wa-input
+                            id="mediaIds"
+                            label="Media IDs"
+                            placeholder="123, 456, 789"
+                            hint="Optional: comma-separated TVDB IDs (Sonarr) or TMDB IDs (Radarr)."
+                        ></wa-input>
                     </div>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="field-group">
+                        <wa-checkbox id="isAsync" checked>
+                            Run in Background
+                            <span slot="hint">Process repair job asynchronously.</span>
+                        </wa-checkbox>
+                    </div>
+                    <div class="field-group">
+                        <wa-checkbox id="autoProcess">
+                            Auto Process
+                            <span slot="hint">Automatically delete broken symlinks and re-search media.</span>
+                        </wa-checkbox>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <wa-button type="submit" variant="brand" id="submitRepair">
+                        <wa-icon slot="start" name="wrench"></wa-icon>
+                        Start Repair
+                    </wa-button>
                 </div>
             </form>
         </div>
-    </div>
+    </wa-card>
 
-    <div class="card bg-base-100 shadow-xl">
-        <div class="card-header">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-6 border-b border-base-200">
-                <h2 class="card-title text-xl">
-                    <i class="bi bi-list-task mr-2"></i>Repair Jobs
-                </h2>
-                <div class="flex flex-wrap gap-2">
-                    <button id="deleteSelectedJobs" class="btn btn-error btn-sm" disabled>
-                        <i class="bi bi-trash mr-1"></i>Delete Selected
-                    </button>
-                    <button id="refreshJobs" class="btn btn-outline btn-sm">
-                        <i class="bi bi-arrow-clockwise mr-1"></i>Refresh
-                    </button>
-                </div>
+    <wa-card class="panel">
+        <div class="panel-header">
+            <div class="section-title">
+                <wa-icon name="list-check"></wa-icon>
+                Repair Jobs
+            </div>
+            <div class="toolbar-actions">
+                <wa-button id="deleteSelectedJobs" variant="danger" appearance="outline" size="small" disabled>
+                    <wa-icon slot="start" name="trash"></wa-icon>
+                    Delete Selected
+                </wa-button>
+                <wa-button id="refreshJobs" appearance="outline" size="small">
+                    <wa-icon slot="start" name="arrows-rotate"></wa-icon>
+                    Refresh
+                </wa-button>
             </div>
         </div>
 
-        <div class="card-body p-0">
-            <div class="overflow-x-auto">
-                <table class="table table-hover" id="jobsTable">
-                    <thead class="bg-base-200">
-                    <tr>
-                        <th class="w-12">
-                            <label class="cursor-pointer">
-                                <input type="checkbox" class="checkbox checkbox-sm" id="selectAllJobs">
-                            </label>
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-hash mr-2"></i>Job ID
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-collection mr-2"></i>Arr Instances
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-calendar mr-2"></i>Started
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-activity mr-2"></i>Status
-                        </th>
-                        <th class="font-semibold">
-                            <i class="bi bi-exclamation-triangle mr-2"></i>Broken Items
-                        </th>
-                        <th class="font-semibold w-32">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody id="jobsTableBody">
-                    </tbody>
-                </table>
-            </div>
+        <div class="panel-body table-wrap">
+            <table class="data-table" id="jobsTable">
+                <thead>
+                <tr>
+                    <th class="w-12">
+                        <wa-checkbox id="selectAllJobs"></wa-checkbox>
+                    </th>
+                    <th>Job ID</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Arrs</th>
+                    <th>Media IDs</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="jobsTableBody"></tbody>
+            </table>
 
-            <div class="flex justify-center p-6 border-t border-base-200">
-                <div class="join" id="jobsPagination">
-                </div>
-            </div>
-
-            <div id="noJobsMessage" class="text-center py-16 hidden">
-                <div class="text-6xl text-base-content/30 mb-4">
-                    <i class="bi bi-clipboard-check"></i>
-                </div>
-                <h3 class="text-2xl font-bold mb-2">No Repair Jobs</h3>
-                <p class="text-base-content/70 mb-6">You haven't run any repair jobs yet. Start your first repair above!</p>
+            <div id="noJobsMessage" class="empty-state hidden">
+                <wa-icon name="clipboard-check" style="font-size: 2.5rem; color: var(--app-text-muted);"></wa-icon>
+                <h3>No Repair Jobs</h3>
+                <p class="hint">You haven't run any repair jobs yet. Start your first repair above.</p>
             </div>
         </div>
-    </div>
+
+        <div class="panel-footer">
+            <div class="pagination" id="jobsPagination"></div>
+        </div>
+    </wa-card>
 </div>
 
-<dialog id="jobDetailsModal" class="modal">
-    <div class="modal-box max-w-6xl max-h-[90vh]">
-        <form method="dialog">
-            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-        </form>
+<wa-dialog id="jobDetailsModal" label="Job Details">
+    <div class="page-stack">
+        <div class="grid grid-2">
+            <wa-card class="panel">
+                <div class="panel-body">
+                    <h4>Job Information</h4>
+                    <div class="page-stack">
+                        <div class="app-inline">
+                            <span class="hint">Job ID</span>
+                            <span class="font-mono" id="modalJobId">-</span>
+                        </div>
+                        <div class="app-inline">
+                            <span class="hint">Status</span>
+                            <span id="modalJobStatus">-</span>
+                        </div>
+                        <div class="app-inline">
+                            <span class="hint">Started</span>
+                            <span id="modalJobStarted">-</span>
+                        </div>
+                        <div class="app-inline">
+                            <span class="hint">Completed</span>
+                            <span id="modalJobCompleted">-</span>
+                        </div>
+                    </div>
+                </div>
+            </wa-card>
 
-        <div class="flex justify-between items-start mb-6">
-            <h3 class="font-bold text-2xl">
-                <i class="bi bi-info-circle mr-2 text-primary"></i>Job Details
-            </h3>
+            <wa-card class="panel">
+                <div class="panel-body">
+                    <h4>Configuration</h4>
+                    <div class="page-stack">
+                        <div class="app-inline">
+                            <span class="hint">Arr Services</span>
+                            <span id="modalJobArrs">-</span>
+                        </div>
+                        <div class="app-inline">
+                            <span class="hint">Media IDs</span>
+                            <span id="modalJobMediaIds">-</span>
+                        </div>
+                        <div class="app-inline">
+                            <span class="hint">Auto Process</span>
+                            <span id="modalJobAutoProcess">-</span>
+                        </div>
+                    </div>
+                </div>
+            </wa-card>
         </div>
 
-        <div class="space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="card bg-base-200">
-                    <div class="card-body">
-                        <h4 class="card-title text-lg mb-4">Job Information</h4>
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="font-medium">Job ID:</span>
-                                <span class="font-mono" id="modalJobId">-</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="font-medium">Status:</span>
-                                <span id="modalJobStatus">-</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="font-medium">Started:</span>
-                                <span id="modalJobStarted">-</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="font-medium">Completed:</span>
-                                <span id="modalJobCompleted">-</span>
-                            </div>
-                        </div>
-                    </div>
+        <wa-callout id="errorContainer" variant="danger" appearance="accent" class="hidden">
+            <wa-icon slot="icon" name="triangle-exclamation"></wa-icon>
+            <strong>Error</strong>
+            <div id="modalJobError">-</div>
+        </wa-callout>
+
+        <wa-card class="panel">
+            <div class="panel-body">
+                <div class="toolbar">
+                    <h4>Broken Items</h4>
+                    <wa-badge variant="neutral" id="totalItemsCount">0</wa-badge>
                 </div>
 
-                <div class="card bg-base-200">
-                    <div class="card-body">
-                        <h4 class="card-title text-lg mb-4">Configuration</h4>
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="font-medium">Arr Services:</span>
-                                <span id="modalJobArrs">-</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="font-medium">Media IDs:</span>
-                                <span id="modalJobMediaIds">-</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="font-medium">Auto Process:</span>
-                                <span id="modalJobAutoProcess">-</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="grid grid-3">
+                    <wa-input id="itemSearchInput" placeholder="Search by path..." label="Search"></wa-input>
+                    <wa-select id="arrFilterSelect" label="Arr Filter">
+                        <wa-option value="">All Arrs</wa-option>
+                    </wa-select>
+                    <wa-select id="pathFilterSelect" label="Path Filter">
+                        <wa-option value="">All Paths</wa-option>
+                        <wa-option value="movie">Movies</wa-option>
+                        <wa-option value="tv">TV Shows</wa-option>
+                        <wa-option value="other">Other</wa-option>
+                    </wa-select>
+                </div>
+
+                <div class="field-group">
+                    <wa-button id="clearFiltersBtn" appearance="outline" size="small">
+                        <wa-icon slot="start" name="xmark"></wa-icon>
+                        Clear Filters
+                    </wa-button>
+                </div>
+
+                <div class="table-wrap">
+                    <table class="data-table data-table--compact">
+                        <thead>
+                        <tr>
+                            <th class="w-12"></th>
+                            <th>Arr</th>
+                            <th>Path</th>
+                            <th>Type</th>
+                            <th>Size</th>
+                        </tr>
+                        </thead>
+                        <tbody id="brokenItemsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="pagination" id="itemsPagination"></div>
+                </div>
+
+                <div id="noBrokenItemsMessage" class="empty-state hidden">
+                    <wa-icon name="circle-check" style="font-size: 2rem; color: var(--app-text-muted);"></wa-icon>
+                    <p class="hint">No broken items found</p>
+                </div>
+
+                <div id="noFilteredItemsMessage" class="empty-state hidden">
+                    <wa-icon name="filter-circle-xmark" style="font-size: 2rem; color: var(--app-text-muted);"></wa-icon>
+                    <p class="hint">No items match the current filters</p>
                 </div>
             </div>
+        </wa-card>
+    </div>
 
-            <div id="errorContainer" class="alert alert-error hidden">
-                <i class="bi bi-exclamation-triangle"></i>
-                <div>
-                    <strong>Error:</strong>
-                    <span id="modalJobError">-</span>
-                </div>
-            </div>
-
-            <div class="card bg-base-200">
-                <div class="card-body">
-                    <div class="flex justify-between items-center mb-4">
-                        <h4 class="card-title text-lg">
-                            Broken Items
-                            <div class="badge badge-secondary" id="totalItemsCount">0</div>
-                        </h4>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-                        <div class="form-control">
-                            <input type="text"
-                                   class="input input-bordered input-sm"
-                                   id="itemSearchInput"
-                                   placeholder="Search by path...">
-                        </div>
-                        <div class="form-control">
-                            <select class="select select-bordered select-sm" id="arrFilterSelect">
-                                <option value="">All Arrs</option>
-                            </select>
-                        </div>
-                        <div class="form-control">
-                            <select class="select select-bordered select-sm" id="pathFilterSelect">
-                                <option value="">All Types</option>
-                                <option value="movie">Movies</option>
-                                <option value="tv">TV Shows</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-control">
-                            <button class="btn btn-outline btn-sm w-full" id="clearFiltersBtn">
-                                <i class="bi bi-x-circle mr-1"></i>Clear
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="overflow-x-auto max-h-96 border border-base-300 rounded-lg">
-                        <table class="table table-sm table-hover">
-                            <thead class="sticky top-0 bg-base-300">
-                            <tr>
-                                <th class="font-semibold">Arr</th>
-                                <th class="font-semibold">Path</th>
-                                <th class="font-semibold w-20">Type</th>
-                                <th class="font-semibold w-24">Size</th>
-                            </tr>
-                            </thead>
-                            <tbody id="brokenItemsTableBody">
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="flex justify-center mt-4">
-                        <div class="join" id="itemsPagination">
-                        </div>
-                    </div>
-
-                    <div id="noBrokenItemsMessage" class="text-center py-8 hidden">
-                        <div class="text-4xl text-base-content/30 mb-2">
-                            <i class="bi bi-check-circle"></i>
-                        </div>
-                        <p class="text-base-content/70">No broken items found</p>
-                    </div>
-
-                    <div id="noFilteredItemsMessage" class="text-center py-8 hidden">
-                        <div class="text-4xl text-base-content/30 mb-2">
-                            <i class="bi bi-funnel"></i>
-                        </div>
-                        <p class="text-base-content/70">No items match the current filters</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal-action">
-            <div class="flex-1">
-                <small class="text-base-content/60" id="modalFooterStats">-</small>
-            </div>
-            <div class="flex gap-2">
-                <button type="button" class="btn btn-primary btn-sm hidden" id="processJobBtn">
-                    <i class="bi bi-play-fill mr-1"></i>Process
-                </button>
-                <button type="button" class="btn btn-warning btn-sm hidden" id="stopJobBtn">
-                    <i class="bi bi-stop-fill mr-1"></i>Stop
-                </button>
-            </div>
+    <div slot="footer" class="dialog-footer">
+        <small class="hint" id="modalFooterStats">-</small>
+        <div class="toolbar-actions">
+            <wa-button type="button" variant="brand" size="small" id="processJobBtn" class="hidden">
+                <wa-icon slot="start" name="play"></wa-icon>
+                Process
+            </wa-button>
+            <wa-button type="button" variant="warning" size="small" id="stopJobBtn" class="hidden">
+                <wa-icon slot="start" name="stop"></wa-icon>
+                Stop
+            </wa-button>
         </div>
     </div>
-</dialog>
+</wa-dialog>
 `;class RepairPage extends i$3{createRenderRoot(){return this}firstUpdated(){this._controller||(this._controller=new RepairManager,window.repairManager=this._controller,window.RepairUtils=RepairUtils)}render(){const w=window.urlBase||"",O=this.needSetup?`
         <wa-callout variant="warning" appearance="accent">
           <wa-icon slot="icon" name="triangle-exclamation"></wa-icon>
           <strong>Configuration Required</strong>
           <div>Your configuration is incomplete. Please complete the setup in the <a href="${w}settings">Settings page</a>.</div>
         </wa-callout>
-      `:"",F=template.replace("__NEED_SETUP__",O).replace(/__URL_BASE__/g,w);return b`${o(F)}`}}Se(RepairPage,"properties",{needSetup:{type:Boolean,attribute:"need-setup"}});customElements.define("repair-page",RepairPage);class RepairManager{constructor(){this.state={jobs:[],currentJob:null,allBrokenItems:[],filteredItems:[],selectedItems:new Set,currentPage:1,currentItemsPage:1,itemsPerPage:10,itemsPerModalPage:20,searchTerm:"",arrFilter:"",pathFilter:"",sortBy:"created_at",sortDirection:"desc"},this.refs={repairForm:document.getElementById("repairForm"),arrSelect:document.getElementById("arrSelect"),mediaIds:document.getElementById("mediaIds"),isAsync:document.getElementById("isAsync"),autoProcess:document.getElementById("autoProcess"),submitBtn:document.getElementById("submitRepair"),jobsTable:document.getElementById("jobsTable"),jobsTableBody:document.getElementById("jobsTableBody"),jobsPagination:document.getElementById("jobsPagination"),noJobsMessage:document.getElementById("noJobsMessage"),refreshJobs:document.getElementById("refreshJobs"),deleteSelectedJobs:document.getElementById("deleteSelectedJobs"),selectAllJobs:document.getElementById("selectAllJobs"),jobDetailsModal:document.getElementById("jobDetailsModal"),modalJobId:document.getElementById("modalJobId"),modalJobStatus:document.getElementById("modalJobStatus"),modalJobStarted:document.getElementById("modalJobStarted"),modalJobCompleted:document.getElementById("modalJobCompleted"),modalJobArrs:document.getElementById("modalJobArrs"),modalJobMediaIds:document.getElementById("modalJobMediaIds"),modalJobAutoProcess:document.getElementById("modalJobAutoProcess"),modalJobError:document.getElementById("modalJobError"),errorContainer:document.getElementById("errorContainer"),brokenItemsTableBody:document.getElementById("brokenItemsTableBody"),itemsPagination:document.getElementById("itemsPagination"),noBrokenItemsMessage:document.getElementById("noBrokenItemsMessage"),noFilteredItemsMessage:document.getElementById("noFilteredItemsMessage"),totalItemsCount:document.getElementById("totalItemsCount"),modalFooterStats:document.getElementById("modalFooterStats"),itemSearchInput:document.getElementById("itemSearchInput"),arrFilterSelect:document.getElementById("arrFilterSelect"),pathFilterSelect:document.getElementById("pathFilterSelect"),clearFiltersBtn:document.getElementById("clearFiltersBtn"),processJobBtn:document.getElementById("processJobBtn"),stopJobBtn:document.getElementById("stopJobBtn")},this.init()}init(){this.bindEvents(),this.loadArrInstances(),this.loadJobs(),this.startAutoRefresh()}bindEvents(){this.refs.repairForm.addEventListener("submit",w=>this.handleFormSubmit(w)),this.refs.refreshJobs.addEventListener("click",()=>this.loadJobs()),this.refs.deleteSelectedJobs.addEventListener("click",()=>this.deleteSelectedJobs()),this.refs.selectAllJobs.addEventListener("change",w=>this.toggleSelectAllJobs(w.target.checked)),this.refs.processJobBtn.addEventListener("click",()=>this.processCurrentJob()),this.refs.stopJobBtn.addEventListener("click",()=>this.stopCurrentJob()),this.refs.itemSearchInput.addEventListener("input",window.decypharrUtils.debounce(()=>this.applyFilters(),300)),this.refs.arrFilterSelect.addEventListener("change",()=>this.applyFilters()),this.refs.pathFilterSelect.addEventListener("change",()=>this.applyFilters()),this.refs.clearFiltersBtn.addEventListener("click",()=>this.clearFilters()),this.refs.jobsTableBody.addEventListener("click",w=>this.handleJobTableClick(w)),this.refs.brokenItemsTableBody.addEventListener("click",w=>this.handleItemTableClick(w))}async loadArrInstances(){try{const w=await window.decypharrUtils.fetcher("/api/arrs");if(!w.ok)throw new Error("Failed to load Arr instances");const O=await w.json();this.refs.arrSelect.innerHTML='<option value="">Select an Arr instance</option>',O.forEach(F=>{const W=document.createElement("option");W.value=F.name,W.textContent=`${F.name} (${F.host})`,this.refs.arrSelect.appendChild(W)})}catch(w){console.error("Error loading Arr instances:",w),window.decypharrUtils.createToast("Failed to load Arr instances","error")}}async handleFormSubmit(w){var U;w.preventDefault();const O=this.refs.arrSelect.value,F=this.refs.mediaIds.value.trim(),W=F?F.split(",").map(q=>q.trim()).filter(Boolean):[];try{window.decypharrUtils.setButtonLoading(this.refs.submitBtn,!0);const q=await window.decypharrUtils.fetcher("/api/repair",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({arr:O,mediaIds:W.length>0?W:null,async:this.refs.isAsync.checked,autoProcess:this.refs.autoProcess.checked})});if(!q.ok){const J=await q.text();throw new Error(J||"Failed to start repair")}const j=await q.json();window.decypharrUtils.createToast(`Repair job started successfully! Job ID: ${((U=j.job_id)==null?void 0:U.substring(0,8))||"Unknown"}`,"success"),this.refs.mediaIds.value="",await this.loadJobs()}catch(q){console.error("Error starting repair:",q),window.decypharrUtils.createToast(`Error starting repair: ${q.message}`,"error")}finally{window.decypharrUtils.setButtonLoading(this.refs.submitBtn,!1)}}async loadJobs(){try{const w=await window.decypharrUtils.fetcher("/api/repair/jobs");if(!w.ok)throw new Error("Failed to fetch jobs");this.state.jobs=await w.json(),this.renderJobsTable()}catch(w){console.error("Error loading jobs:",w),window.decypharrUtils.createToast("Error loading repair jobs","error")}}renderJobsTable(){const w=this.getSortedJobs(),O=Math.ceil(w.length/this.state.itemsPerPage),F=(this.state.currentPage-1)*this.state.itemsPerPage,W=Math.min(F+this.state.itemsPerPage,w.length),U=w.slice(F,W);if(this.refs.jobsTableBody.innerHTML="",this.refs.jobsPagination.innerHTML="",w.length===0){this.refs.noJobsMessage.classList.remove("hidden"),this.refs.jobsTable.classList.add("hidden");return}this.refs.noJobsMessage.classList.add("hidden"),this.refs.jobsTable.classList.remove("hidden"),U.forEach(q=>{const j=document.createElement("tr");j.dataset.jobId=q.id,j.className="hover";const J=RepairUtils.formatRepairStatus(q.status,q.error);j.innerHTML=`
+      `:"",F=template.replace("__NEED_SETUP__",O).replace(/__URL_BASE__/g,w);return b`${o(F)}`}}Se(RepairPage,"properties",{needSetup:{type:Boolean,attribute:"need-setup"}});customElements.define("repair-page",RepairPage);class RepairManager{constructor(){this.state={jobs:[],currentJob:null,allBrokenItems:[],filteredItems:[],selectedItems:new Set,currentPage:1,currentItemsPage:1,itemsPerPage:10,itemsPerModalPage:20,searchTerm:"",arrFilter:"",pathFilter:"",sortBy:"created_at",sortDirection:"desc"},this.refs={repairForm:document.getElementById("repairForm"),arrSelect:document.getElementById("arrSelect"),mediaIds:document.getElementById("mediaIds"),isAsync:document.getElementById("isAsync"),autoProcess:document.getElementById("autoProcess"),submitBtn:document.getElementById("submitRepair"),jobsTable:document.getElementById("jobsTable"),jobsTableBody:document.getElementById("jobsTableBody"),jobsPagination:document.getElementById("jobsPagination"),noJobsMessage:document.getElementById("noJobsMessage"),refreshJobs:document.getElementById("refreshJobs"),deleteSelectedJobs:document.getElementById("deleteSelectedJobs"),selectAllJobs:document.getElementById("selectAllJobs"),jobDetailsModal:document.getElementById("jobDetailsModal"),modalJobId:document.getElementById("modalJobId"),modalJobStatus:document.getElementById("modalJobStatus"),modalJobStarted:document.getElementById("modalJobStarted"),modalJobCompleted:document.getElementById("modalJobCompleted"),modalJobArrs:document.getElementById("modalJobArrs"),modalJobMediaIds:document.getElementById("modalJobMediaIds"),modalJobAutoProcess:document.getElementById("modalJobAutoProcess"),modalJobError:document.getElementById("modalJobError"),errorContainer:document.getElementById("errorContainer"),brokenItemsTableBody:document.getElementById("brokenItemsTableBody"),itemsPagination:document.getElementById("itemsPagination"),noBrokenItemsMessage:document.getElementById("noBrokenItemsMessage"),noFilteredItemsMessage:document.getElementById("noFilteredItemsMessage"),totalItemsCount:document.getElementById("totalItemsCount"),modalFooterStats:document.getElementById("modalFooterStats"),itemSearchInput:document.getElementById("itemSearchInput"),arrFilterSelect:document.getElementById("arrFilterSelect"),pathFilterSelect:document.getElementById("pathFilterSelect"),clearFiltersBtn:document.getElementById("clearFiltersBtn"),processJobBtn:document.getElementById("processJobBtn"),stopJobBtn:document.getElementById("stopJobBtn")},this.init()}init(){this.bindEvents(),this.loadArrInstances(),this.loadJobs(),this.startAutoRefresh()}bindEvents(){this.refs.repairForm.addEventListener("submit",w=>this.handleFormSubmit(w)),this.refs.refreshJobs.addEventListener("click",()=>this.loadJobs()),this.refs.deleteSelectedJobs.addEventListener("click",()=>this.deleteSelectedJobs()),this.refs.selectAllJobs.addEventListener("change",w=>this.toggleSelectAllJobs(w.target.checked)),this.refs.processJobBtn.addEventListener("click",()=>this.processCurrentJob()),this.refs.stopJobBtn.addEventListener("click",()=>this.stopCurrentJob()),this.refs.jobDetailsModal.addEventListener("wa-hide",()=>this.hideJobDetailsModal()),this.refs.itemSearchInput.addEventListener("input",window.decypharrUtils.debounce(()=>this.applyFilters(),300)),this.refs.arrFilterSelect.addEventListener("change",()=>this.applyFilters()),this.refs.pathFilterSelect.addEventListener("change",()=>this.applyFilters()),this.refs.clearFiltersBtn.addEventListener("click",()=>this.clearFilters()),this.refs.jobsTableBody.addEventListener("click",w=>this.handleJobTableClick(w)),this.refs.brokenItemsTableBody.addEventListener("click",w=>this.handleItemTableClick(w))}async loadArrInstances(){try{const w=await window.decypharrUtils.fetcher("/api/arrs");if(!w.ok)throw new Error("Failed to load Arr instances");const O=await w.json();this.refs.arrSelect.innerHTML='<wa-option value="">Select an Arr instance</wa-option>',O.forEach(F=>{const W=document.createElement("wa-option");W.value=F.name,W.textContent=`${F.name} (${F.host})`,this.refs.arrSelect.appendChild(W)})}catch(w){console.error("Error loading Arr instances:",w),window.decypharrUtils.createToast("Failed to load Arr instances","error")}}async handleFormSubmit(w){var U;w.preventDefault();const O=this.refs.arrSelect.value,F=this.refs.mediaIds.value.trim(),W=F?F.split(",").map(q=>q.trim()).filter(Boolean):[];try{window.decypharrUtils.setButtonLoading(this.refs.submitBtn,!0);const q=await window.decypharrUtils.fetcher("/api/repair",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({arr:O,mediaIds:W.length>0?W:null,async:this.refs.isAsync.checked,autoProcess:this.refs.autoProcess.checked})});if(!q.ok){const J=await q.text();throw new Error(J||"Failed to start repair")}const j=await q.json();window.decypharrUtils.createToast(`Repair job started successfully! Job ID: ${((U=j.job_id)==null?void 0:U.substring(0,8))||"Unknown"}`,"success"),this.refs.mediaIds.value="",await this.loadJobs()}catch(q){console.error("Error starting repair:",q),window.decypharrUtils.createToast(`Error starting repair: ${q.message}`,"error")}finally{window.decypharrUtils.setButtonLoading(this.refs.submitBtn,!1)}}async loadJobs(){try{const w=await window.decypharrUtils.fetcher("/api/repair/jobs");if(!w.ok)throw new Error("Failed to fetch jobs");this.state.jobs=await w.json(),this.renderJobsTable()}catch(w){console.error("Error loading jobs:",w),window.decypharrUtils.createToast("Error loading repair jobs","error")}}renderJobsTable(){const w=this.getSortedJobs(),O=Math.ceil(w.length/this.state.itemsPerPage),F=(this.state.currentPage-1)*this.state.itemsPerPage,W=Math.min(F+this.state.itemsPerPage,w.length),U=w.slice(F,W);if(this.refs.jobsTableBody.innerHTML="",this.refs.jobsPagination.innerHTML="",w.length===0){this.refs.noJobsMessage.classList.remove("hidden"),this.refs.jobsTable.classList.add("hidden");return}this.refs.noJobsMessage.classList.add("hidden"),this.refs.jobsTable.classList.remove("hidden"),U.forEach(q=>{const j=document.createElement("tr");j.dataset.jobId=q.id;const J=RepairUtils.formatRepairStatus(q.status,q.error);j.innerHTML=`
                 <td>
-                    <label class="cursor-pointer">
-                        <input type="checkbox" class="checkbox checkbox-sm job-checkbox" 
-                               data-job-id="${q.id}" ${this.state.selectedItems.has(q.id)?"checked":""}>
-                    </label>
+                    <wa-checkbox class="job-checkbox" data-job-id="${q.id}"
+                        ${this.state.selectedItems.has(q.id)?"checked":""}></wa-checkbox>
                 </td>
                 <td class="font-mono text-xs">${q.id.substring(0,8)}</td>
                 <td>
-                    <div class="flex items-center gap-2">
-                        <i class="bi ${J.icon} ${J.class}"></i>
-                        <span>${J.message}</span>
-                    </div>
+                    <wa-badge variant="${J.variant}" size="small">
+                        <wa-icon name="${J.icon}"></wa-icon>
+                        ${J.message}
+                    </wa-badge>
                 </td>
                 <td>${this.formatDate(q.created_at)}</td>
                 <td>${q.arrs?q.arrs.join(", "):"All"}</td>
                 <td>${q.media_ids?q.media_ids.join(", "):"All"}</td>
                 <td>
-                    <div class="flex gap-1">
-                        <button class="btn btn-ghost btn-xs view-job" data-job-id="${q.id}">
-                            <i class="bi bi-eye"></i>
-                        </button>
-                        <button class="btn btn-ghost btn-xs export-job" data-job-id="${q.id}">
-                            <i class="bi bi-download"></i>
-                        </button>
-                        <button class="btn btn-ghost btn-xs delete-job text-error" data-job-id="${q.id}">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                    <div class="table-actions">
+                        <wa-button class="view-job" appearance="plain" size="small" data-job-id="${q.id}" title="View">
+                            <wa-icon name="eye"></wa-icon>
+                        </wa-button>
+                        <wa-button class="export-job" appearance="plain" size="small" data-job-id="${q.id}" title="Export">
+                            <wa-icon name="download"></wa-icon>
+                        </wa-button>
+                        <wa-button class="delete-job" appearance="plain" size="small" variant="danger" data-job-id="${q.id}" title="Delete">
+                            <wa-icon name="trash"></wa-icon>
+                        </wa-button>
                     </div>
                 </td>
-            `,this.refs.jobsTableBody.appendChild(j)}),this.renderPagination(this.refs.jobsPagination,O,this.state.currentPage,q=>{this.state.currentPage=q,this.renderJobsTable()}),this.updateDeleteSelectedButton()}getSortedJobs(){return[...this.state.jobs].sort((w,O)=>this.state.sortDirection==="asc"?w[this.state.sortBy]>O[this.state.sortBy]?1:-1:w[this.state.sortBy]<O[this.state.sortBy]?1:-1)}handleJobTableClick(w){var F;const O=(F=w.target.closest("[data-job-id]"))==null?void 0:F.dataset.jobId;O&&(w.target.classList.contains("job-checkbox")?this.toggleJobSelection(O,w.target.checked):w.target.closest(".view-job")?this.viewJobDetails(O):w.target.closest(".export-job")?this.exportJobData(O):w.target.closest(".delete-job")&&this.deleteJob(O))}toggleJobSelection(w,O){O?this.state.selectedItems.add(w):this.state.selectedItems.delete(w),this.updateDeleteSelectedButton()}toggleSelectAllJobs(w){w?this.state.jobs.forEach(O=>this.state.selectedItems.add(O.id)):this.state.selectedItems.clear(),this.renderJobsTable()}updateDeleteSelectedButton(){this.refs.deleteSelectedJobs.disabled=this.state.selectedItems.size===0}async viewJobDetails(w){try{const O=await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}`);if(!O.ok)throw new Error("Failed to fetch job details");const F=await O.json();this.state.currentJob=F,this.renderJobDetails(F),this.showJobDetailsModal()}catch(O){console.error("Error loading job details:",O),window.decypharrUtils.createToast("Error loading job details","error")}}renderJobDetails(w){const O=RepairUtils.formatRepairStatus(w.status,w.error);this.refs.modalJobId.textContent=w.id,this.refs.modalJobStatus.innerHTML=`
-            <span class="badge ${O.class}">
-                <i class="bi ${O.icon} mr-1"></i>${O.message}
-            </span>
-        `,this.refs.modalJobStarted.textContent=this.formatDate(w.created_at),this.refs.modalJobCompleted.textContent=w.completed_at?this.formatDate(w.completed_at):"Not completed",this.refs.modalJobArrs.textContent=w.arrs?w.arrs.join(", "):"All",this.refs.modalJobMediaIds.textContent=w.media_ids?w.media_ids.join(", "):"All",this.refs.modalJobAutoProcess.textContent=w.auto_process?"Yes":"No",w.error?(this.refs.modalJobError.textContent=w.error,this.refs.errorContainer.classList.remove("hidden")):this.refs.errorContainer.classList.add("hidden"),w.broken_items&&Object.keys(w.broken_items).length>0?(this.state.allBrokenItems=this.flattenBrokenItems(w.broken_items),this.applyFilters()):(this.state.allBrokenItems=[],this.state.filteredItems=[],this.renderBrokenItemsTable()),this.updateActionButtons(w.status)}updateActionButtons(w){w==="pending"||w==="failed"||w==="completed"||w==="cancelled"?(this.refs.processJobBtn.classList.remove("hidden"),this.refs.stopJobBtn.classList.add("hidden")):w==="started"||w==="processing"?(this.refs.processJobBtn.classList.add("hidden"),this.refs.stopJobBtn.classList.remove("hidden")):(this.refs.processJobBtn.classList.add("hidden"),this.refs.stopJobBtn.classList.add("hidden"))}flattenBrokenItems(w){const O=[];return Object.entries(w).forEach(([F,W])=>{Array.isArray(W)&&W.forEach(U=>{O.push({...U,arr:F})})}),O}applyFilters(){const w=this.refs.itemSearchInput.value.toLowerCase(),O=this.refs.arrFilterSelect.value,F=this.refs.pathFilterSelect.value;this.state.searchTerm=w,this.state.arrFilter=O,this.state.pathFilter=F,this.state.filteredItems=this.state.allBrokenItems.filter(W=>{const U=!w||W.path.toLowerCase().includes(w)||W.arr.toLowerCase().includes(w),q=!O||W.arr===O,j=!F||W.path.includes(F);return U&&q&&j}),this.state.currentItemsPage=1,this.renderBrokenItemsTable(),this.updateFilterOptions()}updateFilterOptions(){const w=new Set(this.state.allBrokenItems.map(F=>F.arr)),O=new Set(this.state.allBrokenItems.map(F=>{const W=F.path.split("/");return W.length>1?W[0]:F.path}));this.refs.arrFilterSelect.innerHTML='<option value="">All Arrs</option>',w.forEach(F=>{const W=document.createElement("option");W.value=F,W.textContent=F,F===this.state.arrFilter&&(W.selected=!0),this.refs.arrFilterSelect.appendChild(W)}),this.refs.pathFilterSelect.innerHTML='<option value="">All Paths</option>',O.forEach(F=>{const W=document.createElement("option");W.value=F,W.textContent=F,F===this.state.pathFilter&&(W.selected=!0),this.refs.pathFilterSelect.appendChild(W)})}clearFilters(){this.refs.itemSearchInput.value="",this.refs.arrFilterSelect.value="",this.refs.pathFilterSelect.value="",this.state.searchTerm="",this.state.arrFilter="",this.state.pathFilter="",this.state.filteredItems=[...this.state.allBrokenItems],this.state.currentItemsPage=1,this.renderBrokenItemsTable()}renderBrokenItemsTable(){const w=this.state.filteredItems,O=Math.ceil(w.length/this.state.itemsPerModalPage),F=(this.state.currentItemsPage-1)*this.state.itemsPerModalPage,W=Math.min(F+this.state.itemsPerModalPage,w.length),U=w.slice(F,W);if(this.refs.brokenItemsTableBody.innerHTML="",this.refs.itemsPagination.innerHTML="",w.length===0){this.refs.noBrokenItemsMessage.classList.toggle("hidden",this.state.allBrokenItems.length>0),this.refs.noFilteredItemsMessage.classList.toggle("hidden",this.state.allBrokenItems.length===0),this.refs.modalFooterStats.textContent="",this.refs.totalItemsCount.textContent="0";return}this.refs.noBrokenItemsMessage.classList.add("hidden"),this.refs.noFilteredItemsMessage.classList.add("hidden"),U.forEach(q=>{const j=document.createElement("tr");j.className="hover",j.dataset.itemId=q.id,j.innerHTML=`
+            `,this.refs.jobsTableBody.appendChild(j)}),this.renderPagination(this.refs.jobsPagination,O,this.state.currentPage,q=>{this.state.currentPage=q,this.renderJobsTable()}),this.updateDeleteSelectedButton()}getSortedJobs(){return[...this.state.jobs].sort((w,O)=>this.state.sortDirection==="asc"?w[this.state.sortBy]>O[this.state.sortBy]?1:-1:w[this.state.sortBy]<O[this.state.sortBy]?1:-1)}handleJobTableClick(w){var W;const O=(W=w.target.closest("[data-job-id]"))==null?void 0:W.dataset.jobId;if(!O)return;const F=w.target.closest(".job-checkbox");F?this.toggleJobSelection(O,F.checked):w.target.closest(".view-job")?this.viewJobDetails(O):w.target.closest(".export-job")?this.exportJobData(O):w.target.closest(".delete-job")&&this.deleteJob(O)}toggleJobSelection(w,O){O?this.state.selectedItems.add(w):this.state.selectedItems.delete(w),this.updateDeleteSelectedButton()}toggleSelectAllJobs(w){w?this.state.jobs.forEach(O=>this.state.selectedItems.add(O.id)):this.state.selectedItems.clear(),this.renderJobsTable()}updateDeleteSelectedButton(){this.refs.deleteSelectedJobs.disabled=this.state.selectedItems.size===0}async viewJobDetails(w){try{const O=await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}`);if(!O.ok)throw new Error("Failed to fetch job details");const F=await O.json();this.state.currentJob=F,this.renderJobDetails(F),this.showJobDetailsModal()}catch(O){console.error("Error loading job details:",O),window.decypharrUtils.createToast("Error loading job details","error")}}renderJobDetails(w){const O=RepairUtils.formatRepairStatus(w.status,w.error);this.refs.modalJobId.textContent=w.id,this.refs.modalJobStatus.innerHTML=`
+            <wa-badge variant="${O.variant}" size="small">
+                <wa-icon name="${O.icon}"></wa-icon>
+                ${O.message}
+            </wa-badge>
+        `,this.refs.modalJobStarted.textContent=this.formatDate(w.created_at),this.refs.modalJobCompleted.textContent=w.completed_at?this.formatDate(w.completed_at):"Not completed",this.refs.modalJobArrs.textContent=w.arrs?w.arrs.join(", "):"All",this.refs.modalJobMediaIds.textContent=w.media_ids?w.media_ids.join(", "):"All",this.refs.modalJobAutoProcess.textContent=w.auto_process?"Yes":"No",w.error?(this.refs.modalJobError.textContent=w.error,this.refs.errorContainer.classList.remove("hidden")):this.refs.errorContainer.classList.add("hidden"),w.broken_items&&Object.keys(w.broken_items).length>0?(this.state.allBrokenItems=this.flattenBrokenItems(w.broken_items),this.applyFilters()):(this.state.allBrokenItems=[],this.state.filteredItems=[],this.renderBrokenItemsTable()),this.updateActionButtons(w.status)}updateActionButtons(w){w==="pending"||w==="failed"||w==="completed"||w==="cancelled"?(this.refs.processJobBtn.classList.remove("hidden"),this.refs.stopJobBtn.classList.add("hidden")):w==="started"||w==="processing"?(this.refs.processJobBtn.classList.add("hidden"),this.refs.stopJobBtn.classList.remove("hidden")):(this.refs.processJobBtn.classList.add("hidden"),this.refs.stopJobBtn.classList.add("hidden"))}flattenBrokenItems(w){const O=[];return Object.entries(w).forEach(([F,W])=>{Array.isArray(W)&&W.forEach(U=>{O.push({...U,arr:F})})}),O}applyFilters(){const w=this.refs.itemSearchInput.value.toLowerCase(),O=this.refs.arrFilterSelect.value,F=this.refs.pathFilterSelect.value;this.state.searchTerm=w,this.state.arrFilter=O,this.state.pathFilter=F,this.state.filteredItems=this.state.allBrokenItems.filter(W=>{const U=!w||W.path.toLowerCase().includes(w)||W.arr.toLowerCase().includes(w),q=!O||W.arr===O,j=!F||W.path.includes(F);return U&&q&&j}),this.state.currentItemsPage=1,this.renderBrokenItemsTable(),this.updateFilterOptions()}updateFilterOptions(){const w=new Set(this.state.allBrokenItems.map(F=>F.arr)),O=new Set(this.state.allBrokenItems.map(F=>{const W=F.path.split("/");return W.length>1?W[0]:F.path}));this.refs.arrFilterSelect.innerHTML='<wa-option value="">All Arrs</wa-option>',w.forEach(F=>{const W=document.createElement("wa-option");W.value=F,W.textContent=F,F===this.state.arrFilter&&(W.selected=!0),this.refs.arrFilterSelect.appendChild(W)}),this.refs.pathFilterSelect.innerHTML='<wa-option value="">All Paths</wa-option>',O.forEach(F=>{const W=document.createElement("wa-option");W.value=F,W.textContent=F,F===this.state.pathFilter&&(W.selected=!0),this.refs.pathFilterSelect.appendChild(W)})}clearFilters(){this.refs.itemSearchInput.value="",this.refs.arrFilterSelect.value="",this.refs.pathFilterSelect.value="",this.state.searchTerm="",this.state.arrFilter="",this.state.pathFilter="",this.state.filteredItems=[...this.state.allBrokenItems],this.state.currentItemsPage=1,this.renderBrokenItemsTable()}renderBrokenItemsTable(){const w=this.state.filteredItems,O=Math.ceil(w.length/this.state.itemsPerModalPage),F=(this.state.currentItemsPage-1)*this.state.itemsPerModalPage,W=Math.min(F+this.state.itemsPerModalPage,w.length),U=w.slice(F,W);if(this.refs.brokenItemsTableBody.innerHTML="",this.refs.itemsPagination.innerHTML="",w.length===0){this.refs.noBrokenItemsMessage.classList.toggle("hidden",this.state.allBrokenItems.length>0),this.refs.noFilteredItemsMessage.classList.toggle("hidden",this.state.allBrokenItems.length===0),this.refs.modalFooterStats.textContent="",this.refs.totalItemsCount.textContent="0";return}this.refs.noBrokenItemsMessage.classList.add("hidden"),this.refs.noFilteredItemsMessage.classList.add("hidden"),U.forEach(q=>{const j=document.createElement("tr");j.className="hover",j.dataset.itemId=q.id,j.innerHTML=`
                 <td class="w-12">
-                    <label class="cursor-pointer">
-                        <input type="checkbox" class="checkbox checkbox-sm item-checkbox" 
-                               data-item-id="${q.id}" ${this.state.selectedItems.has(q.id)?"checked":""}>
-                    </label>
+                    <wa-checkbox class="item-checkbox" data-item-id="${q.id}"
+                        ${this.state.selectedItems.has(q.id)?"checked":""}></wa-checkbox>
                 </td>
                 <td>
-                    <div class="badge badge-info badge-xs">${window.decypharrUtils.escapeHtml(q.arr)}</div>
+                    <wa-badge variant="brand" size="small">${window.decypharrUtils.escapeHtml(q.arr)}</wa-badge>
                 </td>
                 <td>
                     <div class="text-sm max-w-xs truncate" title="${window.decypharrUtils.escapeHtml(q.path)}">
@@ -5047,4 +5559,4 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                 <td>
                     <span class="text-sm font-mono">${window.decypharrUtils.formatBytes(q.size)}</span>
                 </td>
-            `,this.refs.brokenItemsTableBody.appendChild(j)}),this.renderPagination(this.refs.itemsPagination,O,this.state.currentItemsPage,q=>{this.state.currentItemsPage=q,this.renderBrokenItemsTable()}),this.refs.modalFooterStats.textContent=`${w.length} items`,this.refs.totalItemsCount.textContent=w.length.toString()}handleItemTableClick(w){if(w.target.classList.contains("item-checkbox")){const O=w.target.dataset.itemId;this.toggleItemSelection(O,w.target.checked)}}toggleItemSelection(w,O){O?this.state.selectedItems.add(w):this.state.selectedItems.delete(w)}async processCurrentJob(){if(!this.state.currentJob)return;const w=this.state.currentJob.id;try{if(!(await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}/process`,{method:"POST"})).ok)throw new Error("Failed to process job");window.decypharrUtils.createToast("Job processing started","success"),this.loadJobs()}catch(O){console.error("Error processing job:",O),window.decypharrUtils.createToast(`Error processing job: ${O.message}`,"error")}}async stopCurrentJob(){if(!this.state.currentJob)return;const w=this.state.currentJob.id;try{if(!(await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}/stop`,{method:"POST"})).ok)throw new Error("Failed to stop job");window.decypharrUtils.createToast("Job stop requested","success"),this.loadJobs()}catch(O){console.error("Error stopping job:",O),window.decypharrUtils.createToast(`Error stopping job: ${O.message}`,"error")}}async deleteJob(w){if(confirm("Are you sure you want to delete this job?"))try{if(!(await window.decypharrUtils.fetcher("/api/repair/jobs",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify([w])})).ok)throw new Error("Failed to delete job");window.decypharrUtils.createToast("Job deleted successfully","success"),this.state.selectedItems.delete(w),this.loadJobs()}catch(O){console.error("Error deleting job:",O),window.decypharrUtils.createToast(`Error deleting job: ${O.message}`,"error")}}async deleteSelectedJobs(){const w=Array.from(this.state.selectedItems);if(w.length!==0&&confirm(`Are you sure you want to delete ${w.length} job(s)?`))try{if(!(await window.decypharrUtils.fetcher("/api/repair/jobs",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify(w)})).ok)throw new Error("Failed to delete jobs");window.decypharrUtils.createToast(`${w.length} job(s) deleted successfully`,"success"),this.state.selectedItems.clear(),this.loadJobs()}catch(O){console.error("Error deleting jobs:",O),window.decypharrUtils.createToast(`Error deleting jobs: ${O.message}`,"error")}}showJobDetailsModal(){this.refs.jobDetailsModal.classList.add("modal-open")}hideJobDetailsModal(){this.refs.jobDetailsModal.classList.remove("modal-open"),this.state.currentJob=null,this.state.allBrokenItems=[],this.state.filteredItems=[],this.state.selectedItems.clear()}renderPagination(w,O,F,W){if(!(O<=1))for(let U=1;U<=O;U++){const q=document.createElement("button");q.className=`btn btn-xs ${U===F?"btn-primary":"btn-ghost"}`,q.textContent=U,q.addEventListener("click",()=>W(U)),w.appendChild(q)}}formatDate(w){return w?new Date(w).toLocaleString():"N/A"}async exportJobData(w){try{const O=await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}`);if(!O.ok)throw new Error("Failed to fetch job data");const F=await O.json(),W=JSON.stringify(F,null,2),U="data:application/json;charset=utf-8,"+encodeURIComponent(W),q=`repair_job_${w.substring(0,8)}.json`,j=document.createElement("a");j.setAttribute("href",U),j.setAttribute("download",q),j.click(),window.decypharrUtils.createToast("Job data exported successfully","success")}catch(O){console.error("Error exporting job data:",O),window.decypharrUtils.createToast("Failed to export job data","error")}}startAutoRefresh(){this.refreshInterval=setInterval(()=>{this.loadJobs()},3e4)}destroy(){this.refreshInterval&&clearInterval(this.refreshInterval),Object.values(this.refs).forEach(w=>{w&&w.removeEventListener})}}const RepairUtils={formatRepairStatus(T,w=null){return{pending:{icon:"bi-clock",class:"text-warning",message:"Waiting to start"},started:{icon:"bi-play-circle",class:"text-primary",message:"Repair in progress"},processing:{icon:"bi-gear",class:"text-info",message:"Processing results"},completed:{icon:"bi-check-circle",class:"text-success",message:"Repair completed successfully"},failed:{icon:"bi-x-circle",class:"text-error",message:w||"Repair failed"},cancelled:{icon:"bi-stop-circle",class:"text-warning",message:"Repair was cancelled"}}[T]||{icon:"bi-question-circle",class:"text-gray-500",message:`Unknown status: ${T}`}},validateMediaIds(T){if(!T||!T.trim())return{valid:!0,ids:[]};const w=T.split(",").map(F=>F.trim()).filter(Boolean),O=w.filter(F=>!/^\d+$/.test(F));return O.length>0?{valid:!1,error:`Invalid media IDs: ${O.join(", ")}. Only numeric IDs are allowed.`,ids:[]}:{valid:!0,ids:w}},generateRepairSummary(T){if(!T.broken_items)return"No broken items found";const w=Object.entries(T.broken_items).map(([F,W])=>`${F}: ${W.length} items`);return`Found ${Object.values(T.broken_items).reduce((F,W)=>F+W.length,0)} broken items across ${Object.keys(T.broken_items).length} Arr instance(s): ${w.join(", ")}`},calculateProgress(T){switch(T.status){case"pending":return 0;case"started":return 25;case"processing":return 75;case"completed":return 100;case"failed":case"cancelled":return 0;default:return 0}}};setBasePath("https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.3.1/dist-cdn/");window.urlBase!==void 0&&setUrlBase(window.urlBase);window.decypharrUtils={fetcher,createToast,formatBytes,formatDuration,formatSpeed,joinURL,escapeHtml,debounce,copyToClipboard,setButtonLoading,isValidUrl,getCurrentTheme};window.fetcher=fetcher;window.createToast=createToast;async function loadVersion(){try{const T=await fetcher("/version");if(!T.ok)throw new Error("Failed");const w=await T.json(),O=document.getElementById("version-badge");if(O){O.innerHTML=`<a href="https://github.com/sirrobot01/decypharr/releases/tag/v${w.version}" target="_blank">${w.channel}-${w.version}</a>`;const F={beta:"warning",nightly:"danger"};F[w.channel]&&(O.variant=F[w.channel])}}catch{const T=document.getElementById("version-badge");T&&(T.textContent="Unknown")}}document.addEventListener("DOMContentLoaded",loadVersion);
+            `,this.refs.brokenItemsTableBody.appendChild(j)}),this.renderPagination(this.refs.itemsPagination,O,this.state.currentItemsPage,q=>{this.state.currentItemsPage=q,this.renderBrokenItemsTable()}),this.refs.modalFooterStats.textContent=`${w.length} items`,this.refs.totalItemsCount.textContent=w.length.toString()}handleItemTableClick(w){const O=w.target.closest(".item-checkbox");if(O){const F=O.dataset.itemId;this.toggleItemSelection(F,O.checked)}}toggleItemSelection(w,O){O?this.state.selectedItems.add(w):this.state.selectedItems.delete(w)}async processCurrentJob(){if(!this.state.currentJob)return;const w=this.state.currentJob.id;try{if(!(await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}/process`,{method:"POST"})).ok)throw new Error("Failed to process job");window.decypharrUtils.createToast("Job processing started","success"),this.loadJobs()}catch(O){console.error("Error processing job:",O),window.decypharrUtils.createToast(`Error processing job: ${O.message}`,"error")}}async stopCurrentJob(){if(!this.state.currentJob)return;const w=this.state.currentJob.id;try{if(!(await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}/stop`,{method:"POST"})).ok)throw new Error("Failed to stop job");window.decypharrUtils.createToast("Job stop requested","success"),this.loadJobs()}catch(O){console.error("Error stopping job:",O),window.decypharrUtils.createToast(`Error stopping job: ${O.message}`,"error")}}async deleteJob(w){if(confirm("Are you sure you want to delete this job?"))try{if(!(await window.decypharrUtils.fetcher("/api/repair/jobs",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify([w])})).ok)throw new Error("Failed to delete job");window.decypharrUtils.createToast("Job deleted successfully","success"),this.state.selectedItems.delete(w),this.loadJobs()}catch(O){console.error("Error deleting job:",O),window.decypharrUtils.createToast(`Error deleting job: ${O.message}`,"error")}}async deleteSelectedJobs(){const w=Array.from(this.state.selectedItems);if(w.length!==0&&confirm(`Are you sure you want to delete ${w.length} job(s)?`))try{if(!(await window.decypharrUtils.fetcher("/api/repair/jobs",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify(w)})).ok)throw new Error("Failed to delete jobs");window.decypharrUtils.createToast(`${w.length} job(s) deleted successfully`,"success"),this.state.selectedItems.clear(),this.loadJobs()}catch(O){console.error("Error deleting jobs:",O),window.decypharrUtils.createToast(`Error deleting jobs: ${O.message}`,"error")}}showJobDetailsModal(){this.refs.jobDetailsModal.show?this.refs.jobDetailsModal.show():this.refs.jobDetailsModal.open=!0}hideJobDetailsModal(){this.refs.jobDetailsModal.hide?this.refs.jobDetailsModal.hide():this.refs.jobDetailsModal.open=!1,this.state.currentJob=null,this.state.allBrokenItems=[],this.state.filteredItems=[],this.state.selectedItems.clear()}renderPagination(w,O,F,W){if(!(O<=1))for(let U=1;U<=O;U++){const q=document.createElement("wa-button");q.size="small",q.variant=U===F?"brand":"neutral",q.appearance=U===F?"solid":"outline",q.textContent=U,q.addEventListener("click",()=>W(U)),w.appendChild(q)}}formatDate(w){return w?new Date(w).toLocaleString():"N/A"}async exportJobData(w){try{const O=await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}`);if(!O.ok)throw new Error("Failed to fetch job data");const F=await O.json(),W=JSON.stringify(F,null,2),U="data:application/json;charset=utf-8,"+encodeURIComponent(W),q=`repair_job_${w.substring(0,8)}.json`,j=document.createElement("a");j.setAttribute("href",U),j.setAttribute("download",q),j.click(),window.decypharrUtils.createToast("Job data exported successfully","success")}catch(O){console.error("Error exporting job data:",O),window.decypharrUtils.createToast("Failed to export job data","error")}}startAutoRefresh(){this.refreshInterval=setInterval(()=>{this.loadJobs()},3e4)}destroy(){this.refreshInterval&&clearInterval(this.refreshInterval),Object.values(this.refs).forEach(w=>{w&&w.removeEventListener})}}const RepairUtils={formatRepairStatus(T,w=null){return{pending:{icon:"clock",variant:"warning",message:"Waiting to start"},started:{icon:"play",variant:"brand",message:"Repair in progress"},processing:{icon:"gear",variant:"brand",message:"Processing results"},completed:{icon:"circle-check",variant:"success",message:"Repair completed successfully"},failed:{icon:"circle-xmark",variant:"danger",message:w||"Repair failed"},cancelled:{icon:"stop",variant:"warning",message:"Repair was cancelled"}}[T]||{icon:"circle-question",variant:"neutral",message:`Unknown status: ${T}`}},validateMediaIds(T){if(!T||!T.trim())return{valid:!0,ids:[]};const w=T.split(",").map(F=>F.trim()).filter(Boolean),O=w.filter(F=>!/^\d+$/.test(F));return O.length>0?{valid:!1,error:`Invalid media IDs: ${O.join(", ")}. Only numeric IDs are allowed.`,ids:[]}:{valid:!0,ids:w}},generateRepairSummary(T){if(!T.broken_items)return"No broken items found";const w=Object.entries(T.broken_items).map(([F,W])=>`${F}: ${W.length} items`);return`Found ${Object.values(T.broken_items).reduce((F,W)=>F+W.length,0)} broken items across ${Object.keys(T.broken_items).length} Arr instance(s): ${w.join(", ")}`},calculateProgress(T){switch(T.status){case"pending":return 0;case"started":return 25;case"processing":return 75;case"completed":return 100;case"failed":case"cancelled":return 0;default:return 0}}};setBasePath("https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.3.1/dist-cdn/");window.urlBase!==void 0&&setUrlBase(window.urlBase);window.decypharrUtils={fetcher,createToast,formatBytes,formatDuration,formatSpeed,joinURL,escapeHtml,debounce,copyToClipboard,setButtonLoading,isValidUrl,getCurrentTheme};window.fetcher=fetcher;window.createToast=createToast;async function loadVersion(){try{const T=await fetcher("/version");if(!T.ok)throw new Error("Failed");const w=await T.json(),O=document.getElementById("version-badge");if(O){O.innerHTML=`<a href="https://github.com/sirrobot01/decypharr/releases/tag/v${w.version}" target="_blank">${w.channel}-${w.version}</a>`;const F={beta:"warning",nightly:"danger"};F[w.channel]&&(O.variant=F[w.channel])}}catch{const T=document.getElementById("version-badge");T&&(T.textContent="Unknown")}}document.addEventListener("DOMContentLoaded",loadVersion);

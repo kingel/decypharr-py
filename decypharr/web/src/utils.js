@@ -100,6 +100,22 @@ export function isValidUrl(string) {
 export function setButtonLoading(el, loading = true, originalText = null) {
   if (typeof el === 'string') el = document.getElementById(el) || document.querySelector(el)
   if (!el) return
+  if (el.tagName && el.tagName.toLowerCase() === 'wa-button') {
+    if (loading) {
+      el.disabled = true
+      el.loading = true
+      if (originalText && !el.dataset.originalText) el.dataset.originalText = el.textContent
+      if (originalText) el.textContent = originalText
+    } else {
+      el.disabled = false
+      el.loading = false
+      if (el.dataset.originalText) {
+        el.textContent = el.dataset.originalText
+        delete el.dataset.originalText
+      }
+    }
+    return
+  }
   if (loading) {
     el.disabled = true
     if (!el.dataset.originalText) el.dataset.originalText = originalText || el.innerHTML
