@@ -30,6 +30,9 @@ import 'htmx.org'
 import './components/theme-toggle.js'
 import './components/download-page.js'
 import './components/system-stats.js'
+import './components/torrent-dashboard.js'
+import './components/config-page.js'
+import './components/repair-page.js'
 
 // Custom styles
 import './styles/app.css'
@@ -51,6 +54,7 @@ window.decypharrUtils = {
   formatSpeed: utils.formatSpeed,
   joinURL: utils.joinURL,
   escapeHtml: utils.escapeHtml,
+  debounce: utils.debounce,
   copyToClipboard: utils.copyToClipboard,
   setButtonLoading: utils.setButtonLoading,
   isValidUrl: utils.isValidUrl,

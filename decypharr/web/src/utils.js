@@ -68,6 +68,20 @@ export function formatNumber(value) {
   try { return Number(value).toLocaleString() } catch { return value ?? '-' }
 }
 
+export function debounce(func, wait, immediate = false) {
+  let timeout
+  return function executedFunction(...args) {
+    const later = () => {
+      timeout = null
+      if (!immediate) func(...args)
+    }
+    const callNow = immediate && !timeout
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+    if (callNow) func(...args)
+  }
+}
+
 export async function copyToClipboard(text) {
   try {
     await navigator.clipboard.writeText(text)

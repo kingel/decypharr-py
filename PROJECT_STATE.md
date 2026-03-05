@@ -3,6 +3,7 @@
 Last updated: 2026-03-05 (5)
 
 ## Recent Changes
+- Frontend modernization (Phase 3): wrapped dashboard/config/repair in Lit components (legacy markup rendered via templates); added repair page component + debounce utility; config page now surfaces `need_setup`.
 - Frontend modernization (Phase 2): migrated download + stats pages to Web Awesome + Lit components; removed legacy scripts; rebuilt Vite assets in container.
 - Frontend pivot: switched Phase 1 UI from Shoelace to Web Awesome (tags/imports/icons/theme classes), updated app CSS tokens; Vite assets rebuilt in container.
 - Frontend modernization (Phase 1): added Vite build system + Shoelace + Lit + htmx; rewrote layout, login, register templates with Shoelace components; old DaisyUI CSS kept for unmigrated pages (dual CSS); Vite dev server in Docker with hot-reload; backward compat shim for `window.decypharrUtils` (`42 passed`).
@@ -62,7 +63,7 @@ Last updated: 2026-03-05 (5)
 - **Static asset handling**: Vite build step added (`npm run build` in `decypharr/web/`); CI should run this before packaging.
 - **UI validation parity**: Bring settings field validation in line with Go version (client-side rules remain).
 - **WebDAV parity**: Validate WsgiDAV dir browser UX vs Go’s custom listing (delete buttons).
-- **Frontend modernization Phase 3**: migrate dashboard, config, repair pages to Web Awesome + Lit.
+- **Frontend modernization Phase 3**: replace legacy DaisyUI markup in dashboard/config/repair and remove legacy CSS/icons.
 - **Tests**: Integration/stack tests (Arr + debrid + webdav flows) — manual by user.
 - **Additional debrid providers**: Debrid‑Link / AllDebrid not yet implemented.
 
@@ -71,7 +72,7 @@ Last updated: 2026-03-05 (5)
 - Run npm/vite commands only inside containers (no host npm).
 
 ## Next Step
-- Frontend modernization Phase 3: migrate dashboard, config, repair pages to Web Awesome + Lit.
+- Frontend modernization Phase 3: replace legacy DaisyUI markup in dashboard/config/repair and drop old CSS/icons.
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.
