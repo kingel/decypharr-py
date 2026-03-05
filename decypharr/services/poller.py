@@ -38,7 +38,7 @@ async def poll_debrid(ctx: AppContext, interval: float | None = None) -> None:
                 if not entry:
                     continue
                 try:
-                    remote = entry.client.get_torrent(torrent.id)
+                    remote = await asyncio.to_thread(entry.client.get_torrent, torrent.id)
                     updates = {
                         "name": remote.name or torrent.name,
                         "state": map_debrid_status(remote.status),
@@ -53,7 +53,7 @@ async def poll_debrid(ctx: AppContext, interval: float | None = None) -> None:
                         cache = ctx.debrids.cache(torrent.debrid or "")
                         if cache:
                             try:
-                                result = process_completed(ctx.config_manager.load(), cache, torrent, remote)
+                                result = await asyncio.to_thread(process_completed, ctx.config_manager.load(), cache, torrent, remote)
                             except Exception:
                                 logger.exception("Failed to process completed torrent %s", torrent.hash)
                                 result = None
@@ -68,29 +68,27 @@ async def poll_debrid(ctx: AppContext, interval: float | None = None) -> None:
                                 arr = ctx.arrs.get(torrent.category)
                                 if arr:
                                     try:
-                                        arr.refresh()
+                                        await asyncio.to_thread(arr.refresh)
                                     except Exception:
                                         pass
                                 # Callback hook
                                 callback_url = torrent.callback_url or ctx.config_manager.load().callback_url
                                 if callback_url:
-                                    send_callback(
-                                        callback_url,
-                                        {
-                                            "status": "completed",
-                                            "completedAt": datetime.utcnow().isoformat(),
-                                            "torrent": updated_torrent.model_dump(mode="json"),
-                                            "debrid": remote,
-                                            "category": updated_torrent.category,
-                                            "contentPath": updated_torrent.content_path or updated_torrent.save_path or "",
-                                            "action": updated_torrent.action,
-                                        },
-                                    )
+                                    _payload = {
+                                        "status": "completed",
+                                        "completedAt": datetime.utcnow().isoformat(),
+                                        "torrent": updated_torrent.model_dump(mode="json"),
+                                        "debrid": remote,
+                                        "category": updated_torrent.category,
+                                        "contentPath": updated_torrent.content_path or updated_torrent.save_path or "",
+                                        "action": updated_torrent.action,
+                                    }
+                                    await asyncio.to_thread(send_callback, callback_url, _payload)
                                     ctx.torrents.update(torrent.hash, callback_status="completed")
                     if status in ("downloaded", "completed"):
                         cache = ctx.debrids.cache(torrent.debrid or "")
                         if cache:
-                            expected_path = build_content_path(ctx.config_manager.load(), cache, torrent, remote)
+                            expected_path = await asyncio.to_thread(build_content_path, ctx.config_manager.load(), cache, torrent, remote)
                             if expected_path and expected_path != (torrent.content_path or ""):
                                 ctx.torrents.update(torrent.hash, content_path=expected_path)
                             if torrent.action == "symlink" and expected_path:
@@ -102,23 +100,21 @@ async def poll_debrid(ctx: AppContext, interval: float | None = None) -> None:
                                         save_root = os.path.join(save_root, torrent.category)
                                 dest_root = os.path.join(save_root, folder_name) if save_root else ""
                                 if not os.path.exists(expected_path) or (dest_root and os.path.islink(dest_root)):
-                                    ensure_symlinked(ctx.config_manager.load(), cache, torrent, remote)
+                                    await asyncio.to_thread(ensure_symlinked, ctx.config_manager.load(), cache, torrent, remote)
                     if status in ("error", "virus", "dead", "magnet_error"):
                         callback_url = torrent.callback_url or ctx.config_manager.load().callback_url
                         if callback_url and torrent.callback_status != "failed":
-                            send_callback(
-                                callback_url,
-                                {
-                                    "status": "failed",
-                                    "completedAt": datetime.utcnow().isoformat(),
-                                    "error": remote.status,
-                                    "torrent": torrent.model_dump(mode="json"),
-                                    "debrid": remote,
-                                    "category": torrent.category,
-                                    "contentPath": torrent.content_path or torrent.save_path or "",
-                                    "action": torrent.action,
-                                },
-                            )
+                            _payload = {
+                                "status": "failed",
+                                "completedAt": datetime.utcnow().isoformat(),
+                                "error": remote.status,
+                                "torrent": torrent.model_dump(mode="json"),
+                                "debrid": remote,
+                                "category": torrent.category,
+                                "contentPath": torrent.content_path or torrent.save_path or "",
+                                "action": torrent.action,
+                            }
+                            await asyncio.to_thread(send_callback, callback_url, _payload)
                             ctx.torrents.update(torrent.hash, callback_status="failed")
                 except Exception:
                     logger.exception("Poller failed for torrent %s", torrent.hash)

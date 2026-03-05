@@ -16,7 +16,7 @@
 - Constraints: static assets directory must exist (missing `decypharr/web/static/build/` breaks app/tests).
 - Done: replace qBittorrent SID cookie — now HMAC-signed username only, no credentials in cookie payload (`38 passed`).
 - Done: make Arr TLS secure by default; opt-in `insecure_tls: bool = False` per Arr config entry (`40 passed`).
-- Medium: offload blocking poller callbacks/download work from async loop.
+- Done: offload blocking poller work (debrid HTTP, Arr refresh, callbacks, symlink/download) via `asyncio.to_thread` (`42 passed`).
 - Done: add locking/atomic writes in torrent store (`torrents.json`); concurrency + atomic-write tests added (`42 passed`).
 - Tighten UI validation to match Go behavior for settings forms (client-side rules).
 - Manual: integration/stack tests (Arr + debrid + WebDAV flows).
