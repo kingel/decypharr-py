@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, Tuple
 import base64
-import hashlib
+import hmac as _hmac
 import time
 import os
 import re
@@ -140,46 +140,60 @@ def _decode_basic_auth(header: str) -> Tuple[str, str]:
     return username.strip(), password.strip()
 
 
-def _create_sid(username: str, password: str, secret: str) -> str:
-    combined = f"{username}|{password}"
-    digest = hashlib.sha256((combined + secret).encode("utf-8")).hexdigest()[:16]
-    raw = f"{combined}|{digest}".encode("utf-8")
+def _create_sid(username: str, secret: str) -> str:
+    digest = _hmac.new(secret.encode("utf-8"), username.encode("utf-8"), "sha256").hexdigest()
+    raw = f"{username}|{digest}".encode("utf-8")
     return base64.urlsafe_b64encode(raw).decode("utf-8")
 
 
-def _extract_from_sid(sid: str, secret: str) -> Tuple[str, str]:
+def _extract_from_sid(sid: str, secret: str) -> str:
+    """Returns the authenticated username, or empty string if the SID is invalid."""
     try:
         decoded = base64.urlsafe_b64decode(sid.encode("utf-8")).decode("utf-8")
     except Exception:
-        return "", ""
-    parts = decoded.split("|")
-    if len(parts) != 3:
-        return "", ""
-    username, password, provided = parts
-    combined = f"{username}|{password}"
-    digest = hashlib.sha256((combined + secret).encode("utf-8")).hexdigest()[:16]
-    if digest != provided:
-        return "", ""
-    return username, password
+        return ""
+    parts = decoded.split("|", 1)
+    if len(parts) != 2:
+        return ""
+    username, provided = parts
+    expected = _hmac.new(secret.encode("utf-8"), username.encode("utf-8"), "sha256").hexdigest()
+    if not _hmac.compare_digest(expected, provided):
+        return ""
+    return username
 
 
-def _get_auth_credentials(request: Request, ctx: AppContext) -> Tuple[str, str]:
+def _get_auth_credentials(request: Request, ctx: AppContext) -> Tuple[str, str, bool]:
+    """Returns (username, password, from_sid). from_sid=True means credentials came from a
+    verified SID cookie, so the username is trusted and password is empty."""
     username, password = _decode_basic_auth(request.headers.get("Authorization", ""))
     if username:
-        return username, password
+        return username, password, False
     sid = request.cookies.get("sid") or request.cookies.get("SID") or ""
     if sid:
-        return _extract_from_sid(sid, ctx.config_manager.secret_key())
-    return "", ""
+        username = _extract_from_sid(sid, ctx.config_manager.secret_key())
+        if username:
+            return username, "", True
+    return "", "", False
 
 
 def _require_qbit_auth(request: Request, ctx: AppContext, category: str) -> Optional[ArrClient]:
     cfg = ctx.config_manager.load()
-    username, password = _get_auth_credentials(request, ctx)
+    username, password, from_sid = _get_auth_credentials(request, ctx)
+
     if cfg.qbittorrent.username and cfg.qbittorrent.password:
+        if from_sid:
+            # SID is proof of prior auth; only verify the username still matches.
+            if username != cfg.qbittorrent.username:
+                raise QbitError(status_code=401, message="unauthorized: invalid credentials")
+            return None
         if username != cfg.qbittorrent.username or password != cfg.qbittorrent.password:
             raise QbitError(status_code=401, message="unauthorized: invalid credentials")
         return None
+
+    if from_sid:
+        # Valid SID = already authenticated. Arr client was registered at login by category.
+        return None
+
     if not username or not password:
         if cfg.use_auth:
             raise QbitError(
@@ -250,7 +264,7 @@ async def auth_login(
         if username != cfg.qbittorrent.username or password != cfg.qbittorrent.password:
             raise QbitError(status_code=401, message="unauthorized: invalid credentials")
         if cfg.use_auth:
-            sid = _create_sid(username, password, ctx.config_manager.secret_key())
+            sid = _create_sid(username, ctx.config_manager.secret_key())
             response = PlainTextResponse("Ok.")
             response.set_cookie("sid", sid)
             return response
@@ -268,7 +282,7 @@ async def auth_login(
         if cfg.use_auth and not ctx.config_manager.verify_auth(username, password):
             raise QbitError(status_code=401, message="unauthorized: invalid credentials")
     if cfg.use_auth:
-        sid = _create_sid(username, password, ctx.config_manager.secret_key())
+        sid = _create_sid(username, ctx.config_manager.secret_key())
         response = PlainTextResponse("Ok.")
         response.set_cookie("sid", sid)
         return response

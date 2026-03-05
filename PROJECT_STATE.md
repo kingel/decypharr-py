@@ -1,8 +1,9 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-05
+Last updated: 2026-03-05 (2)
 
 ## Recent Changes
+- Auth hardening: replaced qBittorrent SID cookie credential exposure — SID now contains only a HMAC-signed username (no password); `_require_qbit_auth` accepts SID as proof of prior auth without re-verifying the password; switched from `hashlib` to `hmac` with `compare_digest`; 2 regression tests added (`38 passed`).
 - Auth hardening: protected all `/debug/*` endpoints (`stats`, `logs`, `logs/rclone`, `ingests`) behind session auth via router-level dependency; returns 401 when `use_auth=True` and no valid session.
 - Tests: added 3 auth regression tests for `/debug/*` (`36 passed`).
 - Bug fix: removed duplicate `os` import and added missing `Optional` import in `debug.py`.
@@ -53,7 +54,6 @@ Last updated: 2026-03-05
 
 ## Open Tasks
 - **Transport hardening (high)**: remove `verify=False` from Arr HTTP client or make insecure TLS opt-in.
-- **Session hardening (high)**: replace qBittorrent SID cookie format so credentials are not embedded in cookie payload.
 - **Runtime robustness (medium)**: move blocking poller callbacks/download processing to threads or async clients.
 - **Storage robustness (medium)**: add locking/atomic writes for `torrents.json` updates.
 - **Tests**: add concurrency/race coverage for torrent storage writes.
@@ -67,7 +67,7 @@ Last updated: 2026-03-05
 - Static assets directory `decypharr/web/static/build/` must exist at runtime/tests or app init fails.
 
 ## Next Step
-- Continue security hardening: tighten Arr TLS (`verify=False`) and fix qBittorrent SID cookie credential exposure.
+- Continue security hardening: tighten Arr TLS — make `verify=False` opt-in per Arr config entry.
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.

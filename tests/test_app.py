@@ -570,3 +570,32 @@ def test_debug_logs_requires_auth(tmp_path: Path):
     client = TestClient(app)
     response = client.get("/debug/logs")
     assert response.status_code == 401
+
+
+def test_qbit_sid_does_not_contain_password(tmp_path: Path):
+    app = _make_auth_app(tmp_path, with_auth=True)
+    client = TestClient(app)
+    resp = client.post(
+        "/api/v2/auth/login", data={"username": "user", "password": "pass"}
+    )
+    assert resp.status_code == 200
+    sid = client.cookies.get("sid") or ""
+    assert sid, "SID cookie should be set"
+    import base64
+    try:
+        decoded = base64.urlsafe_b64decode(sid).decode("utf-8")
+    except Exception:
+        decoded = ""
+    assert "pass" not in decoded
+
+
+def test_qbit_sid_authenticates_subsequent_request(tmp_path: Path):
+    app = _make_auth_app(tmp_path, with_auth=True)
+    client = TestClient(app)
+    login = client.post(
+        "/api/v2/auth/login", data={"username": "user", "password": "pass"}
+    )
+    assert login.status_code == 200
+    assert client.cookies.get("sid"), "SID cookie should be set after login"
+    resp = client.get("/api/v2/torrents/info")
+    assert resp.status_code == 200
