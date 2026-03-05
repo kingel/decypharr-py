@@ -15,7 +15,7 @@
 - Deferred: decide static asset strategy (commit `decypharr/web/static/build/` or add CI build step).
 - Constraints: static assets directory must exist (missing `decypharr/web/static/build/` breaks app/tests).
 - Done: replace qBittorrent SID cookie — now HMAC-signed username only, no credentials in cookie payload (`38 passed`).
-- High: remove default `verify=False` for Arr HTTP calls (make insecure TLS explicit if needed).
+- Done: make Arr TLS secure by default; opt-in `insecure_tls: bool = False` per Arr config entry (`40 passed`).
 - Medium: offload blocking poller callbacks/download work from async loop.
 - Medium: add locking/atomic writes in torrent store (`torrents.json`) to avoid concurrent write races.
 - Tests: add concurrency/race coverage for torrent store writes.

@@ -84,6 +84,7 @@ class Arr(BaseConfigModel):
     download_uncached: Optional[bool] = None
     selected_debrid: Optional[str] = None
     source: Optional[str] = None
+    insecure_tls: bool = False
 
 
 class Repair(BaseConfigModel):

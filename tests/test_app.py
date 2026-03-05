@@ -599,3 +599,17 @@ def test_qbit_sid_authenticates_subsequent_request(tmp_path: Path):
     assert client.cookies.get("sid"), "SID cookie should be set after login"
     resp = client.get("/api/v2/torrents/info")
     assert resp.status_code == 200
+
+
+def test_arr_client_tls_secure_by_default():
+    from decypharr.config import Arr as ArrConfig
+    from decypharr.arr import ArrClient
+    client = ArrClient(ArrConfig(name="test", host="https://arr.local", token="tok"))
+    assert client.insecure_tls is False
+
+
+def test_arr_client_tls_insecure_when_opted_in():
+    from decypharr.config import Arr as ArrConfig
+    from decypharr.arr import ArrClient
+    client = ArrClient(ArrConfig(name="test", host="https://arr.local", token="tok", insecure_tls=True))
+    assert client.insecure_tls is True

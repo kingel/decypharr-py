@@ -65,8 +65,9 @@ class ArrClient:
         self.download_uncached = cfg.download_uncached
         self.selected_debrid = cfg.selected_debrid or ""
         self.source = cfg.source or ""
+        self.insecure_tls = cfg.insecure_tls
         self.type = self._infer_type(self.host, self.name)
-        self._client = httpx.Client(verify=False, timeout=60.0)
+        self._client = httpx.Client(verify=not self.insecure_tls, timeout=60.0)
 
     @staticmethod
     def _infer_type(host: str, name: str) -> ArrType:
@@ -336,6 +337,7 @@ class ArrStorage:
                 "download_uncached": arr.download_uncached,
                 "selected_debrid": arr.selected_debrid,
                 "source": arr.source,
+                "insecure_tls": arr.insecure_tls,
             }
             for arr in arrs
         ]
