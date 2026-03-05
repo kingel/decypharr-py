@@ -1,8 +1,9 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-05 (5)
+Last updated: 2026-03-05 (6)
 
 ## Recent Changes
+- Docs: refreshed Project State + TODO after Phase 3 frontend modernization; no code changes.
 - Frontend modernization (Phase 3): dashboard/config/repair now render with Web Awesome components; runtime template normalization added; legacy Tailwind/DaisyUI bundle + Bootstrap icons removed; WA dialog + utility CSS added.
 - Frontend modernization (Phase 2): migrated download + stats pages to Web Awesome + Lit components; removed legacy scripts; rebuilt Vite assets in container.
 - Frontend pivot: switched Phase 1 UI from Shoelace to Web Awesome (tags/imports/icons/theme classes), updated app CSS tokens; Vite assets rebuilt in container.
@@ -71,6 +72,7 @@ Last updated: 2026-03-05 (5)
 - Static assets directory `decypharr/web/static/build/` must exist at runtime/tests or app init fails.
 - Run npm/vite commands only inside containers (no host npm).
 - Legacy `styles.css` removed; UI now depends on Vite `main.css` bundle.
+ - No new constraints added in this update.
 
 ## Next Step
 - Decide whether to keep the utility-class shim + template normalization or fully rewrite remaining templates to pure Web Awesome markup.
