@@ -3941,7 +3941,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
             <table class="data-table">
                 <thead>
                 <tr>
-                    <th class="w-12">
+                    <th class="table-select">
                         <wa-checkbox id="selectAll"></wa-checkbox>
                     </th>
                     <th>
@@ -4030,21 +4030,21 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
             ${F?"checked":""}>
           </wa-checkbox>
         </td>
-        <td class="max-w-xs">
-          <div class="truncate font-medium" title="${this.escapeHtml(w.name)}">
+        <td class="max-w-sm">
+          <div class="text-truncate text-strong" title="${this.escapeHtml(w.name)}">
             ${this.escapeHtml(w.name)}
           </div>
         </td>
-        <td class="text-nowrap font-mono text-sm">
+        <td class="text-nowrap text-mono text-small">
           ${window.decypharrUtils.formatBytes(w.size)}
         </td>
         <td>
           <div class="progress-cell">
             <wa-progress-bar class="progress-bar" value="${O}"></wa-progress-bar>
-            <span class="text-sm font-medium">${O}%</span>
+            <span class="text-small text-strong">${O}%</span>
           </div>
         </td>
-        <td class="text-nowrap font-mono text-sm">
+        <td class="text-nowrap text-mono text-small">
           ${window.decypharrUtils.formatSpeed(w.dlspeed)}
         </td>
         <td>
@@ -4053,7 +4053,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
         <td>
           ${w.debrid?`<wa-badge variant="brand" size="small">${this.escapeHtml(w.debrid)}</wa-badge>`:'<span class="hint">None</span>'}
         </td>
-        <td class="text-nowrap font-mono text-sm">
+        <td class="text-nowrap text-mono text-small">
           ${w.num_seeds||0}
         </td>
         <td>
@@ -4092,32 +4092,30 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
     __NEED_SETUP__
 
     <form id="configForm" class="page-stack" novalidate>
-        <div class="card bg-base-100 shadow-xl">
-            <div class="card-body">
-                <div class="border-b border-base-300 mb-8">
-                    <nav class="tab-nav" aria-label="Configuration Tabs">
-                        <wa-button type="button" appearance="plain" class="tab-button active" data-tab="general">
-                            General
-                        </wa-button>
-                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="debrid">
-                            Debrid
-                        </wa-button>
-                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="qbittorrent">
-                            QBittorrent
-                        </wa-button>
-                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="arrs">
-                            *Arrs
-                        </wa-button>
-                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="repair">
-                            Repair
-                        </wa-button>
-                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="rclone">
-                            Rclone
-                        </wa-button>
-                    </nav>
-                </div>
+        <wa-card class="panel">
+            <div class="panel-body">
+                <nav class="tab-nav" aria-label="Configuration Tabs">
+                    <wa-button type="button" appearance="plain" class="tab-button active" data-tab="general">
+                        General
+                    </wa-button>
+                    <wa-button type="button" appearance="plain" class="tab-button" data-tab="debrid">
+                        Debrid
+                    </wa-button>
+                    <wa-button type="button" appearance="plain" class="tab-button" data-tab="qbittorrent">
+                        QBittorrent
+                    </wa-button>
+                    <wa-button type="button" appearance="plain" class="tab-button" data-tab="arrs">
+                        *Arrs
+                    </wa-button>
+                    <wa-button type="button" appearance="plain" class="tab-button" data-tab="repair">
+                        Repair
+                    </wa-button>
+                    <wa-button type="button" appearance="plain" class="tab-button" data-tab="rclone">
+                        Rclone
+                    </wa-button>
+                </nav>
 
-                <div class="sticky top-20 z-30 flex justify-end mb-6">
+                <div class="config-actions">
                     <wa-button type="submit" variant="success">
                         Save Configuration
                     </wa-button>
@@ -4127,14 +4125,14 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                     <div class="tab-content" data-tab-content="general">
                         <div class="page-stack">
-                            <h2 class="text-2xl font-bold flex items-center mb-6">
+                            <h2 class="section-heading">
                                 General Settings
                             </h2>
 
                             <div class="grid grid-2">
                                 <div class="field-group">
                                     <label class="label" for="log-level">
-                                        <span class="label-text font-medium">Log Level</span>
+                                        <span class="label-text">Log Level</span>
                                     </label>
                                     <select class="app-select" name="log_level" id="log-level">
                                         <option value="info">Info</option>
@@ -4146,7 +4144,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                 </div>
                                 <div class="field-group">
                                     <label class="label">
-                                        <span class="label-text font-medium">Magnet Link Handler</span>
+                                        <span class="label-text">Magnet Link Handler</span>
                                     </label>
                                     <wa-button type="button" variant="brand" appearance="outline" onclick="registerMagnetLinkHandler();" id="registerMagnetLink">
                                         <wa-icon slot="start" name="magnet"></wa-icon>
@@ -4158,7 +4156,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             <div class="grid grid-3">
                                 <div class="field-group">
                                     <label class="label" for="urlBase">
-                                        <span class="label-text font-medium">URL Base</span>
+                                        <span class="label-text">URL Base</span>
                                     </label>
                                     <input type="text" class="app-input" id="urlBase" name="url_base" placeholder="/">
                                     <div class="label">
@@ -4168,7 +4166,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                 <div class="field-group">
                                     <label class="label" for="bindAddress">
-                                        <span class="label-text font-medium">Bind Address</span>
+                                        <span class="label-text">Bind Address</span>
                                     </label>
                                     <input type="text" class="app-input" id="bindAddress" name="bind_address" placeholder="0.0.0.0">
                                     <div class="label">
@@ -4178,7 +4176,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                 <div class="field-group">
                                     <label class="label" for="port">
-                                        <span class="label-text font-medium">Port</span>
+                                        <span class="label-text">Port</span>
                                     </label>
                                     <input type="number" class="app-input" id="port" name="port" placeholder="8282">
                                     <div class="label">
@@ -4190,7 +4188,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             <div class="grid grid-3">
                                 <div class="field-group">
                                     <label class="label" for="debridPollInterval">
-                                        <span class="label-text font-medium">Debrid Poll Interval (seconds)</span>
+                                        <span class="label-text">Debrid Poll Interval (seconds)</span>
                                     </label>
                                     <input type="number" class="app-input" id="debridPollInterval" name="debrid_poll_interval" min="5" placeholder="30">
                                     <div class="label">
@@ -4199,7 +4197,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                 </div>
                                 <div class="field-group">
                                     <label class="label" for="badTorrentThresholdHours">
-                                        <span class="label-text font-medium">Bad Torrent Threshold (hours)</span>
+                                        <span class="label-text">Bad Torrent Threshold (hours)</span>
                                     </label>
                                     <input type="number" class="app-input" id="badTorrentThresholdHours" name="bad_torrent_threshold_hours" min="1" placeholder="12">
                                     <div class="label">
@@ -4211,14 +4209,14 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             <div class="grid grid-2">
                                 <div class="field-group">
                                     <label class="label" for="discordWebhookUrl">
-                                        <span class="label-text font-medium">Discord Webhook URL</span>
+                                        <span class="label-text">Discord Webhook URL</span>
                                     </label>
                                     <textarea class="app-textarea" id="discordWebhookUrl" name="discord_webhook_url" placeholder="https://discord.com/api/webhooks/..."></textarea>
                                 </div>
 
                                 <div class="field-group">
                                     <label class="label" for="allowedExtensions">
-                                        <span class="label-text font-medium">Allowed File Extensions</span>
+                                        <span class="label-text">Allowed File Extensions</span>
                                     </label>
                                     <textarea class="app-textarea" id="allowedExtensions" name="allowed_file_types" placeholder="mkv, mp4, avi, mov"></textarea>
                                     <div class="label">
@@ -4230,7 +4228,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             <div class="grid grid-2">
                                 <div class="field-group">
                                     <label class="label" for="minFileSize">
-                                        <span class="label-text font-medium">Minimum File Size</span>
+                                        <span class="label-text">Minimum File Size</span>
                                     </label>
                                     <input type="text" class="app-input" id="minFileSize" name="min_file_size" placeholder="10MB">
                                     <div class="label">
@@ -4240,7 +4238,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                 <div class="field-group">
                                     <label class="label" for="maxFileSize">
-                                        <span class="label-text font-medium">Maximum File Size</span>
+                                        <span class="label-text">Maximum File Size</span>
                                     </label>
                                     <input type="text" class="app-input" id="maxFileSize" name="max_file_size" placeholder="50GB">
                                     <div class="label">
@@ -4250,7 +4248,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                 <div class="field-group">
                                     <label class="label" for="removeStalledAfter">
-                                        <span class="label-text font-medium">Remove Stalled After</span>
+                                        <span class="label-text">Remove Stalled After</span>
                                     </label>
                                     <input type="text" class="app-input" id="removeStalledAfter" name="remove_stalled_after" placeholder="1h">
                                     <div class="label">
@@ -4259,7 +4257,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                 </div>
                                 <div class="field-group">
                                     <label class="label" for="callbackUrl">
-                                        <span class="label-text font-medium">Callback URL</span>
+                                        <span class="label-text">Callback URL</span>
                                     </label>
                                     <input type="text" class="app-input" id="callbackUrl" name="callback_url" placeholder="http://example.com/callback">
                                     <div class="label">
@@ -4269,27 +4267,27 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             </div>
 
                             <!-- Authentication Settings Section -->
-                            <div class="divider">
-                                <span class="text-lg font-semibold">Authentication Settings</span>
+                            <div class="section-divider">
+                                <span class="section-divider__text">Authentication Settings</span>
                             </div>
 
-                            <div class="card bg-base-200">
-                                <div class="card-body">
+                            <wa-card class="panel panel-muted">
+                                <div class="panel-body">
                                     <div class="page-stack">
-                                        <div class="flex justify-between items-start">
-                                            <div class="flex-1">
-                                                <h3 class="text-lg font-semibold mb-2">Authentication Settings</h3>
-                                                <p class="text-sm text-muted">Configure username/password authentication and API token for programmatic access.</p>
+                                        <div class="row-between-start">
+                                            <div class="stack-sm grow">
+                                                <h3 class="section-subheading">Authentication Settings</h3>
+                                                <p class="hint">Configure username/password authentication and API token for programmatic access.</p>
                                             </div>
                                         </div>
 
                                         <!-- Username/Password Section -->
-                                        <div class="space-y-4">
-                                            <h4 class="font-semibold text-base">Web Authentication</h4>
+                                        <div class="stack-md">
+                                            <h4 class="section-subheading">Web Authentication</h4>
                                             <div class="grid grid-2">
                                                 <div class="field-group">
                                                     <label class="label">
-                                                        <span class="label-text font-medium">Username</span>
+                                                        <span class="label-text">Username</span>
                                                     </label>
                                                     <input type="text" 
                                                            id="auth-username" 
@@ -4302,7 +4300,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                                 </div>
                                                 <div class="field-group">
                                                     <label class="label">
-                                                        <span class="label-text font-medium">Password</span>
+                                                        <span class="label-text">Password</span>
                                                     </label>
                                                     <div class="password-toggle-container">
                                                         <input type="password" 
@@ -4320,7 +4318,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                                 </div>
                                                 <div class="field-group">
                                                     <label class="label">
-                                                        <span class="label-text font-medium">Confirm Password</span>
+                                                        <span class="label-text">Confirm Password</span>
                                                     </label>
                                                     <div class="password-toggle-container">
                                                         <input type="password"
@@ -4338,12 +4336,12 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                                 </div>
                                                 <div class="field-group">
                                                     <label class="label">
-                                                        <span class="label-text font-medium">Current Token</span>
+                                                        <span class="label-text">Current Token</span>
                                                     </label>
                                                     <div class="join">
                                                         <input type="text"
                                                                id="api-token-display"
-                                                               class="app-input flex-1 font-mono"
+                                                               class="app-input grow text-mono"
                                                                placeholder="No token generated"
                                                                readonly>
                                                         <wa-button type="button" appearance="outline" size="small"
@@ -4362,7 +4360,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="flex justify-end items-center mt-5">
+                                            <div class="row-end">
                                                 <wa-button type="button" variant="brand"
                                                         id="update-auth-btn"
                                                         onclick="updateAuthSettings();">
@@ -4370,21 +4368,21 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                                 </wa-button>
                                             </div>
                                         </div>
-                                        <div class="space-y-4">
-                                            <p class="text-sm text-muted">Use this token for API authentication instead of session cookies. Perfect for automation and scripts.</p>
+                                        <div class="stack-md">
+                                            <p class="hint">Use this token for API authentication instead of session cookies. Perfect for automation and scripts.</p>
 
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </wa-card>
                         </div>
                     </div>
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="debrid">
                         <div class="page-stack">
-                            <div class="flex justify-between items-center">
-                                <h2 class="text-2xl font-bold flex items-center">
+                            <div class="row-between">
+                                <h2 class="section-heading">
                                     Debrid Services
                                 </h2>
                                 <wa-button type="button" variant="brand" appearance="outline" id="addDebridBtn">
@@ -4392,21 +4390,21 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                 </wa-button>
                             </div>
 
-                            <div id="debridConfigs" class="space-y-4">
+                            <div id="debridConfigs" class="stack-md">
                             </div>
                         </div>
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="qbittorrent">
                         <div class="page-stack">
-                            <h2 class="text-2xl font-bold flex items-center mb-6">
+                            <h2 class="section-heading">
                                 QBittorrent Settings
                             </h2>
 
                             <div class="grid grid-2">
                                 <div class="field-group">
                                     <label class="label" for="qbit.download_folder">
-                                        <span class="label-text font-medium">Download Folder</span>
+                                        <span class="label-text">Download Folder</span>
                                     </label>
                                     <input type="text" class="app-input" name="qbit.download_folder" id="qbit.download_folder">
                                     <div class="label">
@@ -4416,14 +4414,14 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                 <div class="field-group">
                                     <label class="label" for="qbit.refresh_interval">
-                                        <span class="label-text font-medium">Refresh Interval (seconds)</span>
+                                        <span class="label-text">Refresh Interval (seconds)</span>
                                     </label>
                                     <input type="number" class="app-input" name="qbit.refresh_interval" id="qbit.refresh_interval" min="1">
                                 </div>
 
                                 <div class="field-group">
                                     <label class="label" for="qbit.max_downloads">
-                                        <span class="label-text font-medium">Maximum Downloads</span>
+                                        <span class="label-text">Maximum Downloads</span>
                                     </label>
                                     <input type="number" class="app-input" name="qbit.max_downloads" id="qbit.max_downloads" min="0">
                                     <div class="label">
@@ -4432,28 +4430,28 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                 </div>
 
                                 <div class="field-group">
-                                    <label class="label cursor-pointer justify-start gap-3">
+                                    <label class="checkbox-row">
                                         <input type="checkbox" class="app-checkbox" name="qbit.skip_pre_cache" id="qbit.skip_pre_cache">
-                                        <div>
-                                            <span class="label-text font-medium">Skip Pre-Cache</span>
-                                            <div class="label-text-alt">Disable pre-caching to speed up imports</div>
+                                        <div class="checkbox-row__text">
+                                            <span class="label-text">Skip Pre-Cache</span>
+                                            <span class="label-text-alt">Disable pre-caching to speed up imports</span>
                                         </div>
                                     </label>
                                 </div>
 
                                 <div class="field-group">
-                                    <label class="label cursor-pointer justify-start gap-3">
+                                    <label class="checkbox-row">
                                         <input type="checkbox" class="app-checkbox" name="qbit.always_rm_tracker_urls" id="qbit.always_rm_tracker_urls">
-                                        <div>
-                                            <span class="label-text font-medium">Always Remove Tracker URLs</span>
-                                            <div class="label-text-alt">Allows you to <a href="https://sirrobot01.github.io/decypharr/features/repair-worker/private-tracker-downloads" class="link link-hover font-semibold" target="_blank">download private tracker torrents</a> with lower risk</div>
+                                        <div class="checkbox-row__text">
+                                            <span class="label-text">Always Remove Tracker URLs</span>
+                                            <span class="label-text-alt">Allows you to <a href="https://sirrobot01.github.io/decypharr/features/repair-worker/private-tracker-downloads" class="app-link" target="_blank">download private tracker torrents</a> with lower risk</span>
                                         </div>
                                     </label>
                                 </div>
 
                                 <div class="field-group">
                                     <label class="label" for="qbit.default_action">
-                                        <span class="label-text font-medium">Default Action</span>
+                                        <span class="label-text">Default Action</span>
                                     </label>
                                     <select class="app-select" name="qbit.default_action" id="qbit.default_action">
                                         <option value="symlink">Symlink (fast, requires shared rclone mount)</option>
@@ -4470,8 +4468,8 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                     <div class="tab-content hidden" data-tab-content="arrs">
                         <div class="page-stack">
-                            <div class="flex justify-between items-center">
-                                <h2 class="text-2xl font-bold flex items-center">
+                            <div class="row-between">
+                                <h2 class="section-heading">
                                     Arr Applications
                                 </h2>
                                 <wa-button type="button" variant="brand" appearance="outline" id="addArrBtn">
@@ -4479,23 +4477,23 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                 </wa-button>
                             </div>
 
-                            <div id="arrConfigs" class="space-y-4">
+                            <div id="arrConfigs" class="stack-md">
                             </div>
                         </div>
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="repair">
                         <div class="page-stack">
-                            <h2 class="text-2xl font-bold flex items-center mb-6">
+                            <h2 class="section-heading">
                                 Repair Settings
                             </h2>
 
                             <div class="field-group">
-                                <label class="label cursor-pointer justify-start gap-3">
+                                <label class="checkbox-row">
                                     <input type="checkbox" class="app-checkbox" name="repair.enabled" id="repair.enabled">
-                                    <div>
-                                        <span class="label-text font-medium text-lg">Enable Scheduled Repair</span>
-                                        <div class="label-text-alt">Automatically repair broken symlinks and missing files</div>
+                                    <div class="checkbox-row__text">
+                                        <span class="label-text">Enable Scheduled Repair</span>
+                                        <span class="label-text-alt">Automatically repair broken symlinks and missing files</span>
                                     </div>
                                 </label>
                             </div>
@@ -4503,7 +4501,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             <div class="grid grid-2">
                                 <div class="field-group">
                                     <label class="label" for="repair.interval">
-                                        <span class="label-text font-medium">Repair Interval</span>
+                                        <span class="label-text">Repair Interval</span>
                                     </label>
                                     <input type="text" class="app-input" name="repair.interval" id="repair.interval" placeholder="24h">
                                     <div class="label">
@@ -4513,7 +4511,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                 <div class="field-group">
                                     <label class="label" for="repair.workers">
-                                        <span class="label-text font-medium">Worker Threads</span>
+                                        <span class="label-text">Worker Threads</span>
                                     </label>
                                     <input type="number" class="app-input" name="repair.workers" id="repair.workers" min="1" placeholder="40">
                                     <div class="label">
@@ -4523,7 +4521,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                 <div class="field-group">
                                     <label class="label" for="repair.strategy">
-                                        <span class="label-text font-medium">Repair Strategy</span>
+                                        <span class="label-text">Repair Strategy</span>
                                     </label>
                                     <select class="app-select" name="repair.strategy" id="repair.strategy">
                                         <option value="per_torrent" selected>Per Torrent</option>
@@ -4535,7 +4533,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                 </div>
                                 <div class="field-group">
                                     <label class="label" for="repair.zurg_url">
-                                        <span class="label-text font-medium">Zurg URL</span>
+                                        <span class="label-text">Zurg URL</span>
                                     </label>
                                     <input type="url" class="app-input" name="repair.zurg_url" id="repair.zurg_url" placeholder="http://zurg:9999">
                                     <div class="label">
@@ -4546,21 +4544,21 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                             <div class="grid grid-3">
                                 <div class="field-group">
-                                    <label class="label cursor-pointer justify-start gap-3">
+                                    <label class="checkbox-row">
                                         <input type="checkbox" class="app-checkbox" name="repair.use_webdav" id="repair.use_webdav">
-                                        <div>
-                                            <span class="label-text font-medium">Use WebDAV</span>
-                                            <div class="label-text-alt">Use internal WebDAV for repairs</div>
+                                        <div class="checkbox-row__text">
+                                            <span class="label-text">Use WebDAV</span>
+                                            <span class="label-text-alt">Use internal WebDAV for repairs</span>
                                         </div>
                                     </label>
                                 </div>
 
                                 <div class="field-group">
-                                    <label class="label cursor-pointer justify-start gap-3">
+                                    <label class="checkbox-row">
                                         <input type="checkbox" class="app-checkbox" name="repair.auto_process" id="repair.auto_process">
-                                        <div>
-                                            <span class="label-text font-medium">Auto Process</span>
-                                            <div class="label-text-alt">Automatically delete broken symlinks and re-search</div>
+                                        <div class="checkbox-row__text">
+                                            <span class="label-text">Auto Process</span>
+                                            <span class="label-text-alt">Automatically delete broken symlinks and re-search</span>
                                         </div>
                                     </label>
                                 </div>
@@ -4570,29 +4568,29 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                     <div class="tab-content hidden" data-tab-content="rclone">
                         <div class="page-stack">
-                            <h2 class="text-2xl font-bold flex items-center mb-6">
+                            <h2 class="section-heading">
                                 Rclone Mount Settings
                             </h2>
 
                             <div class="field-group">
-                                <label class="label cursor-pointer justify-start gap-3">
+                                <label class="checkbox-row">
                                     <input type="checkbox" class="app-checkbox" name="rclone.enabled" id="rclone.enabled">
-                                    <div>
-                                        <span class="label-text font-medium text-lg">Enable Mount</span>
-                                        <div class="label-text-alt">Automatically mount your debrid items</div>
+                                    <div class="checkbox-row__text">
+                                        <span class="label-text">Enable Mount</span>
+                                        <span class="label-text-alt">Automatically mount your debrid items</span>
                                     </div>
                                 </label>
                             </div>
 
-                            <div class="card bg-base-200">
-                                <div class="card-body">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <wa-card class="panel panel-muted">
+                                <div class="panel-body">
+                                    <h3 class="section-subheading">
                                         Mount Configuration
                                     </h3>
-                                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                                    <div class="grid grid-4">
                                         <div class="field-group">
                                             <label class="label" for="rclone.mount_path">
-                                                <span class="label-text font-medium">Global Mount Path</span>
+                                                <span class="label-text">Global Mount Path</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.mount_path" id="rclone.mount_path" placeholder="/mnt/decypharr">
                                             <div class="label">
@@ -4602,14 +4600,14 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.rc_port">
-                                                <span class="label-text font-medium">RC Port</span>
+                                                <span class="label-text">RC Port</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.rc_port" id="rclone.rc_port">
                                         </div>
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.log_level">
-                                                <span class="label-text font-medium">Log Level</span>
+                                                <span class="label-text">Log Level</span>
                                             </label>
                                             <select class="app-select" name="rclone.log_level" id="rclone.log_level">
                                                 <option value="INFO">INFO</option>
@@ -4621,7 +4619,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.uid">
-                                                <span class="label-text font-medium">User ID (PUID)</span>
+                                                <span class="label-text">User ID (PUID)</span>
                                             </label>
                                             <input type="number" class="app-input" name="rclone.uid" id="rclone.uid" placeholder="1000" min="0">
                                             <div class="label">
@@ -4631,7 +4629,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.gid">
-                                                <span class="label-text font-medium">Group ID (PGID)</span>
+                                                <span class="label-text">Group ID (PGID)</span>
                                             </label>
                                             <input type="number" class="app-input" name="rclone.gid" id="rclone.gid" placeholder="1000" min="0">
                                             <div class="label">
@@ -4640,7 +4638,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         </div>
                                         <div class="field-group">
                                             <label class="label" for="rclone.umask">
-                                                <span class="label-text font-medium">UMASK</span>
+                                                <span class="label-text">UMASK</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.umask" id="rclone.umask" placeholder="0022">
                                             <div class="label">
@@ -4649,7 +4647,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         </div>
                                         <div class="field-group">
                                             <label class="label" for="rclone.buffer_size">
-                                                <span class="label-text font-medium">Buffer Size</span>
+                                                <span class="label-text">Buffer Size</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.buffer_size" id="rclone.buffer_size" placeholder="10M">
                                             <div class="label">
@@ -4658,7 +4656,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         </div>
                                         <div class="field-group">
                                             <label class="label" for="rclone.bw_limit">
-                                                <span class="label-text font-medium">Bandwidth Limit</span>
+                                                <span class="label-text">Bandwidth Limit</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.bw_limit" id="rclone.bw_limit" placeholder="100M">
                                             <div class="label">
@@ -4667,7 +4665,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         </div>
                                         <div class="field-group">
                                             <label class="label" for="rclone.attr_timeout">
-                                                <span class="label-text font-medium">Attribute Caching Timeout</span>
+                                                <span class="label-text">Attribute Caching Timeout</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.attr_timeout" id="rclone.attr_timeout" placeholder="1s">
                                             <div class="label">
@@ -4676,7 +4674,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         </div>
                                         <div class="field-group">
                                             <label class="label" for="rclone.transfers">
-                                                <span class="label-text font-medium">Transfers</span>
+                                                <span class="label-text">Transfers</span>
                                             </label>
                                             <input type="number" class="app-input" name="rclone.transfers" id="rclone.transfers" placeholder="8" min="1">
                                             <div class="label">
@@ -4685,16 +4683,16 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card bg-base-200">
-                                <div class="card-body">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            </wa-card>
+                            <wa-card class="panel panel-muted">
+                                <div class="panel-body">
+                                    <h3 class="section-subheading">
                                         VFS Cache Settings
                                     </h3>
-                                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                                    <div class="grid grid-4">
                                         <div class="field-group">
                                             <label class="label" for="rclone.cache_dir">
-                                                <span class="label-text font-medium">Cache Directory</span>
+                                                <span class="label-text">Cache Directory</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.cache_dir" id="rclone.cache_dir" placeholder="/tmp/rclone">
                                             <div class="label">
@@ -4704,7 +4702,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_mode">
-                                                <span class="label-text font-medium">VFS Cache Mode</span>
+                                                <span class="label-text">VFS Cache Mode</span>
                                             </label>
                                             <select class="app-select" name="rclone.vfs_cache_mode" id="rclone.vfs_cache_mode">
                                                 <option value="off">Off - No caching</option>
@@ -4719,7 +4717,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_max_size">
-                                                <span class="label-text font-medium">VFS Cache Max Size</span>
+                                                <span class="label-text">VFS Cache Max Size</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_cache_max_size" id="rclone.vfs_cache_max_size" placeholder="1G">
                                             <div class="label">
@@ -4729,7 +4727,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_max_age">
-                                                <span class="label-text font-medium">VFS Cache Max Age</span>
+                                                <span class="label-text">VFS Cache Max Age</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_cache_max_age" id="rclone.vfs_cache_max_age" placeholder="1h">
                                             <div class="label">
@@ -4739,7 +4737,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_chunk_size">
-                                                <span class="label-text font-medium">Read Chunk Size</span>
+                                                <span class="label-text">Read Chunk Size</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_read_chunk_size" id="rclone.vfs_read_chunk_size" placeholder="128M">
                                             <div class="label">
@@ -4749,7 +4747,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_chunk_size_limit">
-                                                <span class="label-text font-medium">Read Chunk Size Limit</span>
+                                                <span class="label-text">Read Chunk Size Limit</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_read_chunk_size_limit" id="rclone.vfs_read_chunk_size_limit" placeholder="128M">
                                             <div class="label">
@@ -4759,7 +4757,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_ahead">
-                                                <span class="label-text font-medium">VFS Read Ahead</span>
+                                                <span class="label-text">VFS Read Ahead</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_read_ahead" id="rclone.vfs_read_ahead" placeholder="128k">
                                             <div class="label">
@@ -4769,7 +4767,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.dir_cache_time">
-                                                <span class="label-text font-medium">Directory Cache Time</span>
+                                                <span class="label-text">Directory Cache Time</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.dir_cache_time" id="rclone.dir_cache_time" placeholder="5m">
                                             <div class="label">
@@ -4779,7 +4777,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_poll_interval">
-                                                <span class="label-text font-medium">VFS Cache Poll Interval</span>
+                                                <span class="label-text">VFS Cache Poll Interval</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_cache_poll_interval" id="rclone.vfs_cache_poll_interval" placeholder="1h">
                                             <div class="label">
@@ -4789,7 +4787,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_min_free_space">
-                                                <span class="label-text font-medium">VFS Cache Min Free Space</span>
+                                                <span class="label-text">VFS Cache Min Free Space</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_cache_min_free_space" id="rclone.vfs_cache_min_free_space" placeholder="1G">
                                             <div class="label">
@@ -4799,7 +4797,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_disk_space_total">
-                                                <span class="label-text font-medium">VFS Disk Space Total</span>
+                                                <span class="label-text">VFS Disk Space Total</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_disk_space_total" id="rclone.vfs_disk_space_total" placeholder="1G">
                                             <div class="label">
@@ -4809,7 +4807,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_chunk_streams">
-                                                <span class="label-text font-medium">VFS Read Chunk Streams</span>
+                                                <span class="label-text">VFS Read Chunk Streams</span>
                                             </label>
                                             <input type="number" class="app-input" name="rclone.vfs_read_chunk_streams" id="rclone.vfs_read_chunk_streams" placeholder="4" min="0">
                                             <div class="label">
@@ -4818,85 +4816,83 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </wa-card>
 
-                            <div class="card bg-base-200">
-                                <div class="card-body">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <wa-card class="panel panel-muted">
+                                <div class="panel-body">
+                                    <h3 class="section-subheading">
                                         Advanced Settings
                                     </h3>
                                     <div class="grid grid-3">
                                         <div class="field-group">
-                                            <label class="label cursor-pointer justify-start gap-3">
+                                            <label class="checkbox-row">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.no_modtime" id="rclone.no_modtime">
-                                                <div>
-                                                    <span class="label-text font-medium">No Modification Time</span>
-                                                    <div class="label-text-alt">Don't read/write modification times</div>
+                                                <div class="checkbox-row__text">
+                                                    <span class="label-text">No Modification Time</span>
+                                                    <span class="label-text-alt">Don't read/write modification times</span>
                                                 </div>
                                             </label>
                                         </div>
                                         
                                         <div class="field-group">
-                                            <label class="label cursor-pointer justify-start gap-3">
+                                            <label class="checkbox-row">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.no_checksum" id="rclone.no_checksum">
-                                                <div>
-                                                    <span class="label-text font-medium">No Checksum</span>
-                                                    <div class="label-text-alt">Don't checksum files on upload</div>
+                                                <div class="checkbox-row__text">
+                                                    <span class="label-text">No Checksum</span>
+                                                    <span class="label-text-alt">Don't checksum files on upload</span>
                                                 </div>
                                             </label>
                                         </div>
 
                                         <div class="field-group">
-                                            <label class="label cursor-pointer justify-start gap-3" for="rclone.async_read">
+                                            <label class="checkbox-row" for="rclone.async_read">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.async_read" id="rclone.async_read">
-                                                <div>
-                                                    <span class="label-text font-medium">Async Read</span>
-                                                    <div class="label-text-alt">Use asynchronous reads</div>
+                                                <div class="checkbox-row__text">
+                                                    <span class="label-text">Async Read</span>
+                                                    <span class="label-text-alt">Use asynchronous reads</span>
                                                 </div>
                                             </label>
                                         </div>
 
                                         <div class="field-group">
-                                            <label class="label cursor-pointer justify-start gap-3" for="rclone.vfs_fast_fingerprint">
+                                            <label class="checkbox-row" for="rclone.vfs_fast_fingerprint">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.vfs_fast_fingerprint" id="rclone.vfs_fast_fingerprint">
-                                                <div>
-                                                    <span class="label-text font-medium">VFS Fast Fingerprint</span>
-                                                    <div class="label-text-alt">Use fast (less accurate) fingerprints for change detection</div>
+                                                <div class="checkbox-row__text">
+                                                    <span class="label-text">VFS Fast Fingerprint</span>
+                                                    <span class="label-text-alt">Use fast (less accurate) fingerprints for change detection</span>
                                                 </div>
                                             </label>
                                         </div>
 
                                         <div class="field-group">
-                                            <label class="label cursor-pointer justify-start gap-3" for="rclone.use_mmap">
+                                            <label class="checkbox-row" for="rclone.use_mmap">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.use_mmap" id="rclone.use_mmap">
-                                                <div>
-                                                    <span class="label-text font-medium">Use Mmap</span>
-                                                    <div class="label-text-alt">Use fast (less accurate) fingerprints for change detection</div>
+                                                <div class="checkbox-row__text">
+                                                    <span class="label-text">Use Mmap</span>
+                                                    <span class="label-text-alt">Use fast (less accurate) fingerprints for change detection</span>
                                                 </div>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </wa-card>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
+        </wa-card>
     </form>
 </div>
 
-<div id="loadingOverlay" class="fixed inset-0 bg-overlay backdrop-blur-sm z-50 hidden">
-    <div class="flex items-center justify-center h-full">
-        <div class="card bg-base-100 shadow-2xl">
-            <div class="card-body text-center">
-                <wa-spinner></wa-spinner>
-                <h3 class="text-lg font-semibold mt-4">Applying Configuration</h3>
-                <p class="text-muted">Please wait while we save your settings...</p>
-            </div>
+<div id="loadingOverlay" class="overlay hidden">
+    <wa-card class="panel overlay-card">
+        <div class="panel-body center-text stack-sm">
+            <wa-spinner></wa-spinner>
+            <h3 class="section-subheading">Applying Configuration</h3>
+            <p class="hint">Please wait while we save your settings...</p>
         </div>
-    </div>
+    </wa-card>
 </div>
 `;class ConfigPage extends i$3{createRenderRoot(){return this}firstUpdated(){this._controller||(this._controller=new ConfigManager,window.configManager=this._controller,setupPasswordToggles(),window.refreshAPIToken=refreshAPIToken,window.copyAPIToken=copyAPIToken,window.updateAuthSettings=updateAuthSettings)}render(){const w=window.urlBase||"",O=this.needSetup?`
         <wa-callout variant="warning" appearance="accent">
@@ -4906,23 +4902,21 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
         </wa-callout>
       `:"",F=template$1.replace("__NEED_SETUP__",O).replace(/__URL_BASE__/g,w);return b`${o(F)}`}}Se(ConfigPage,"properties",{needSetup:{type:Boolean,attribute:"need-setup"}});customElements.define("config-page",ConfigPage);function setupPasswordToggles(){document.addEventListener("click",T=>{const w=T.target.closest(".password-toggle-btn");if(!w)return;T.preventDefault(),T.stopPropagation();const O=w.closest(".password-toggle-container");if(!O)return;const F=O.querySelector("input, textarea, wa-input, wa-textarea");let W=w.querySelector("wa-icon, i");W||(W=document.createElement("wa-icon"),W.setAttribute("name","eye"),w.appendChild(W)),!(!F||!W)&&(F.tagName.toLowerCase()==="textarea"?togglePasswordTextarea(F,W):togglePasswordInput(F,W))})}function togglePasswordInput(T,w){T.type==="password"?(T.type="text",w.tagName&&w.tagName.toLowerCase()==="wa-icon"?w.setAttribute("name","eye-slash"):w.className="bi bi-eye-slash"):(T.type="password",w.tagName&&w.tagName.toLowerCase()==="wa-icon"?w.setAttribute("name","eye"):w.className="bi bi-eye")}function togglePasswordTextarea(T,w){T.style.webkitTextSecurity==="disc"||T.style.webkitTextSecurity===""||T.getAttribute("data-password-visible")!=="true"?(T.style.webkitTextSecurity="none",T.style.textSecurity="none",T.setAttribute("data-password-visible","true"),w.tagName&&w.tagName.toLowerCase()==="wa-icon"?w.setAttribute("name","eye-slash"):w.className="bi bi-eye-slash"):(T.style.webkitTextSecurity="disc",T.style.textSecurity="disc",T.setAttribute("data-password-visible","false"),w.tagName&&w.tagName.toLowerCase()==="wa-icon"?w.setAttribute("name","eye"):w.className="bi bi-eye")}async function refreshAPIToken(){const T=document.getElementById("refresh-token-btn"),w=document.getElementById("api-token-display");window.decypharrUtils.setButtonLoading(T,!0,"Refresh Token");try{const O=await window.decypharrUtils.fetcher("/api/refresh-token",{method:"POST"});if(!O.ok)throw new Error("Failed to refresh token");const F=await O.json();w.value=F.token,window.decypharrUtils.createToast(F.message||"Token refreshed successfully","success")}catch(O){console.error("Error refreshing token:",O),window.decypharrUtils.createToast("Failed to refresh token: "+O.message,"error")}finally{window.decypharrUtils.setButtonLoading(T,!1)}}async function copyAPIToken(){const w=document.getElementById("api-token-display").value;if(!w||w==="No token generated"){window.decypharrUtils.createToast("No token to copy. Please refresh the token first.","warning");return}try{await window.decypharrUtils.copyToClipboard(w)}catch(O){console.error("Failed to copy token:",O),window.decypharrUtils.createToast("Failed to copy token to clipboard","error")}}async function updateAuthSettings(){const T=document.getElementById("auth-username").value,w=document.getElementById("auth-password").value,O=document.getElementById("auth-password-confirm").value,F=document.getElementById("update-auth-btn");if(w!==O)return window.decypharrUtils.createToast("Passwords do not match","error"),!1;window.decypharrUtils.setButtonLoading(F,!0,"Update Authentication");try{const W=await window.decypharrUtils.fetcher("/api/update-auth",{method:"POST",body:JSON.stringify({username:T,password:w,confirm_password:O})});if(!W.ok){const q=await W.text();throw new Error(q||"Failed to update authentication settings")}const U=await W.json();return window.decypharrUtils.createToast(U.message,"success"),document.getElementById("auth-password").value="",document.getElementById("auth-password-confirm").value="",!0}catch(W){return console.error("Error updating auth settings:",W),window.decypharrUtils.createToast("Failed to update authentication: "+W.message,"error"),!1}finally{window.decypharrUtils.setButtonLoading(F,!1)}}class ConfigManager{constructor(){this.debridCount=0,this.arrCount=0,this.debridDirectoryCounts={},this.directoryFilterCounts={},this.refs={configForm:document.getElementById("configForm"),loadingOverlay:document.getElementById("loadingOverlay"),debridConfigs:document.getElementById("debridConfigs"),arrConfigs:document.getElementById("arrConfigs"),addDebridBtn:document.getElementById("addDebridBtn"),addArrBtn:document.getElementById("addArrBtn")},this.init()}init(){this.bindEvents(),this.initTabs(),this.loadConfiguration(),this.setupMagnetHandler(),this.checkIncompleteConfig()}initTabs(){const w=Array.from(document.querySelectorAll(".tab-button")),O=Array.from(document.querySelectorAll(".tab-content"));if(!w.length||!O.length)return;const F=W=>{const U=W.dataset.tab;w.forEach(q=>q.classList.toggle("active",q===W)),O.forEach(q=>{q.classList.toggle("hidden",q.dataset.tabContent!==U)})};w.forEach(W=>W.addEventListener("click",()=>F(W))),F(w.find(W=>W.classList.contains("active"))||w[0])}checkIncompleteConfig(){const w=new URLSearchParams(window.location.search);if(w.has("inco")){const O=w.get("inco");window.decypharrUtils.createToast(`Incomplete configuration: ${O}`,"warning")}}bindEvents(){this.refs.configForm.addEventListener("submit",w=>this.saveConfiguration(w)),this.refs.addDebridBtn.addEventListener("click",()=>this.addDebridConfig()),this.refs.addArrBtn.addEventListener("click",()=>this.addArrConfig()),document.addEventListener("change",w=>{w.target.classList.contains("useWebdav")&&this.toggleWebDAVSection(w.target)}),document.addEventListener("click",w=>{const O=w.target.closest(".test-debrid-key");if(O){w.preventDefault();const F=parseInt(O.dataset.index||"0",10);this.testDebridKey(F)}})}async loadConfiguration(){try{const w=await window.decypharrUtils.fetcher("/api/config");if(!w.ok)throw new Error("Failed to load configuration");const O=await w.json();this.populateForm(O)}catch(w){console.error("Error loading configuration:",w),window.decypharrUtils.createToast("Error loading configuration","error")}}populateForm(w){this.populateGeneralSettings(w),w.debrids&&Array.isArray(w.debrids)&&w.debrids.forEach(O=>this.addDebridConfig(O)),this.populateQBittorrentSettings(w.qbittorrent),w.arrs&&Array.isArray(w.arrs)&&w.arrs.forEach(O=>this.addArrConfig(O)),this.populateRepairSettings(w.repair),this.populateRcloneSettings(w.rclone),this.populateAPIToken(w)}populateGeneralSettings(w){["log_level","url_base","bind_address","port","discord_webhook_url","min_file_size","max_file_size","remove_stalled_after","debrid_poll_interval","bad_torrent_threshold_hours"].forEach(F=>{const W=document.querySelector(`[name="${F}"]`);W&&w[F]!==void 0&&(W.value=w[F])}),w.allowed_file_types&&Array.isArray(w.allowed_file_types)&&(document.querySelector('[name="allowed_file_types"]').value=w.allowed_file_types.join(", "))}populateQBittorrentSettings(w){if(!w)return;["download_folder","refresh_interval","max_downloads","skip_pre_cache","always_rm_tracker_urls","default_action"].forEach(F=>{const W=document.querySelector(`[name="qbit.${F}"]`);W&&w[F]!==void 0&&(W.type==="checkbox"?W.checked=w[F]:W.value=w[F])})}populateRepairSettings(w){if(!w)return;["enabled","interval","workers","zurg_url","strategy","use_webdav","auto_process"].forEach(F=>{const W=document.querySelector(`[name="repair.${F}"]`);W&&w[F]!==void 0&&(W.type==="checkbox"?W.checked=w[F]:W.value=w[F])})}populateRcloneSettings(w){if(!w)return;["enabled","rc_port","mount_path","cache_dir","transfers","vfs_cache_mode","vfs_cache_max_size","vfs_cache_max_age","vfs_cache_poll_interval","vfs_read_chunk_size","vfs_read_chunk_size_limit","buffer_size","bw_limit","uid","gid","vfs_read_ahead","attr_timeout","dir_cache_time","poll_interval","umask","no_modtime","no_checksum","log_level","vfs_cache_min_free_space","vfs_fast_fingerprint","vfs_read_chunk_streams","async_read","use_mmap"].forEach(F=>{const W=document.querySelector(`[name="rclone.${F}"]`);W&&w[F]!==void 0&&(W.type==="checkbox"?W.checked=w[F]:W.value=w[F])})}addDebridConfig(w={}){const O=this.getDebridTemplate(this.debridCount,w);this.refs.debridConfigs.insertAdjacentHTML("beforeend",O);const W=this.refs.debridConfigs.lastElementChild.querySelector(".useWebdav");w.use_webdav&&this.toggleWebDAVSection(W,!0),Object.keys(w).length>0&&this.populateDebridData(this.debridCount,w),this.debridDirectoryCounts[this.debridCount]=0,w.directories&&Object.entries(w.directories).forEach(([U,q])=>{const j=this.addDirectory(this.debridCount,{name:U,...q});q.filters&&Object.entries(q.filters).forEach(([J,X])=>{this.addFilter(this.debridCount,j,J,X)})}),this.debridCount++}populateDebridData(w,O){Object.entries(O).forEach(([F,W])=>{const U=document.querySelector(`[name="debrid[${w}].${F}"]`);U&&(U.type==="checkbox"?U.checked=W:F==="download_api_keys"&&Array.isArray(W)?(U.value=W.join(`
 `),U.tagName.toLowerCase()==="textarea"&&(U.style.webkitTextSecurity="disc",U.style.textSecurity="disc",U.setAttribute("data-password-visible","false"))):U.value=W)})}getDebridTemplate(w){return templateDebrid(w)}toggleWebDAVSection(w,O=!1){const F=w.closest(".debrid-config"),W=F.dataset.index,U=F.querySelector(`#webdav-section-${W}`),q=U.querySelectorAll(".webdav-field");w.checked||O?U.classList.remove("hidden"):(U.classList.add("hidden"),q.forEach(j=>j.required=!1))}addDirectory(w,O={}){this.debridDirectoryCounts[w]||(this.debridDirectoryCounts[w]=0);const F=this.debridDirectoryCounts[w],W=document.getElementById(`debrid[${w}].directories`),U=this.getDirectoryTemplate(w,F);return W.insertAdjacentHTML("beforeend",U),Object.keys(O).length>0&&this.populateDirectoryData(w,F,O),this.debridDirectoryCounts[w]++,F}populateDirectoryData(w,O,F){if(F.name){const W=document.querySelector(`[name="debrid[${w}].directories[${O}].name"]`);W&&(W.value=F.name)}if(F.path){const W=document.querySelector(`[name="debrid[${w}].directories[${O}].path"]`);W&&(W.value=F.path)}}getDirectoryTemplate(w,O){return templateDirectory(w,O)}addFilter(w,O,F,W){this.directoryFilterCounts[`${w}-${O}`]||(this.directoryFilterCounts[`${w}-${O}`]=0);const U=this.directoryFilterCounts[`${w}-${O}`],q=document.getElementById(`debrid[${w}].directories[${O}].filters`),j=this.getFilterTemplate(w,O,U);q.insertAdjacentHTML("beforeend",j);const J=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${U}].type"]`),X=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${U}].value"]`);J&&(J.value=F),X&&(X.value=W),this.directoryFilterCounts[`${w}-${O}`]++}getFilterTemplate(w,O,F){return templateFilter(w,O,F)}addArrConfig(w={}){const O=this.getArrTemplate(this.arrCount,w);this.refs.arrConfigs.insertAdjacentHTML("beforeend",O),Object.keys(w).length>0&&this.populateArrData(this.arrCount,w),this.arrCount++}populateArrData(w,O){Object.entries(O).forEach(([F,W])=>{const U=document.querySelector(`[name="arr[${w}].${F}"]`);U&&(U.type==="checkbox"?U.checked=W:U.value=W)})}getArrTemplate(w,O={}){return templateArr(w,O)}async saveConfiguration(w){w.preventDefault();const O=new FormData(this.refs.configForm),F=this.buildConfigPayload(O);this.showLoadingOverlay(!0);try{const W=await window.decypharrUtils.fetcher("/api/config",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(F)});if(!W.ok){const U=await W.text();throw new Error(U||"Failed to save configuration")}window.decypharrUtils.createToast("Configuration saved successfully","success")}catch(W){console.error("Error saving configuration:",W),window.decypharrUtils.createToast("Failed to save configuration: "+W.message,"error")}finally{this.showLoadingOverlay(!1)}}buildConfigPayload(w){const O=Object.fromEntries(w.entries());return O.allowed_file_types&&(O.allowed_file_types=O.allowed_file_types.split(",").map(F=>F.trim()).filter(Boolean)),O.debrids=this.collectDebridConfig(),O.arrs=this.collectArrConfig(),O.qbittorrent=this.collectQbitConfig(),O.repair=this.collectRepairConfig(),O.rclone=this.collectRcloneConfig(),O}collectDebridConfig(){const w=[];for(let O=0;O<this.debridCount;O++){if(!document.querySelector(`[name="debrid[${O}].name"]`))continue;const W={};document.querySelectorAll(`[name^="debrid[${O}]."]`).forEach(U=>{const q=U.name.replace(`debrid[${O}].`,"");U.type==="checkbox"?W[q]=U.checked:q==="download_api_keys"?W[q]=U.value.split(`
-`).map(j=>j.trim()).filter(Boolean):W[q]=U.value}),W.directories=this.collectDirectoryConfig(O),w.push(W)}return w}collectDirectoryConfig(w){const O={},F=document.getElementById(`debrid[${w}].directories`);return F&&F.querySelectorAll(".directory-config").forEach(W=>{const U=W.dataset.index,q=document.querySelector(`[name="debrid[${w}].directories[${U}].name"]`).value,j=document.querySelector(`[name="debrid[${w}].directories[${U}].path"]`).value,J=this.collectFilterConfig(w,U);O[q]={path:j,filters:J}}),O}collectFilterConfig(w,O){const F={},W=document.getElementById(`debrid[${w}].directories[${O}].filters`);return W&&W.querySelectorAll(".filter-config").forEach(U=>{const q=U.dataset.index,j=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${q}].type"]`).value,J=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${q}].value"]`).value;j&&(F[j]=J)}),F}collectArrConfig(){const w=[];for(let O=0;O<this.arrCount;O++){if(!document.querySelector(`[name="arr[${O}].name"]`))continue;const W={};document.querySelectorAll(`[name^="arr[${O}]."]`).forEach(U=>{const q=U.name.replace(`arr[${O}].`,"");U.type==="checkbox"?W[q]=U.checked:W[q]=U.value}),w.push(W)}return w}collectQbitConfig(){const w=(O,F="")=>{const W=document.querySelector(`[name="qbit.${O}"]`);return W?W.type==="checkbox"?W.checked:W.value||F:F};return{download_folder:w("download_folder"),refresh_interval:parseInt(w("refresh_interval",60),10),max_downloads:parseInt(w("max_downloads",0),10),skip_pre_cache:w("skip_pre_cache",!1),always_rm_tracker_urls:w("always_rm_tracker_urls",!1),default_action:w("default_action","symlink")}}collectRepairConfig(){return{enabled:document.querySelector('[name="repair.enabled"]').checked,interval:document.querySelector('[name="repair.interval"]').value,zurg_url:document.querySelector('[name="repair.zurg_url"]').value,strategy:document.querySelector('[name="repair.strategy"]').value,workers:parseInt(document.querySelector('[name="repair.workers"]').value)||1,use_webdav:document.querySelector('[name="repair.use_webdav"]').checked,auto_process:document.querySelector('[name="repair.auto_process"]').checked}}collectRcloneConfig(){const w=(O,F="")=>{const W=document.querySelector(`[name="rclone.${O}"]`);if(!W)return F;if(W.type==="checkbox")return W.checked;if(W.type==="number"){const U=parseInt(W.value);return isNaN(U)?0:U}return W.value||F};return{enabled:w("enabled",!1),rc_port:w("rc_port","5572"),mount_path:w("mount_path"),buffer_size:w("buffer_size"),bw_limit:w("bw_limit"),cache_dir:w("cache_dir"),transfers:w("transfers",8),vfs_cache_mode:w("vfs_cache_mode","off"),vfs_cache_max_age:w("vfs_cache_max_age","1h"),vfs_cache_max_size:w("vfs_cache_max_size"),vfs_cache_poll_interval:w("vfs_cache_poll_interval","1m"),vfs_read_chunk_size:w("vfs_read_chunk_size","128M"),vfs_read_chunk_size_limit:w("vfs_read_chunk_size_limit","off"),vfs_cache_min_free_space:w("vfs_cache_min_free_space",""),vfs_fast_fingerprint:w("vfs_fast_fingerprint",!1),vfs_read_chunk_streams:w("vfs_read_chunk_streams",0),use_mmap:w("use_mmap",!1),async_read:w("async_read",!0),uid:w("uid",0),gid:w("gid",0),umask:w("umask",""),vfs_read_ahead:w("vfs_read_ahead","128k"),attr_timeout:w("attr_timeout","1s"),dir_cache_time:w("dir_cache_time","5m"),no_modtime:w("no_modtime",!1),no_checksum:w("no_checksum",!1),log_level:w("log_level","INFO")}}showLoadingOverlay(w){this.refs.loadingOverlay.classList.toggle("hidden",!w)}setupMagnetHandler(){if(window.registerMagnetLinkHandler=()=>{if("registerProtocolHandler"in navigator)try{navigator.registerProtocolHandler("magnet",`${window.location.origin}${window.urlBase}download?magnet=%s`,"Decypharr"),localStorage.setItem("magnetHandler","true");const w=document.getElementById("registerMagnetLink");w&&(w.innerHTML='<wa-icon slot="start" name="check"></wa-icon>Magnet Handler Registered',w.variant="success",w.appearance="solid",w.disabled=!0),window.decypharrUtils.createToast("Magnet link handler registered successfully")}catch(w){console.error("Failed to register magnet link handler:",w),window.decypharrUtils.createToast("Failed to register magnet link handler","error")}else window.decypharrUtils.createToast("Magnet link registration not supported in this browser","warning")},localStorage.getItem("magnetHandler")==="true"){const w=document.getElementById("registerMagnetLink");w&&(w.innerHTML='<wa-icon slot="start" name="check"></wa-icon>Magnet Handler Registered',w.variant="success",w.appearance="solid",w.disabled=!0)}}async testDebridKey(w){const O=document.querySelector(`[name="debrid[${w}].name"]`),F=document.querySelector(`[name="debrid[${w}].api_key"]`);if(!O||!F){window.decypharrUtils.createToast("Debrid fields not found","error");return}const W=O.value.trim(),U=F.value.trim(),q=document.querySelector(`[name="debrid[${w}].unpack_rar"]`),j=document.querySelector(`.test-debrid-key[data-index="${w}"]`);if(!W||!U){window.decypharrUtils.createToast("Please enter a debrid service and API key first","warning");return}try{window.decypharrUtils.setButtonLoading(j,!0);const J=await window.decypharrUtils.fetcher("/api/debrid/test",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:W,api_key:U,unpack_rar:q?q.checked:!1})});let X={};try{X=await J.json()}catch{X={}}if(!J.ok)throw new Error(X.detail||X.error||"Test failed");const Y=X.profile||{};let K=`${W} key OK`;if(Y.username&&(K+=` (${Y.username})`),Y.expiration){const G=new Date(Y.expiration);isNaN(G.getTime())||(K+=`, expires ${G.toLocaleString()}`)}window.decypharrUtils.createToast(K,"success")}catch(J){const X=J&&J.message?J.message:String(J);window.decypharrUtils.createToast(`Key test failed: ${X}`,"error")}finally{window.decypharrUtils.setButtonLoading(j,!1)}}populateAPIToken(w){const O=document.getElementById("api-token-display");O&&(O.value=w.api_token||"****");const F=document.getElementById("auth-username");F&&w.auth_username&&(F.value=w.auth_username)}}function normalizeTemplate(T){return T.replace(/class="input input-bordered input-has-toggle"/g,'class="app-input input-has-toggle"').replace(/input input-bordered/g,"app-input").replace(/class="input input-bordered input-sm"/g,'class="app-input"').replace(/class="input input-bordered"/g,'class="app-input"').replace(/class="textarea[^"]*"/g,'class="app-textarea"').replace(/select select-bordered/g,"app-select").replace(/class="select select-bordered select-sm"/g,'class="app-select"').replace(/class="select select-bordered"/g,'class="app-select"').replace(/checkbox checkbox-sm/g,"app-checkbox").replace(/checkbox checkbox-lg/g,"app-checkbox").replace(/\bcheckbox\b/g,"app-checkbox").replace(/text-base-content\/70/g,"text-muted").replace(/text-base-content\/60/g,"text-muted").replace(/bg-black\/50/g,"bg-overlay").replace(/<button/g,"<wa-button").replace(/<\/button>/g,"</wa-button>").replace(/<i class="bi[^>]*"><\/i>/g,"")}function getDebridTemplate(T){return`
-        <div class="card bg-base-100 border border-base-300 shadow-sm debrid-config" data-index="${T}">
-            <div class="card-body">
-                <div class="flex justify-between items-start mb-4">
-                    <h3 class="card-title text-lg">
-                        Debrid Service #${T+1}
-                    </h3>
-                    <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.debrid-config').remove();">
+`).map(j=>j.trim()).filter(Boolean):W[q]=U.value}),W.directories=this.collectDirectoryConfig(O),w.push(W)}return w}collectDirectoryConfig(w){const O={},F=document.getElementById(`debrid[${w}].directories`);return F&&F.querySelectorAll(".directory-config").forEach(W=>{const U=W.dataset.index,q=document.querySelector(`[name="debrid[${w}].directories[${U}].name"]`).value,j=document.querySelector(`[name="debrid[${w}].directories[${U}].path"]`).value,J=this.collectFilterConfig(w,U);O[q]={path:j,filters:J}}),O}collectFilterConfig(w,O){const F={},W=document.getElementById(`debrid[${w}].directories[${O}].filters`);return W&&W.querySelectorAll(".filter-config").forEach(U=>{const q=U.dataset.index,j=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${q}].type"]`).value,J=document.querySelector(`[name="debrid[${w}].directories[${O}].filters[${q}].value"]`).value;j&&(F[j]=J)}),F}collectArrConfig(){const w=[];for(let O=0;O<this.arrCount;O++){if(!document.querySelector(`[name="arr[${O}].name"]`))continue;const W={};document.querySelectorAll(`[name^="arr[${O}]."]`).forEach(U=>{const q=U.name.replace(`arr[${O}].`,"");U.type==="checkbox"?W[q]=U.checked:W[q]=U.value}),w.push(W)}return w}collectQbitConfig(){const w=(O,F="")=>{const W=document.querySelector(`[name="qbit.${O}"]`);return W?W.type==="checkbox"?W.checked:W.value||F:F};return{download_folder:w("download_folder"),refresh_interval:parseInt(w("refresh_interval",60),10),max_downloads:parseInt(w("max_downloads",0),10),skip_pre_cache:w("skip_pre_cache",!1),always_rm_tracker_urls:w("always_rm_tracker_urls",!1),default_action:w("default_action","symlink")}}collectRepairConfig(){return{enabled:document.querySelector('[name="repair.enabled"]').checked,interval:document.querySelector('[name="repair.interval"]').value,zurg_url:document.querySelector('[name="repair.zurg_url"]').value,strategy:document.querySelector('[name="repair.strategy"]').value,workers:parseInt(document.querySelector('[name="repair.workers"]').value)||1,use_webdav:document.querySelector('[name="repair.use_webdav"]').checked,auto_process:document.querySelector('[name="repair.auto_process"]').checked}}collectRcloneConfig(){const w=(O,F="")=>{const W=document.querySelector(`[name="rclone.${O}"]`);if(!W)return F;if(W.type==="checkbox")return W.checked;if(W.type==="number"){const U=parseInt(W.value);return isNaN(U)?0:U}return W.value||F};return{enabled:w("enabled",!1),rc_port:w("rc_port","5572"),mount_path:w("mount_path"),buffer_size:w("buffer_size"),bw_limit:w("bw_limit"),cache_dir:w("cache_dir"),transfers:w("transfers",8),vfs_cache_mode:w("vfs_cache_mode","off"),vfs_cache_max_age:w("vfs_cache_max_age","1h"),vfs_cache_max_size:w("vfs_cache_max_size"),vfs_cache_poll_interval:w("vfs_cache_poll_interval","1m"),vfs_read_chunk_size:w("vfs_read_chunk_size","128M"),vfs_read_chunk_size_limit:w("vfs_read_chunk_size_limit","off"),vfs_cache_min_free_space:w("vfs_cache_min_free_space",""),vfs_fast_fingerprint:w("vfs_fast_fingerprint",!1),vfs_read_chunk_streams:w("vfs_read_chunk_streams",0),use_mmap:w("use_mmap",!1),async_read:w("async_read",!0),uid:w("uid",0),gid:w("gid",0),umask:w("umask",""),vfs_read_ahead:w("vfs_read_ahead","128k"),attr_timeout:w("attr_timeout","1s"),dir_cache_time:w("dir_cache_time","5m"),no_modtime:w("no_modtime",!1),no_checksum:w("no_checksum",!1),log_level:w("log_level","INFO")}}showLoadingOverlay(w){this.refs.loadingOverlay.classList.toggle("hidden",!w)}setupMagnetHandler(){if(window.registerMagnetLinkHandler=()=>{if("registerProtocolHandler"in navigator)try{navigator.registerProtocolHandler("magnet",`${window.location.origin}${window.urlBase}download?magnet=%s`,"Decypharr"),localStorage.setItem("magnetHandler","true");const w=document.getElementById("registerMagnetLink");w&&(w.innerHTML='<wa-icon slot="start" name="check"></wa-icon>Magnet Handler Registered',w.variant="success",w.appearance="solid",w.disabled=!0),window.decypharrUtils.createToast("Magnet link handler registered successfully")}catch(w){console.error("Failed to register magnet link handler:",w),window.decypharrUtils.createToast("Failed to register magnet link handler","error")}else window.decypharrUtils.createToast("Magnet link registration not supported in this browser","warning")},localStorage.getItem("magnetHandler")==="true"){const w=document.getElementById("registerMagnetLink");w&&(w.innerHTML='<wa-icon slot="start" name="check"></wa-icon>Magnet Handler Registered',w.variant="success",w.appearance="solid",w.disabled=!0)}}async testDebridKey(w){const O=document.querySelector(`[name="debrid[${w}].name"]`),F=document.querySelector(`[name="debrid[${w}].api_key"]`);if(!O||!F){window.decypharrUtils.createToast("Debrid fields not found","error");return}const W=O.value.trim(),U=F.value.trim(),q=document.querySelector(`[name="debrid[${w}].unpack_rar"]`),j=document.querySelector(`.test-debrid-key[data-index="${w}"]`);if(!W||!U){window.decypharrUtils.createToast("Please enter a debrid service and API key first","warning");return}try{window.decypharrUtils.setButtonLoading(j,!0);const J=await window.decypharrUtils.fetcher("/api/debrid/test",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:W,api_key:U,unpack_rar:q?q.checked:!1})});let X={};try{X=await J.json()}catch{X={}}if(!J.ok)throw new Error(X.detail||X.error||"Test failed");const Y=X.profile||{};let K=`${W} key OK`;if(Y.username&&(K+=` (${Y.username})`),Y.expiration){const G=new Date(Y.expiration);isNaN(G.getTime())||(K+=`, expires ${G.toLocaleString()}`)}window.decypharrUtils.createToast(K,"success")}catch(J){const X=J&&J.message?J.message:String(J);window.decypharrUtils.createToast(`Key test failed: ${X}`,"error")}finally{window.decypharrUtils.setButtonLoading(j,!1)}}populateAPIToken(w){const O=document.getElementById("api-token-display");O&&(O.value=w.api_token||"****");const F=document.getElementById("auth-username");F&&w.auth_username&&(F.value=w.auth_username)}}function getDebridTemplate(T){return`
+        <wa-card class="panel debrid-config" data-index="${T}">
+            <div class="panel-body page-stack">
+                <div class="row-between-start">
+                    <h3 class="section-subheading">Debrid Service #${T+1}</h3>
+                    <wa-button type="button" variant="danger" appearance="outline" size="small" onclick="this.closest('.debrid-config').remove();">
                         Remove
-                    </button>
+                    </wa-button>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="form-control">
+                <div class="grid grid-2 grid-spaced">
+                        <div class="field-group">
                             <label class="label" for="debrid[${T}].name">
-                                <span class="label-text font-medium">Service Type</span>
+                                <span class="label-text">Service Type</span>
                             </label>
-                            <select class="select select-bordered" name="debrid[${T}].name" id="debrid[${T}].name" required>
+                            <select class="app-select" name="debrid[${T}].name" id="debrid[${T}].name" required>
                                 <option value="realdebrid">Real Debrid</option>
                                 <option value="alldebrid">AllDebrid</option>
                                 <option value="debridlink">Debrid Link</option>
@@ -4930,107 +4924,104 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             </select>
                         </div>
 
-                        <div class="form-control">
+                        <div class="field-group">
                             <label class="label" for="debrid[${T}].api_key">
-                                <span class="label-text font-medium">API Key</span>
+                                <span class="label-text">API Key</span>
                             </label>
                             <div class="password-toggle-container">
-                                <input type="password" class="input input-bordered input-has-toggle" 
+                                <input type="password" class="app-input input-has-toggle"
                                        name="debrid[${T}].api_key" id="debrid[${T}].api_key" required>
-                                <button type="button" class="password-toggle-btn">
-                                    <i class="bi bi-eye" id="debrid[${T}].api_key_icon"></i>
-                                </button>
+                                <wa-button type="button" appearance="plain" class="password-toggle-btn">
+                                    <wa-icon name="eye" id="debrid[${T}].api_key_icon"></wa-icon>
+                                </wa-button>
                             </div>
                             <div class="label">
                                 <span class="label-text-alt">API key for the debrid service</span>
                             </div>
-                            <div class="mt-2 flex items-center gap-2">
-                                <button type="button" class="btn btn-outline btn-xs test-debrid-key" data-index="${T}">
+                            <div class="inline-note">
+                                <wa-button type="button" appearance="outline" size="small" class="test-debrid-key" data-index="${T}">
                                     Test key
-                                </button>
-                                <span class="text-xs text-base-content/60">Validates the API key against the service.</span>
+                                </wa-button>
+                                <span class="hint">Validates the API key against the service.</span>
                             </div>
                         </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="flex flex-col">
-                        <div class="form-control flex-1">
-                            <label class="label" for="debrid[${T}].download_api_keys">
-                                <span class="label-text font-medium">Download API Keys</span>
-                            </label>
-                            <div class="password-toggle-container">
-                                <textarea class="textarea textarea-bordered has-toggle font-mono h-full min-h-[200px]" 
-                                          name="debrid[${T}].download_api_keys" 
-                                          id="debrid[${T}].download_api_keys" 
-                                          placeholder="Multiple API keys for download (one per line). If empty, main API key will be used."></textarea>
-                                <button type="button" class="password-toggle-btn textarea-toggle">
-                                    <i class="bi bi-eye" id="debrid[${T}].download_api_keys_icon"></i>
-                                </button>
-                            </div>
-                            <div class="label">
-                                <span class="label-text-alt">Multiple API keys for downloads - leave empty to use main API key</span>
-                            </div>
+                <div class="grid grid-2 grid-spaced">
+                    <div class="field-group">
+                        <label class="label" for="debrid[${T}].download_api_keys">
+                            <span class="label-text">Download API Keys</span>
+                        </label>
+                        <div class="password-toggle-container">
+                            <textarea class="app-textarea text-mono textarea-tall"
+                                      name="debrid[${T}].download_api_keys"
+                                      id="debrid[${T}].download_api_keys"
+                                      placeholder="Multiple API keys for download (one per line). If empty, main API key will be used."></textarea>
+                            <wa-button type="button" appearance="plain" class="password-toggle-btn textarea-toggle">
+                                <wa-icon name="eye" id="debrid[${T}].download_api_keys_icon"></wa-icon>
+                            </wa-button>
+                        </div>
+                        <div class="label">
+                            <span class="label-text-alt">Multiple API keys for downloads - leave empty to use main API key</span>
                         </div>
                     </div>
-                    <div class="space-y-4">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div class="form-control">
+                    <div class="stack-md">
+                    <div class="grid grid-2">
+                        <div class="field-group">
                             <label class="label" for="debrid[${T}].folder">
-                                <span class="label-text font-medium">Mount/Rclone Folder</span>
+                                <span class="label-text">Mount/Rclone Folder</span>
                             </label>
-                            <input type="text" class="input input-bordered" 
-                                   name="debrid[${T}].folder" id="debrid[${T}].folder" 
+                            <input type="text" class="app-input"
+                                   name="debrid[${T}].folder" id="debrid[${T}].folder"
                                    placeholder="/mnt/remote/realdebrid/__all__" required>
                             <div class="label">
                                 <span class="label-text-alt">Path where debrid files are mounted</span>
                             </div>
                         </div>
-                        <div class="form-control">
+                        <div class="field-group">
                               <label class="label" for="debrid[${T}].rclone_mount_path">
-                                  <span class="label-text font-medium">Custom Rclone Mount Path</span>
-                                  <span class="badge badge-ghost badge-sm">Optional</span>
+                                  <span class="label-text">Custom Rclone Mount Path</span>
+                                  <wa-badge variant="neutral" size="small">Optional</wa-badge>
                               </label>
-                              <input type="text" class="input input-bordered" 
-                                     name="debrid[${T}].rclone_mount_path" id="debrid[${T}].rclone_mount_path" 
+                              <input type="text" class="app-input"
+                                     name="debrid[${T}].rclone_mount_path" id="debrid[${T}].rclone_mount_path"
                                      placeholder="/custom/mount/path (leave empty for global mount path)">
                               <div class="label">
                                   <span class="label-text-alt">Custom mount path for this debrid service. If empty, uses global rclone mount path.</span>
                               </div>
                         </div>
-                        
                     </div>
-                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-3">
-                        <div class="form-control">
+                    <div class="grid grid-3">
+                        <div class="field-group">
                             <label class="label" for="debrid[${T}].rate_limit">
-                                <span class="label-text font-medium">Rate Limit</span>
+                                <span class="label-text">Rate Limit</span>
                             </label>
-                            <input type="text" class="input input-bordered" 
-                                   name="debrid[${T}].rate_limit" id="debrid[${T}].rate_limit" 
+                            <input type="text" class="app-input"
+                                   name="debrid[${T}].rate_limit" id="debrid[${T}].rate_limit"
                                    placeholder="1000">
                         </div>
-                        <div class="form-control">
+                        <div class="field-group">
                             <label class="label" for="debrid[${T}].download_queue">
-                                <span class="label-text font-medium">Download Queue</span>
+                                <span class="label-text">Download Queue</span>
                             </label>
-                            <input type="number" class="input input-bordered" 
-                                   name="debrid[${T}].download_queue" id="debrid[${T}].download_queue" 
+                            <input type="number" class="app-input"
+                                   name="debrid[${T}].download_queue" id="debrid[${T}].download_queue"
                                    placeholder="0">
                         </div>
-                        <div class="form-control">
+                        <div class="field-group">
                             <label class="label" for="debrid[${T}].download_timeout">
-                                <span class="label-text font-medium">Download Timeout</span>
+                                <span class="label-text">Download Timeout</span>
                             </label>
-                            <input type="text" class="input input-bordered" 
-                                   name="debrid[${T}].download_timeout" id="debrid[${T}].download_timeout" 
+                            <input type="text" class="app-input"
+                                   name="debrid[${T}].download_timeout" id="debrid[${T}].download_timeout"
                                    placeholder="30s">
                         </div>
                     </div>
-                    <div class="form-control">
+                    <div class="field-group">
                         <label class="label" for="debrid[${T}].folder_naming">
-                            <span class="label-text font-medium">Folder Naming Strategy</span>
+                            <span class="label-text">Folder Naming Strategy</span>
                         </label>
-                        <select class="select select-bordered" name="debrid[${T}].folder_naming" id="debrid[${T}].folder_naming">
+                        <select class="app-select" name="debrid[${T}].folder_naming" id="debrid[${T}].folder_naming">
                             <option value="original">Original</option>
                             <option value="original_no_ext">Original (No Extension)</option>
                             <option value="min">Minimum</option>
@@ -5039,243 +5030,251 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                             <option value="arr">Arr Style</option>
                         </select>
                     </div>
-                    <div class="form-control">
-                        <label class="label cursor-pointer justify-start gap-3">
-                            <input type="checkbox" class="checkbox useWebdav" name="debrid[${T}].use_webdav" id="debrid[${T}].use_webdav">
-                            <div>
-                                <span class="label-text font-medium">Enable WebDAV</span>
-                                <div class="label-text-alt">Expose debrid via WebDAV</div>
+                    <div class="field-group">
+                        <label class="checkbox-row">
+                            <input type="checkbox" class="app-checkbox useWebdav" name="debrid[${T}].use_webdav" id="debrid[${T}].use_webdav">
+                            <div class="checkbox-row__text">
+                                <span class="label-text">Enable WebDAV</span>
+                                <span class="label-text-alt">Expose debrid via WebDAV</span>
                             </div>
                         </label>
                     </div>
                     </div>
                 </div>
 
-                <div class="webdav-section hidden mt-6" id="webdav-section-${T}">
-                    <div class="divider">WebDAV Settings</div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div class="form-control">
+                <div class="webdav-section hidden" id="webdav-section-${T}">
+                    <div class="section-divider">
+                        <span class="section-divider__text">WebDAV Settings</span>
+                    </div>
+                    <div class="grid grid-2">
+                        <div class="field-group">
                             <label class="label" for="debrid[${T}].webdav_url">
-                                <span class="label-text font-medium">WebDAV URL</span>
+                                <span class="label-text">WebDAV URL</span>
                             </label>
-                            <input type="text" class="input input-bordered webdav-field" 
-                                   name="debrid[${T}].webdav_url" id="debrid[${T}].webdav_url" 
+                            <input type="text" class="app-input webdav-field"
+                                   name="debrid[${T}].webdav_url" id="debrid[${T}].webdav_url"
                                    placeholder="https://webdav.example.com">
                         </div>
-                        <div class="form-control">
+                        <div class="field-group">
                             <label class="label" for="debrid[${T}].webdav_username">
-                                <span class="label-text font-medium">WebDAV Username</span>
+                                <span class="label-text">WebDAV Username</span>
                             </label>
-                            <input type="text" class="input input-bordered webdav-field" 
+                            <input type="text" class="app-input webdav-field"
                                    name="debrid[${T}].webdav_username" id="debrid[${T}].webdav_username">
                         </div>
-                        <div class="form-control">
+                        <div class="field-group">
                             <label class="label" for="debrid[${T}].webdav_password">
-                                <span class="label-text font-medium">WebDAV Password</span>
+                                <span class="label-text">WebDAV Password</span>
                             </label>
-                            <input type="password" class="input input-bordered webdav-field" 
+                            <input type="password" class="app-input webdav-field"
                                    name="debrid[${T}].webdav_password" id="debrid[${T}].webdav_password">
                         </div>
-                        <div class="form-control">
+                        <div class="field-group">
                             <label class="label" for="debrid[${T}].webdav_path">
-                                <span class="label-text font-medium">WebDAV Path</span>
+                                <span class="label-text">WebDAV Path</span>
                             </label>
-                            <input type="text" class="input input-bordered webdav-field" 
+                            <input type="text" class="app-input webdav-field"
                                    name="debrid[${T}].webdav_path" id="debrid[${T}].webdav_path">
                         </div>
                     </div>
                 </div>
 
-                <div class="divider">Directories & Filters</div>
-                <div class="flex justify-between items-center mb-4">
-                    <h4 class="text-lg font-semibold">Directories</h4>
-                    <button type="button" class="btn btn-outline btn-sm" onclick="window.configManager.addDirectory(${T});">Add Directory</button>
+                <div class="section-divider">
+                    <span class="section-divider__text">Directories & Filters</span>
+                </div>
+                <div class="row-between">
+                    <h4 class="section-subheading">Directories</h4>
+                    <wa-button type="button" appearance="outline" size="small" onclick="window.configManager.addDirectory(${T});">
+                        Add Directory
+                    </wa-button>
                 </div>
                 <div id="debrid[${T}].directories"></div>
             </div>
-        </div>
+        </wa-card>
     `}function getDirectoryTemplate(T,w){return`
-        <div class="card bg-base-100 border border-base-300 shadow-sm directory-config mb-4" data-index="${w}">
-            <div class="card-body">
-                <div class="flex justify-between items-start mb-4">
-                    <h4 class="text-lg font-semibold">Directory #${w+1}</h4>
-                    <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.directory-config').remove();">Remove</button>
+        <wa-card class="panel directory-config" data-index="${w}">
+            <div class="panel-body page-stack">
+                <div class="row-between-start">
+                    <h4 class="section-subheading">Directory #${w+1}</h4>
+                    <wa-button type="button" variant="danger" appearance="outline" size="small" onclick="this.closest('.directory-config').remove();">Remove</wa-button>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div class="form-control">
+                <div class="grid grid-2">
+                    <div class="field-group">
                         <label class="label" for="debrid[${T}].directories[${w}].name">
-                            <span class="label-text font-medium">Directory Name</span>
+                            <span class="label-text">Directory Name</span>
                         </label>
-                        <input type="text" class="input input-bordered" 
-                               name="debrid[${T}].directories[${w}].name" 
+                        <input type="text" class="app-input"
+                               name="debrid[${T}].directories[${w}].name"
                                id="debrid[${T}].directories[${w}].name" required>
                     </div>
-                    <div class="form-control">
+                    <div class="field-group">
                         <label class="label" for="debrid[${T}].directories[${w}].path">
-                            <span class="label-text font-medium">Directory Path</span>
+                            <span class="label-text">Directory Path</span>
                         </label>
-                        <input type="text" class="input input-bordered" 
-                               name="debrid[${T}].directories[${w}].path" 
+                        <input type="text" class="app-input"
+                               name="debrid[${T}].directories[${w}].path"
                                id="debrid[${T}].directories[${w}].path">
                     </div>
                 </div>
 
-                <div class="divider">Filters</div>
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-sm text-base-content/70">Optional: route only matching torrents.</span>
-                    <button type="button" class="btn btn-outline btn-sm" onclick="window.configManager.addFilter(${T}, ${w});">Add Filter</button>
+                <div class="section-divider">
+                    <span class="section-divider__text">Filters</span>
+                </div>
+                <div class="row-between">
+                    <span class="hint">Optional: route only matching torrents.</span>
+                    <wa-button type="button" appearance="outline" size="small" onclick="window.configManager.addFilter(${T}, ${w});">Add Filter</wa-button>
                 </div>
                 <div id="debrid[${T}].directories[${w}].filters"></div>
             </div>
-        </div>
+        </wa-card>
     `}function getFilterTemplate(T,w,O){return`
-        <div class="card bg-base-200 filter-config p-4 mb-3" data-index="${O}">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-end">
-                <div class="form-control">
-                    <label class="label" for="debrid[${T}].directories[${w}].filters[${O}].type">
-                        <span class="label-text font-medium">Filter Type</span>
-                    </label>
-                    <select class="select select-bordered" 
-                            name="debrid[${T}].directories[${w}].filters[${O}].type"
-                            id="debrid[${T}].directories[${w}].filters[${O}].type">
-                        <option value="">Select filter</option>
-                        <option value="label">Label</option>
-                        <option value="last_added">Last Added</option>
-                        <option value="size_greater_than">Size Greater Than</option>
-                        <option value="size_less_than">Size Less Than</option>
-                        <option value="name_contains">Name Contains</option>
-                        <option value="name_not_contains">Name Does Not Contain</option>
-                        <option value="file_contains">File Contains</option>
-                        <option value="file_not_contains">File Does Not Contain</option>
-                    </select>
-                </div>
-                <div class="form-control">
-                    <label class="label" for="debrid[${T}].directories[${w}].filters[${O}].value">
-                        <span class="label-text font-medium">Filter Value</span>
-                    </label>
-                    <input type="text" class="input input-bordered" 
-                           name="debrid[${T}].directories[${w}].filters[${O}].value"
-                           id="debrid[${T}].directories[${w}].filters[${O}].value">
-                </div>
-                <div class="form-control">
-                    <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.filter-config').remove();">Remove</button>
+        <wa-card class="panel panel-muted filter-config" data-index="${O}">
+            <div class="panel-body">
+                <div class="grid grid-3 align-end">
+                    <div class="field-group">
+                        <label class="label" for="debrid[${T}].directories[${w}].filters[${O}].type">
+                            <span class="label-text">Filter Type</span>
+                        </label>
+                        <select class="app-select"
+                                name="debrid[${T}].directories[${w}].filters[${O}].type"
+                                id="debrid[${T}].directories[${w}].filters[${O}].type">
+                            <option value="">Select filter</option>
+                            <option value="label">Label</option>
+                            <option value="last_added">Last Added</option>
+                            <option value="size_greater_than">Size Greater Than</option>
+                            <option value="size_less_than">Size Less Than</option>
+                            <option value="name_contains">Name Contains</option>
+                            <option value="name_not_contains">Name Does Not Contain</option>
+                            <option value="file_contains">File Contains</option>
+                            <option value="file_not_contains">File Does Not Contain</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label class="label" for="debrid[${T}].directories[${w}].filters[${O}].value">
+                            <span class="label-text">Filter Value</span>
+                        </label>
+                        <input type="text" class="app-input"
+                               name="debrid[${T}].directories[${w}].filters[${O}].value"
+                               id="debrid[${T}].directories[${w}].filters[${O}].value">
+                    </div>
+                    <div class="field-group">
+                        <wa-button type="button" variant="danger" appearance="outline" size="small" onclick="this.closest('.filter-config').remove();">Remove</wa-button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </wa-card>
     `}function getArrTemplate(T,w={}){return`
-            <div class="card bg-base-100 border border-base-300 shadow-sm arr-config ${w&&w.source==="auto"?"border-info":""}" data-index="${T}">
-                <div class="card-body">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="card-title text-lg">
-                            Arr Service #${T+1}
-                        </h3>
-                        <button type="button" class="btn btn-error btn-sm" onclick="this.closest('.arr-config').remove();">
+            <wa-card class="panel arr-config ${w&&w.source==="auto"?"panel-highlight":""}" data-index="${T}">
+                <div class="panel-body page-stack">
+                    <div class="row-between-start">
+                        <h3 class="section-subheading">Arr Service #${T+1}</h3>
+                        <wa-button type="button" variant="danger" appearance="outline" size="small" onclick="this.closest('.arr-config').remove();">
                             Remove
-                        </button>
+                        </wa-button>
                     </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="form-control">
+                    <div class="grid grid-2 grid-spaced">
+                        <div class="field-group">
                             <label class="label" for="arr[${T}].name">
-                                <span class="label-text font-medium">Service Name</span>
+                                <span class="label-text">Service Name</span>
                             </label>
-                            <input type="text" class="input input-bordered" 
+                            <input type="text" class="app-input"
                                    name="arr[${T}].name" id="arr[${T}].name" required>
                         </div>
 
-                        <div class="form-control">
+                        <div class="field-group">
                             <label class="label" for="arr[${T}].host">
-                                <span class="label-text font-medium">Host URL</span>
+                                <span class="label-text">Host URL</span>
                             </label>
-                            <input type="text" class="input input-bordered" 
-                                   name="arr[${T}].host" id="arr[${T}].host" 
+                            <input type="text" class="app-input"
+                                   name="arr[${T}].host" id="arr[${T}].host"
                                    placeholder="http://localhost:7878" required>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="form-control">
+                    <div class="grid grid-2 grid-spaced">
+                        <div class="field-group">
                             <label class="label" for="arr[${T}].api_key">
-                                <span class="label-text font-medium">API Key</span>
+                                <span class="label-text">API Key</span>
                             </label>
                             <div class="password-toggle-container">
-                                <input type="password" class="input input-bordered input-has-toggle" 
+                                <input type="password" class="app-input input-has-toggle"
                                        name="arr[${T}].api_key" id="arr[${T}].api_key" required>
-                                <button type="button" class="password-toggle-btn">
-                                    <i class="bi bi-eye" id="arr[${T}].api_key_icon"></i>
-                                </button>
+                                <wa-button type="button" appearance="plain" class="password-toggle-btn">
+                                    <wa-icon name="eye" id="arr[${T}].api_key_icon"></wa-icon>
+                                </wa-button>
                             </div>
                         </div>
 
-                        <div class="form-control">
+                        <div class="field-group">
                             <label class="label" for="arr[${T}].category">
-                                <span class="label-text font-medium">Category</span>
+                                <span class="label-text">Category</span>
                             </label>
-                            <input type="text" class="input input-bordered" 
+                            <input type="text" class="app-input"
                                    name="arr[${T}].category" id="arr[${T}].category"
                                    placeholder="sonarr or radarr">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                        <div class="form-control">
+                    <div class="grid grid-3">
+                        <div class="field-group">
                             <label class="label" for="arr[${T}].fallback_on_pause">
-                                <span class="label-text font-medium">Fallback On Pause</span>
+                                <span class="label-text">Fallback On Pause</span>
                             </label>
-                            <input type="number" class="input input-bordered" 
+                            <input type="number" class="app-input"
                                    name="arr[${T}].fallback_on_pause" id="arr[${T}].fallback_on_pause"
                                    placeholder="0">
                         </div>
-                        <div class="form-control">
+                        <div class="field-group">
                             <label class="label" for="arr[${T}].max_errors">
-                                <span class="label-text font-medium">Max Errors</span>
+                                <span class="label-text">Max Errors</span>
                             </label>
-                            <input type="number" class="input input-bordered" 
+                            <input type="number" class="app-input"
                                    name="arr[${T}].max_errors" id="arr[${T}].max_errors"
                                    placeholder="0">
                         </div>
-                        <div class="form-control">
+                        <div class="field-group">
                             <label class="label" for="arr[${T}].quality_profile">
-                                <span class="label-text font-medium">Quality Profile</span>
+                                <span class="label-text">Quality Profile</span>
                             </label>
-                            <input type="text" class="input input-bordered" 
+                            <input type="text" class="app-input"
                                    name="arr[${T}].quality_profile" id="arr[${T}].quality_profile"
                                    placeholder="HD-1080p">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                        <div class="form-control">
-                            <label class="label cursor-pointer justify-start gap-3">
-                                <input type="checkbox" class="checkbox" name="arr[${T}].enabled" id="arr[${T}].enabled">
-                                <div>
-                                    <span class="label-text font-medium">Enabled</span>
-                                    <div class="label-text-alt">Enable this Arr integration</div>
+                    <div class="grid grid-3">
+                        <div class="field-group">
+                            <label class="checkbox-row">
+                                <input type="checkbox" class="app-checkbox" name="arr[${T}].enabled" id="arr[${T}].enabled">
+                                <div class="checkbox-row__text">
+                                    <span class="label-text">Enabled</span>
+                                    <span class="label-text-alt">Enable this Arr integration</span>
                                 </div>
                             </label>
                         </div>
-                        <div class="form-control">
-                            <label class="label cursor-pointer justify-start gap-3">
-                                <input type="checkbox" class="checkbox" name="arr[${T}].add_as_completed" id="arr[${T}].add_as_completed">
-                                <div>
-                                    <span class="label-text font-medium">Add As Completed</span>
-                                    <div class="label-text-alt">Add to Arr when download completes</div>
+                        <div class="field-group">
+                            <label class="checkbox-row">
+                                <input type="checkbox" class="app-checkbox" name="arr[${T}].add_as_completed" id="arr[${T}].add_as_completed">
+                                <div class="checkbox-row__text">
+                                    <span class="label-text">Add As Completed</span>
+                                    <span class="label-text-alt">Add to Arr when download completes</span>
                                 </div>
                             </label>
                         </div>
-                        <div class="form-control">
-                            <label class="label cursor-pointer justify-start gap-3">
-                                <input type="checkbox" class="checkbox" name="arr[${T}].add_default_to_job" id="arr[${T}].add_default_to_job">
-                                <div>
-                                    <span class="label-text font-medium">Add Default Jobs</span>
-                                    <div class="label-text-alt">Add default Arr items to repair queue</div>
+                        <div class="field-group">
+                            <label class="checkbox-row">
+                                <input type="checkbox" class="app-checkbox" name="arr[${T}].add_default_to_job" id="arr[${T}].add_default_to_job">
+                                <div class="checkbox-row__text">
+                                    <span class="label-text">Add Default Jobs</span>
+                                    <span class="label-text-alt">Add default Arr items to repair queue</span>
                                 </div>
                             </label>
                         </div>
                     </div>
                 </div>
-            </div>
-    `}function templateDebrid(T){return normalizeTemplate(getDebridTemplate(T))}function templateDirectory(T,w){return normalizeTemplate(getDirectoryTemplate(T,w))}function templateFilter(T,w,O){return normalizeTemplate(getFilterTemplate(T,w,O))}function templateArr(T,w){const O=normalizeTemplate(getArrTemplate(T,w));return w&&w.source==="auto"?O.replace(/__AUTO__/g,"1"):O.replace(/__AUTO__/g,"")}const template=`<div class="page-stack">
+            </wa-card>
+    `}function templateDebrid(T){return getDebridTemplate(T)}function templateDirectory(T,w){return getDirectoryTemplate(T,w)}function templateFilter(T,w,O){return getFilterTemplate(T,w,O)}function templateArr(T,w){return getArrTemplate(T,w)}const template=`<div class="page-stack">
     __NEED_SETUP__
 
     <wa-card class="panel">
@@ -5350,7 +5349,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
             <table class="data-table" id="jobsTable">
                 <thead>
                 <tr>
-                    <th class="w-12">
+                    <th class="table-select">
                         <wa-checkbox id="selectAllJobs"></wa-checkbox>
                     </th>
                     <th>Job ID</th>
@@ -5386,7 +5385,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                     <div class="page-stack">
                         <div class="app-inline">
                             <span class="hint">Job ID</span>
-                            <span class="font-mono" id="modalJobId">-</span>
+                            <span class="text-mono" id="modalJobId">-</span>
                         </div>
                         <div class="app-inline">
                             <span class="hint">Status</span>
@@ -5462,7 +5461,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                     <table class="data-table data-table--compact">
                         <thead>
                         <tr>
-                            <th class="w-12"></th>
+                            <th class="table-select"></th>
                             <th>Arr</th>
                             <th>Path</th>
                             <th>Type</th>
@@ -5515,7 +5514,7 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                     <wa-checkbox class="job-checkbox" data-job-id="${q.id}"
                         ${this.state.selectedItems.has(q.id)?"checked":""}></wa-checkbox>
                 </td>
-                <td class="font-mono text-xs">${q.id.substring(0,8)}</td>
+                <td class="text-mono text-tiny">${q.id.substring(0,8)}</td>
                 <td>
                     <wa-badge variant="${J.variant}" size="small">
                         <wa-icon name="${J.icon}"></wa-icon>
@@ -5552,11 +5551,11 @@ ${O}`,"error")}_clearForm(){const w=this.renderRoot;w.getElementById("magnetURI"
                     <wa-badge variant="brand" size="small">${window.decypharrUtils.escapeHtml(q.arr)}</wa-badge>
                 </td>
                 <td>
-                    <div class="text-sm max-w-xs truncate" title="${window.decypharrUtils.escapeHtml(q.path)}">
+                    <div class="text-small max-w-sm text-truncate" title="${window.decypharrUtils.escapeHtml(q.path)}">
                         ${window.decypharrUtils.escapeHtml(q.path)}
                     </div>
                 </td>
                 <td>
-                    <span class="text-sm font-mono">${window.decypharrUtils.formatBytes(q.size)}</span>
+                    <span class="text-small text-mono">${window.decypharrUtils.formatBytes(q.size)}</span>
                 </td>
             `,this.refs.brokenItemsTableBody.appendChild(j)}),this.renderPagination(this.refs.itemsPagination,O,this.state.currentItemsPage,q=>{this.state.currentItemsPage=q,this.renderBrokenItemsTable()}),this.refs.modalFooterStats.textContent=`${w.length} items`,this.refs.totalItemsCount.textContent=w.length.toString()}handleItemTableClick(w){const O=w.target.closest(".item-checkbox");if(O){const F=O.dataset.itemId;this.toggleItemSelection(F,O.checked)}}toggleItemSelection(w,O){O?this.state.selectedItems.add(w):this.state.selectedItems.delete(w)}async processCurrentJob(){if(!this.state.currentJob)return;const w=this.state.currentJob.id;try{if(!(await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}/process`,{method:"POST"})).ok)throw new Error("Failed to process job");window.decypharrUtils.createToast("Job processing started","success"),this.loadJobs()}catch(O){console.error("Error processing job:",O),window.decypharrUtils.createToast(`Error processing job: ${O.message}`,"error")}}async stopCurrentJob(){if(!this.state.currentJob)return;const w=this.state.currentJob.id;try{if(!(await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}/stop`,{method:"POST"})).ok)throw new Error("Failed to stop job");window.decypharrUtils.createToast("Job stop requested","success"),this.loadJobs()}catch(O){console.error("Error stopping job:",O),window.decypharrUtils.createToast(`Error stopping job: ${O.message}`,"error")}}async deleteJob(w){if(confirm("Are you sure you want to delete this job?"))try{if(!(await window.decypharrUtils.fetcher("/api/repair/jobs",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify([w])})).ok)throw new Error("Failed to delete job");window.decypharrUtils.createToast("Job deleted successfully","success"),this.state.selectedItems.delete(w),this.loadJobs()}catch(O){console.error("Error deleting job:",O),window.decypharrUtils.createToast(`Error deleting job: ${O.message}`,"error")}}async deleteSelectedJobs(){const w=Array.from(this.state.selectedItems);if(w.length!==0&&confirm(`Are you sure you want to delete ${w.length} job(s)?`))try{if(!(await window.decypharrUtils.fetcher("/api/repair/jobs",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify(w)})).ok)throw new Error("Failed to delete jobs");window.decypharrUtils.createToast(`${w.length} job(s) deleted successfully`,"success"),this.state.selectedItems.clear(),this.loadJobs()}catch(O){console.error("Error deleting jobs:",O),window.decypharrUtils.createToast(`Error deleting jobs: ${O.message}`,"error")}}showJobDetailsModal(){this.refs.jobDetailsModal.show?this.refs.jobDetailsModal.show():this.refs.jobDetailsModal.open=!0}hideJobDetailsModal(){this.refs.jobDetailsModal.hide?this.refs.jobDetailsModal.hide():this.refs.jobDetailsModal.open=!1,this.state.currentJob=null,this.state.allBrokenItems=[],this.state.filteredItems=[],this.state.selectedItems.clear()}renderPagination(w,O,F,W){if(!(O<=1))for(let U=1;U<=O;U++){const q=document.createElement("wa-button");q.size="small",q.variant=U===F?"brand":"neutral",q.appearance=U===F?"solid":"outline",q.textContent=U,q.addEventListener("click",()=>W(U)),w.appendChild(q)}}formatDate(w){return w?new Date(w).toLocaleString():"N/A"}async exportJobData(w){try{const O=await window.decypharrUtils.fetcher(`/api/repair/jobs/${w}`);if(!O.ok)throw new Error("Failed to fetch job data");const F=await O.json(),W=JSON.stringify(F,null,2),U="data:application/json;charset=utf-8,"+encodeURIComponent(W),q=`repair_job_${w.substring(0,8)}.json`,j=document.createElement("a");j.setAttribute("href",U),j.setAttribute("download",q),j.click(),window.decypharrUtils.createToast("Job data exported successfully","success")}catch(O){console.error("Error exporting job data:",O),window.decypharrUtils.createToast("Failed to export job data","error")}}startAutoRefresh(){this.refreshInterval=setInterval(()=>{this.loadJobs()},3e4)}destroy(){this.refreshInterval&&clearInterval(this.refreshInterval),Object.values(this.refs).forEach(w=>{w&&w.removeEventListener})}}const RepairUtils={formatRepairStatus(T,w=null){return{pending:{icon:"clock",variant:"warning",message:"Waiting to start"},started:{icon:"play",variant:"brand",message:"Repair in progress"},processing:{icon:"gear",variant:"brand",message:"Processing results"},completed:{icon:"circle-check",variant:"success",message:"Repair completed successfully"},failed:{icon:"circle-xmark",variant:"danger",message:w||"Repair failed"},cancelled:{icon:"stop",variant:"warning",message:"Repair was cancelled"}}[T]||{icon:"circle-question",variant:"neutral",message:`Unknown status: ${T}`}},validateMediaIds(T){if(!T||!T.trim())return{valid:!0,ids:[]};const w=T.split(",").map(F=>F.trim()).filter(Boolean),O=w.filter(F=>!/^\d+$/.test(F));return O.length>0?{valid:!1,error:`Invalid media IDs: ${O.join(", ")}. Only numeric IDs are allowed.`,ids:[]}:{valid:!0,ids:w}},generateRepairSummary(T){if(!T.broken_items)return"No broken items found";const w=Object.entries(T.broken_items).map(([F,W])=>`${F}: ${W.length} items`);return`Found ${Object.values(T.broken_items).reduce((F,W)=>F+W.length,0)} broken items across ${Object.keys(T.broken_items).length} Arr instance(s): ${w.join(", ")}`},calculateProgress(T){switch(T.status){case"pending":return 0;case"started":return 25;case"processing":return 75;case"completed":return 100;case"failed":case"cancelled":return 0;default:return 0}}};setBasePath("https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.3.1/dist-cdn/");window.urlBase!==void 0&&setUrlBase(window.urlBase);window.decypharrUtils={fetcher,createToast,formatBytes,formatDuration,formatSpeed,joinURL,escapeHtml,debounce,copyToClipboard,setButtonLoading,isValidUrl,getCurrentTheme};window.fetcher=fetcher;window.createToast=createToast;async function loadVersion(){try{const T=await fetcher("/version");if(!T.ok)throw new Error("Failed");const w=await T.json(),O=document.getElementById("version-badge");if(O){O.innerHTML=`<a href="https://github.com/sirrobot01/decypharr/releases/tag/v${w.version}" target="_blank">${w.channel}-${w.version}</a>`;const F={beta:"warning",nightly:"danger"};F[w.channel]&&(O.variant=F[w.channel])}}catch{const T=document.getElementById("version-badge");T&&(T.textContent="Unknown")}}document.addEventListener("DOMContentLoaded",loadVersion);

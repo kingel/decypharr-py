@@ -260,7 +260,7 @@ class RepairManager {
                     <wa-checkbox class="job-checkbox" data-job-id="${job.id}"
                         ${this.state.selectedItems.has(job.id) ? 'checked' : ''}></wa-checkbox>
                 </td>
-                <td class="font-mono text-xs">${job.id.substring(0, 8)}</td>
+                <td class="text-mono text-tiny">${job.id.substring(0, 8)}</td>
                 <td>
                     <wa-badge variant="${statusInfo.variant}" size="small">
                         <wa-icon name="${statusInfo.icon}"></wa-icon>
@@ -528,12 +528,12 @@ class RepairManager {
                     <wa-badge variant="brand" size="small">${window.decypharrUtils.escapeHtml(item.arr)}</wa-badge>
                 </td>
                 <td>
-                    <div class="text-sm max-w-xs truncate" title="${window.decypharrUtils.escapeHtml(item.path)}">
+                    <div class="text-small max-w-sm text-truncate" title="${window.decypharrUtils.escapeHtml(item.path)}">
                         ${window.decypharrUtils.escapeHtml(item.path)}
                     </div>
                 </td>
                 <td>
-                    <span class="text-sm font-mono">${window.decypharrUtils.formatBytes(item.size)}</span>
+                    <span class="text-small text-mono">${window.decypharrUtils.formatBytes(item.size)}</span>
                 </td>
             `;
 

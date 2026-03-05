@@ -2,32 +2,30 @@
     __NEED_SETUP__
 
     <form id="configForm" class="page-stack" novalidate>
-        <div class="card bg-base-100 shadow-xl">
-            <div class="card-body">
-                <div class="border-b border-base-300 mb-8">
-                    <nav class="tab-nav" aria-label="Configuration Tabs">
-                        <wa-button type="button" appearance="plain" class="tab-button active" data-tab="general">
-                            General
-                        </wa-button>
-                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="debrid">
-                            Debrid
-                        </wa-button>
-                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="qbittorrent">
-                            QBittorrent
-                        </wa-button>
-                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="arrs">
-                            *Arrs
-                        </wa-button>
-                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="repair">
-                            Repair
-                        </wa-button>
-                        <wa-button type="button" appearance="plain" class="tab-button" data-tab="rclone">
-                            Rclone
-                        </wa-button>
-                    </nav>
-                </div>
+        <wa-card class="panel">
+            <div class="panel-body">
+                <nav class="tab-nav" aria-label="Configuration Tabs">
+                    <wa-button type="button" appearance="plain" class="tab-button active" data-tab="general">
+                        General
+                    </wa-button>
+                    <wa-button type="button" appearance="plain" class="tab-button" data-tab="debrid">
+                        Debrid
+                    </wa-button>
+                    <wa-button type="button" appearance="plain" class="tab-button" data-tab="qbittorrent">
+                        QBittorrent
+                    </wa-button>
+                    <wa-button type="button" appearance="plain" class="tab-button" data-tab="arrs">
+                        *Arrs
+                    </wa-button>
+                    <wa-button type="button" appearance="plain" class="tab-button" data-tab="repair">
+                        Repair
+                    </wa-button>
+                    <wa-button type="button" appearance="plain" class="tab-button" data-tab="rclone">
+                        Rclone
+                    </wa-button>
+                </nav>
 
-                <div class="sticky top-20 z-30 flex justify-end mb-6">
+                <div class="config-actions">
                     <wa-button type="submit" variant="success">
                         Save Configuration
                     </wa-button>
@@ -37,14 +35,14 @@
 
                     <div class="tab-content" data-tab-content="general">
                         <div class="page-stack">
-                            <h2 class="text-2xl font-bold flex items-center mb-6">
+                            <h2 class="section-heading">
                                 General Settings
                             </h2>
 
                             <div class="grid grid-2">
                                 <div class="field-group">
                                     <label class="label" for="log-level">
-                                        <span class="label-text font-medium">Log Level</span>
+                                        <span class="label-text">Log Level</span>
                                     </label>
                                     <select class="app-select" name="log_level" id="log-level">
                                         <option value="info">Info</option>
@@ -56,7 +54,7 @@
                                 </div>
                                 <div class="field-group">
                                     <label class="label">
-                                        <span class="label-text font-medium">Magnet Link Handler</span>
+                                        <span class="label-text">Magnet Link Handler</span>
                                     </label>
                                     <wa-button type="button" variant="brand" appearance="outline" onclick="registerMagnetLinkHandler();" id="registerMagnetLink">
                                         <wa-icon slot="start" name="magnet"></wa-icon>
@@ -68,7 +66,7 @@
                             <div class="grid grid-3">
                                 <div class="field-group">
                                     <label class="label" for="urlBase">
-                                        <span class="label-text font-medium">URL Base</span>
+                                        <span class="label-text">URL Base</span>
                                     </label>
                                     <input type="text" class="app-input" id="urlBase" name="url_base" placeholder="/">
                                     <div class="label">
@@ -78,7 +76,7 @@
 
                                 <div class="field-group">
                                     <label class="label" for="bindAddress">
-                                        <span class="label-text font-medium">Bind Address</span>
+                                        <span class="label-text">Bind Address</span>
                                     </label>
                                     <input type="text" class="app-input" id="bindAddress" name="bind_address" placeholder="0.0.0.0">
                                     <div class="label">
@@ -88,7 +86,7 @@
 
                                 <div class="field-group">
                                     <label class="label" for="port">
-                                        <span class="label-text font-medium">Port</span>
+                                        <span class="label-text">Port</span>
                                     </label>
                                     <input type="number" class="app-input" id="port" name="port" placeholder="8282">
                                     <div class="label">
@@ -100,7 +98,7 @@
                             <div class="grid grid-3">
                                 <div class="field-group">
                                     <label class="label" for="debridPollInterval">
-                                        <span class="label-text font-medium">Debrid Poll Interval (seconds)</span>
+                                        <span class="label-text">Debrid Poll Interval (seconds)</span>
                                     </label>
                                     <input type="number" class="app-input" id="debridPollInterval" name="debrid_poll_interval" min="5" placeholder="30">
                                     <div class="label">
@@ -109,7 +107,7 @@
                                 </div>
                                 <div class="field-group">
                                     <label class="label" for="badTorrentThresholdHours">
-                                        <span class="label-text font-medium">Bad Torrent Threshold (hours)</span>
+                                        <span class="label-text">Bad Torrent Threshold (hours)</span>
                                     </label>
                                     <input type="number" class="app-input" id="badTorrentThresholdHours" name="bad_torrent_threshold_hours" min="1" placeholder="12">
                                     <div class="label">
@@ -121,14 +119,14 @@
                             <div class="grid grid-2">
                                 <div class="field-group">
                                     <label class="label" for="discordWebhookUrl">
-                                        <span class="label-text font-medium">Discord Webhook URL</span>
+                                        <span class="label-text">Discord Webhook URL</span>
                                     </label>
                                     <textarea class="app-textarea" id="discordWebhookUrl" name="discord_webhook_url" placeholder="https://discord.com/api/webhooks/..."></textarea>
                                 </div>
 
                                 <div class="field-group">
                                     <label class="label" for="allowedExtensions">
-                                        <span class="label-text font-medium">Allowed File Extensions</span>
+                                        <span class="label-text">Allowed File Extensions</span>
                                     </label>
                                     <textarea class="app-textarea" id="allowedExtensions" name="allowed_file_types" placeholder="mkv, mp4, avi, mov"></textarea>
                                     <div class="label">
@@ -140,7 +138,7 @@
                             <div class="grid grid-2">
                                 <div class="field-group">
                                     <label class="label" for="minFileSize">
-                                        <span class="label-text font-medium">Minimum File Size</span>
+                                        <span class="label-text">Minimum File Size</span>
                                     </label>
                                     <input type="text" class="app-input" id="minFileSize" name="min_file_size" placeholder="10MB">
                                     <div class="label">
@@ -150,7 +148,7 @@
 
                                 <div class="field-group">
                                     <label class="label" for="maxFileSize">
-                                        <span class="label-text font-medium">Maximum File Size</span>
+                                        <span class="label-text">Maximum File Size</span>
                                     </label>
                                     <input type="text" class="app-input" id="maxFileSize" name="max_file_size" placeholder="50GB">
                                     <div class="label">
@@ -160,7 +158,7 @@
 
                                 <div class="field-group">
                                     <label class="label" for="removeStalledAfter">
-                                        <span class="label-text font-medium">Remove Stalled After</span>
+                                        <span class="label-text">Remove Stalled After</span>
                                     </label>
                                     <input type="text" class="app-input" id="removeStalledAfter" name="remove_stalled_after" placeholder="1h">
                                     <div class="label">
@@ -169,7 +167,7 @@
                                 </div>
                                 <div class="field-group">
                                     <label class="label" for="callbackUrl">
-                                        <span class="label-text font-medium">Callback URL</span>
+                                        <span class="label-text">Callback URL</span>
                                     </label>
                                     <input type="text" class="app-input" id="callbackUrl" name="callback_url" placeholder="http://example.com/callback">
                                     <div class="label">
@@ -179,27 +177,27 @@
                             </div>
 
                             <!-- Authentication Settings Section -->
-                            <div class="divider">
-                                <span class="text-lg font-semibold">Authentication Settings</span>
+                            <div class="section-divider">
+                                <span class="section-divider__text">Authentication Settings</span>
                             </div>
 
-                            <div class="card bg-base-200">
-                                <div class="card-body">
+                            <wa-card class="panel panel-muted">
+                                <div class="panel-body">
                                     <div class="page-stack">
-                                        <div class="flex justify-between items-start">
-                                            <div class="flex-1">
-                                                <h3 class="text-lg font-semibold mb-2">Authentication Settings</h3>
-                                                <p class="text-sm text-muted">Configure username/password authentication and API token for programmatic access.</p>
+                                        <div class="row-between-start">
+                                            <div class="stack-sm grow">
+                                                <h3 class="section-subheading">Authentication Settings</h3>
+                                                <p class="hint">Configure username/password authentication and API token for programmatic access.</p>
                                             </div>
                                         </div>
 
                                         <!-- Username/Password Section -->
-                                        <div class="space-y-4">
-                                            <h4 class="font-semibold text-base">Web Authentication</h4>
+                                        <div class="stack-md">
+                                            <h4 class="section-subheading">Web Authentication</h4>
                                             <div class="grid grid-2">
                                                 <div class="field-group">
                                                     <label class="label">
-                                                        <span class="label-text font-medium">Username</span>
+                                                        <span class="label-text">Username</span>
                                                     </label>
                                                     <input type="text" 
                                                            id="auth-username" 
@@ -212,7 +210,7 @@
                                                 </div>
                                                 <div class="field-group">
                                                     <label class="label">
-                                                        <span class="label-text font-medium">Password</span>
+                                                        <span class="label-text">Password</span>
                                                     </label>
                                                     <div class="password-toggle-container">
                                                         <input type="password" 
@@ -230,7 +228,7 @@
                                                 </div>
                                                 <div class="field-group">
                                                     <label class="label">
-                                                        <span class="label-text font-medium">Confirm Password</span>
+                                                        <span class="label-text">Confirm Password</span>
                                                     </label>
                                                     <div class="password-toggle-container">
                                                         <input type="password"
@@ -248,12 +246,12 @@
                                                 </div>
                                                 <div class="field-group">
                                                     <label class="label">
-                                                        <span class="label-text font-medium">Current Token</span>
+                                                        <span class="label-text">Current Token</span>
                                                     </label>
                                                     <div class="join">
                                                         <input type="text"
                                                                id="api-token-display"
-                                                               class="app-input flex-1 font-mono"
+                                                               class="app-input grow text-mono"
                                                                placeholder="No token generated"
                                                                readonly>
                                                         <wa-button type="button" appearance="outline" size="small"
@@ -272,7 +270,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="flex justify-end items-center mt-5">
+                                            <div class="row-end">
                                                 <wa-button type="button" variant="brand"
                                                         id="update-auth-btn"
                                                         onclick="updateAuthSettings();">
@@ -280,21 +278,21 @@
                                                 </wa-button>
                                             </div>
                                         </div>
-                                        <div class="space-y-4">
-                                            <p class="text-sm text-muted">Use this token for API authentication instead of session cookies. Perfect for automation and scripts.</p>
+                                        <div class="stack-md">
+                                            <p class="hint">Use this token for API authentication instead of session cookies. Perfect for automation and scripts.</p>
 
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </wa-card>
                         </div>
                     </div>
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="debrid">
                         <div class="page-stack">
-                            <div class="flex justify-between items-center">
-                                <h2 class="text-2xl font-bold flex items-center">
+                            <div class="row-between">
+                                <h2 class="section-heading">
                                     Debrid Services
                                 </h2>
                                 <wa-button type="button" variant="brand" appearance="outline" id="addDebridBtn">
@@ -302,21 +300,21 @@
                                 </wa-button>
                             </div>
 
-                            <div id="debridConfigs" class="space-y-4">
+                            <div id="debridConfigs" class="stack-md">
                             </div>
                         </div>
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="qbittorrent">
                         <div class="page-stack">
-                            <h2 class="text-2xl font-bold flex items-center mb-6">
+                            <h2 class="section-heading">
                                 QBittorrent Settings
                             </h2>
 
                             <div class="grid grid-2">
                                 <div class="field-group">
                                     <label class="label" for="qbit.download_folder">
-                                        <span class="label-text font-medium">Download Folder</span>
+                                        <span class="label-text">Download Folder</span>
                                     </label>
                                     <input type="text" class="app-input" name="qbit.download_folder" id="qbit.download_folder">
                                     <div class="label">
@@ -326,14 +324,14 @@
 
                                 <div class="field-group">
                                     <label class="label" for="qbit.refresh_interval">
-                                        <span class="label-text font-medium">Refresh Interval (seconds)</span>
+                                        <span class="label-text">Refresh Interval (seconds)</span>
                                     </label>
                                     <input type="number" class="app-input" name="qbit.refresh_interval" id="qbit.refresh_interval" min="1">
                                 </div>
 
                                 <div class="field-group">
                                     <label class="label" for="qbit.max_downloads">
-                                        <span class="label-text font-medium">Maximum Downloads</span>
+                                        <span class="label-text">Maximum Downloads</span>
                                     </label>
                                     <input type="number" class="app-input" name="qbit.max_downloads" id="qbit.max_downloads" min="0">
                                     <div class="label">
@@ -342,28 +340,28 @@
                                 </div>
 
                                 <div class="field-group">
-                                    <label class="label cursor-pointer justify-start gap-3">
+                                    <label class="checkbox-row">
                                         <input type="checkbox" class="app-checkbox" name="qbit.skip_pre_cache" id="qbit.skip_pre_cache">
-                                        <div>
-                                            <span class="label-text font-medium">Skip Pre-Cache</span>
-                                            <div class="label-text-alt">Disable pre-caching to speed up imports</div>
+                                        <div class="checkbox-row__text">
+                                            <span class="label-text">Skip Pre-Cache</span>
+                                            <span class="label-text-alt">Disable pre-caching to speed up imports</span>
                                         </div>
                                     </label>
                                 </div>
 
                                 <div class="field-group">
-                                    <label class="label cursor-pointer justify-start gap-3">
+                                    <label class="checkbox-row">
                                         <input type="checkbox" class="app-checkbox" name="qbit.always_rm_tracker_urls" id="qbit.always_rm_tracker_urls">
-                                        <div>
-                                            <span class="label-text font-medium">Always Remove Tracker URLs</span>
-                                            <div class="label-text-alt">Allows you to <a href="https://sirrobot01.github.io/decypharr/features/repair-worker/private-tracker-downloads" class="link link-hover font-semibold" target="_blank">download private tracker torrents</a> with lower risk</div>
+                                        <div class="checkbox-row__text">
+                                            <span class="label-text">Always Remove Tracker URLs</span>
+                                            <span class="label-text-alt">Allows you to <a href="https://sirrobot01.github.io/decypharr/features/repair-worker/private-tracker-downloads" class="app-link" target="_blank">download private tracker torrents</a> with lower risk</span>
                                         </div>
                                     </label>
                                 </div>
 
                                 <div class="field-group">
                                     <label class="label" for="qbit.default_action">
-                                        <span class="label-text font-medium">Default Action</span>
+                                        <span class="label-text">Default Action</span>
                                     </label>
                                     <select class="app-select" name="qbit.default_action" id="qbit.default_action">
                                         <option value="symlink">Symlink (fast, requires shared rclone mount)</option>
@@ -380,8 +378,8 @@
 
                     <div class="tab-content hidden" data-tab-content="arrs">
                         <div class="page-stack">
-                            <div class="flex justify-between items-center">
-                                <h2 class="text-2xl font-bold flex items-center">
+                            <div class="row-between">
+                                <h2 class="section-heading">
                                     Arr Applications
                                 </h2>
                                 <wa-button type="button" variant="brand" appearance="outline" id="addArrBtn">
@@ -389,23 +387,23 @@
                                 </wa-button>
                             </div>
 
-                            <div id="arrConfigs" class="space-y-4">
+                            <div id="arrConfigs" class="stack-md">
                             </div>
                         </div>
                     </div>
 
                     <div class="tab-content hidden" data-tab-content="repair">
                         <div class="page-stack">
-                            <h2 class="text-2xl font-bold flex items-center mb-6">
+                            <h2 class="section-heading">
                                 Repair Settings
                             </h2>
 
                             <div class="field-group">
-                                <label class="label cursor-pointer justify-start gap-3">
+                                <label class="checkbox-row">
                                     <input type="checkbox" class="app-checkbox" name="repair.enabled" id="repair.enabled">
-                                    <div>
-                                        <span class="label-text font-medium text-lg">Enable Scheduled Repair</span>
-                                        <div class="label-text-alt">Automatically repair broken symlinks and missing files</div>
+                                    <div class="checkbox-row__text">
+                                        <span class="label-text">Enable Scheduled Repair</span>
+                                        <span class="label-text-alt">Automatically repair broken symlinks and missing files</span>
                                     </div>
                                 </label>
                             </div>
@@ -413,7 +411,7 @@
                             <div class="grid grid-2">
                                 <div class="field-group">
                                     <label class="label" for="repair.interval">
-                                        <span class="label-text font-medium">Repair Interval</span>
+                                        <span class="label-text">Repair Interval</span>
                                     </label>
                                     <input type="text" class="app-input" name="repair.interval" id="repair.interval" placeholder="24h">
                                     <div class="label">
@@ -423,7 +421,7 @@
 
                                 <div class="field-group">
                                     <label class="label" for="repair.workers">
-                                        <span class="label-text font-medium">Worker Threads</span>
+                                        <span class="label-text">Worker Threads</span>
                                     </label>
                                     <input type="number" class="app-input" name="repair.workers" id="repair.workers" min="1" placeholder="40">
                                     <div class="label">
@@ -433,7 +431,7 @@
 
                                 <div class="field-group">
                                     <label class="label" for="repair.strategy">
-                                        <span class="label-text font-medium">Repair Strategy</span>
+                                        <span class="label-text">Repair Strategy</span>
                                     </label>
                                     <select class="app-select" name="repair.strategy" id="repair.strategy">
                                         <option value="per_torrent" selected>Per Torrent</option>
@@ -445,7 +443,7 @@
                                 </div>
                                 <div class="field-group">
                                     <label class="label" for="repair.zurg_url">
-                                        <span class="label-text font-medium">Zurg URL</span>
+                                        <span class="label-text">Zurg URL</span>
                                     </label>
                                     <input type="url" class="app-input" name="repair.zurg_url" id="repair.zurg_url" placeholder="http://zurg:9999">
                                     <div class="label">
@@ -456,21 +454,21 @@
 
                             <div class="grid grid-3">
                                 <div class="field-group">
-                                    <label class="label cursor-pointer justify-start gap-3">
+                                    <label class="checkbox-row">
                                         <input type="checkbox" class="app-checkbox" name="repair.use_webdav" id="repair.use_webdav">
-                                        <div>
-                                            <span class="label-text font-medium">Use WebDAV</span>
-                                            <div class="label-text-alt">Use internal WebDAV for repairs</div>
+                                        <div class="checkbox-row__text">
+                                            <span class="label-text">Use WebDAV</span>
+                                            <span class="label-text-alt">Use internal WebDAV for repairs</span>
                                         </div>
                                     </label>
                                 </div>
 
                                 <div class="field-group">
-                                    <label class="label cursor-pointer justify-start gap-3">
+                                    <label class="checkbox-row">
                                         <input type="checkbox" class="app-checkbox" name="repair.auto_process" id="repair.auto_process">
-                                        <div>
-                                            <span class="label-text font-medium">Auto Process</span>
-                                            <div class="label-text-alt">Automatically delete broken symlinks and re-search</div>
+                                        <div class="checkbox-row__text">
+                                            <span class="label-text">Auto Process</span>
+                                            <span class="label-text-alt">Automatically delete broken symlinks and re-search</span>
                                         </div>
                                     </label>
                                 </div>
@@ -480,29 +478,29 @@
 
                     <div class="tab-content hidden" data-tab-content="rclone">
                         <div class="page-stack">
-                            <h2 class="text-2xl font-bold flex items-center mb-6">
+                            <h2 class="section-heading">
                                 Rclone Mount Settings
                             </h2>
 
                             <div class="field-group">
-                                <label class="label cursor-pointer justify-start gap-3">
+                                <label class="checkbox-row">
                                     <input type="checkbox" class="app-checkbox" name="rclone.enabled" id="rclone.enabled">
-                                    <div>
-                                        <span class="label-text font-medium text-lg">Enable Mount</span>
-                                        <div class="label-text-alt">Automatically mount your debrid items</div>
+                                    <div class="checkbox-row__text">
+                                        <span class="label-text">Enable Mount</span>
+                                        <span class="label-text-alt">Automatically mount your debrid items</span>
                                     </div>
                                 </label>
                             </div>
 
-                            <div class="card bg-base-200">
-                                <div class="card-body">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <wa-card class="panel panel-muted">
+                                <div class="panel-body">
+                                    <h3 class="section-subheading">
                                         Mount Configuration
                                     </h3>
-                                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                                    <div class="grid grid-4">
                                         <div class="field-group">
                                             <label class="label" for="rclone.mount_path">
-                                                <span class="label-text font-medium">Global Mount Path</span>
+                                                <span class="label-text">Global Mount Path</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.mount_path" id="rclone.mount_path" placeholder="/mnt/decypharr">
                                             <div class="label">
@@ -512,14 +510,14 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.rc_port">
-                                                <span class="label-text font-medium">RC Port</span>
+                                                <span class="label-text">RC Port</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.rc_port" id="rclone.rc_port">
                                         </div>
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.log_level">
-                                                <span class="label-text font-medium">Log Level</span>
+                                                <span class="label-text">Log Level</span>
                                             </label>
                                             <select class="app-select" name="rclone.log_level" id="rclone.log_level">
                                                 <option value="INFO">INFO</option>
@@ -531,7 +529,7 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.uid">
-                                                <span class="label-text font-medium">User ID (PUID)</span>
+                                                <span class="label-text">User ID (PUID)</span>
                                             </label>
                                             <input type="number" class="app-input" name="rclone.uid" id="rclone.uid" placeholder="1000" min="0">
                                             <div class="label">
@@ -541,7 +539,7 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.gid">
-                                                <span class="label-text font-medium">Group ID (PGID)</span>
+                                                <span class="label-text">Group ID (PGID)</span>
                                             </label>
                                             <input type="number" class="app-input" name="rclone.gid" id="rclone.gid" placeholder="1000" min="0">
                                             <div class="label">
@@ -550,7 +548,7 @@
                                         </div>
                                         <div class="field-group">
                                             <label class="label" for="rclone.umask">
-                                                <span class="label-text font-medium">UMASK</span>
+                                                <span class="label-text">UMASK</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.umask" id="rclone.umask" placeholder="0022">
                                             <div class="label">
@@ -559,7 +557,7 @@
                                         </div>
                                         <div class="field-group">
                                             <label class="label" for="rclone.buffer_size">
-                                                <span class="label-text font-medium">Buffer Size</span>
+                                                <span class="label-text">Buffer Size</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.buffer_size" id="rclone.buffer_size" placeholder="10M">
                                             <div class="label">
@@ -568,7 +566,7 @@
                                         </div>
                                         <div class="field-group">
                                             <label class="label" for="rclone.bw_limit">
-                                                <span class="label-text font-medium">Bandwidth Limit</span>
+                                                <span class="label-text">Bandwidth Limit</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.bw_limit" id="rclone.bw_limit" placeholder="100M">
                                             <div class="label">
@@ -577,7 +575,7 @@
                                         </div>
                                         <div class="field-group">
                                             <label class="label" for="rclone.attr_timeout">
-                                                <span class="label-text font-medium">Attribute Caching Timeout</span>
+                                                <span class="label-text">Attribute Caching Timeout</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.attr_timeout" id="rclone.attr_timeout" placeholder="1s">
                                             <div class="label">
@@ -586,7 +584,7 @@
                                         </div>
                                         <div class="field-group">
                                             <label class="label" for="rclone.transfers">
-                                                <span class="label-text font-medium">Transfers</span>
+                                                <span class="label-text">Transfers</span>
                                             </label>
                                             <input type="number" class="app-input" name="rclone.transfers" id="rclone.transfers" placeholder="8" min="1">
                                             <div class="label">
@@ -595,16 +593,16 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card bg-base-200">
-                                <div class="card-body">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            </wa-card>
+                            <wa-card class="panel panel-muted">
+                                <div class="panel-body">
+                                    <h3 class="section-subheading">
                                         VFS Cache Settings
                                     </h3>
-                                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                                    <div class="grid grid-4">
                                         <div class="field-group">
                                             <label class="label" for="rclone.cache_dir">
-                                                <span class="label-text font-medium">Cache Directory</span>
+                                                <span class="label-text">Cache Directory</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.cache_dir" id="rclone.cache_dir" placeholder="/tmp/rclone">
                                             <div class="label">
@@ -614,7 +612,7 @@
                                         
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_mode">
-                                                <span class="label-text font-medium">VFS Cache Mode</span>
+                                                <span class="label-text">VFS Cache Mode</span>
                                             </label>
                                             <select class="app-select" name="rclone.vfs_cache_mode" id="rclone.vfs_cache_mode">
                                                 <option value="off">Off - No caching</option>
@@ -629,7 +627,7 @@
                                         
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_max_size">
-                                                <span class="label-text font-medium">VFS Cache Max Size</span>
+                                                <span class="label-text">VFS Cache Max Size</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_cache_max_size" id="rclone.vfs_cache_max_size" placeholder="1G">
                                             <div class="label">
@@ -639,7 +637,7 @@
                                         
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_max_age">
-                                                <span class="label-text font-medium">VFS Cache Max Age</span>
+                                                <span class="label-text">VFS Cache Max Age</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_cache_max_age" id="rclone.vfs_cache_max_age" placeholder="1h">
                                             <div class="label">
@@ -649,7 +647,7 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_chunk_size">
-                                                <span class="label-text font-medium">Read Chunk Size</span>
+                                                <span class="label-text">Read Chunk Size</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_read_chunk_size" id="rclone.vfs_read_chunk_size" placeholder="128M">
                                             <div class="label">
@@ -659,7 +657,7 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_chunk_size_limit">
-                                                <span class="label-text font-medium">Read Chunk Size Limit</span>
+                                                <span class="label-text">Read Chunk Size Limit</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_read_chunk_size_limit" id="rclone.vfs_read_chunk_size_limit" placeholder="128M">
                                             <div class="label">
@@ -669,7 +667,7 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_ahead">
-                                                <span class="label-text font-medium">VFS Read Ahead</span>
+                                                <span class="label-text">VFS Read Ahead</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_read_ahead" id="rclone.vfs_read_ahead" placeholder="128k">
                                             <div class="label">
@@ -679,7 +677,7 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.dir_cache_time">
-                                                <span class="label-text font-medium">Directory Cache Time</span>
+                                                <span class="label-text">Directory Cache Time</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.dir_cache_time" id="rclone.dir_cache_time" placeholder="5m">
                                             <div class="label">
@@ -689,7 +687,7 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_poll_interval">
-                                                <span class="label-text font-medium">VFS Cache Poll Interval</span>
+                                                <span class="label-text">VFS Cache Poll Interval</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_cache_poll_interval" id="rclone.vfs_cache_poll_interval" placeholder="1h">
                                             <div class="label">
@@ -699,7 +697,7 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_min_free_space">
-                                                <span class="label-text font-medium">VFS Cache Min Free Space</span>
+                                                <span class="label-text">VFS Cache Min Free Space</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_cache_min_free_space" id="rclone.vfs_cache_min_free_space" placeholder="1G">
                                             <div class="label">
@@ -709,7 +707,7 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_disk_space_total">
-                                                <span class="label-text font-medium">VFS Disk Space Total</span>
+                                                <span class="label-text">VFS Disk Space Total</span>
                                             </label>
                                             <input type="text" class="app-input" name="rclone.vfs_disk_space_total" id="rclone.vfs_disk_space_total" placeholder="1G">
                                             <div class="label">
@@ -719,7 +717,7 @@
 
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_read_chunk_streams">
-                                                <span class="label-text font-medium">VFS Read Chunk Streams</span>
+                                                <span class="label-text">VFS Read Chunk Streams</span>
                                             </label>
                                             <input type="number" class="app-input" name="rclone.vfs_read_chunk_streams" id="rclone.vfs_read_chunk_streams" placeholder="4" min="0">
                                             <div class="label">
@@ -728,83 +726,81 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </wa-card>
 
-                            <div class="card bg-base-200">
-                                <div class="card-body">
-                                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                            <wa-card class="panel panel-muted">
+                                <div class="panel-body">
+                                    <h3 class="section-subheading">
                                         Advanced Settings
                                     </h3>
                                     <div class="grid grid-3">
                                         <div class="field-group">
-                                            <label class="label cursor-pointer justify-start gap-3">
+                                            <label class="checkbox-row">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.no_modtime" id="rclone.no_modtime">
-                                                <div>
-                                                    <span class="label-text font-medium">No Modification Time</span>
-                                                    <div class="label-text-alt">Don't read/write modification times</div>
+                                                <div class="checkbox-row__text">
+                                                    <span class="label-text">No Modification Time</span>
+                                                    <span class="label-text-alt">Don't read/write modification times</span>
                                                 </div>
                                             </label>
                                         </div>
                                         
                                         <div class="field-group">
-                                            <label class="label cursor-pointer justify-start gap-3">
+                                            <label class="checkbox-row">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.no_checksum" id="rclone.no_checksum">
-                                                <div>
-                                                    <span class="label-text font-medium">No Checksum</span>
-                                                    <div class="label-text-alt">Don't checksum files on upload</div>
+                                                <div class="checkbox-row__text">
+                                                    <span class="label-text">No Checksum</span>
+                                                    <span class="label-text-alt">Don't checksum files on upload</span>
                                                 </div>
                                             </label>
                                         </div>
 
                                         <div class="field-group">
-                                            <label class="label cursor-pointer justify-start gap-3" for="rclone.async_read">
+                                            <label class="checkbox-row" for="rclone.async_read">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.async_read" id="rclone.async_read">
-                                                <div>
-                                                    <span class="label-text font-medium">Async Read</span>
-                                                    <div class="label-text-alt">Use asynchronous reads</div>
+                                                <div class="checkbox-row__text">
+                                                    <span class="label-text">Async Read</span>
+                                                    <span class="label-text-alt">Use asynchronous reads</span>
                                                 </div>
                                             </label>
                                         </div>
 
                                         <div class="field-group">
-                                            <label class="label cursor-pointer justify-start gap-3" for="rclone.vfs_fast_fingerprint">
+                                            <label class="checkbox-row" for="rclone.vfs_fast_fingerprint">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.vfs_fast_fingerprint" id="rclone.vfs_fast_fingerprint">
-                                                <div>
-                                                    <span class="label-text font-medium">VFS Fast Fingerprint</span>
-                                                    <div class="label-text-alt">Use fast (less accurate) fingerprints for change detection</div>
+                                                <div class="checkbox-row__text">
+                                                    <span class="label-text">VFS Fast Fingerprint</span>
+                                                    <span class="label-text-alt">Use fast (less accurate) fingerprints for change detection</span>
                                                 </div>
                                             </label>
                                         </div>
 
                                         <div class="field-group">
-                                            <label class="label cursor-pointer justify-start gap-3" for="rclone.use_mmap">
+                                            <label class="checkbox-row" for="rclone.use_mmap">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.use_mmap" id="rclone.use_mmap">
-                                                <div>
-                                                    <span class="label-text font-medium">Use Mmap</span>
-                                                    <div class="label-text-alt">Use fast (less accurate) fingerprints for change detection</div>
+                                                <div class="checkbox-row__text">
+                                                    <span class="label-text">Use Mmap</span>
+                                                    <span class="label-text-alt">Use fast (less accurate) fingerprints for change detection</span>
                                                 </div>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </wa-card>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
+        </wa-card>
     </form>
 </div>
 
-<div id="loadingOverlay" class="fixed inset-0 bg-overlay backdrop-blur-sm z-50 hidden">
-    <div class="flex items-center justify-center h-full">
-        <div class="card bg-base-100 shadow-2xl">
-            <div class="card-body text-center">
-                <wa-spinner></wa-spinner>
-                <h3 class="text-lg font-semibold mt-4">Applying Configuration</h3>
-                <p class="text-muted">Please wait while we save your settings...</p>
-            </div>
+<div id="loadingOverlay" class="overlay hidden">
+    <wa-card class="panel overlay-card">
+        <div class="panel-body center-text stack-sm">
+            <wa-spinner></wa-spinner>
+            <h3 class="section-subheading">Applying Configuration</h3>
+            <p class="hint">Please wait while we save your settings...</p>
         </div>
-    </div>
+    </wa-card>
 </div>

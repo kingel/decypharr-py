@@ -289,21 +289,21 @@ class TorrentDashboard {
             ${isSelected ? 'checked' : ''}>
           </wa-checkbox>
         </td>
-        <td class="max-w-xs">
-          <div class="truncate font-medium" title="${this.escapeHtml(torrent.name)}">
+        <td class="max-w-sm">
+          <div class="text-truncate text-strong" title="${this.escapeHtml(torrent.name)}">
             ${this.escapeHtml(torrent.name)}
           </div>
         </td>
-        <td class="text-nowrap font-mono text-sm">
+        <td class="text-nowrap text-mono text-small">
           ${window.decypharrUtils.formatBytes(torrent.size)}
         </td>
         <td>
           <div class="progress-cell">
             <wa-progress-bar class="progress-bar" value="${progressPercent}"></wa-progress-bar>
-            <span class="text-sm font-medium">${progressPercent}%</span>
+            <span class="text-small text-strong">${progressPercent}%</span>
           </div>
         </td>
-        <td class="text-nowrap font-mono text-sm">
+        <td class="text-nowrap text-mono text-small">
           ${window.decypharrUtils.formatSpeed(torrent.dlspeed)}
         </td>
         <td>
@@ -318,7 +318,7 @@ class TorrentDashboard {
             : '<span class="hint">None</span>'
           }
         </td>
-        <td class="text-nowrap font-mono text-sm">
+        <td class="text-nowrap text-mono text-small">
           ${torrent.num_seeds || 0}
         </td>
         <td>

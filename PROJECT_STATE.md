@@ -1,8 +1,9 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-05 (6)
+Last updated: 2026-03-05 (7)
 
 ## Recent Changes
+- Frontend cleanup: removed utility-class shim and template normalization; config templates now explicit Web Awesome + app input markup; rebuilt Vite assets.
 - Docs: refreshed Project State + TODO after Phase 3 frontend modernization; no code changes.
 - Frontend modernization (Phase 3): dashboard/config/repair now render with Web Awesome components; runtime template normalization added; legacy Tailwind/DaisyUI bundle + Bootstrap icons removed; WA dialog + utility CSS added.
 - Frontend modernization (Phase 2): migrated download + stats pages to Web Awesome + Lit components; removed legacy scripts; rebuilt Vite assets in container.
@@ -64,7 +65,6 @@ Last updated: 2026-03-05 (6)
 - **Static asset handling**: Vite build step added (`npm run build` in `decypharr/web/`); CI should run this before packaging.
 - **UI validation parity**: Bring settings field validation in line with Go version (client-side rules remain).
 - **WebDAV parity**: Validate WsgiDAV dir browser UX vs Go’s custom listing (delete buttons).
-- **Frontend cleanup**: review utility-class shim + template normalization and decide whether to refactor to pure Web Awesome markup.
 - **Tests**: Integration/stack tests (Arr + debrid + webdav flows) — manual by user.
 - **Additional debrid providers**: Debrid‑Link / AllDebrid not yet implemented.
 
@@ -75,7 +75,7 @@ Last updated: 2026-03-05 (6)
  - No new constraints added in this update.
 
 ## Next Step
-- Decide whether to keep the utility-class shim + template normalization or fully rewrite remaining templates to pure Web Awesome markup.
+- Tighten UI validation to match Go behavior for settings forms.
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.
