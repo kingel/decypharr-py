@@ -17,6 +17,7 @@
 - Done: frontend modernization Phase 2 (download + stats) migrated to Web Awesome + Lit.
 - Done: frontend modernization — Phase 3 completed (dashboard/config/repair updated, legacy CSS/icons removed).
 - Done: removed utility-class shim + template normalization; config templates now explicit Web Awesome markup.
+- Done: Phase 4 cleanup — pruned static build output to Vite artifacts only.
 - Constraints: static assets directory must exist (missing `decypharr/web/static/build/` breaks app/tests).
 - Constraints: run npm/vite commands only inside containers (no host npm).
 - Constraints: no new constraints added in this update.

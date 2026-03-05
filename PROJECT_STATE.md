@@ -1,8 +1,9 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-05 (7)
+Last updated: 2026-03-05 (8)
 
 ## Recent Changes
+- Phase 4 cleanup: pruned `web/static/build/` to Vite outputs only (main.js/main.css), removed legacy script placeholders, rebuilt assets.
 - Frontend cleanup: removed utility-class shim and template normalization; config templates now explicit Web Awesome + app input markup; rebuilt Vite assets.
 - Docs: refreshed Project State + TODO after Phase 3 frontend modernization; no code changes.
 - Frontend modernization (Phase 3): dashboard/config/repair now render with Web Awesome components; runtime template normalization added; legacy Tailwind/DaisyUI bundle + Bootstrap icons removed; WA dialog + utility CSS added.
@@ -72,7 +73,6 @@ Last updated: 2026-03-05 (7)
 - Static assets directory `decypharr/web/static/build/` must exist at runtime/tests or app init fails.
 - Run npm/vite commands only inside containers (no host npm).
 - Legacy `styles.css` removed; UI now depends on Vite `main.css` bundle.
- - No new constraints added in this update.
 
 ## Next Step
 - Tighten UI validation to match Go behavior for settings forms.
