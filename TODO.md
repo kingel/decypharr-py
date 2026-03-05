@@ -17,8 +17,7 @@
 - Done: replace qBittorrent SID cookie — now HMAC-signed username only, no credentials in cookie payload (`38 passed`).
 - Done: make Arr TLS secure by default; opt-in `insecure_tls: bool = False` per Arr config entry (`40 passed`).
 - Medium: offload blocking poller callbacks/download work from async loop.
-- Medium: add locking/atomic writes in torrent store (`torrents.json`) to avoid concurrent write races.
-- Tests: add concurrency/race coverage for torrent store writes.
+- Done: add locking/atomic writes in torrent store (`torrents.json`); concurrency + atomic-write tests added (`42 passed`).
 - Tighten UI validation to match Go behavior for settings forms (client-side rules).
 - Manual: integration/stack tests (Arr + debrid + WebDAV flows).
 - Add additional debrid providers (Debrid‑Link, AllDebrid).

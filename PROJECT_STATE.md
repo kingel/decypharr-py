@@ -3,7 +3,8 @@
 Last updated: 2026-03-05 (2)
 
 ## Recent Changes
-- Transport hardening: `ArrClient` now verifies TLS by default (`verify=True`); opt-in `insecure_tls: bool = False` field added to `Arr` config model and round-tripped through `ArrStorage.serialize()`; 2 regression tests added (`40 passed`).
+- Storage robustness: `TorrentStore` now serialises all reads/writes under a `threading.Lock`; `_save()` uses atomic write-to-tmp-then-rename (`os.replace`) so a crash mid-write leaves the original file intact; 2 regression tests added (`42 passed`).
+- Transport hardening: `ArrClient` now verifies TLS by default (`verify=True`); opt-in `insecure_tls: bool = False` field added to `Arr` config model and round-tripped through `ArrStorage.serialize()`; 2 regression tests added.
 - Auth hardening: replaced qBittorrent SID cookie credential exposure — SID now contains only a HMAC-signed username (no password); `_require_qbit_auth` accepts SID as proof of prior auth without re-verifying the password; switched from `hashlib` to `hmac` with `compare_digest`; 2 regression tests added.
 - Auth hardening: protected all `/debug/*` endpoints (`stats`, `logs`, `logs/rclone`, `ingests`) behind session auth via router-level dependency; returns 401 when `use_auth=True` and no valid session.
 - Tests: added 3 auth regression tests for `/debug/*` (`36 passed`).
@@ -55,6 +56,7 @@ Last updated: 2026-03-05 (2)
 
 ## Open Tasks
 - **Runtime robustness (medium)**: move blocking poller callbacks/download processing to threads or async clients.
+- **Tests**: add concurrency/race coverage for torrent store writes — done (see recent changes).
 - **Storage robustness (medium)**: add locking/atomic writes for `torrents.json` updates.
 - **Tests**: add concurrency/race coverage for torrent storage writes.
 - **Static asset handling**: Ensure `decypharr/web/static/build/` is committed or add a build step in CI to generate it.
@@ -67,7 +69,7 @@ Last updated: 2026-03-05 (2)
 - Static assets directory `decypharr/web/static/build/` must exist at runtime/tests or app init fails.
 
 ## Next Step
-- Continue robustness work: add `threading.Lock` to `TorrentStore` (`storage/torrents.py`) for atomic `torrents.json` writes.
+- Runtime robustness: audit `services/poller.py` and `services/downloader.py` for blocking sync calls in async loops; move to `asyncio.to_thread`.
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.

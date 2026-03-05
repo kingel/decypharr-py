@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import urllib.parse
 from pathlib import Path
 from types import SimpleNamespace
@@ -599,6 +600,38 @@ def test_qbit_sid_authenticates_subsequent_request(tmp_path: Path):
     assert client.cookies.get("sid"), "SID cookie should be set after login"
     resp = client.get("/api/v2/torrents/info")
     assert resp.status_code == 200
+
+
+def test_torrent_store_concurrent_updates(tmp_path: Path):
+    import threading
+    from decypharr.storage.torrents import TorrentStore
+    store = TorrentStore(tmp_path / "torrents.json")
+    torrent = store.add(name="base", hash_value="aaa")
+
+    errors = []
+    def worker(i):
+        try:
+            store.update("aaa", name=f"worker-{i}")
+        except Exception as exc:
+            errors.append(exc)
+
+    threads = [threading.Thread(target=worker, args=(i,)) for i in range(20)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+
+    assert not errors
+    data = json.loads((tmp_path / "torrents.json").read_text())
+    assert len(data) == 1
+
+
+def test_torrent_store_atomic_write_no_tmp_left(tmp_path: Path):
+    from decypharr.storage.torrents import TorrentStore
+    store = TorrentStore(tmp_path / "torrents.json")
+    store.add(name="t1", hash_value="bbb")
+    assert not (tmp_path / "torrents.tmp").exists()
+    assert (tmp_path / "torrents.json").exists()
 
 
 def test_arr_client_tls_secure_by_default():
