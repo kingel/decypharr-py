@@ -6,27 +6,34 @@
             <div class="panel-body">
                 <nav class="tab-nav" aria-label="Configuration Tabs">
                     <wa-button type="button" appearance="plain" class="tab-button active" data-tab="general">
+                        <wa-icon slot="start" name="gear"></wa-icon>
                         General
                     </wa-button>
                     <wa-button type="button" appearance="plain" class="tab-button" data-tab="debrid">
+                        <wa-icon slot="start" name="cloud"></wa-icon>
                         Debrid
                     </wa-button>
                     <wa-button type="button" appearance="plain" class="tab-button" data-tab="qbittorrent">
+                        <wa-icon slot="start" name="download"></wa-icon>
                         QBittorrent
                     </wa-button>
                     <wa-button type="button" appearance="plain" class="tab-button" data-tab="arrs">
+                        <wa-icon slot="start" name="briefcase"></wa-icon>
                         *Arrs
                     </wa-button>
                     <wa-button type="button" appearance="plain" class="tab-button" data-tab="repair">
+                        <wa-icon slot="start" name="wrench"></wa-icon>
                         Repair
                     </wa-button>
                     <wa-button type="button" appearance="plain" class="tab-button" data-tab="rclone">
+                        <wa-icon slot="start" name="server"></wa-icon>
                         Rclone
                     </wa-button>
                 </nav>
 
                 <div class="config-actions">
-                    <wa-button type="submit" variant="success">
+                    <wa-button type="submit" variant="success" size="large">
+                        <wa-icon slot="start" name="floppy-disk"></wa-icon>
                         Save Configuration
                     </wa-button>
                 </div>
@@ -36,6 +43,7 @@
                     <div class="tab-content" data-tab-content="general">
                         <div class="page-stack">
                             <h2 class="section-heading">
+                                <wa-icon name="gear"></wa-icon>
                                 General Settings
                             </h2>
 
@@ -199,10 +207,10 @@
                                                     <label class="label">
                                                         <span class="label-text">Username</span>
                                                     </label>
-                                                    <input type="text" 
-                                                           id="auth-username" 
+                                                    <input type="text"
+                                                           id="auth-username"
                                                            name="auth_username"
-                                                           class="app-input" 
+                                                           class="app-input"
                                                            placeholder="Enter username (leave empty to disable auth)">
                                                     <div class="label">
                                                         <span class="label-text-alt">Leave empty to disable authentication</span>
@@ -213,10 +221,10 @@
                                                         <span class="label-text">Password</span>
                                                     </label>
                                                     <div class="password-toggle-container">
-                                                        <input type="password" 
-                                                               id="auth-password" 
+                                                        <input type="password"
+                                                               id="auth-password"
                                                                name="auth_password"
-                                                               class="app-input input-has-toggle" 
+                                                               class="app-input input-has-toggle"
                                                                placeholder="Enter password">
                                                         <wa-button type="button" appearance="plain" class="password-toggle-btn">
                                                             <wa-icon name="eye"></wa-icon>
@@ -609,7 +617,7 @@
                                                 <span class="label-text-alt">Directory for rclone cache files (leave empty for system default)</span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_mode">
                                                 <span class="label-text">VFS Cache Mode</span>
@@ -624,7 +632,7 @@
                                                 <span class="label-text-alt">VFS caching mode for performance optimization</span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_max_size">
                                                 <span class="label-text">VFS Cache Max Size</span>
@@ -634,7 +642,7 @@
                                                 <span class="label-text-alt">Maximum cache size (e.g., 1G, 500M, leave empty for unlimited)</span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="field-group">
                                             <label class="label" for="rclone.vfs_cache_max_age">
                                                 <span class="label-text">VFS Cache Max Age</span>
@@ -743,7 +751,7 @@
                                                 </div>
                                             </label>
                                         </div>
-                                        
+
                                         <div class="field-group">
                                             <label class="checkbox-row">
                                                 <input type="checkbox" class="app-checkbox" name="rclone.no_checksum" id="rclone.no_checksum">

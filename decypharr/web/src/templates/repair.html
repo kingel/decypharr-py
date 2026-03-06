@@ -10,42 +10,56 @@
 
             <form id="repairForm" class="page-stack">
                 <div class="grid grid-2">
-                    <div class="field-group">
-                        <wa-select id="arrSelect" label="Arr Instance" hint="Choose which Arr service to repair">
-                            <wa-option value="">Select an Arr instance</wa-option>
-                        </wa-select>
+                    <div class="stack-md">
+                        <div class="field-group">
+                            <wa-select
+                                id="arrSelect"
+                                label="Arr Instance"
+                                hint="Choose which Arr service to repair"
+                            >
+                                <wa-option value=""
+                                    >Select an Arr instance</wa-option
+                                >
+                            </wa-select>
+                        </div>
+                        <div class="field-group">
+                            <wa-input
+                                id="mediaIds"
+                                label="Media IDs"
+                                placeholder="123, 456, 789"
+                                hint="Optional: comma-separated TVDB IDs (Sonarr) or TMDB IDs (Radarr)."
+                            ></wa-input>
+                        </div>
                     </div>
-
-                    <div class="field-group">
-                        <wa-input
-                            id="mediaIds"
-                            label="Media IDs"
-                            placeholder="123, 456, 789"
-                            hint="Optional: comma-separated TVDB IDs (Sonarr) or TMDB IDs (Radarr)."
-                        ></wa-input>
+                    <div class="stack-md">
+                        <div class="field-group">
+                            <wa-checkbox id="isAsync" checked>
+                                Run in Background
+                                <span slot="hint"
+                                    >Process repair job asynchronously.</span
+                                >
+                            </wa-checkbox>
+                        </div>
+                        <div class="field-group">
+                            <wa-checkbox id="autoProcess">
+                                Auto Process
+                                <span slot="hint"
+                                    >Automatically delete broken symlinks and
+                                    re-search media.</span
+                                >
+                            </wa-checkbox>
+                        </div>
+                        <div class="field-group">
+                            <wa-button
+                                type="submit"
+                                variant="brand"
+                                id="submitRepair"
+                            >
+                                <wa-icon slot="start" name="wrench"></wa-icon>
+                                Start Repair
+                            </wa-button>
+                        </div>
                     </div>
-                </div>
-
-                <div class="grid grid-2">
-                    <div class="field-group">
-                        <wa-checkbox id="isAsync" checked>
-                            Run in Background
-                            <span slot="hint">Process repair job asynchronously.</span>
-                        </wa-checkbox>
-                    </div>
-                    <div class="field-group">
-                        <wa-checkbox id="autoProcess">
-                            Auto Process
-                            <span slot="hint">Automatically delete broken symlinks and re-search media.</span>
-                        </wa-checkbox>
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <wa-button type="submit" variant="brand" id="submitRepair">
-                        <wa-icon slot="start" name="wrench"></wa-icon>
-                        Start Repair
-                    </wa-button>
                 </div>
             </form>
         </div>
@@ -58,7 +72,13 @@
                 Repair Jobs
             </div>
             <div class="toolbar-actions">
-                <wa-button id="deleteSelectedJobs" variant="danger" appearance="outline" size="small" disabled>
+                <wa-button
+                    id="deleteSelectedJobs"
+                    variant="danger"
+                    appearance="outline"
+                    size="small"
+                    disabled
+                >
                     <wa-icon slot="start" name="trash"></wa-icon>
                     Delete Selected
                 </wa-button>
@@ -72,25 +92,31 @@
         <div class="panel-body table-wrap">
             <table class="data-table" id="jobsTable">
                 <thead>
-                <tr>
-                    <th class="table-select">
-                        <wa-checkbox id="selectAllJobs"></wa-checkbox>
-                    </th>
-                    <th>Job ID</th>
-                    <th>Status</th>
-                    <th>Created</th>
-                    <th>Arrs</th>
-                    <th>Media IDs</th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th class="table-select">
+                            <wa-checkbox id="selectAllJobs"></wa-checkbox>
+                        </th>
+                        <th>Job ID</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Arrs</th>
+                        <th>Media IDs</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody id="jobsTableBody"></tbody>
             </table>
 
             <div id="noJobsMessage" class="empty-state hidden">
-                <wa-icon name="clipboard-check" style="font-size: 2.5rem; color: var(--app-text-muted);"></wa-icon>
+                <wa-icon
+                    name="clipboard-check"
+                    style="font-size: 2.5rem; color: var(--app-text-muted)"
+                ></wa-icon>
                 <h3>No Repair Jobs</h3>
-                <p class="hint">You haven't run any repair jobs yet. Start your first repair above.</p>
+                <p class="hint">
+                    You haven't run any repair jobs yet. Start your first repair
+                    above.
+                </p>
             </div>
         </div>
 
@@ -148,7 +174,12 @@
             </wa-card>
         </div>
 
-        <wa-callout id="errorContainer" variant="danger" appearance="accent" class="hidden">
+        <wa-callout
+            id="errorContainer"
+            variant="danger"
+            appearance="accent"
+            class="hidden"
+        >
             <wa-icon slot="icon" name="triangle-exclamation"></wa-icon>
             <strong>Error</strong>
             <div id="modalJobError">-</div>
@@ -158,11 +189,17 @@
             <div class="panel-body">
                 <div class="toolbar">
                     <h4>Broken Items</h4>
-                    <wa-badge variant="neutral" id="totalItemsCount">0</wa-badge>
+                    <wa-badge variant="neutral" id="totalItemsCount"
+                        >0</wa-badge
+                    >
                 </div>
 
                 <div class="grid grid-3">
-                    <wa-input id="itemSearchInput" placeholder="Search by path..." label="Search"></wa-input>
+                    <wa-input
+                        id="itemSearchInput"
+                        placeholder="Search by path..."
+                        label="Search"
+                    ></wa-input>
                     <wa-select id="arrFilterSelect" label="Arr Filter">
                         <wa-option value="">All Arrs</wa-option>
                     </wa-select>
@@ -175,7 +212,11 @@
                 </div>
 
                 <div class="field-group">
-                    <wa-button id="clearFiltersBtn" appearance="outline" size="small">
+                    <wa-button
+                        id="clearFiltersBtn"
+                        appearance="outline"
+                        size="small"
+                    >
                         <wa-icon slot="start" name="xmark"></wa-icon>
                         Clear Filters
                     </wa-button>
@@ -184,13 +225,13 @@
                 <div class="table-wrap">
                     <table class="data-table data-table--compact">
                         <thead>
-                        <tr>
-                            <th class="table-select"></th>
-                            <th>Arr</th>
-                            <th>Path</th>
-                            <th>Type</th>
-                            <th>Size</th>
-                        </tr>
+                            <tr>
+                                <th class="table-select"></th>
+                                <th>Arr</th>
+                                <th>Path</th>
+                                <th>Type</th>
+                                <th>Size</th>
+                            </tr>
                         </thead>
                         <tbody id="brokenItemsTableBody"></tbody>
                     </table>
@@ -201,12 +242,18 @@
                 </div>
 
                 <div id="noBrokenItemsMessage" class="empty-state hidden">
-                    <wa-icon name="circle-check" style="font-size: 2rem; color: var(--app-text-muted);"></wa-icon>
+                    <wa-icon
+                        name="circle-check"
+                        style="font-size: 2rem; color: var(--app-text-muted)"
+                    ></wa-icon>
                     <p class="hint">No broken items found</p>
                 </div>
 
                 <div id="noFilteredItemsMessage" class="empty-state hidden">
-                    <wa-icon name="filter-circle-xmark" style="font-size: 2rem; color: var(--app-text-muted);"></wa-icon>
+                    <wa-icon
+                        name="filter-circle-xmark"
+                        style="font-size: 2rem; color: var(--app-text-muted)"
+                    ></wa-icon>
                     <p class="hint">No items match the current filters</p>
                 </div>
             </div>
@@ -216,11 +263,23 @@
     <div slot="footer" class="dialog-footer">
         <small class="hint" id="modalFooterStats">-</small>
         <div class="toolbar-actions">
-            <wa-button type="button" variant="brand" size="small" id="processJobBtn" class="hidden">
+            <wa-button
+                type="button"
+                variant="brand"
+                size="small"
+                id="processJobBtn"
+                class="hidden"
+            >
                 <wa-icon slot="start" name="play"></wa-icon>
                 Process
             </wa-button>
-            <wa-button type="button" variant="warning" size="small" id="stopJobBtn" class="hidden">
+            <wa-button
+                type="button"
+                variant="warning"
+                size="small"
+                id="stopJobBtn"
+                class="hidden"
+            >
                 <wa-icon slot="start" name="stop"></wa-icon>
                 Stop
             </wa-button>

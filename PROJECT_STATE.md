@@ -1,8 +1,10 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-05 (8)
+Last updated: 2026-03-06 (9)
 
 ## Recent Changes
+- UI alignment pass: tuned shared header/card/table styling and page composition (Dashboard/Settings/Download/Repair/Stats) to better match the original app screenshots while keeping existing Web Awesome component structure.
+- Stats UX wording: replaced Go-centric "Goroutines" label with Python-appropriate "Runtime Workers" in the Stats overview.
 - Phase 4 cleanup: pruned `web/static/build/` to Vite outputs only (main.js/main.css), removed legacy script placeholders, rebuilt assets.
 - Frontend cleanup: removed utility-class shim and template normalization; config templates now explicit Web Awesome + app input markup; rebuilt Vite assets.
 - Docs: refreshed Project State + TODO after Phase 3 frontend modernization; no code changes.

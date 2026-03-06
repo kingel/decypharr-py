@@ -1,143 +1,227 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark" class="wa-theme-default wa-palette-default wa-brand-blue">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decypharr - {{ title }}</title>
+<!doctype html>
+<html
+    lang="en"
+    data-theme="light"
+    class="wa-theme-default wa-palette-default wa-brand-blue"
+>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Decypharr - {{ title }}</title>
 
-    <!-- Vite bundle: Web Awesome + Lit + htmx + app CSS -->
-    {% if vite_dev %}
-    <script type="module" src="http://localhost:5173/@vite/client"></script>
-    <script type="module" src="http://localhost:5173/src/main.js"></script>
-    {% else %}
-    <link href="{{ url_base }}assets/css/main.css" rel="stylesheet" type="text/css" />
-    <script type="module" src="{{ url_base }}assets/js/main.js"></script>
-    {% endif %}
+        <!-- Vite bundle: Web Awesome + Lit + htmx + app CSS -->
+        {% if vite_dev %}
+        <script type="module" src="http://localhost:5173/@vite/client"></script>
+        <script type="module" src="http://localhost:5173/src/main.js"></script>
+        {% else %}
+        <link
+            href="{{ url_base }}assets/css/main.css"
+            rel="stylesheet"
+            type="text/css"
+        />
+        <script type="module" src="{{ url_base }}assets/js/main.js"></script>
+        {% endif %}
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_base }}images/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_base }}images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_base }}images/favicon/favicon-16x16.png">
-    <link rel="manifest" href="{{ url_base }}images/favicon/site.webmanifest">
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="{{ url_base }}images/favicon/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="{{ url_base }}images/favicon/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="{{ url_base }}images/favicon/favicon-16x16.png"
+        />
+        <link
+            rel="manifest"
+            href="{{ url_base }}images/favicon/site.webmanifest"
+        />
 
-    <script>
-        // Early theme detection to prevent FOUC
-        (function() {
-            const saved = localStorage.getItem('theme');
-            const theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-theme', theme);
-            document.documentElement.classList.toggle('wa-dark', theme === 'dark');
-        })();
-        window.urlBase = "{{ url_base }}";
-    </script>
-</head>
-<body>
+        <script>
+            // Early theme detection to prevent FOUC
+            (function () {
+                const saved = localStorage.getItem("theme");
+                const theme =
+                    saved ||
+                    (window.matchMedia &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches
+                        ? "dark"
+                        : "light");
+                document.documentElement.setAttribute("data-theme", theme);
+                document.documentElement.classList.toggle(
+                    "wa-dark",
+                    theme === "dark",
+                );
+            })();
+            window.urlBase = "{{ url_base }}";
+        </script>
+    </head>
+    <body>
+        <header class="app-header">
+            <div class="app-header__start">
+                <wa-button
+                    class="app-header__menu-toggle"
+                    appearance="plain"
+                    size="small"
+                    aria-label="Menu"
+                    title="Menu"
+                    onclick="document.querySelector('.app-drawer').show()"
+                >
+                    <wa-icon slot="start" name="list"></wa-icon>
+                </wa-button>
+                <a class="app-header__logo" href="{{ url_base }}">
+                    <img
+                        src="{{ url_base }}images/logo.svg"
+                        alt="Decypharr Logo"
+                    />
+                    <span>Decypharr</span>
+                </a>
+            </div>
 
-<header class="app-header">
-    <div class="app-header__start">
-        <wa-button
-            class="app-header__menu-toggle"
-            appearance="plain"
-            size="small"
-            aria-label="Menu"
-            title="Menu"
-            onclick="document.querySelector('.app-drawer').show()"
+            <nav class="app-header__nav">
+                <a
+                    href="{{ url_base }}"
+                    class="app-nav-link {% if page == 'index' %}active{% endif %}"
+                >
+                    <wa-icon name="gauge"></wa-icon> Dashboard
+                </a>
+                <a
+                    href="{{ url_base }}download"
+                    class="app-nav-link {% if page == 'download' %}active{% endif %}"
+                >
+                    <wa-icon name="cloud-arrow-down"></wa-icon> Download
+                </a>
+                <a
+                    href="{{ url_base }}repair"
+                    class="app-nav-link {% if page == 'repair' %}active{% endif %}"
+                >
+                    <wa-icon name="screwdriver-wrench"></wa-icon> Repair
+                </a>
+                <a
+                    href="{{ url_base }}settings"
+                    class="app-nav-link {% if page == 'config' %}active{% endif %}"
+                >
+                    <wa-icon name="gear"></wa-icon> Settings
+                </a>
+                <a
+                    href="{{ url_base }}webdav"
+                    target="_blank"
+                    class="app-nav-link"
+                >
+                    <wa-icon name="cloud"></wa-icon> WebDAV
+                </a>
+                <a
+                    href="{{ url_base }}debug/logs"
+                    target="_blank"
+                    class="app-nav-link"
+                >
+                    <wa-icon name="file-lines"></wa-icon> Logs
+                </a>
+            </nav>
+
+            <div class="app-header__end">
+                <theme-toggle></theme-toggle>
+                <a
+                    href="{{ url_base }}stats"
+                    class="app-nav-link app-nav-link--stats {% if page == 'stats' %}active{% endif %}"
+                >
+                    <wa-icon name="chart-line"></wa-icon> Stats
+                </a>
+                <wa-badge id="version-badge" variant="brand" pill
+                    >Loading...</wa-badge
+                >
+            </div>
+        </header>
+
+        <wa-drawer label="Menu" class="app-drawer" placement="start">
+            <nav>
+                <a
+                    href="{{ url_base }}"
+                    class="app-nav-link {% if page == 'index' %}active{% endif %}"
+                >
+                    <wa-icon name="gauge"></wa-icon> Dashboard
+                </a>
+                <a
+                    href="{{ url_base }}download"
+                    class="app-nav-link {% if page == 'download' %}active{% endif %}"
+                >
+                    <wa-icon name="cloud-arrow-down"></wa-icon> Download
+                </a>
+                <a
+                    href="{{ url_base }}repair"
+                    class="app-nav-link {% if page == 'repair' %}active{% endif %}"
+                >
+                    <wa-icon name="screwdriver-wrench"></wa-icon> Repair
+                </a>
+                <a
+                    href="{{ url_base }}settings"
+                    class="app-nav-link {% if page == 'config' %}active{% endif %}"
+                >
+                    <wa-icon name="gear"></wa-icon> Settings
+                </a>
+                <a
+                    href="{{ url_base }}stats"
+                    class="app-nav-link {% if page == 'stats' %}active{% endif %}"
+                >
+                    <wa-icon name="chart-line"></wa-icon> Stats
+                </a>
+                <a
+                    href="{{ url_base }}webdav"
+                    target="_blank"
+                    class="app-nav-link"
+                >
+                    <wa-icon name="cloud"></wa-icon> WebDAV
+                </a>
+                <a
+                    href="{{ url_base }}debug/logs"
+                    target="_blank"
+                    class="app-nav-link"
+                >
+                    <wa-icon name="file-lines"></wa-icon> Logs
+                </a>
+            </nav>
+        </wa-drawer>
+
+        <main
+            class="{% if page in ('login', 'register') %}{% else %}app-main{% endif %}"
         >
-            <wa-icon slot="start" name="list"></wa-icon>
-        </wa-button>
-        <a class="app-header__logo" href="{{ url_base }}">
-            <img src="{{ url_base }}images/logo.svg" alt="Decypharr Logo">
-            <span>Decypharr</span>
-        </a>
-    </div>
+            {% if page == 'index' %} {% include "index.html" %} {% elif page ==
+            'download' %} {% include "download.html" %} {% elif page == 'repair'
+            %} {% include "repair.html" %} {% elif page == 'stats' %} {% include
+            "stats.html" %} {% elif page == 'config' %} {% include "config.html"
+            %} {% elif page == 'login' %} {% include "login.html" %} {% elif
+            page == 'register' %} {% include "register.html" %} {% else %}
+            <div style="text-align: center; padding: 4rem">
+                <h1
+                    style="
+                        font-size: 3rem;
+                        color: var(--wa-color-danger-600, #dc2626);
+                    "
+                >
+                    404
+                </h1>
+                <p>Page not found.</p>
+                <wa-button href="{{ url_base }}" variant="primary"
+                    >Go Home</wa-button
+                >
+            </div>
+            {% endif %}
+        </main>
 
-    <nav class="app-header__nav">
-        <a href="{{ url_base }}" class="app-nav-link {% if page == 'index' %}active{% endif %}">
-            <wa-icon name="gauge"></wa-icon> Dashboard
-        </a>
-        <a href="{{ url_base }}download" class="app-nav-link {% if page == 'download' %}active{% endif %}">
-            <wa-icon name="cloud-arrow-down"></wa-icon> Download
-        </a>
-        <a href="{{ url_base }}repair" class="app-nav-link {% if page == 'repair' %}active{% endif %}">
-            <wa-icon name="screwdriver-wrench"></wa-icon> Repair
-        </a>
-        <a href="{{ url_base }}settings" class="app-nav-link {% if page == 'config' %}active{% endif %}">
-            <wa-icon name="gear"></wa-icon> Settings
-        </a>
-        <a href="{{ url_base }}stats" class="app-nav-link {% if page == 'stats' %}active{% endif %}">
-            <wa-icon name="chart-line"></wa-icon> Stats
-        </a>
-        <a href="{{ url_base }}webdav" target="_blank" class="app-nav-link">
-            <wa-icon name="cloud"></wa-icon> WebDAV
-        </a>
-        <a href="{{ url_base }}debug/logs" target="_blank" class="app-nav-link">
-            <wa-icon name="file-lines"></wa-icon> Logs
-        </a>
-    </nav>
-
-    <div class="app-header__end">
-        <theme-toggle></theme-toggle>
-        <wa-badge id="version-badge" variant="brand" pill>Loading...</wa-badge>
-    </div>
-</header>
-
-<wa-drawer label="Menu" class="app-drawer" placement="start">
-    <nav>
-        <a href="{{ url_base }}" class="app-nav-link {% if page == 'index' %}active{% endif %}">
-            <wa-icon name="gauge"></wa-icon> Dashboard
-        </a>
-        <a href="{{ url_base }}download" class="app-nav-link {% if page == 'download' %}active{% endif %}">
-            <wa-icon name="cloud-arrow-down"></wa-icon> Download
-        </a>
-        <a href="{{ url_base }}repair" class="app-nav-link {% if page == 'repair' %}active{% endif %}">
-            <wa-icon name="screwdriver-wrench"></wa-icon> Repair
-        </a>
-        <a href="{{ url_base }}settings" class="app-nav-link {% if page == 'config' %}active{% endif %}">
-            <wa-icon name="gear"></wa-icon> Settings
-        </a>
-        <a href="{{ url_base }}stats" class="app-nav-link {% if page == 'stats' %}active{% endif %}">
-            <wa-icon name="chart-line"></wa-icon> Stats
-        </a>
-        <a href="{{ url_base }}webdav" target="_blank" class="app-nav-link">
-            <wa-icon name="cloud"></wa-icon> WebDAV
-        </a>
-        <a href="{{ url_base }}debug/logs" target="_blank" class="app-nav-link">
-            <wa-icon name="file-lines"></wa-icon> Logs
-        </a>
-    </nav>
-</wa-drawer>
-
-<main class="{% if page in ('login', 'register') %}{% else %}app-main{% endif %}">
-    {% if page == 'index' %}
-    {% include "index.html" %}
-    {% elif page == 'download' %}
-    {% include "download.html" %}
-    {% elif page == 'repair' %}
-    {% include "repair.html" %}
-    {% elif page == 'stats' %}
-    {% include "stats.html" %}
-    {% elif page == 'config' %}
-    {% include "config.html" %}
-    {% elif page == 'login' %}
-    {% include "login.html" %}
-    {% elif page == 'register' %}
-    {% include "register.html" %}
-    {% else %}
-    <div style="text-align:center; padding:4rem;">
-        <h1 style="font-size:3rem; color:var(--wa-color-danger-600, #dc2626);">404</h1>
-        <p>Page not found.</p>
-        <wa-button href="{{ url_base }}" variant="primary">Go Home</wa-button>
-    </div>
-    {% endif %}
-</main>
-
-<footer class="app-footer">
-    <a href="https://github.com/sirrobot01/decypharr" target="_blank">
-        <wa-icon name="github"></wa-icon> GitHub
-    </a>
-    <a href="https://sirrobot01.github.io/decypharr" target="_blank">
-        <wa-icon name="book"></wa-icon> Documentation
-    </a>
-</footer>
-
-</body>
+        <footer class="app-footer">
+            <a href="https://github.com/sirrobot01/decypharr" target="_blank">
+                <wa-icon name="github"></wa-icon> GitHub
+            </a>
+            <a href="https://sirrobot01.github.io/decypharr" target="_blank">
+                <wa-icon name="book"></wa-icon> Documentation
+            </a>
+        </footer>
+    </body>
 </html>

@@ -10,8 +10,8 @@ export class SystemStats extends LitElement {
 
   static styles = css`
     :host { display: block; }
-    .header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
-    .title { font-size: 1.5rem; font-weight: 700; }
+    .header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .title { font-size: 1.25rem; font-weight: 700; }
     .section { display: flex; flex-direction: column; gap: 1.5rem; }
     .grid { display: grid; gap: 1rem; }
     .grid-2 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
@@ -26,6 +26,7 @@ export class SystemStats extends LitElement {
     .subtle { background: var(--app-surface-muted); padding: 0.5rem; border-radius: var(--app-radius); }
     .scroll { max-height: 280px; overflow-y: auto; }
     .callout-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+    wa-card::part(base) { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 16px; box-shadow: 0 6px 22px rgba(15, 23, 42, 0.07); }
   `
 
   constructor() {
@@ -62,6 +63,7 @@ export class SystemStats extends LitElement {
   }
 
   _renderOverview(stats) {
+    const runtimeVersion = stats.runtime_version || 'Python'
     const heapAlloc = stats.heap_alloc_mb || '-'
     const totalAlloc = stats.total_alloc_mb || null
     const heapText = totalAlloc ? `Heap: ${heapAlloc} | Total: ${totalAlloc}` : `Heap: ${heapAlloc}`
@@ -78,7 +80,7 @@ export class SystemStats extends LitElement {
             <div class="stat-card">
               <div class="stat-title">System</div>
               <div class="stat-value">${stats.os || '-'}</div>
-              <div class="stat-desc">${stats.runtime_version || stats.go_version || '-'}</div>
+              <div class="stat-desc">${runtimeVersion}</div>
             </div>
             <div class="stat-card">
               <div class="stat-title">CPU Cores</div>
@@ -96,7 +98,7 @@ export class SystemStats extends LitElement {
               <div class="stat-desc">${heapText}</div>
             </div>
             <div class="stat-card">
-              <div class="stat-title">Threads</div>
+              <div class="stat-title">Runtime Workers</div>
               <div class="stat-value">${formatNumber(stats.goroutines || 0)}</div>
               <div class="stat-desc">GC: ${formatNumber(stats.gc_cycles || 0)} cycles</div>
             </div>

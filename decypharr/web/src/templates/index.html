@@ -5,15 +5,32 @@
         <div class="panel-body">
             <div class="toolbar">
                 <div class="toolbar-actions">
-                    <wa-button variant="danger" appearance="outline" size="small" id="batchDeleteBtn" class="hidden">
+                    <wa-button
+                        variant="danger"
+                        appearance="outline"
+                        size="small"
+                        id="batchDeleteBtn"
+                        class="hidden"
+                    >
                         <wa-icon slot="start" name="trash"></wa-icon>
                         Delete Selected
                     </wa-button>
-                    <wa-button variant="warning" appearance="outline" size="small" id="batchDeleteDebridBtn" class="hidden">
+                    <wa-button
+                        variant="warning"
+                        appearance="outline"
+                        size="small"
+                        id="batchDeleteDebridBtn"
+                        class="hidden"
+                    >
                         <wa-icon slot="start" name="cloud-slash"></wa-icon>
                         Remove From Debrid
                     </wa-button>
-                    <wa-button variant="neutral" appearance="outline" size="small" id="refreshBtn">
+                    <wa-button
+                        variant="neutral"
+                        appearance="outline"
+                        size="small"
+                        id="refreshBtn"
+                    >
                         <wa-icon slot="start" name="arrows-rotate"></wa-icon>
                         Refresh
                     </wa-button>
@@ -21,28 +38,54 @@
 
                 <div class="filter-row">
                     <div class="filter-field">
-                        <wa-select id="stateFilter" label="State">
+                        <wa-select
+                            id="stateFilter"
+                            size="small"
+                            aria-label="State"
+                        >
                             <wa-option value="">All States</wa-option>
                             <wa-option value="pausedUP">Completed</wa-option>
-                            <wa-option value="downloading">Downloading</wa-option>
+                            <wa-option value="downloading"
+                                >Downloading</wa-option
+                            >
                             <wa-option value="error">Error</wa-option>
                         </wa-select>
                     </div>
                     <div class="filter-field">
-                        <wa-select id="categoryFilter" label="Category">
+                        <wa-select
+                            id="categoryFilter"
+                            size="small"
+                            aria-label="Category"
+                        >
                             <wa-option value="">All Categories</wa-option>
                         </wa-select>
                     </div>
                     <div class="filter-field">
-                        <wa-select id="sortSelector" label="Sort By">
-                            <wa-option value="added_on" selected>Date Added (Newest First)</wa-option>
-                            <wa-option value="added_on_asc">Date Added (Oldest First)</wa-option>
+                        <wa-select
+                            id="sortSelector"
+                            size="small"
+                            aria-label="Sort By"
+                        >
+                            <wa-option value="added_on" selected
+                                >Date Added (Newest First)</wa-option
+                            >
+                            <wa-option value="added_on_asc"
+                                >Date Added (Oldest First)</wa-option
+                            >
                             <wa-option value="name_asc">Name (A-Z)</wa-option>
                             <wa-option value="name_desc">Name (Z-A)</wa-option>
-                            <wa-option value="size_desc">Size (Largest First)</wa-option>
-                            <wa-option value="size_asc">Size (Smallest First)</wa-option>
-                            <wa-option value="progress_desc">Progress (Most First)</wa-option>
-                            <wa-option value="progress_asc">Progress (Least First)</wa-option>
+                            <wa-option value="size_desc"
+                                >Size (Largest First)</wa-option
+                            >
+                            <wa-option value="size_asc"
+                                >Size (Smallest First)</wa-option
+                            >
+                            <wa-option value="progress_desc"
+                                >Progress (Most First)</wa-option
+                            >
+                            <wa-option value="progress_asc"
+                                >Progress (Least First)</wa-option
+                            >
                         </wa-select>
                     </div>
                 </div>
@@ -54,36 +97,20 @@
         <div class="panel-body table-wrap">
             <table class="data-table">
                 <thead>
-                <tr>
-                    <th class="table-select">
-                        <wa-checkbox id="selectAll"></wa-checkbox>
-                    </th>
-                    <th>
-                        <wa-icon name="file-lines"></wa-icon> Name
-                    </th>
-                    <th>
-                        <wa-icon name="hard-drive"></wa-icon> Size
-                    </th>
-                    <th>
-                        <wa-icon name="gauge-high"></wa-icon> Progress
-                    </th>
-                    <th>
-                        <wa-icon name="download"></wa-icon> Speed
-                    </th>
-                    <th>
-                        <wa-icon name="tag"></wa-icon> Category
-                    </th>
-                    <th>
-                        <wa-icon name="cloud"></wa-icon> Debrid
-                    </th>
-                    <th>
-                        <wa-icon name="users"></wa-icon> Seeders
-                    </th>
-                    <th>
-                        <wa-icon name="wave-square"></wa-icon> State
-                    </th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th class="table-select">
+                            <wa-checkbox id="selectAll"></wa-checkbox>
+                        </th>
+                        <th><wa-icon name="file-lines"></wa-icon> Name</th>
+                        <th><wa-icon name="hard-drive"></wa-icon> Size</th>
+                        <th><wa-icon name="gauge-high"></wa-icon> Progress</th>
+                        <th><wa-icon name="download"></wa-icon> Speed</th>
+                        <th><wa-icon name="tag"></wa-icon> Category</th>
+                        <th><wa-icon name="cloud"></wa-icon> Debrid</th>
+                        <th><wa-icon name="users"></wa-icon> Seeders</th>
+                        <th><wa-icon name="wave-square"></wa-icon> State</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody id="torrentsList"></tbody>
             </table>
@@ -99,9 +126,15 @@
 
     <wa-card class="panel hidden" id="emptyState">
         <div class="panel-body empty-state">
-            <wa-icon name="inbox" style="font-size: 3rem; color: var(--app-text-muted);"></wa-icon>
+            <wa-icon
+                name="inbox"
+                style="font-size: 3rem; color: var(--app-text-muted)"
+            ></wa-icon>
             <h3>No Torrents Found</h3>
-            <p class="hint">You haven't added any torrents yet. Start by adding your first download.</p>
+            <p class="hint">
+                You haven't added any torrents yet. Start by adding your first
+                download.
+            </p>
             <wa-button variant="brand" href="__URL_BASE__download">
                 <wa-icon slot="start" name="plus"></wa-icon>
                 Add New Download
@@ -112,7 +145,7 @@
 
 <div class="context-menu hidden" id="torrentContextMenu">
     <div class="context-title torrent-name"></div>
-    <hr/>
+    <hr />
     <button class="context-item" data-action="copy-magnet">
         <wa-icon name="magnet"></wa-icon>
         Copy Magnet Link
@@ -121,7 +154,7 @@
         <wa-icon name="clipboard"></wa-icon>
         Copy Name
     </button>
-    <hr/>
+    <hr />
     <button class="context-item" data-action="delete">
         <wa-icon name="trash"></wa-icon>
         Delete Torrent
