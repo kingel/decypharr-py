@@ -1,5 +1,7 @@
 # TODO
 
+- Done: install MkDocs tooling in the dev container, add a dedicated docs CI build, and document the container-based docs build command.
+- Done: align public docs with current implementation status while keeping additional provider support documented as planned work.
 - Done: restore documented repair interval parsing for shorthand durations and `HH:MM` values.
 - Done: replace the shared fallback secret with a per-instance persisted secret when `DECYPHARR_SECRET_KEY` is unset.
 - Done: reconcile repair scheduler with current config so disabling repair or using an invalid/empty interval removes the scheduled job.

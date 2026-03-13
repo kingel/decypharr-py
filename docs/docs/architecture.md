@@ -10,7 +10,8 @@ This document describes the major components and data flow for Decypharr using F
   - Implements Arr-facing qBittorrent endpoints for add/list/delete/status, categories, and preferences.
   - State mapping: debrid `downloaded`/`completed` → `pausedUP` (qBittorrent completed), active processing → `downloading`, failures → `error`.
 - **Debrid Layer**
-  - Provider clients (Real-Debrid, TorBox, Debrid-Link, All-Debrid)
+  - Provider clients (Real-Debrid, TorBox)
+  - Additional providers such as Debrid-Link and All-Debrid remain planned
   - Unified storage and caching to map infohashes to debrid items and cache availability
 - **WebDAV**
   - Provider-backed WebDAV directories exposed per debrid service

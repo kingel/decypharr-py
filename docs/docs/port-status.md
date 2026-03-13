@@ -61,7 +61,7 @@ Legend:
 | List/info | Done | Basic list/status fields. |
 | Categories/tags | Done | Basic support. |
 | Sync/maindata | Partial | Core fields only. |
-| Trackers/peers/priorities | Planned | Not yet implemented. |
+| Trackers/files/priorities | Done | Trackers, peers placeholder response, file listing, and file priority updates are implemented. |
 
 ## Arr Integration
 

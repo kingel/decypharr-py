@@ -1,8 +1,10 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-13 (14)
+Last updated: 2026-03-13 (16)
 
 ## Recent Changes
+- Docs tooling: installed MkDocs dependencies in the dev container, added a dedicated GitHub Actions docs build workflow, and documented the container-based `mkdocs build` command.
+- Docs parity: aligned public docs with current implementation status for auth/setup flow, implemented qBittorrent endpoints, and provider support wording; unsupported providers remain documented as planned work.
 - Repair interval parsing fix: restored documented shorthand (`1h`, `15m`, etc.) and clock-time (`HH:MM`) parsing in `_parse_schedule()`, with regression coverage for parsing and scheduled-job creation.
 - Secret management hardening: replaced the shared fallback session/SID secret with a per-instance secret persisted under the config path when `DECYPHARR_SECRET_KEY` is unset; added regression tests for generation, stability, and env override.
 - Repair scheduler fix: `refresh_from_config()` now removes stale `repair-scheduler` jobs before reapplying config, so disabling repair or clearing/invalidating the interval actually unschedules background runs; added regression tests.

@@ -19,7 +19,7 @@ The Decypharr user interface provides:
 - Torrent management capabilities
 - Status monitoring
 - Configuration options
-- Multiple Debrid provider integration
+- Multi-provider configuration for implemented and planned Debrid backends
 
 ## Advanced Features
 
@@ -28,17 +28,18 @@ Decypharr includes several advanced features that extend its capabilities:
 - [Repair Support](repair-worker.md): Identifies and fixes issues with your media files
 - WebDav Server: Provides direct access to your Debrid files
 - Mounting Support: Allows you to mount Debrid services using [rclone](https://rclone.org), making it easy to access your files directly from your system
-- Multiple Debrid Providers: Supports Real Debrid, Torbox, Debrid Link, and All Debrid, allowing you to choose the best service for your needs
+- Multiple Debrid Providers: Real Debrid and Torbox are implemented today, with Debrid Link and All Debrid planned
 
-## Supported Debrid Providers
+## Debrid Provider Status
 
-Decypharr supports multiple Debrid providers:
+Implemented providers:
 
 - Real Debrid
 - Torbox
+
+Planned providers:
+
 - Debrid Link
 - All Debrid
-- Premiumize(Coming Soon)
-- Usenet(Coming Soon)
 
-Each provider can be configured separately, allowing you to use one or multiple services simultaneously.
+Each provider is intended to be configurable separately. See the feature status page for current implementation coverage.

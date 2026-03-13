@@ -2,7 +2,7 @@
 ![Decypharr UI - Light Mode](images/main-light.png){: .light-mode-image}
 ![Decypharr UI - Dark Mode](images/main.png){: .dark-mode-image}
 
-**Decypharr** is a qBittorrent-compatible download client with **multiple Debrid service support**.
+**Decypharr** is a qBittorrent-compatible download client with Debrid service support.
 This repository provides the Python implementation, inspired by the original Decypharr project.
 
 ## What is Decypharr?
@@ -13,14 +13,17 @@ This repository provides the Python implementation, inspired by the original Dec
 ## Key Features
 
 - Mock qBittorrent API that supports Sonarr, Radarr, Lidarr, and other Arr applications
-- Multiple Debrid providers support
+- Multiple Debrid provider support, with additional providers planned
 - WebDAV server support for each Debrid provider with an optional mounting feature(using [rclone](https://rclone.org))
 - Repair Worker for missing files, symlinks etc
 
-## Supported Debrid Providers
+## Currently Implemented Debrid Providers
 
 - [Real Debrid](https://real-debrid.com)
 - [Torbox](https://torbox.app)
+
+Planned providers:
+
 - [Debrid Link](https://debrid-link.com)
 - [All Debrid](https://alldebrid.com)
 

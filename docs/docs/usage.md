@@ -5,12 +5,12 @@ This guide will help you get started with Decypharr after installation.
 After installing Decypharr, you can access the web interface at `http://localhost:8282` or your configured host/port.
 
 ### Initial Configuration
-If it's the first time you're accessing the UI, you will be prompted to set up your credentials. You can skip this step if you don't want to enable authentication. If you choose to set up credentials, enter a username and password confirm password, then click **Save**. You will be redirected to the settings page.
+If it's the first time you're accessing the UI, you will be prompted to set up your credentials. Enter a username and password, confirm the password, then click **Save**. You will be redirected to the settings page. After bootstrap, credential changes require an authenticated session.
 
 ### Debrid Configuration
    ![Decypharr Settings](images/settings/debrid.png)
 - Click on **Debrid** in the tab
-- Add your desired Debrid services (Real Debrid, Torbox, Debrid Link, All Debrid) by entering the required API keys or tokens.
+- Add your desired Debrid services by entering the required API keys or tokens. The Python port currently implements Real Debrid and Torbox. Debrid Link and All Debrid remain planned work.
 - Set the **Mount/Rclone Folder**. This is where decypharr will look for added torrents to symlink them to your media library.
    - If you're using internal webdav, do not forget the `/__all__` suffix
 - Enable WebDAV
@@ -47,6 +47,7 @@ You can skip Arr configuration for now. Decypharr will auto-add them when you co
 Optional toggles:
 - **Cleanup Queue**: Remove stalled/failed import items from the Arr queue automatically.
 - **Auto-Remove Completed**: Once Arr imports a completed download and it disappears from the Arr queue, Decypharr removes it from its own torrent list.
+- **Skip Repair**: Exclude a configured Arr instance from repair jobs.
 
 
 #### Connecting to Sonarr/Radarr
@@ -66,6 +67,8 @@ To connect Decypharr to your Sonarr or Radarr instance:
    - **First and Last First**: `No` by default or `Yes` if you want to remove torrent tracker URLs from the torrents. This can make it possible to [download private trackers torrents without breaking the rules](features/private-tracker-downloads.md).
 3. Click **Test** to verify the connection
 4. Click **Save** to add the download client
+
+If app authentication is enabled, the web UI uses sessions and the API also accepts `Authorization: Bearer <api_token>` for programmatic access.
 
 
 ### Rclone Configuration

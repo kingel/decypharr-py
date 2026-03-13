@@ -37,6 +37,14 @@ Run inside the container (recommended):
 docker compose -f docker-compose.dev.yml exec -T decypharr-py pytest -q
 ```
 
+### Documentation
+
+Build the MkDocs site inside the dev container:
+
+```bash
+docker compose -f docker-compose.dev.yml exec -T decypharr-py python -m mkdocs build -f docs/mkdocs.yml --strict
+```
+
 ### Rclone (Internal Mounting)
 
 Decypharr uses rclone `rcd` and manages mounts internally.

@@ -24,9 +24,11 @@ RUN python -m pip install --upgrade pip \
 
 COPY pyproject.toml README.md ./
 COPY decypharr ./decypharr
+COPY docs/requirements.txt ./docs/requirements.txt
 COPY scripts/dev-entrypoint.sh /usr/local/bin/dev-entrypoint.sh
 
 RUN uv pip install -e .[dev] --system
+RUN python -m pip install -r docs/requirements.txt
 RUN chmod +x /usr/local/bin/dev-entrypoint.sh
 
 EXPOSE 8282
