@@ -1,8 +1,9 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-13 (17)
+Last updated: 2026-03-13 (18)
 
 ## Recent Changes
+- CI asset check: GitHub Actions now rebuilds the Vite frontend and fails if `decypharr/web/static/build/` is out of sync with checked-in source; developer guide updated with the local verification commands.
 - UI validation parity: the settings form now performs explicit client-side validation before `/api/config` submit, blocks incomplete debrid/qBittorrent/repair payloads, and switches to the tab containing the first invalid field; Vite assets rebuilt in container.
 - Docs tooling: installed MkDocs dependencies in the dev container, added a dedicated GitHub Actions docs build workflow, and documented the container-based `mkdocs build` command.
 - Docs parity: aligned public docs with current implementation status for auth/setup flow, implemented qBittorrent endpoints, and provider support wording; unsupported providers remain documented as planned work.
@@ -73,7 +74,6 @@ Last updated: 2026-03-13 (17)
 - `docs/`: MkDocs site for user + developer docs.
 
 ## Open Tasks
-- **Static asset handling**: Vite build step added (`npm run build` in `decypharr/web/`); CI should run this before packaging.
 - **WebDAV parity**: Validate WsgiDAV dir browser UX vs Go’s custom listing (delete buttons).
 - **Tests**: Integration/stack tests (Arr + debrid + webdav flows) — manual by user.
 - **Additional debrid providers**: Debrid‑Link / AllDebrid not yet implemented.

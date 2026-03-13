@@ -1,5 +1,6 @@
 # TODO
 
+- Done: add a CI check that rebuilds Vite assets and fails when `decypharr/web/static/build/` is out of date; documented the local verification commands.
 - Done: install MkDocs tooling in the dev container, add a dedicated docs CI build, and document the container-based docs build command.
 - Done: tighten settings form validation to block incomplete debrid/qBittorrent/repair config before submit; rebuilt Vite assets in container.
 - Done: align public docs with current implementation status while keeping additional provider support documented as planned work.

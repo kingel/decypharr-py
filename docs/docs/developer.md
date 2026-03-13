@@ -37,6 +37,20 @@ Run inside the container (recommended):
 docker compose -f docker-compose.dev.yml exec -T decypharr-py pytest -q
 ```
 
+### Frontend Assets
+
+When you change files under `decypharr/web/src/`, rebuild the checked-in Vite assets in the frontend container:
+
+```bash
+docker compose -f docker-compose.dev.yml exec -T frontend sh -lc 'cd /app/decypharr/web && npm run build'
+```
+
+Then verify the generated bundle is committed:
+
+```bash
+git diff --exit-code -- decypharr/web/static/build
+```
+
 ### Documentation
 
 Build the MkDocs site inside the dev container:
