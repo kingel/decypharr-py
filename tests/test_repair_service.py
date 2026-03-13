@@ -52,3 +52,51 @@ def test_process_job_calls_arr_actions(tmp_path):
     assert fake_arr.deleted is True
     assert fake_arr.searched is True
     assert job.status == JobStatus.COMPLETED
+    if scheduler.running:
+        scheduler.shutdown(wait=False)
+
+
+def test_refresh_from_config_removes_scheduler_when_disabled(tmp_path):
+    cfg = ConfigManager(tmp_path)
+    config = cfg.load()
+    config.repair.enabled = True
+    config.repair.interval = "0 0 * * *"
+    cfg.save(config)
+
+    debrids = DebridStorage(config)
+    scheduler = BackgroundScheduler()
+    arrs = ArrStorage()
+    service = RepairService(cfg, debrids, arrs, scheduler)
+
+    assert scheduler.get_job("repair-scheduler") is not None
+
+    updated = cfg.load()
+    updated.repair.enabled = False
+    cfg.save(updated)
+    service.refresh_from_config()
+
+    assert scheduler.get_job("repair-scheduler") is None
+    scheduler.shutdown(wait=False)
+
+
+def test_refresh_from_config_removes_scheduler_when_interval_invalid(tmp_path):
+    cfg = ConfigManager(tmp_path)
+    config = cfg.load()
+    config.repair.enabled = True
+    config.repair.interval = "0 0 * * *"
+    cfg.save(config)
+
+    debrids = DebridStorage(config)
+    scheduler = BackgroundScheduler()
+    arrs = ArrStorage()
+    service = RepairService(cfg, debrids, arrs, scheduler)
+
+    assert scheduler.get_job("repair-scheduler") is not None
+
+    updated = cfg.load()
+    updated.repair.interval = "invalid"
+    cfg.save(updated)
+    service.refresh_from_config()
+
+    assert scheduler.get_job("repair-scheduler") is None
+    scheduler.shutdown(wait=False)

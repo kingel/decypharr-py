@@ -1,8 +1,9 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-13 (11)
+Last updated: 2026-03-13 (12)
 
 ## Recent Changes
+- Repair scheduler fix: `refresh_from_config()` now removes stale `repair-scheduler` jobs before reapplying config, so disabling repair or clearing/invalidating the interval actually unschedules background runs; added regression tests.
 - Auth/API parity: `/api/*` and `/debug/*` now accept either a logged-in session or `Authorization: Bearer <api_token>`; added regression coverage for token auth and refresh rotation; refreshed API docs/spec.
 - Cleanup: removed orphaned legacy frontend scripts under `decypharr/web/static/js/` and dropped stale duplicate status tracker `docs/porting-checklist.md`; active runtime remains the Vite `web/static/build/` bundle.
 - UI alignment pass: tuned shared header/card/table styling and page composition (Dashboard/Settings/Download/Repair/Stats) to better match the original app screenshots while keeping existing Web Awesome component structure.

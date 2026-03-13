@@ -102,8 +102,15 @@ class RepairService:
         self._load_from_file()
         self._schedule_if_enabled()
 
+    def _remove_scheduled_job(self) -> None:
+        try:
+            self._scheduler.remove_job("repair-scheduler")
+        except Exception:
+            pass
+
     def _schedule_if_enabled(self) -> None:
         cfg = self._config_manager.load()
+        self._remove_scheduled_job()
         if not cfg.repair.enabled or not cfg.repair.interval:
             return
         if not getattr(self._scheduler, "running", False):
@@ -114,10 +121,6 @@ class RepairService:
         trigger = _parse_schedule(cfg.repair.interval)
         if trigger is None:
             return
-        try:
-            self._scheduler.remove_job("repair-scheduler")
-        except Exception:
-            pass
         self._scheduler.add_job(
             lambda: self.add_job([], [], cfg.repair.auto_process, recurrent=True),
             trigger=trigger,
