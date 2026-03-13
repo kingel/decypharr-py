@@ -1,5 +1,6 @@
 # TODO
 
+- Done: restore documented repair interval parsing for shorthand durations and `HH:MM` values.
 - Done: replace the shared fallback secret with a per-instance persisted secret when `DECYPHARR_SECRET_KEY` is unset.
 - Done: reconcile repair scheduler with current config so disabling repair or using an invalid/empty interval removes the scheduled job.
 - Done: add bearer token auth for `/api/*` and `/debug/*`, including refresh-token rotation regression tests and API doc/spec updates.

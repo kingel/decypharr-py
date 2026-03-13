@@ -59,7 +59,7 @@ def _parse_schedule(value: str):
     value = value.strip()
     if not value:
         return None
-    match = re.match(r"^(\\d+)([smhd])$", value, re.IGNORECASE)
+    match = re.match(r"^(\d+)([smhd])$", value, re.IGNORECASE)
     if match:
         amount = int(match.group(1))
         unit = match.group(2).lower()
@@ -71,7 +71,7 @@ def _parse_schedule(value: str):
         elif unit == "d":
             seconds *= 86400
         return IntervalTrigger(seconds=seconds)
-    match = re.match(r"^(\\d{1,2}):(\\d{2})$", value)
+    match = re.match(r"^(\d{1,2}):(\d{2})$", value)
     if match:
         hour = int(match.group(1))
         minute = int(match.group(2))

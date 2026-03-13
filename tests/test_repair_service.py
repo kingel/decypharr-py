@@ -1,11 +1,13 @@
 from datetime import datetime
 
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
+from apscheduler.triggers.interval import IntervalTrigger
 
 from decypharr.arr import ArrStorage, ContentFile
 from decypharr.config import ConfigManager
 from decypharr.debrid.storage import DebridStorage
-from decypharr.services.repair import JobStatus, RepairJob, RepairService
+from decypharr.services.repair import JobStatus, RepairJob, RepairService, _parse_schedule
 
 
 class FakeArr:
@@ -54,6 +56,30 @@ def test_process_job_calls_arr_actions(tmp_path):
     assert job.status == JobStatus.COMPLETED
     if scheduler.running:
         scheduler.shutdown(wait=False)
+
+
+def test_parse_schedule_supports_documented_formats():
+    duration = _parse_schedule("1h")
+    clock_time = _parse_schedule("02:30")
+
+    assert isinstance(duration, IntervalTrigger)
+    assert isinstance(clock_time, CronTrigger)
+
+
+def test_schedule_if_enabled_accepts_duration_shorthand(tmp_path):
+    cfg = ConfigManager(tmp_path)
+    config = cfg.load()
+    config.repair.enabled = True
+    config.repair.interval = "1h"
+    cfg.save(config)
+
+    debrids = DebridStorage(config)
+    scheduler = BackgroundScheduler()
+    arrs = ArrStorage()
+    RepairService(cfg, debrids, arrs, scheduler)
+
+    assert scheduler.get_job("repair-scheduler") is not None
+    scheduler.shutdown(wait=False)
 
 
 def test_refresh_from_config_removes_scheduler_when_disabled(tmp_path):
