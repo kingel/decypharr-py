@@ -10,14 +10,6 @@ from typing import Any, List, Optional
 from pydantic import BaseModel, Field
 import bcrypt
 
-
-def _env_secret_key() -> str:
-    return os.getenv(
-        "DECYPHARR_SECRET_KEY",
-        "\"wqj(v%lj*!-+kf@4&i95rhh_!5_px5qnuwqbr%cjrvrozz_r*(\"",
-    )
-
-
 def _normalize_url_base(url_base: str) -> str:
     if not url_base:
         url_base = "/"
@@ -188,6 +180,10 @@ class ConfigManager:
     def torrents_path(self) -> Path:
         return self.base_path / "torrents.json"
 
+    @property
+    def secret_path(self) -> Path:
+        return self.base_path / "secret.key"
+
     def load(self) -> Config:
         if self._config is not None:
             return self._config
@@ -263,9 +259,18 @@ class ConfigManager:
         self.save_auth(cfg.auth)
         return cfg.auth.api_token
 
-    @staticmethod
-    def secret_key() -> str:
-        return _env_secret_key()
+    def secret_key(self) -> str:
+        env_secret = os.getenv("DECYPHARR_SECRET_KEY")
+        if env_secret:
+            return env_secret
+        if self.secret_path.exists():
+            secret = self.secret_path.read_text().strip()
+            if secret:
+                return secret
+        self.base_path.mkdir(parents=True, exist_ok=True)
+        secret = secrets.token_urlsafe(48)
+        self.secret_path.write_text(secret)
+        return secret
 
     @staticmethod
     def _hash_password(password: str) -> str:

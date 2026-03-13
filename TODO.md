@@ -1,5 +1,6 @@
 # TODO
 
+- Done: replace the shared fallback secret with a per-instance persisted secret when `DECYPHARR_SECRET_KEY` is unset.
 - Done: reconcile repair scheduler with current config so disabling repair or using an invalid/empty interval removes the scheduled job.
 - Done: add bearer token auth for `/api/*` and `/debug/*`, including refresh-token rotation regression tests and API doc/spec updates.
 - Done: removed orphaned legacy frontend scripts from `decypharr/web/static/js/` and deleted stale duplicate status tracker `docs/porting-checklist.md`.

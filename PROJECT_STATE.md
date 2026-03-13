@@ -1,8 +1,9 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-13 (12)
+Last updated: 2026-03-13 (13)
 
 ## Recent Changes
+- Secret management hardening: replaced the shared fallback session/SID secret with a per-instance secret persisted under the config path when `DECYPHARR_SECRET_KEY` is unset; added regression tests for generation, stability, and env override.
 - Repair scheduler fix: `refresh_from_config()` now removes stale `repair-scheduler` jobs before reapplying config, so disabling repair or clearing/invalidating the interval actually unschedules background runs; added regression tests.
 - Auth/API parity: `/api/*` and `/debug/*` now accept either a logged-in session or `Authorization: Bearer <api_token>`; added regression coverage for token auth and refresh rotation; refreshed API docs/spec.
 - Cleanup: removed orphaned legacy frontend scripts under `decypharr/web/static/js/` and dropped stale duplicate status tracker `docs/porting-checklist.md`; active runtime remains the Vite `web/static/build/` bundle.

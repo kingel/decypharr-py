@@ -117,6 +117,37 @@ def test_qbit_auth_requires_credentials_when_enabled(tmp_path: Path):
     )
 
 
+def test_secret_key_is_generated_and_persisted(tmp_path: Path, monkeypatch):
+    monkeypatch.delenv("DECYPHARR_SECRET_KEY", raising=False)
+    manager = ConfigManager(tmp_path)
+
+    secret = manager.secret_key()
+
+    assert secret
+    assert manager.secret_path.exists()
+    assert manager.secret_path.read_text().strip() == secret
+
+
+def test_secret_key_is_stable_for_same_config_path(tmp_path: Path, monkeypatch):
+    monkeypatch.delenv("DECYPHARR_SECRET_KEY", raising=False)
+
+    first = ConfigManager(tmp_path).secret_key()
+    second = ConfigManager(tmp_path).secret_key()
+
+    assert first == second
+
+
+def test_secret_key_env_overrides_persisted_secret(tmp_path: Path, monkeypatch):
+    monkeypatch.delenv("DECYPHARR_SECRET_KEY", raising=False)
+    manager = ConfigManager(tmp_path)
+    generated = manager.secret_key()
+
+    monkeypatch.setenv("DECYPHARR_SECRET_KEY", "override-secret")
+
+    assert ConfigManager(tmp_path).secret_key() == "override-secret"
+    assert manager.secret_path.read_text().strip() == generated
+
+
 def test_register_allows_bootstrap_without_auth(tmp_path: Path):
     app = _make_auth_app(tmp_path)
     client = TestClient(app)
