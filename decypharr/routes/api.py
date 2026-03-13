@@ -7,17 +7,13 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from decypharr.config import Config
 from decypharr.torrent_utils import infohash_from_torrent, parse_magnet_infohash, map_debrid_status
 from decypharr.services.context import AppContext
+from decypharr.services.auth import require_session_or_api_token
 from decypharr.debrid.storage import DebridStorage
 from decypharr.services.rclone import RcloneManager
 
 
 def _require_auth(request: Request, ctx: AppContext) -> None:
-    cfg = ctx.config_manager.load()
-    if not cfg.use_auth:
-        return
-    if request.session.get("user"):
-        return
-    raise HTTPException(status_code=401, detail="Authentication required")
+    require_session_or_api_token(request, ctx)
 
 
 router = APIRouter()

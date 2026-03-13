@@ -12,9 +12,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, Request
 from fastapi.responses import PlainTextResponse
 
+from decypharr.services.auth import require_session_or_api_token
 from decypharr.services.context import AppContext
 
 
@@ -26,12 +27,7 @@ def get_ctx(request: Request) -> AppContext:
 
 
 async def require_auth(request: Request, ctx: AppContext = Depends(get_ctx)) -> None:
-    config = ctx.config_manager.load()
-    if not config.use_auth:
-        return
-    if request.session.get("user"):
-        return
-    raise HTTPException(status_code=401, detail="Authentication required")
+    require_session_or_api_token(request, ctx)
 
 
 router = APIRouter(dependencies=[Depends(require_auth)])

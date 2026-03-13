@@ -557,6 +557,62 @@ def test_debug_stats_requires_auth(tmp_path: Path):
     assert response.status_code == 401
 
 
+def test_api_allows_bearer_token(tmp_path: Path):
+    app = _make_auth_app(tmp_path, with_auth=True)
+    token = app.state.ctx.config_manager.load().auth.api_token
+    client = TestClient(app)
+
+    response = client.get("/api/config", headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["auth_username"] == "user"
+
+
+def test_api_rejects_invalid_bearer_token(tmp_path: Path):
+    app = _make_auth_app(tmp_path, with_auth=True)
+    client = TestClient(app)
+
+    response = client.get(
+        "/api/config", headers={"Authorization": "Bearer invalid-token"}
+    )
+
+    assert response.status_code == 401
+
+
+def test_debug_allows_bearer_token(tmp_path: Path):
+    app = _make_auth_app(tmp_path, with_auth=True)
+    token = app.state.ctx.config_manager.load().auth.api_token
+    client = TestClient(app)
+
+    response = client.get("/debug/stats", headers={"Authorization": f"Bearer {token}"})
+
+    assert response.status_code == 200
+
+
+def test_refresh_token_rotates_bearer_auth(tmp_path: Path):
+    app = _make_auth_app(tmp_path, with_auth=True)
+    token = app.state.ctx.config_manager.load().auth.api_token
+    client = TestClient(app)
+
+    refresh = client.post(
+        "/api/refresh-token", headers={"Authorization": f"Bearer {token}"}
+    )
+    assert refresh.status_code == 200
+    new_token = refresh.json()["token"]
+    assert new_token != token
+
+    old_response = client.get(
+        "/api/config", headers={"Authorization": f"Bearer {token}"}
+    )
+    assert old_response.status_code == 401
+
+    new_response = client.get(
+        "/api/config", headers={"Authorization": f"Bearer {new_token}"}
+    )
+    assert new_response.status_code == 200
+
+
 def test_debug_stats_allows_authenticated(tmp_path: Path):
     app = _make_auth_app(tmp_path, with_auth=True)
     client = TestClient(app)

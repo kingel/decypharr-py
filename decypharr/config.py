@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import secrets
+import hmac
 from pathlib import Path
 from typing import Any, List, Optional
 
@@ -245,6 +246,14 @@ class ConfigManager:
         if not cfg.auth.password:
             return False
         return bcrypt.checkpw(password.encode("utf-8"), cfg.auth.password.encode("utf-8"))
+
+    def verify_api_token(self, token: str) -> bool:
+        cfg = self.load()
+        if not cfg.use_auth:
+            return False
+        if not cfg.auth or not cfg.auth.api_token or not token:
+            return False
+        return hmac.compare_digest(cfg.auth.api_token, token)
 
     def refresh_api_token(self) -> str:
         cfg = self.load()

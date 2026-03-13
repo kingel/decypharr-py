@@ -270,12 +270,12 @@ components:
     cookieAuth:
       type: apiKey
       in: cookie
-      name: auth-session
+      name: session
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: token
-      description: API token for authentication
+      description: API token for `/api/*` and `/debug/*` routes
 
   schemas:
     Arr:

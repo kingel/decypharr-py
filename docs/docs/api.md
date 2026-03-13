@@ -7,7 +7,7 @@ Decypharr provides a RESTful API for managing torrents, debrid services, and Arr
 The API supports two authentication methods:
 
 ### 1. Session-based Authentication (Cookies)
-Log in through the web interface (`/login`) to establish an authenticated session. The session cookie (`auth-session`) will be automatically included in subsequent API requests from the same browser session.
+Log in through the web interface (`/login`) to establish an authenticated session. The session cookie (`session`) will be automatically included in subsequent API requests from the same browser session.
 
 ### 2. API Token Authentication (Bearer Token)
 Use API tokens for programmatic access. Include the token in the `Authorization` header for each request:
@@ -56,24 +56,24 @@ Notes:
 
 #### Using API Token:
 ```bash
-curl -H "Authorization: Bearer $API_TOKEN" -X POST http://localhost:8080/api/add \
+curl -H "Authorization: Bearer $API_TOKEN" -X POST http://localhost:8282/api/add \
   -F "arr=sonarr" \
   -F "debrid=realdebrid" \
   -F "urls=magnet:?xt=urn:btih:..." \
-  -F "downloadUncached=true"
-  -F "file=@/path/to/torrent/file.torrent"
+  -F "downloadUncached=true" \
+  -F "file=@/path/to/torrent/file.torrent" \
   -F "callbackUrl=http://your.callback.url/endpoint"
 ```
 
 #### Using Session Cookies:
 ```bash
 # Login first (this sets the session cookie)
-curl -c cookies.txt -X POST http://localhost:8080/login \
+curl -c cookies.txt -X POST http://localhost:8282/login \
   -H "Content-Type: application/json" \
   -d '{"username": "your_username", "password": "your_password"}'
 
 # Then use the session cookie for API calls
-curl -b cookies.txt -X POST http://localhost:8080/api/add \
+curl -b cookies.txt -X POST http://localhost:8282/api/add \
   -F "arr=sonarr" \
   -F "debrid=realdebrid" \
   -F "urls=magnet:?xt=urn:btih:..." \
@@ -84,19 +84,18 @@ curl -b cookies.txt -X POST http://localhost:8080/api/add \
 
 ```bash
 # With API token
-curl -H "Authorization: Bearer $API_TOKEN" -X GET http://localhost:8080/api/torrents
+curl -H "Authorization: Bearer $API_TOKEN" -X GET http://localhost:8282/api/torrents
 ```
 
 ### Starting a Repair Job
 
 ```bash
 # With API token
-curl -H "Authorization: Bearer $API_TOKEN" -X POST http://localhost:8080/api/repair \
+curl -H "Authorization: Bearer $API_TOKEN" -X POST http://localhost:8282/api/repair \
   -H "Content-Type: application/json" \
   -d '{
-    "arrName": "sonarr",
+    "arr": "sonarr",
     "mediaIds": ["123", "456"],
-    "autoProcess": true,
-    "async": true
+    "autoProcess": true
   }'
 ```
