@@ -1,5 +1,6 @@
 # TODO
 
+- Done: removed orphaned legacy frontend scripts from `decypharr/web/static/js/` and deleted stale duplicate status tracker `docs/porting-checklist.md`.
 - Done: UI alignment pass to better match original app screenshots (header/nav pills, panels/tables, settings tabs, download/repair layout, stats card styling) and rename "Goroutines" label to "Runtime Workers" in Stats (`42 passed`).
 - Update: docs refreshed after Phase 3 frontend modernization; no code changes.
 - Done: qBittorrent tracker + file priority parity (stored in torrent state).
