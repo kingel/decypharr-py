@@ -215,20 +215,104 @@ class ConfigManager {
   }
 
   initTabs() {
-    const tabs = Array.from(document.querySelectorAll('.tab-button'))
-    const panels = Array.from(document.querySelectorAll('.tab-content'))
-    if (!tabs.length || !panels.length) return
+    this.tabs = Array.from(document.querySelectorAll('.tab-button'))
+    this.panels = Array.from(document.querySelectorAll('.tab-content'))
+    if (!this.tabs.length || !this.panels.length) return
 
-    const activate = (tab) => {
-      const target = tab.dataset.tab
-      tabs.forEach(btn => btn.classList.toggle('active', btn === tab))
-      panels.forEach(panel => {
+    this.activateTab = (target) => {
+      this.tabs.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === target))
+      this.panels.forEach(panel => {
         panel.classList.toggle('hidden', panel.dataset.tabContent !== target)
       })
     }
 
-    tabs.forEach(btn => btn.addEventListener('click', () => activate(btn)))
-    activate(tabs.find(tab => tab.classList.contains('active')) || tabs[0])
+    this.tabs.forEach(btn => btn.addEventListener('click', () => this.activateTab(btn.dataset.tab)))
+    this.activateTab((this.tabs.find(tab => tab.classList.contains('active')) || this.tabs[0]).dataset.tab)
+  }
+
+  clearValidationState() {
+    this.refs.configForm.querySelectorAll('input, select, textarea').forEach(field => {
+      field.setCustomValidity('')
+      field.removeAttribute('aria-invalid')
+    })
+  }
+
+  getFieldLabel(field) {
+    const label = field.closest('.field-group')?.querySelector('.label-text')
+    return label ? label.textContent.trim() : 'This field'
+  }
+
+  getTabName(field) {
+    return field?.closest('.tab-content')?.dataset.tabContent || null
+  }
+
+  showValidationError(field, message, tabName = this.getTabName(field)) {
+    if (tabName && this.activateTab) {
+      this.activateTab(tabName)
+    }
+    if (field && typeof field.setCustomValidity === 'function') {
+      field.setCustomValidity(message)
+      field.setAttribute('aria-invalid', 'true')
+    }
+    if (field && typeof field.reportValidity === 'function') {
+      field.reportValidity()
+    }
+    if (field && typeof field.focus === 'function') {
+      field.focus()
+    }
+    if (field && typeof field.scrollIntoView === 'function') {
+      field.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+    window.decypharrUtils.createToast(message, 'warning')
+    return false
+  }
+
+  validateConfiguration() {
+    this.clearValidationState()
+
+    if (!this.refs.debridConfigs.querySelector('.debrid-config')) {
+      return this.showValidationError(
+        this.refs.addDebridBtn,
+        'At least one debrid service is required',
+        'debrid'
+      )
+    }
+
+    const qbitDownloadFolder = document.querySelector('[name="qbit.download_folder"]')
+    if (qbitDownloadFolder && !qbitDownloadFolder.value.trim()) {
+      return this.showValidationError(qbitDownloadFolder, 'Download Folder is required')
+    }
+
+    const requiredFields = Array.from(this.refs.configForm.querySelectorAll('[required]'))
+    for (const field of requiredFields) {
+      if (!String(field.value || '').trim()) {
+        return this.showValidationError(field, `${this.getFieldLabel(field)} is required`)
+      }
+      if (!field.checkValidity()) {
+        return this.showValidationError(field, field.validationMessage || `${this.getFieldLabel(field)} is invalid`)
+      }
+    }
+
+    const repairEnabled = document.querySelector('[name="repair.enabled"]')?.checked
+    const repairInterval = document.querySelector('[name="repair.interval"]')
+    if (repairEnabled && repairInterval && !repairInterval.value.trim()) {
+      return this.showValidationError(repairInterval, 'Repair Interval is required when scheduled repair is enabled')
+    }
+
+    const constrainedFields = Array.from(this.refs.configForm.querySelectorAll('input, select, textarea')).filter(field => {
+      if (!field.name || field.name.startsWith('auth_') || field.type === 'checkbox') {
+        return false
+      }
+      return String(field.value || '').trim().length > 0
+    })
+
+    for (const field of constrainedFields) {
+      if (!field.checkValidity()) {
+        return this.showValidationError(field, field.validationMessage || `${this.getFieldLabel(field)} is invalid`)
+      }
+    }
+
+    return true
   }
 
   checkIncompleteConfig() {
@@ -530,6 +614,10 @@ class ConfigManager {
 
   async saveConfiguration(e) {
     e.preventDefault()
+
+    if (!this.validateConfiguration()) {
+      return
+    }
 
     const formData = new FormData(this.refs.configForm)
     const payload = this.buildConfigPayload(formData)

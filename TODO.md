@@ -1,6 +1,7 @@
 # TODO
 
 - Done: install MkDocs tooling in the dev container, add a dedicated docs CI build, and document the container-based docs build command.
+- Done: tighten settings form validation to block incomplete debrid/qBittorrent/repair config before submit; rebuilt Vite assets in container.
 - Done: align public docs with current implementation status while keeping additional provider support documented as planned work.
 - Done: restore documented repair interval parsing for shorthand durations and `HH:MM` values.
 - Done: replace the shared fallback secret with a per-instance persisted secret when `DECYPHARR_SECRET_KEY` is unset.
@@ -34,6 +35,5 @@
 - Done: offload blocking poller work (debrid HTTP, Arr refresh, callbacks, symlink/download) via `asyncio.to_thread` (`42 passed`).
 - Done: add locking/atomic writes in torrent store (`torrents.json`); concurrency + atomic-write tests added (`42 passed`).
 - Done: pivot Phase 1 UI to Web Awesome and rebuild Vite assets in container.
-- Tighten UI validation to match Go behavior for settings forms (client-side rules).
 - Manual: integration/stack tests (Arr + debrid + WebDAV flows).
 - Add additional debrid providers (Debrid‑Link, AllDebrid).

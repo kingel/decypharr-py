@@ -1,8 +1,9 @@
 # Project State (Python Port)
 
-Last updated: 2026-03-13 (16)
+Last updated: 2026-03-13 (17)
 
 ## Recent Changes
+- UI validation parity: the settings form now performs explicit client-side validation before `/api/config` submit, blocks incomplete debrid/qBittorrent/repair payloads, and switches to the tab containing the first invalid field; Vite assets rebuilt in container.
 - Docs tooling: installed MkDocs dependencies in the dev container, added a dedicated GitHub Actions docs build workflow, and documented the container-based `mkdocs build` command.
 - Docs parity: aligned public docs with current implementation status for auth/setup flow, implemented qBittorrent endpoints, and provider support wording; unsupported providers remain documented as planned work.
 - Repair interval parsing fix: restored documented shorthand (`1h`, `15m`, etc.) and clock-time (`HH:MM`) parsing in `_parse_schedule()`, with regression coverage for parsing and scheduled-job creation.
@@ -73,7 +74,6 @@ Last updated: 2026-03-13 (16)
 
 ## Open Tasks
 - **Static asset handling**: Vite build step added (`npm run build` in `decypharr/web/`); CI should run this before packaging.
-- **UI validation parity**: Bring settings field validation in line with Go version (client-side rules remain).
 - **WebDAV parity**: Validate WsgiDAV dir browser UX vs Go’s custom listing (delete buttons).
 - **Tests**: Integration/stack tests (Arr + debrid + webdav flows) — manual by user.
 - **Additional debrid providers**: Debrid‑Link / AllDebrid not yet implemented.
@@ -84,7 +84,7 @@ Last updated: 2026-03-13 (16)
 - Legacy `styles.css` removed; UI now depends on Vite `main.css` bundle.
 
 ## Next Step
-- Tighten UI validation to match Go behavior for settings forms.
+- Add the Vite asset build/check to CI before packaging.
 
 ## Decisions
 - **FastAPI + Jinja2** for the main web UI and API, keeping template parity with the Go UI.
